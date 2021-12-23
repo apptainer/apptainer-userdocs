@@ -1,0 +1,3 @@
+[submodule "apptainer_source"]
+	path = apptainer_source
+	url = https://github.com/apptainer/apptainer.git

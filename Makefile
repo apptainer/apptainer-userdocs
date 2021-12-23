@@ -51,16 +51,16 @@ help:
 
 ifndef SKIPCLI
 
-clidocs: cli/singularity.rst
+clidocs: cli/apptainer.rst
 
-singularity_source/builddir/singularity:
-	cd singularity_source &&\
+apptainer_source/builddir/apptainer:
+	cd apptainer_source &&\
 	./mconfig &&\
 	cd builddir &&\
 	make
 
-cli/singularity.rst: singularity_source/builddir/singularity
-	cd singularity_source &&\
+cli/apptainer.rst: apptainer_source/builddir/apptainer
+	cd apptainer_source &&\
 	go run ./cmd/docs rst --dir ../cli
 
 endif

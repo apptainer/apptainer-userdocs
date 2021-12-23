@@ -1,8 +1,8 @@
 ---
 name: publish
 
-on:
-  push:
+# on:
+#   push:
 
 jobs:
   publish:
@@ -17,7 +17,7 @@ jobs:
         with:
           go-version: 1.17.3
 
-      - name: Install Singularity dependencies
+      - name: Install Apptainer dependencies
         run: |
           sudo apt-get install -f -y build-essential libssl-dev uuid-dev squashfs-tools libseccomp-dev cryptsetup-bin libgpgme-dev
 
