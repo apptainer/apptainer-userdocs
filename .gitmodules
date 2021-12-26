@@ -1,4 +1,3 @@
-[submodule "vendor/src/github.com/hpcng/singularity"]
-	path = singularity_source
-	url = https://github.com/hpcng/singularity
-	branch = master
+[submodule "apptainer_source"]
+	path = apptainer_source
+	url = https://github.com/apptainer/apptainer.git
