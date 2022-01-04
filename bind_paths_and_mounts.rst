@@ -128,11 +128,11 @@ A note on using ``--bind`` with the ``--writable`` flag
 
 To mount a bind path inside the container, a *bind point* must be defined
 within the container. The bind point is a directory within the container that
-apptainer can use as a destination to bind a directory on the host system.
+Apptainer can use as a destination to bind a directory on the host system.
 
-Starting in version 3.0, apptainer will do its best to bind mount requested
-paths into a container regardless of whether the appropriate bind point exists
-within the container.  apptainer can often carry out this operation even in
+Apptainer will do its best to bind mount requested paths into a container 
+regardless of whether the appropriate bind point exists
+within the container. Apptainer can often carry out this operation even in
 the absence of the "overlay fs" feature.
 
 However, binding paths to non-existent points within the container can result in
@@ -150,7 +150,7 @@ Using ``--no-home`` and ``--containall`` flags
 ``--no-home``
 ^^^^^^^^^^^^^
 
-When shelling into your container image, apptainer allows you to mount your current working directory (``CWD``)
+When shelling into your container image, Apptainer allows you to mount your current working directory (``CWD``)
 without mounting your host ``$HOME`` directory with the ``--no-home`` flag.
 
 .. code-block:: none
@@ -193,13 +193,13 @@ mount a remote computer's filesystem to your local host, over ssh:
     $ ythel:/home/dave on /home/dave/other_host type fuse.sshfs (rw,nosuid,nodev,relatime,user_id=1000,group_id=1000)
 
 
-apptainer 3.6 introduces the ``--fusemount`` option, which allows
+Apptainer offers the ``--fusemount`` option, which allows
 you directly expose FUSE filesystems inside a container. The FUSE
 command / driver that mounts a particular type of filesystem can be
 located on the host, or in the container.
 
 The FUSE command *must* be based on libfuse3 to work correctly with
-apptainer ``--fusemount``. If you are using an older distribution
+Apptainer ``--fusemount`` option. If you are using an older distribution
 that provides FUSE commands such as ``sshfs`` based on FUSE 2 then you
 can install FUSE 3 versions of the commands you need inside your
 container.
@@ -207,16 +207,15 @@ container.
 
 .. note::
 
-   ``--fusemount`` functionality was present in a hidden preview state
-   from apptainer 3.4. The behavior has changed for the final
-   supported version introduced in apptainer 3.6.
+   ``--fusemount`` functionality has evolved from a previous hidden preview state
+   to a fully supported behavior as of now.
 
 
    
 FUSE mount definitions
 ======================
 
-A fusemount definition for apptainer consists of 3 parts:
+A fusemount definition for Apptainer consists of 3 parts:
 
 .. code-block:: none
 
@@ -278,7 +277,7 @@ type:
 Image Mounts
 ------------
 
-In apptainer 3.6 and above you can mount a directory contained in an
+Apptainer provides you possibility to mount a directory contained in an
 image file into a container. This may be useful if you want to
 distribute directories containing a large number of data files as a
 single image file.
@@ -330,7 +329,7 @@ to distribute in an image file that allows read/write:
     Copying files into the device: done
     Writing superblocks and filesystem accounting information: done 
 
-    # Run apptainer, mounting my input data to '/input-data' in
+    # Run Apptainer, mounting my input data to '/input-data' in
     # the container.
     $ apptainer run -B inputs.img:/input-data:image-src=/ mycontainer.sif
     apptainer> ls /input-data
@@ -382,7 +381,7 @@ overlays instructions<overlay-sif>`:
     apptainer> ls /input-data
     1  2  3  4  5  6  7  8  9
 
-If your bind source is a SIF then apptainer will bind from
+If your bind source is a SIF then Apptainer will bind from
 the first data partition in the SIF, or you may specify an
 alternative descriptor by ID with the additional bind option
 ``:id=n``, where n is the descriptor ID.

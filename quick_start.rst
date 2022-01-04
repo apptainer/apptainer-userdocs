@@ -196,7 +196,7 @@ follows:
       sign        Attach a cryptographic signature to an image
       test        Run the user-defined tests within a container
       verify      Verify cryptographic signatures attached to an image
-      version     Show the version for apptainer
+      version     Show the version for Apptainer
 
     Examples:
       $ apptainer help <command> [<subcommand>]

@@ -261,7 +261,7 @@ We'll use ``file1`` to demonstrate the usage of the ``%files`` section below.
 The ``file2`` is created at the root of the file system **within the
 container**.
 
-In later versions of apptainer the ``%files`` section is provided as a safer
+In later versions of Apptainer the ``%files`` section is provided as a safer
 alternative to copying files from the host system into the container during the
 build. Because of the potential danger involved in running the ``%setup``
 scriptlet with elevated privileges on the host system during the build, it's

@@ -186,10 +186,9 @@ do not grant their users. The `Build Service
 unprivileged users to build containers remotely, with root level
 permissions inside the secured service. System administrators can use
 the system to monitor which users are building containers, and the
-contents of those containers. The apptainer CLI has native
-integration with the Build Service from version 3.0 onwards. In
-addition, a browser interface to the Build Service also exists, which
-allows users to build containers using only a web browser.
+contents of those containers. The Apptainer CLI has native
+integration with the Build Service. In addition, a browser interface
+to the Build Service also exists, which allows users to build containers using only a web browser.
 
 .. note::
 

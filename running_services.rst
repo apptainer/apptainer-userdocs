@@ -21,11 +21,10 @@ Overview
 
 .. _sec:instances:
 
-apptainer v2.4 introduced the concept of *instances* allowing users to run
-services in apptainer. This page will help you understand instances using an
-elementary example followed by a more useful example running an NGINX web server
-using instances. In the end, you will find a more detailed example of running an
-instance of an API that converts URL to PDFs.
+The concept of *instances* allows users to run services in Apptainer. This page 
+will help you understand instances using an elementary example followed by a more 
+useful example running an NGINX web server using instances. In the end, you will 
+find a more detailed example of running an instance of an API that converts URL to PDFs.
 
 To begin with, suppose you want to run an NGINX web server outside of a
 container. On Ubuntu, you can simply install NGINX and start the service by:
@@ -44,7 +43,7 @@ interface with it. This is a called an orphan process. apptainer instances
 give you the ability to handle services properly.
 
 ----------------------------------
-Container Instances in apptainer
+Container Instances in Apptainer
 ----------------------------------
 
 For demonstration, let's use an easy (though somewhat useless) example of
@@ -523,14 +522,14 @@ To request a pdf simply do:
 
 .. code-block:: none
 
-    $ apptainer run --app pdf_client instance://pdf http://sylabs.io/docs sylabs.pdf
+    $ apptainer run --app pdf_client instance://pdf http://apptainer.org/user-docs/master apptainer.pdf
 
 To confirm that it worked:
 
 .. code-block:: none
 
     $ ls /tmp/out/
-    sylabs.pdf
+    apptainer.pdf
 
 When you are finished, use the instance stop command to close all running
 instances.

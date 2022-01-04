@@ -48,7 +48,7 @@ To use a persistent overlay, you must first have a container.
 File system image overlay
 =========================
 
-Since 3.8, apptainer provides a command ``apptainer overlay create`` to
+Apptainer provides a command ``apptainer overlay create`` to
 create persistent overlay images. You can create a single EXT3 overlay image
 or adding a EXT3 writable overlay partition to an existing SIF image.
 
@@ -88,8 +88,12 @@ So for example:
     $ apptainer overlay create --size 1024 --create-dir /var/cache/nginx /tmp/nginx.sif
     $ echo "test" | apptainer exec /tmp/nginx.sif sh -c "cat > /var/cache/nginx/test"
 
-Create an overlay image (< 3.8)
+Create an overlay image 
 -------------------------------
+
+.. note::
+
+    This may be only available for versions of Singularity earlier than 3.8
 
 You can use tools like ``dd`` and ``mkfs.ext3`` to create and format
 an empty ext3 file system image, which holds all changes made in your

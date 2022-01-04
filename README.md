@@ -20,7 +20,7 @@ Sphinx is written in Python. To get setup to contribute:
 pip3 install --user Sphinx sphinx-rtd-theme
 ```
 
-If your version of python 3 does not come with `pip` / `pip3`, you may need to install a `python3-pip`package with `apt` or `yum`, or you can install pip follwing [the instructions here](https://pip.pypa.io/en/stable/installing/).
+If your version of Python 3 does not come with `pip` / `pip3`, you may need to install a `python3-pip`package with `apt` or `yum`, or you can install pip follwing [the instructions here](https://pip.pypa.io/en/stable/installing/).
 
 You're all set! After this you will only need to use your favorite editor to work with the RST files.
 
@@ -40,7 +40,7 @@ This project maintains the following structure:
 
 This file sets the themes, extensions, variables and naming scheme for output created when building the documentation with Sphinx. Some important elements include:
 
-- `version` : Describes the current version of `apptainer` that the documentation is for. We set version to the `major.minor` values, e.g. `3.5`,as we are not creating separate documentation for each patch release.
+- `version` : Describes the current version of `apptainer` that the documentation is for. We set version to the `major.minor` values, e.g. `1.0`,as we are not creating separate documentation for each patch release.
 - `release`: Would be used to specify the current release of the software being documented, including patch number, alpha tags etc. We leave this the same as `version` as we only generate documentation for each `major.minor` version of Apptainer.
 - `html_theme`: Sets the theme to be used for HTML output. We are using the RTD or Read The Docs theme.
 - `html_context`: Options here control links back to our GitHub repository.
@@ -176,7 +176,7 @@ argument.  For example, to rebuild the HTML docs without including the CLI docs,
 just run `make html SKIPCLI=1`.
 
 If apptainer has been updated and you want to synchronize the CLI docs with
-the new version of apptainer, you'll have to update the submodule.  To do
+the new version of Apptainer, you'll have to update the submodule.  To do
 this, just run:
 
 ```bash

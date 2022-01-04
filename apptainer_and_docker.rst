@@ -14,19 +14,19 @@ Effort has been expended in developing `Docker <https://www.docker.com/>`_ conta
 (typically split across multiple segments, or **layers** as they are known in Docker parlance) plus some metadata, images for these containers
 are built from specifications known as ``Dockerfiles``. The public `Docker Hub <https://hub.docker.com/>`_, as well as various private registries, 
 host images for use as Docker containers. Apptainer has from the outset emphasized the importance of interoperability with Docker. As a consequence, 
-this section of the apptainer User Docs first makes its sole focus interoperabilty with Docker. In so doing, the following topics receive attention here:
-- Application of apptainer action commands on ephemeral containers derived from public Docker images
-- Converting public Docker images into apptainer's native format for containerization, namely the apptainer Image Format (SIF)
-- Authenticated application of apptainer commands to containers derived from private Docker images
-- Authenticated application of apptainer commands to containers derived from private Docker images originating from private registries
-- Building SIF containers for apptainer via the command line or definition files from a variety of sources for Docker images and image archives
+this section of the Apptainer User Docs first makes its sole focus interoperabilty with Docker. In so doing, the following topics receive attention here:
+- Application of Apptainer action commands on ephemeral containers derived from public Docker images
+- Converting public Docker images into Apptainer's native format for containerization, namely the Apptainer Image Format (SIF)
+- Authenticated application of Apptainer commands to containers derived from private Docker images
+- Authenticated application of Apptainer commands to containers derived from private Docker images originating from private registries
+- Building SIF containers for Apptainer via the command line or definition files from a variety of sources for Docker images and image archives
 
-The second part of this section places emphasis upon apptainer's interoperability with open standards emerging from the `Open Containers Initiative <https://www.opencontainers.org/>`_ (OCI). 
-Specifically, in documenting apptainer interoperability as it relates to the OCI Image Specification, the following topics are covered:
+The second part of this section places emphasis upon Apptainer's interoperability with open standards emerging from the `Open Containers Initiative <https://www.opencontainers.org/>`_ (OCI). 
+Specifically, in documenting Apptainer interoperability as it relates to the OCI Image Specification, the following topics are covered:
 - Compliance with the OCI Image Layout Specification
-- OCI-compliant caching in apptainer
-- Acquiring OCI images and image archives via apptainer
-- Building SIF containers for apptainer via the command line or definition files from a variety of sources for OCI images and image archives
+- OCI-compliant caching in Apptainer
+- Acquiring OCI images and image archives via Apptainer
+- Building SIF containers for Apptainer via the command line or definition files from a variety of sources for OCI images and image archives
 he section closes with a brief enumeration of emerging best practices plus consideration of troubleshooting common issues.
 
 
@@ -36,7 +36,7 @@ he section closes with a brief enumeration of emerging best practices plus consi
 Running action commands on public images from Docker Hub
 --------------------------------------------------------
 
-``godlovedc/lolcow`` is a whimsical example of a publicly accessible image hosted via `Docker Hub <https://hub.docker.com/>`_. apptainer can execute this image as follows:
+``godlovedc/lolcow`` is a whimsical example of a publicly accessible image hosted via `Docker Hub <https://hub.docker.com/>`_. Apptainer can execute this image as follows:
 
 .. code-block:: none
 
@@ -75,7 +75,7 @@ Running action commands on public images from Docker Hub
                     ||----w |
                     ||     ||
 
-Here ``docker`` is prepended to ensure that the ``run`` command of apptainer is instructed to bootstrap container creation based upon this Docker image, thus creating a complete URI for apptainer. apptainer subsequently downloads :ref:`all the OCI blobs that comprise this image <sec:oci_overview>`, and converts them into a *single* SIF file - the native format for apptainer containers. Because this image from Docker Hub is cached locally in the ``$HOME/.apptainer/cache/oci-tmp/<org.opencontainers.image.ref.name>/lolcow_latest.sif`` directory, where ``<org.opencontainers.image.ref.name>`` will be replaced by the appropriate hash for the container, the image does not need to be downloaded again (from Docker Hub) the next time a apptainer ``run`` is executed. In other words, the cached copy is sensibly reused:
+Here ``docker`` is prepended to ensure that the ``run`` command of Apptainer is instructed to bootstrap container creation based upon this Docker image, thus creating a complete URI for Apptainer. Apptainer subsequently downloads :ref:`all the OCI blobs that comprise this image <sec:oci_overview>`, and converts them into a *single* SIF file - the native format for Apptainer containers. Because this image from Docker Hub is cached locally in the ``$HOME/.apptainer/cache/oci-tmp/<org.opencontainers.image.ref.name>/lolcow_latest.sif`` directory, where ``<org.opencontainers.image.ref.name>`` will be replaced by the appropriate hash for the container, the image does not need to be downloaded again (from Docker Hub) the next time a Apptainer ``run`` is executed. In other words, the cached copy is sensibly reused:
 
 .. code-block:: none
 
@@ -99,7 +99,7 @@ Here ``docker`` is prepended to ensure that the ``run`` command of apptainer is 
 
 .. note::
 
-    Use is made of the ``$HOME/.apptainer`` directory by default to :ref:`cache images <sec:cache>`. To cache images elsewhere, use of the environment variable ``apptainer_CACHEDIR`` can be made.
+    Use is made of the ``$HOME/.apptainer`` directory by default to :ref:`cache images <sec:cache>`. To cache images elsewhere, use of the environment variable ``APPTAINER_CACHEDIR`` can be made.
 
 As the runtime of this container is encapsulated as a single SIF file, it is possible to
 
@@ -127,9 +127,9 @@ and then execute the SIF file directly:
 
 .. note::
 
-    SIF files abstract apptainer containers as a single file. As with any executable, a SIF file can be executed directly.
+    SIF files abstract Apptainer containers as a single file. As with any executable, a SIF file can be executed directly.
 
-``fortune | cowsay | lolcat`` is executed by *default* when this container is ``run`` by apptainer. apptainer's ``exec`` command allows a different command to be executed; for example:
+``fortune | cowsay | lolcat`` is executed by *default* when this container is ``run`` by Apptainer. Apptainer's ``exec`` command allows a different command to be executed; for example:
 
 .. code-block:: none
 
@@ -140,13 +140,13 @@ and then execute the SIF file directly:
 
 .. note::
 
-    The *same* cached copy of the ``lolcow`` container is reused here by apptainer ``exec``, and immediately below here by ``shell``.
+    The *same* cached copy of the ``lolcow`` container is reused here by Apptainer ``exec``, and immediately below here by ``shell``.
 
 .. note::
 
     Execution defaults are documented below - see :ref:`Directing Execution <sec:def_files_execution>` and :ref:`Container Metadata <sec:inspect_container_metadata>`.
 
-In addition to non-interactive execution of an image from Docker Hub, apptainer provides support for an *interactive* ``shell`` session:
+In addition to non-interactive execution of an image from Docker Hub, pptainer provides support for an *interactive* ``shell`` session:
 
 .. code-block:: none
 
@@ -167,7 +167,7 @@ In addition to non-interactive execution of an image from Docker Hub, apptainer 
 
 From this it is evident that use is being made of Ubuntu 16.04 *within* this container, whereas the shell *external* to the container is running a more recent release of Ubuntu (not illustrated here).
 
-``inspect`` reveals the metadata for a apptainer container encapsulated via SIF; :ref:`Container Metadata <sec:inspect_container_metadata>` is documented below.
+``inspect`` reveals the metadata for a Apptainer container encapsulated via SIF; :ref:`Container Metadata <sec:inspect_container_metadata>` is documented below.
 
 .. note::
 
@@ -185,7 +185,7 @@ From this it is evident that use is being made of Ubuntu 16.04 *within* this con
 Making use of public images from Docker Hub
 ---------------------------------------------------------
 
-apptainer can make use of public images available from the `Docker Hub <https://hub.docker.com/>`_. By specifying the ``docker://`` URI for an image that has already been located, apptainer can ``pull``  it - e.g.:
+Apptainer can make use of public images available from the `Docker Hub <https://hub.docker.com/>`_. By specifying the ``docker://`` URI for an image that has already been located, Apptainer can ``pull``  it - e.g.:
 
 .. code-block:: none
 
@@ -211,14 +211,14 @@ apptainer can make use of public images available from the `Docker Hub <https://
     INFO:    Creating SIF file...
     INFO:    Build complete: lolcow_latest.sif
 
-This ``pull`` results in a *local* copy of the Docker image in SIF, the apptainer Image Format:
+This ``pull`` results in a *local* copy of the Docker image in SIF, the Apptainer Image Format:
 
 .. code-block:: none
 
     $ file lolcow_latest.sif
     lolcow_latest.sif: a /usr/bin/env run-apptainer script executable (binary data)
 
-In converting to SIF, individual layers of the Docker image have been *combined* into a single, native file for use by apptainer; there is no need to subsequently ``build`` the image for apptainer. For example, you can now ``exec``, ``run`` or ``shell`` into the SIF version via apptainer, :ref:`as described above <sec:action_commands_prebuilt_public_docker_images>`.
+In converting to SIF, individual layers of the Docker image have been *combined* into a single, native file for use by Apptainer; there is no need to subsequently ``build`` the image for Apptainer. For example, you can now ``exec``, ``run`` or ``shell`` into the SIF version via apptainer, :ref:`as described above <sec:action_commands_prebuilt_public_docker_images>`.
 
 .. _sec:use_prebuilt_public_docker_images_SUB_inspect:
 
@@ -267,7 +267,7 @@ In our example ``docker://godlovedc/lolcow``, ``godlovedc`` specifies a Docker H
 Making use of private images from Docker Hub
 ----------------------------------------------------------
 
-After successful authentication, apptainer can also make use of *private* images available from the `Docker Hub <https://hub.docker.com/>`_. The three means available for authentication follow here. Before describing these means, it is instructive to illustrate the error generated when attempting access a private image *without* credentials:
+After successful authentication, Apptainer can also make use of *private* images available from the `Docker Hub <https://hub.docker.com/>`_. The three means available for authentication follow here. Before describing these means, it is instructive to illustrate the error generated when attempting access a private image *without* credentials:
 
 .. code-block:: none
 
@@ -283,8 +283,7 @@ In this case, the ``mylolcow`` repository of user ``ilumb`` **requires** authent
 Authentication via Remote Login
 ===============================
 
-apptainer 3.7 introduces the ability for users to supply credentials on a per
-registry basis with the ``remote`` command group. See :ref:`Managing OCI Registries <sec:managing_oci_registries>`
+Users are able to supply credentials on a per registry basis with the ``remote`` command group. See :ref:`Managing OCI Registries <sec:managing_oci_registries>`
 for detailed instructions.
 
 Using this method of authentication will allow you to pull private images
@@ -297,7 +296,7 @@ or flags described below.
 Authentication via Interactive Login
 ====================================
 
-Interactive login is the first of two means provided for authentication with Docker Hub. It is enabled through use of the ``--docker-login`` option of apptainer's ``pull`` command; for example:
+Interactive login is the first of two means provided for authentication with Docker Hub. It is enabled through use of the ``--docker-login`` option of Apptainer's ``pull`` command; for example:
 
 .. code-block:: none
 
@@ -397,8 +396,8 @@ will retrieve a specific version of the `PyTorch platform <https://pytorch.org/>
 
 .. code-block:: none
 
-    export apptainer_DOCKER_USERNAME='$oauthtoken'
-    export apptainer_DOCKER_PASSWORD=<redacted>
+    export APPTAINER_DOCKER_USERNAME='$oauthtoken'
+    export APPTAINER_DOCKER_PASSWORD=<redacted>
 
 Upon use, these environment-variable settings allow for authentication with NGC.
 
@@ -429,19 +428,19 @@ Alternatively, for purely interactive use, ``--docker-login`` is recommended:
     INFO:    Creating SIF file...
     INFO:    Build complete: pytorch_18.11-py3.sif
 
-Authentication aside, the outcome of the ``pull`` command is the apptainer container ``pytorch_18.11-py3.sif`` - i.e., a locally stored copy, that has been coverted to SIF.
+Authentication aside, the outcome of the ``pull`` command is the Apptainer container ``pytorch_18.11-py3.sif`` - i.e., a locally stored copy, that has been coverted to SIF.
 
 
 ------------------------------------------------------
-Building images for apptainer from Docker Registries
+Building images for Apptainer from Docker Registries
 ------------------------------------------------------
 
-The ``build`` command is used to **create** apptainer containers. Because it is documented extensively :ref:`elsewhere in this manual <build-a-container>`, only specifics relevant to Docker are provided here - namely, working with Docker Hub via :ref:`the apptainer command line <sec:apptainer_build_cli>` and through :ref:`apptainer definition files <sec:apptainer_build_def_files>`.
+The ``build`` command is used to **create** Apptainer containers. Because it is documented extensively :ref:`elsewhere in this manual <build-a-container>`, only specifics relevant to Docker are provided here - namely, working with Docker Hub via :ref:`the apptainer command line <sec:apptainer_build_cli>` and through :ref:`apptainer definition files <sec:apptainer_build_def_files>`.
 
 
 .. _sec:apptainer_build_cli:
 
-Working from the apptainer Command Line
+Working from the Apptainer Command Line
 =========================================
 
 Remotely Hosted Images
@@ -467,7 +466,7 @@ In the simplest case, ``build`` is functionally equivalent to ``pull``:
     INFO:    Creating SIF file...
     INFO:    Build complete: mylolcow_latest.sif
 
-This ``build`` results in a *local* copy of the Docker image in SIF, as did ``pull`` :ref:`above <sec:use_prebuilt_public_docker_images>`. Here, ``build`` has named the apptainer container ``mylolcow_latest.sif``.
+This ``build`` results in a *local* copy of the Docker image in SIF, as did ``pull`` :ref:`above <sec:use_prebuilt_public_docker_images>`. Here, ``build`` has named the Apptainer container ``mylolcow_latest.sif``.
 
 .. note::
 
@@ -499,9 +498,9 @@ After successful execution, the above command results in creation of the ``mylol
 
     bin  boot  core  dev  environment  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  apptainer  srv  sys  tmp  usr  var
 
-The ``build`` command of apptainer allows (e.g., development) sandbox containers to be converted into (e.g., production) read-only SIF containers, and vice-versa. Consult the :ref:`Build a container <build-a-container>` documentation for the details.
+The ``build`` command of Apptainer allows (e.g., development) sandbox containers to be converted into (e.g., production) read-only SIF containers, and vice-versa. Consult the :ref:`Build a container <build-a-container>` documentation for the details.
 
-Implicit in the above command-line interactions is use of public images from Docker Hub. To make use of **private** images from Docker Hub, authentication is required. Available means for authentication were described above. Use of environment variables is functionally equivalent for apptainer ``build`` as it is for ``pull``; see :ref:`Authentication via Environment Variables <sec:authentication_via_environment_variables>` above. For purely interactive use, authentication can be added to the ``build`` command as follows:
+Implicit in the above command-line interactions is use of public images from Docker Hub. To make use of **private** images from Docker Hub, authentication is required. Available means for authentication were described above. Use of environment variables is functionally equivalent for Apptainer ``build`` as it is for ``pull``; see :ref:`Authentication via Environment Variables <sec:authentication_via_environment_variables>` above. For purely interactive use, authentication can be added to the ``build`` command as follows:
 
 .. code-block:: none
 
@@ -513,11 +512,11 @@ Implicit in the above command-line interactions is use of public images from Doc
 Building Containers Remotely
 ----------------------------
 
-By making use of the `Sylabs Cloud Remote Builder <https://cloud.sylabs.io/builder>`_, it is possible to build SIF containers *remotely* from images hosted at Docker Hub. The Sylabs Cloud Remote Builder is a **service** that can be used from the apptainer command line or via its Web interface. Here use of the apptainer CLI is emphasized.
+By making use of the `Sylabs Cloud Remote Builder <https://cloud.sylabs.io/builder>`_, it is possible to build SIF containers *remotely* from images hosted at Docker Hub. The Sylabs Cloud Remote Builder is a **service** that can be used from the Apptainer command line or via its Web interface. Here use of the Apptainer CLI is emphasized.
 
 Once you have an account for Sylabs Cloud, and have logged in to the portal, select `Remote Builder <https://cloud.sylabs.io/builder>`_. The right-hand side of this page is devoted to use of the apptainer CLI. Self-generated API tokens are used to enable authenticated access to the Remote Builder. To create a token, follow the `instructions provided <https://cloud.sylabs.io/auth/tokens>`_. Once the token has been created, run ``apptainer remote login`` and paste it at the prompt.
 
-The above token provides *authenticated* use of the Sylabs Cloud Remote Builder when ``--remote`` is *appended* to the apptainer ``build`` command. For example, for remotely hosted images:
+The above token provides *authenticated* use of the Sylabs Cloud Remote Builder when ``--remote`` is *appended* to the Apptainer ``build`` command. For example, for remotely hosted images:
 
 .. code-block:: none
 
@@ -551,7 +550,7 @@ The above token provides *authenticated* use of the Sylabs Cloud Remote Builder 
 
     Elevated privileges (e.g., via ``sudo``) are *not* required when use is made of the Sylabs Cloud Remote Builder.
 
-During the build process, progress can be monitored in the Sylabs Cloud portal on the Remote Builder page - as illustrated upon completion by the screenshot below. Once complete, this results in a *local* copy of the SIF file ``lolcow_rb.sif``. From the `Sylabs Cloud apptainer Library <https://cloud.sylabs.io/library>`_ it is evident that the 'original' SIF file remains available via this portal.
+During the build process, progress can be monitored in the Sylabs Cloud portal on the Remote Builder page - as illustrated upon completion by the screenshot below. Once complete, this results in a *local* copy of the SIF file ``lolcow_rb.sif``. From the `Sylabs Library <https://cloud.sylabs.io/library>`_ it is evident that the 'original' SIF file remains available via this portal.
 
 .. image:: lolcow_sylabsrb.png
 
@@ -561,7 +560,7 @@ During the build process, progress can be monitored in the Sylabs Cloud portal o
 Locally Available Images: Cached by Docker
 ------------------------------------------
 
-apptainer containers can be built at the command line from images cached *locally* by Docker. Suppose, for example:
+Apptainer containers can be built at the command line from images cached *locally* by Docker. Suppose, for example:
 
 .. code-block:: none
 
@@ -595,14 +594,14 @@ This indicates that ``godlovedc/lolcow:latest`` has been cached locally by Docke
     INFO:    Creating SIF file...
     INFO:    Build complete: lolcow_from_docker_cache.sif
 
-results in ``lolcow_from_docker_cache.sif`` for native use by apptainer. There are two important differences in syntax evident in the above ``build`` command:
+results in ``lolcow_from_docker_cache.sif`` for native use by Apptainer. There are two important differences in syntax evident in the above ``build`` command:
 
-1. The ``docker`` part of the URI has been appended by ``daemon``. This ensures apptainer seek an image locally cached by Docker to bootstrap the conversion process to SIF, as opposed to attempting to retrieve an image remotely hosted via Docker Hub.
-2. ``sudo`` is prepended to the ``build`` command for apptainer; this is required as the Docker daemon executes as ``root``. However, if the user issuing the ``build`` command is a member of the ``docker`` Linux group, then ``sudo`` need not be prepended.
+1. The ``docker`` part of the URI has been appended by ``daemon``. This ensures Apptainer seek an image locally cached by Docker to bootstrap the conversion process to SIF, as opposed to attempting to retrieve an image remotely hosted via Docker Hub.
+2. ``sudo`` is prepended to the ``build`` command for Apptainer; this is required as the Docker daemon executes as ``root``. However, if the user issuing the ``build`` command is a member of the ``docker`` Linux group, then ``sudo`` need not be prepended.
 
 .. note::
 
-    The image tag, in this case ``latest``, is **required** when bootstrapping creation of a container for apptainer from an image locally cached by Docker.
+    The image tag, in this case ``latest``, is **required** when bootstrapping creation of a container for Apptainer from an image locally cached by Docker.
 
 .. note::
 
@@ -663,7 +662,7 @@ Thus ``lolcow.tar`` is a locally stored archive in the *current* working directo
 
 In other words, it is evident that this 'tarball' is a Docker-format image comprised of multiple layers along with metadata in a JSON manifest.
 
-Through use of the ``docker-archive`` bootstrap agent, a SIF file (``lolcow_tar.sif``) for use by apptainer can be created via the following ``build`` command:
+Through use of the ``docker-archive`` bootstrap agent, a SIF file (``lolcow_tar.sif``) for use by Apptainer can be created via the following ``build`` command:
 
 .. code-block:: none
 
@@ -691,16 +690,16 @@ Through use of the ``docker-archive`` bootstrap agent, a SIF file (``lolcow_tar.
 
 There are two important differences in syntax evident in the above ``build`` command:
 
-1. The ``docker`` part of the URI has been appended by ``archive``. This ensures apptainer seek a Docker-format image archive stored locally as ``lolcow.tar`` to bootstrap the conversion process to SIF, as opposed to attempting to retrieve an image remotely hosted via Docker Hub.
-2. ``sudo`` is *not* prepended to the ``build`` command for apptainer. This is *not* required if the executing user has the appropriate access privileges to the stored file.
+1. The ``docker`` part of the URI has been appended by ``archive``. This ensures Apptainer seek a Docker-format image archive stored locally as ``lolcow.tar`` to bootstrap the conversion process to SIF, as opposed to attempting to retrieve an image remotely hosted via Docker Hub.
+2. ``sudo`` is *not* prepended to the ``build`` command for Apptainer. This is *not* required if the executing user has the appropriate access privileges to the stored file.
 
 .. note::
 
-    The ``docker-archive`` bootstrap agent handles archives (``.tar`` files) as well as compressed archives (``.tar.gz``) when containers are built for apptainer via its ``build`` command.
+    The ``docker-archive`` bootstrap agent handles archives (``.tar`` files) as well as compressed archives (``.tar.gz``) when containers are built for Apptainer via its ``build`` command.
 
 .. note::
 
-    The Sylabs Cloud Remote Builder *does not* interoperate with locally stored Docker-format images; therefore, images cached locally by Docker, *cannot* be used to bootstrap creation of SIF files via the Remote Builder service. Of course, a SIF file could be created locally as detailed above. Then, in a separate, manual step, :ref:`pushed to the Sylabs Cloud apptainer Library <sec:pushing_locally_available_images_to_library>`.
+    The Sylabs Cloud Remote Builder *does not* interoperate with locally stored Docker-format images; therefore, images cached locally by Docker, *cannot* be used to bootstrap creation of SIF files via the Remote Builder service. Of course, a SIF file could be created locally as detailed above. Then, in a separate, manual step, :ref:`pushed to the Sylabs Library <sec:pushing_locally_available_images_to_library>`.
 
 
 .. _sec:pushing_locally_available_images_to_library:
@@ -708,9 +707,9 @@ There are two important differences in syntax evident in the above ``build`` com
 Pushing Locally Available Images to a Library
 ---------------------------------------------
 
-The outcome of bootstrapping from an image cached locally by Docker, or one stored locally as an archive, is of course a *locally* stored SIF file. As noted above, this is the *only* option available, as the Sylabs Cloud Remote Builder *does not* interoperate with the Docker daemon or locally stored archives in the Docker image format. Once produced, however, it may be desirable to  make the resulting SIF file available through the Sylabs Cloud apptainer Library; therefore, the procedure to ``push`` a locally available SIF file to the Library is detailed here.
+The outcome of bootstrapping from an image cached locally by Docker, or one stored locally as an archive, is of course a *locally* stored SIF file. As noted above, this is the *only* option available, as the Sylabs Cloud Remote Builder *does not* interoperate with the Docker daemon or locally stored archives in the Docker image format. Once produced, however, it may be desirable to  make the resulting SIF file available through the Sylabs Library; therefore, the procedure to ``push`` a locally available SIF file to the Library is detailed here.
 
-From the `Sylabs Cloud apptainer Library <https://cloud.sylabs.io/library>`_, select ``Create a new Project``. In this first of two steps, the publicly accessible project is created as illustrated below:
+From the `Sylabs Cloud Library <https://library.sylabs.io/>`_, select ``Create a new Project``. In this first of two steps, the publicly accessible project is created as illustrated below:
 
 .. image:: create_project.png
 
@@ -734,7 +733,7 @@ Finally, from the perspective of the Library, the *hosted* version of the SIF fi
 
 .. note::
 
-    The hosted version of the SIF file in the Sylabs Cloud apptainer Library is maintainable. In other words, if the image is updated locally, the update can be pushed to the Library and tagged appropriately.
+    The hosted version of the SIF file in the Sylabs Cloud Apptainer Library is maintainable. In other words, if the image is updated locally, the update can be pushed to the Library and tagged appropriately.
 
 
 .. _sec:apptainer_build_def_files:
@@ -747,9 +746,9 @@ Working with Definition Files
 Mandatory Header Keywords: Remotely Bootstrapped
 -------------------------------------------------
 
-Akin to a set of blueprints that explain how to build a custom container, apptainer definition files (or "def files") are considered in detail :ref:`elsewhere in this manual <definition-files>`. Therefore, only def file nuances specific to interoperability with Docker receive consideration here.
+Akin to a set of blueprints that explain how to build a custom container, Apptainer definition files (or "def files") are considered in detail :ref:`elsewhere in this manual <definition-files>`. Therefore, only def file nuances specific to interoperability with Docker receive consideration here.
 
-apptainer definition files are comprised of two parts - a **header** plus **sections**.
+Apptainer definition files are comprised of two parts - a **header** plus **sections**.
 
 When working with repositories such as Docker Hub, ``Bootstrap`` and ``From`` are **mandatory** keywords within the header; for example, if the file ``lolcow.def`` has contents
 
@@ -762,9 +761,9 @@ then
 
 .. code-block:: none
 
-    sudo apptainer build lolcow.sif lolcow.def
+    sudo Apptainer build lolcow.sif lolcow.def
 
-creates a apptainer container in SIF by bootstrapping from the public ``godlovedc/lolcow`` image from Docker Hub.
+creates a Apptainer container in SIF by bootstrapping from the public ``godlovedc/lolcow`` image from Docker Hub.
 
 In the above definition file, ``docker`` is one of numerous, possible bootstrap agents; this, and other bootstrap agents receive attention :ref:`in the appendix <build-docker-module>`.
 
@@ -849,13 +848,13 @@ Once the build process has been completed, the corresponding SIF file can be ret
 
 .. image:: build_output.png
 
-A copy of the SIF file created by the service remains in the Sylabs Cloud apptainer Library as illustrated below.
+A copy of the SIF file created by the service remains in the Sylabs Cloud Apptainer Library as illustrated below.
 
 .. image:: mysylabslibrary.png
 
 .. note::
 
-    The Sylabs Cloud is currently available as an Alpha Preview. In addition to the apptainer Library and Remote Builder, a Keystore service is also available. All three services make use of a *freemium* pricing model in supporting apptainer Community Edition. In contrast, all three services are included in apptainerPRO - an enterprise grade subscription for apptainer that is offered for a fee from Sylabs. For addtional details regarding the different offerings available for apptainer, please `consult the Sylabs website <https://www.sylabs.io/apptainer/>`_.
+    The Sylabs Cloud is currently available as an Alpha Preview. In addition to the Apptainer Library and Remote Builder, a Keystore service is also available. All three services make use of a *freemium* pricing model in supporting apptainer Community Edition. In contrast, all three services are included in apptainerPRO - an enterprise grade subscription for apptainer that is offered for a fee from Sylabs. For addtional details regarding the different offerings available for apptainer, please `consult the Sylabs website <https://www.sylabs.io/apptainer/>`_.
 
 
 .. _sec:mandatory_headers_docker_locally_bootstrapped_def_file:
@@ -863,7 +862,7 @@ A copy of the SIF file created by the service remains in the Sylabs Cloud apptai
 Mandatory Header Keywords: Locally Bootstrapped
 ------------------------------------------------
 
-When ``docker-daemon`` is the bootstrap agent in a apptainer definition file, SIF containers can be created from images cached locally by Docker. Suppose the definition file ``lolcow-d.def`` has contents:
+When ``docker-daemon`` is the bootstrap agent in a Apptainer definition file, SIF containers can be created from images cached locally by Docker. Suppose the definition file ``lolcow-d.def`` has contents:
 
 .. code-block:: apptainer
 
@@ -872,7 +871,7 @@ When ``docker-daemon`` is the bootstrap agent in a apptainer definition file, SI
 
 .. note::
 
-    Again, the image tag ``latest`` is **required** when bootstrapping creation of a container for apptainer from an image locally cached by Docker.
+    Again, the image tag ``latest`` is **required** when bootstrapping creation of a container for Apptainer from an image locally cached by Docker.
 
 Then,
 
@@ -905,11 +904,11 @@ In other words, this is the definition-file counterpart to :ref:`the command-lin
 
 .. note::
 
-    The ``sudo`` requirement in the above ``build`` request originates from apptainer; it is the standard requirement when use is made of definition files. In other words, membership of the issuing user in the ``docker`` Linux group is of no consequence in this context.
+    The ``sudo`` requirement in the above ``build`` request originates from Apptainer; it is the standard requirement when use is made of definition files. In other words, membership of the issuing user in the ``docker`` Linux group is of no consequence in this context.
 
 .. TODO-ND remote builder content note - exclusion above
 
-Alternatively when ``docker-archive`` is the bootstrap agent in a apptainer definition file, SIF containers can be created from images stored locally by Docker. Suppose the definition file ``lolcow-da.def`` has contents:
+Alternatively when ``docker-archive`` is the bootstrap agent in a Apptainer definition file, SIF containers can be created from images stored locally by Docker. Suppose the definition file ``lolcow-da.def`` has contents:
 
 .. code-block:: apptainer
 
@@ -972,7 +971,7 @@ In the two-previous examples, the ``From`` keyword specifies *both* the ``user``
 Private Images and Registries
 -----------------------------
 
-Thus far, use of Docker Hub has been assumed. To make use of a different repository of Docker images the **optional** ``Registry`` keyword can be added to the apptainer definition file. For example, to make use of a Docker image from the NVIDIA GPU Cloud (NGC) corresponding definition file is:
+Thus far, use of Docker Hub has been assumed. To make use of a different repository of Docker images the **optional** ``Registry`` keyword can be added to the Apptainer definition file. For example, to make use of a Docker image from the NVIDIA GPU Cloud (NGC) corresponding definition file is:
 
 .. code-block:: apptainer
 
@@ -1040,7 +1039,7 @@ The execution-specific part of this ``Dockerfile`` is the ``ENTRYPOINT`` - "... 
 
 In addition, ``CMD`` allows an arbitrary string to be *appended* to the ``ENTRYPOINT``. Thus, multiple commands or flags can be passed together through combined use.
 
-Suppose now that a apptainer ``%runscript`` **section** is added to the definition file as follows:
+Suppose now that a Apptainer ``%runscript`` **section** is added to the definition file as follows:
 
 .. code-block:: apptainer
 
@@ -1052,7 +1051,7 @@ Suppose now that a apptainer ``%runscript`` **section** is added to the definiti
 
         fortune
 
-After conversion to SIF via the apptainer ``build`` command, exection of the resulting container produces the output:
+After conversion to SIF via the Apptainer ``build`` command, exection of the resulting container produces the output:
 
 .. code-block:: none
 
@@ -1060,9 +1059,9 @@ After conversion to SIF via the apptainer ``build`` command, exection of the res
     This was the most unkindest cut of all.
             -- William Shakespeare, "Julius Caesar"
 
-In other words, introduction of a ``%runscript`` section into the apptainer definition file causes the ``ENTRYPOINT`` of the ``Dockerfile`` to be *bypassed*. The presence of the ``%runscript`` section would also bypass a ``CMD`` entry in the ``Dockerfile``.
+In other words, introduction of a ``%runscript`` section into the Apptainer definition file causes the ``ENTRYPOINT`` of the ``Dockerfile`` to be *bypassed*. The presence of the ``%runscript`` section would also bypass a ``CMD`` entry in the ``Dockerfile``.
 
-To *preserve* use of ``ENTRYPOINT`` and/or ``CMD`` as defined in the ``Dockerfile``, the ``%runscript`` section must be *absent* from the apptainer definition. In this case, and to favor execution of ``CMD`` *over* ``ENTRYPOINT``, a non-empty assignment of the *optional* ``IncludeCmd`` should be included in the header section of the apptainer definition file as follows:
+To *preserve* use of ``ENTRYPOINT`` and/or ``CMD`` as defined in the ``Dockerfile``, the ``%runscript`` section must be *absent* from the Apptainer definition. In this case, and to favor execution of ``CMD`` *over* ``ENTRYPOINT``, a non-empty assignment of the *optional* ``IncludeCmd`` should be included in the header section of the apptainer definition file as follows:
 
 .. code-block:: apptainer
 
@@ -1079,8 +1078,8 @@ To *preserve* use of ``ENTRYPOINT`` and/or ``CMD`` as defined in the ``Dockerfil
 
 To summarize execution precedence:
 
-1. If present, the ``%runscript`` section of the apptainer definition file is executed
-2. If ``IncludeCmd`` is a non-empty keyword entry in the header of the apptainer definition file, then ``CMD`` from the ``Dockerfile`` is executed
+1. If present, the ``%runscript`` section of the Apptainer definition file is executed
+2. If ``IncludeCmd`` is a non-empty keyword entry in the header of the Apptainer definition file, then ``CMD`` from the ``Dockerfile`` is executed
 3. If present in the ``Dockerfile``, ``ENTRYPOINT`` appended by ``CMD`` (if present) are executed in sequence
 4. Execution of the ``bash`` shell is defaulted to
 
@@ -1091,11 +1090,11 @@ To summarize execution precedence:
 Container Metadata
 ------------------
 
-apptainer's ``inspect`` command displays container metadata - data about data that is encapsulated *within* a SIF file. Default output (assumed via the ``--labels`` option) from the command was :ref:`illustrated above <sec:use_prebuilt_public_docker_images_SUB_inspect>`. ``inspect``, however, provides a number of options that are :ref:`detailed elsewhere <environment-and-metadata>`; in the remainder of this section, Docker-specific use to establish execution precedence is emphasized.
+Apptainer's ``inspect`` command displays container metadata - data about data that is encapsulated *within* a SIF file. Default output (assumed via the ``--labels`` option) from the command was :ref:`illustrated above <sec:use_prebuilt_public_docker_images_SUB_inspect>`. ``inspect``, however, provides a number of options that are :ref:`detailed elsewhere <environment-and-metadata>`; in the remainder of this section, Docker-specific use to establish execution precedence is emphasized.
 
-As stated above (i.e., :ref:`the first case of execution precedence <sec:def_files_execution_SUB_execution_precedence>`), the very existence of a ``%runscript`` section in a apptainer definition file *takes precedence* over commands that might exist in the ``Dockerfile``.
+As stated above (i.e., :ref:`the first case of execution precedence <sec:def_files_execution_SUB_execution_precedence>`), the very existence of a ``%runscript`` section in a Apptainer definition file *takes precedence* over commands that might exist in the ``Dockerfile``.
 
-When the ``%runscript`` section is *removed* from the apptainer definition file, the result is (once again):
+When the ``%runscript`` section is *removed* from the Apptainer definition file, the result is (once again):
 
 .. code-block:: none
 
@@ -1164,7 +1163,7 @@ OCI is an acronym for the `Open Containers Initiative <https://www.opencontainer
 
 .. note::
 
-    To facilitate interoperation with Docker Hub, the apptainer core makes use of  the ``containers/image`` `library <https://github.com/containers/image/>`_ - "... a set of Go libraries aimed at working in various way[s] with containers' images and container image registries."
+    To facilitate interoperation with Docker Hub, the Apptainer core makes use of  the ``containers/image`` `library <https://github.com/containers/image/>`_ - "... a set of Go libraries aimed at working in various way[s] with containers' images and container image registries."
 
 
 Image Pulls Revisited
@@ -1196,12 +1195,12 @@ After describing various :ref:`action commands that could be applied to images h
     INFO:    Creating SIF file...
     INFO:    Build complete: lolcow_latest.sif
 
-Thus use of apptainer's ``pull`` command results in the *local* file copy in SIF, namely ``lolcow_latest.sif``. Layers of the image from Docker Hub are copied locally as OCI blobs.
+Thus use of Apptainer's ``pull`` command results in the *local* file copy in SIF, namely ``lolcow_latest.sif``. Layers of the image from Docker Hub are copied locally as OCI blobs.
 
 .. TODO minor - fix appearance of above link
 
 
-Image Caching in apptainer
+Image Caching in Apptainer
 ----------------------------
 
 If the *same* ``pull`` command is issued a *second* time, the output is different:
@@ -1224,7 +1223,7 @@ If the *same* ``pull`` command is issued a *second* time, the output is differen
     INFO:    Creating SIF file...
     INFO:    Build complete: lolcow_latest.sif
 
-As the copy operation has clearly been *skipped*, it is evident that a copy of all OCI blobs **must** be cached locally. Indeed, apptainer has made an entry in its local cache as follows:
+As the copy operation has clearly been *skipped*, it is evident that a copy of all OCI blobs **must** be cached locally. Indeed, Apptainer has made an entry in its local cache as follows:
 
 .. code-block:: none
 
@@ -1252,7 +1251,7 @@ As the copy operation has clearly been *skipped*, it is evident that a copy of a
 Compliance with the OCI Image Layout Specification
 --------------------------------------------------
 
-From the perspective of the directory ``$HOME/.apptainer/cache/oci``, this cache implementation in apptainer complies with the `OCI Image Layout Specification <https://github.com/opencontainers/image-spec/blob/master/image-layout.md>`_:
+From the perspective of the directory ``$HOME/.apptainer/cache/oci``, this cache implementation in Apptainer complies with the `OCI Image Layout Specification <https://github.com/opencontainers/image-spec/blob/master/image-layout.md>`_:
 
 - ``blobs`` directory - contains content addressable data, that is otherwise considered opaque
 - ``oci-layout`` file - a mandatory JSON object file containing both mandatory and optional content
@@ -1263,7 +1262,7 @@ Because one or more images is 'bundled' here, the directory ``$HOME/.apptainer/c
 For additional details regarding this specification, consult the `OCI Image Format Specification <https://github.com/opencontainers/image-spec>`_.
 
 
-OCI Compliance and the apptainer Cache
+OCI Compliance and the Apptainer Cache
 ----------------------------------------
 
 As required by the layout specification, OCI blobs are *uniquely* named by their contents:
@@ -1444,24 +1443,24 @@ The ``digest`` blob referenced in the ``index.json`` file references the followi
 
 .. TODO Is the above not the config.json file referred to at https://github.com/opencontainers/runtime-spec/blob/master/config.md ???
 
-Even when all OCI blobs are already in apptainer's local cache, repeated image pulls cause *both* these last-two JSON object files, as well as the ``oci-layout`` and ``index.json`` files, to be updated.
+Even when all OCI blobs are already in Apptainer's local cache, repeated image pulls cause *both* these last-two JSON object files, as well as the ``oci-layout`` and ``index.json`` files, to be updated.
 
 
-Building Containers for apptainer from OCI Images
+Building Containers for Apptainer from OCI Images
 ===================================================
 
 .. _cli-oci-bootstrap-agent:
 
-Working Locally from the apptainer Command Line: ``oci`` Bootstrap Agent
+Working Locally from the Apptainer Command Line: ``oci`` Bootstrap Agent
 --------------------------------------------------------------------------
 
-The example detailed in the previous section can be used to illustrate how a SIF file for use by apptainer can be created from the local cache - an albeit contrived example, that works because the apptainer cache is compliant with the OCI Image Layout Specification.
+The example detailed in the previous section can be used to illustrate how a SIF file for use by Apptainer can be created from the local cache - an albeit contrived example, that works because the Apptainer cache is compliant with the OCI Image Layout Specification.
 
 .. note::
 
-    Of course, the ``oci`` bootstrap agent can be applied to *any* **bundle** that is compliant with the OCI Image Layout Specification - not *just* the apptainer cache, as created by executing a apptainer ``pull`` command.
+    Of course, the ``oci`` bootstrap agent can be applied to *any* **bundle** that is compliant with the OCI Image Layout Specification - not *just* the Apptainer cache, as created by executing a Apptainer ``pull`` command.
 
-In this local case, the ``build`` command of apptainer makes use of the ``oci`` bootstrap agent as follows:
+In this local case, the ``build`` command of Apptainer makes use of the ``oci`` bootstrap agent as follows:
 
 .. code-block:: none
 
@@ -1503,17 +1502,17 @@ does not *uniquely* specify an image from which to bootstrap the ``build`` proce
 
 .. note::
 
-    Executing the apptainer ``pull`` command multiple times on the same image produces multiple ``org.opencontainers.image.ref.name`` entries in the ``index.json`` file. Appending the value of the unique ``org.opencontainers.image.ref.name`` allows for use of the ``oci`` bootstrap agent.
+    Executing the Apptainer ``pull`` command multiple times on the same image produces multiple ``org.opencontainers.image.ref.name`` entries in the ``index.json`` file. Appending the value of the unique ``org.opencontainers.image.ref.name`` allows for use of the ``oci`` bootstrap agent.
 
 
 .. _cli-oci-archive-bootstrap-agent:
 
-Working Locally from the apptainer Command Line: ``oci-archive`` Bootstrap Agent
+Working Locally from the Apptainer Command Line: ``oci-archive`` Bootstrap Agent
 ----------------------------------------------------------------------------------
 
-OCI archives, i.e., ``tar`` files obeying the OCI Image Layout Specification :ref:`as discussed previously <misc:OCI_Image_Layout_Specification>`, can seed creation of a container for apptainer. In this case, use is made of the ``oci-archive`` bootstrap agent.
+OCI archives, i.e., ``tar`` files obeying the OCI Image Layout Specification :ref:`as discussed previously <misc:OCI_Image_Layout_Specification>`, can seed creation of a container for Apptainer. In this case, use is made of the ``oci-archive`` bootstrap agent.
 
-To illustrate this agent, it is convenient to build the archive from the apptainer cache. After a single ``pull`` of the ``godlovedc/lolcow`` image from Docker Hub, a ``tar`` format archive can be generated from the ``$HOME/.apptainer/cache/oci`` directory as follows:
+To illustrate this agent, it is convenient to build the archive from the Apptainer cache. After a single ``pull`` of the ``godlovedc/lolcow`` image from Docker Hub, a ``tar`` format archive can be generated from the ``$HOME/.apptainer/cache/oci`` directory as follows:
 
 .. code-block:: none
 
@@ -1531,7 +1530,7 @@ To illustrate this agent, it is convenient to build the archive from the apptain
     index.json
     oci-layout
 
-The native container ``lolcow_oci_tarfile.sif`` for use by apptainer can be created by issuing the ``build`` command as follows:
+The native container ``lolcow_oci_tarfile.sif`` for use by Apptainer can be created by issuing the ``build`` command as follows:
 
 .. code-block:: none
 
@@ -1565,7 +1564,7 @@ This assumes that the ``tar`` file exists in the current working directory.
     Because the layers of a Docker image as well as the blobs of an OCI image are already ``gzip`` compressed, there is a minimal advantage to having compressed archives representing OCI images. For this reason, the ``build`` detailed above bootstraps a SIF file for use by apptainer from only a ``tar`` file, and not a ``tar.gz`` file.
 
 
-Working from the apptainer Command Line with Remotely Hosted Images
+Working from the Apptainer Command Line with Remotely Hosted Images
 ---------------------------------------------------------------------
 
 In the previous section, an OCI archive was created from locally available OCI blobs and metadata; the resulting ``tar`` file served to bootstrap the creation of a container for apptainer in SIF via the ``oci-archive`` agent. Typically, however, OCI archives of interest are remotely hosted. Consider, for example, an Alpine Linux OCI archive stored in Amazon S3 storage. Because such an archive can be retrieved via secure HTTP, the following ``pull`` command results in a local copy as follows:
@@ -1575,7 +1574,7 @@ In the previous section, an OCI archive was created from locally available OCI b
     $ apptainer pull https://s3.amazonaws.com/apptainer-ci-public/alpine-oci-archive.tar
      1.98 MiB / 1.98 MiB [==================================================================================] 100.00% 7.48 MiB/s 0s
 
-Thus ``https`` (and ``http``) are additional bootstrap agents available to seed development of containers for apptainer.
+Thus ``https`` (and ``http``) are additional bootstrap agents available to seed development of containers for Apptainer.
 
 It is worth noting that the OCI image specfication compliant contents of this archive are:
 
@@ -1626,10 +1625,10 @@ The resulting SIF file can be validated as follows, for example:
 
     The ``http`` and ``https`` bootstrap agents can only be used to ``pull`` OCI archives from where they are hosted.
 
-    In working with remotely hosted OCI image archives then, a two-step workflow is *required* to produce SIF files for native use by apptainer:
+    In working with remotely hosted OCI image archives then, a two-step workflow is *required* to produce SIF files for native use by Apptainer:
 
-    1. Transfer of the image to local storage via the ``https`` (or ``http``) bootstrap agent. The apptainer ``pull`` command achieves this.
-    2. Creation of a SIF file via the ``oci-archive`` bootstrap agent. The apptainer ``build`` command achieves this.
+    1. Transfer of the image to local storage via the ``https`` (or ``http``) bootstrap agent. The Apptainer ``pull`` command achieves this.
+    2. Creation of a SIF file via the ``oci-archive`` bootstrap agent. The Apptainer ``build`` command achieves this.
     
     Established with nothing more than a Web server then, any individual, group or organization, *could* host OCI archives. This might be particularly appealing, 
     
@@ -1640,7 +1639,7 @@ Working with Definition Files: Mandatory Header Keywords
 
 Three, new bootstrap agents have been introduced as a consequence of compliance with the OCI Image Specification - assuming ``http`` and ``https`` are considered together. In addition to bootstrapping images for apptainer completely from the command line, definition files can be employed.
 
-As :ref:`above <cli-oci-bootstrap-agent>`, the OCI image layout compliant apptainer cache can be employed to create SIF containers; the definition file, ``lolcow-oci.def``, equivalent is:
+As :ref:`above <cli-oci-bootstrap-agent>`, the OCI image layout compliant Apptainer cache can be employed to create SIF containers; the definition file, ``lolcow-oci.def``, equivalent is:
 
 
 .. code-block:: apptainer
@@ -1676,7 +1675,7 @@ Recall that the colon-appended string in this file uniquely specifies the ``org.
     INFO:    Creating SIF file...
     INFO:    Build complete: /home/vagrant/lolcow_oci_cache.sif
 
-Required use of ``sudo`` allows apptainer to ``build`` the SIF container ``lolcow_oci_cache.sif``.
+Required use of ``sudo`` allows Apptainer to ``build`` the SIF container ``lolcow_oci_cache.sif``.
 
 When it comes to OCI archives, the definition file, ``lolcow-ocia.def`` corresponding to the command-line invocation above is:
 
@@ -1737,7 +1736,7 @@ In working with definition files, the following additional considerations arise:
 Container Caching
 -----------------
 
-To avoid fetching duplicate docker or OCI layers every time you want to ``run``, ``exec`` etc. a ``docker://`` or ``oci://`` container directly, apptainer keeps a cache of layer files. The SIF format container that apptainer creates from these layers is also cached. This means that re-running a docker container, e.g. ``apptainer run docker://alpine`` is much faster until the upstream image changes in docker hub, and a new SIF must be built from updated layers.
+To avoid fetching duplicate docker or OCI layers every time you want to ``run``, ``exec`` etc. a ``docker://`` or ``oci://`` container directly, Apptainer keeps a cache of layer files. The SIF format container that apptainer creates from these layers is also cached. This means that re-running a docker container, e.g. ``apptainer run docker://alpine`` is much faster until the upstream image changes in docker hub, and a new SIF must be built from updated layers.
 
 By default the cache directory is ``.apptainer/cache`` in your ``$HOME`` directory. You can modify the cache directory by setting the ``apptainer_CACHEDIR`` environment variable. To disable caching altogether, set the ``apptainer_DISABLE_CACHE`` environment variable.
 
@@ -1769,41 +1768,41 @@ For a more complete guide to caching and the ``cache`` command, see the :ref:`bu
 Best Practices
 --------------
 
-apptainer can make use of most Docker and OCI images without complication. However, there exist  known cases where complications can arise. Thus a brief compilation of best practices follows below.
+Apptainer can make use of most Docker and OCI images without complication. However, there exist  known cases where complications can arise. Thus a brief compilation of best practices follows below.
 
 1. Accounting for trust
-Docker containers *allow for* privilege escalation. In a ``Dockerfile``, for example, the ``USER`` instruction allows for user and/or group settings to be made in the Linux operating environment. The trust model in apptainer is completely different: apptainer allows untrusted users to run untrusted containers in a trusted way. Because apptainer containers embodied as SIF files execute in *user* space, there is no possibility for privilege escalation. In other words, those familiar with Docker, should *not* expect access to elevated user permissions; and as a corollary, use of the ``USER`` instruction must be *avoided*.
-apptainer does, however, allow for fine-grained control over the permissions that containers require for execution. Given that Singularilty executes in user space, it is not surprising that permissions need to be externally established *for* the container through use of the ``capability`` command. :ref:`Detailed elsewhere in this documentation <security-options>`, apptainer allows users and/or groups to be granted/revoked authorized capabilties. Owing to apptainer's trust model, this fundamental best practice can be stated as follows:
+Docker containers *allow for* privilege escalation. In a ``Dockerfile``, for example, the ``USER`` instruction allows for user and/or group settings to be made in the Linux operating environment. The trust model in Apptainer is completely different: Apptainer allows untrusted users to run untrusted containers in a trusted way. Because Apptainer containers embodied as SIF files execute in *user* space, there is no possibility for privilege escalation. In other words, those familiar with Docker, should *not* expect access to elevated user permissions; and as a corollary, use of the ``USER`` instruction must be *avoided*.
+Apptainer does, however, allow for fine-grained control over the permissions that containers require for execution. Given that Singularilty executes in user space, it is not surprising that permissions need to be externally established *for* the container through use of the ``capability`` command. :ref:`Detailed elsewhere in this documentation <security-options>`, Apptainer allows users and/or groups to be granted/revoked authorized capabilties. Owing to Apptainer's trust model, this fundamental best practice can be stated as follows:
 
 "Employ ``apptainer capability`` to manage execution privileges for containers"
 2. Maintaining containers built from Docker and OCI images
-SIF files created by bootstrapping from Docker or OCI images are, of course, only as current as the most recent apptainer ``pull``. Subsequent retrievals *may* result in containers that are built and/or behave differently, owing to changes in the corresponding ``Dockerfile``. A prudent practice then, for maintaining containers of value, is based upon use of apptainer definition files. Styled and implemented after a ``Dockerfile`` retrieved at some point in time, use of ``diff`` on subsequent versions of this same file, can be employed to inform maintenance of the corresponding apptainer definition file. Understanding build specifications at this level of detail places container creators in a much more sensible position prior to signing with an encrypted key. Thus the best practice is:
+SIF files created by bootstrapping from Docker or OCI images are, of course, only as current as the most recent Apptainer ``pull``. Subsequent retrievals *may* result in containers that are built and/or behave differently, owing to changes in the corresponding ``Dockerfile``. A prudent practice then, for maintaining containers of value, is based upon use of apptainer definition files. Styled and implemented after a ``Dockerfile`` retrieved at some point in time, use of ``diff`` on subsequent versions of this same file, can be employed to inform maintenance of the corresponding apptainer definition file. Understanding build specifications at this level of detail places container creators in a much more sensible position prior to signing with an encrypted key. Thus the best practice is:
 
 "Maintain detailed build specifications for containers, rather than opaque runtimes"
 3. Working with environment variables
 
 In a ``Dockerfile``, `environment variables are declared <https://docs.docker.com/engine/reference/builder/#env>`_ as key-value pairs through use of the ``ENV`` instruction. Declaration in the build specification for a container is advised, rather than relying upon user
-(e.g., ``.bashrc``, ``.profile``) or system-wide configuration files for interactive shells. Should a ``Dockerfile`` be converted into a definition file for apptainer, as suggested in the container-maintenance best practice above, :ref:`environment variables can be explicitly represented <definition-files>` as ``ENV`` instructions that have been converted into entries in the ``%environment`` section, respectively. This best practice can be stated as follows:
+(e.g., ``.bashrc``, ``.profile``) or system-wide configuration files for interactive shells. Should a ``Dockerfile`` be converted into a definition file for Apptainer, as suggested in the container-maintenance best practice above, :ref:`environment variables can be explicitly represented <definition-files>` as ``ENV`` instructions that have been converted into entries in the ``%environment`` section, respectively. This best practice can be stated as follows:
 "Define environment variables in container specifications, not interactive shells"
 4. Installation to ``/root``
 Docker and OCI container's are typically run as the ``root`` user; therefore, ``/root`` (this user's ``$HOME`` directory) will be the installation target when ``$HOME`` is specified. Installation to ``/root`` may prove workable in some circumstances - e.g., while the container is executing, or if read-only access is required to this directory after installation. In general, however, because this is the ``root`` directory conventional wisdom suggests this practice be avoided. Thus the best practice is:
 "Avoid installations that make use of ``/root``."
 5. Read-only ``/`` filesystem
-apptainer mounts a container's ``/`` filesystem in read-only mode. To ensure a Docker container meets apptainer's requirements, it may prove useful to execute ``docker run --read-only --tmpfs /run --tmpfs /tmp godlovedc/lolcow``. The best practioce here is:
-"Ensure Docker containers meet apptainer's read-only ``/`` filesystem requirement"
+Apptainer mounts a container's ``/`` filesystem in read-only mode. To ensure a Docker container meets Apptainer's requirements, it may prove useful to execute ``docker run --read-only --tmpfs /run --tmpfs /tmp godlovedc/lolcow``. The best practioce here is:
+"Ensure Docker containers meet Apptainer's read-only ``/`` filesystem requirement"
 6. Installation to ``$HOME`` or ``$TMP``
-In making use of apptainer, it is common practice for ``$USER`` to be automatically mounted on ``$HOME``, and for ``$TMP`` also to be mounted. To avoid the side effects (e.g., 'missing' or conflicting files) that might arise as a consequence of executing ``mount`` commands then, the best practice is:
+In making use of Apptainer, it is common practice for ``$USER`` to be automatically mounted on ``$HOME``, and for ``$TMP`` also to be mounted. To avoid the side effects (e.g., 'missing' or conflicting files) that might arise as a consequence of executing ``mount`` commands then, the best practice is:
 "Avoid placing container 'valuables' in ``$HOME`` or ``$TMP``."
 A detailed review of the container's build specification (e.g., its ``Dockerfile``) may be required to ensure this best practice is adhered to.
 7. Current library caches
-Irrespective of containers, `a common runtime error <https://codeyarns.com/2014/01/14/how-to-fix-shared-object-file-error/>`_ stems from failing to locate shared libraries required for execution. Suppose now there exists a requirement for symbolically linked libraries *within* a apptainer container. If the builld process that creates the container fails to update the cache, then it is quite likely that (read-only) execution of this container will result in the common error of missing libraries. Upon investigation, it is likely revealed that the library exists, just not the required symbolic links. Thus the best practice is:
+Irrespective of containers, `a common runtime error <https://codeyarns.com/2014/01/14/how-to-fix-shared-object-file-error/>`_ stems from failing to locate shared libraries required for execution. Suppose now there exists a requirement for symbolically linked libraries *within* a Apptainer container. If the builld process that creates the container fails to update the cache, then it is quite likely that (read-only) execution of this container will result in the common error of missing libraries. Upon investigation, it is likely revealed that the library exists, just not the required symbolic links. Thus the best practice is:
 "Ensure calls to ``ldconfig`` are executed towards the *end* of ``build`` specifications (e.g., ``Dockerfile``), so that the library cache is updated when the container is created."
 8. Use of plain-text passwords for authentication
-For obvious reasons, it is desireable to completely *avoid* use of plain-text passwords. Therefore, for interactive sessions requiring authentication, use of the ``--docker-login`` option for apptainer's ``pull`` and ``build`` commands is *recommended*. At the present time, the *only* option available for non-interactive use is to :ref:`embed plain-text passwords into environment variables <sec:authentication_via_environment_variables>`. Because the Sylabs Cloud apptainer Library employs `time-limited API tokens for authentication <https://cloud.sylabs.io/auth>`_, use of SIF containers hosted through this service provides a more secure means for both interactive *and* non-interactive use. This best practice is:
+For obvious reasons, it is desireable to completely *avoid* use of plain-text passwords. Therefore, for interactive sessions requiring authentication, use of the ``--docker-login`` option for Apptainer's ``pull`` and ``build`` commands is *recommended*. At the present time, the *only* option available for non-interactive use is to :ref:`embed plain-text passwords into environment variables <sec:authentication_via_environment_variables>`. Because the Sylabs Cloud apptainer Library employs `time-limited API tokens for authentication <https://cloud.sylabs.io/auth>`_, use of SIF containers hosted through this service provides a more secure means for both interactive *and* non-interactive use. This best practice is:
 "Avoid use of plain-text passwords"
 9. Execution ambiguity
-Short of converting an *entire* ``Dockerfile`` into a apptainer definition file, informed specification of the ``%runscript`` entry in the def file *removes* any ambiguity associated with ``ENTRYPOINT`` :ref:`versus <sec:def_files_execution>` ``CMD`` and ultimately :ref:`execution precedence <sec:def_files_execution>`. Thus the best practice is:
-"Employ apptainer's ``%runscript`` by default to avoid execution ambiguity"
+Short of converting an *entire* ``Dockerfile`` into a Apptainer definition file, informed specification of the ``%runscript`` entry in the def file *removes* any ambiguity associated with ``ENTRYPOINT`` :ref:`versus <sec:def_files_execution>` ``CMD`` and ultimately :ref:`execution precedence <sec:def_files_execution>`. Thus the best practice is:
+"Employ Apptainer's ``%runscript`` by default to avoid execution ambiguity"
 Note that the ``ENTRYPOINT`` can be bypassed completely, e.g., ``docker run -i -t --entrypoint /bin/bash godlovedc/lolcow``. This allows for an interactive session within the container, that may prove useful in validating the built runtime.
 t practices emerge from experience. Contributions that allow additional experiences to be shared as best practices are always encouraged. Please refer to :ref:`Contributing <contributing>` for additional details.
 
@@ -1814,18 +1813,18 @@ t practices emerge from experience. Contributions that allow additional experien
 Troubleshooting
 ---------------
 
-In making use of Docker and OCI images through apptainer the need to troubleshoot may arise. A brief compilation of issues and their resolution is provided here.
+In making use of Docker and OCI images through Apptainer the need to troubleshoot may arise. A brief compilation of issues and their resolution is provided here.
 
 1. Authentication issues
-Authentication is required to make use of Docker-style private images and/or private registries. Examples involving private images hosted by the public Docker Hub were :ref:`provided above <sec:using_prebuilt_private_images>`, whereas the NVIDIA GPU Cloud was used to :ref:`illustrate access to a private registry <sec:using_prebuilt_private_images_parivate_registries>`. Even if the intended use of containers is non-interactive, issues in authenticating with these image-hosting services are most easily addressed through use of the ``--docker-login`` option that can be appended to a apptainer ``pull`` request. As soon as image signatures and blobs start being received, authentication credentials have been validated, and the image ``pull`` can be cancelled.
+Authentication is required to make use of Docker-style private images and/or private registries. Examples involving private images hosted by the public Docker Hub were :ref:`provided above <sec:using_prebuilt_private_images>`, whereas the NVIDIA GPU Cloud was used to :ref:`illustrate access to a private registry <sec:using_prebuilt_private_images_parivate_registries>`. Even if the intended use of containers is non-interactive, issues in authenticating with these image-hosting services are most easily addressed through use of the ``--docker-login`` option that can be appended to a Apptainer ``pull`` request. As soon as image signatures and blobs start being received, authentication credentials have been validated, and the image ``pull`` can be cancelled.
 2. Execution mismatches
-Execution intentions are detailed through specification files - i.e., the ``Dockerfile`` in the case of Docker images. However, intentions and precedence aside, the reality of executing a container may not align with expectations. To alleviate this mismatch, use of ``apptainer inspect --runscript <somecontainer>.sif`` details the *effective* runscript - i.e., the one that is actually being executed. Of course, the ultimate solution to this issue is to develop and maintain apptainer definition files for containers of interest.
+Execution intentions are detailed through specification files - i.e., the ``Dockerfile`` in the case of Docker images. However, intentions and precedence aside, the reality of executing a container may not align with expectations. To alleviate this mismatch, use of ``apptainer inspect --runscript <somecontainer>.sif`` details the *effective* runscript - i.e., the one that is actually being executed. Of course, the ultimate solution to this issue is to develop and maintain Apptainer definition files for containers of interest.
 3. More than one image in the OCI bundle directory
 :ref:`As illustrated above <cli-oci-bootstrap-agent>`, and with respect to the bootstrap agent ``oci://$OCI_BUNDLE_DIR``, a fatal error is generated when *more* than one image is referenced in the ``$OCI_BUNDLE_DIR/index.json`` file. The workaround shared previously was to append the bootstrap directive with the unique reference name for the image of interest - i.e., ``oci://$OCI_BUNDLE_DIR:org.opencontainers.image.ref.name``. Because it may take some effort to locate the reference name for an image of interest, an even simpler solution is to ensure that each ``$OCI_BUNDLE_DIR`` contains at most a single image.
 4. Cache maintenance
-Maintenance of the apptainer cache (i.e., ``$HOME/.apptainer/cache``) requires manual intervention at this time. By **carefully** issuing the command ``rm -rf $HOME/.apptainer/cache``, its local cache will be cleared of all downloaded images.
+Maintenance of the Apptainer cache (i.e., ``$HOME/.apptainer/cache``) requires manual intervention at this time. By **carefully** issuing the command ``rm -rf $HOME/.apptainer/cache``, its local cache will be cleared of all downloaded images.
 5. The ``http`` and ``https`` are ``pull`` only bootstrap agents
-``http`` and ``https`` are the only examples of ``pull`` only bootstrap agents. In other words, when used with apptainer's ``pull`` command, the result is a local copy of, for example, an OCI archive image. This means that a subsequent step is necessary to actually create a SIF container for use by apptainer - a step involving the ``oci-archive`` bootstrap agent in the case of an OCI image archive.
+``http`` and ``https`` are the only examples of ``pull`` only bootstrap agents. In other words, when used with Apptainer's ``pull`` command, the result is a local copy of, for example, an OCI archive image. This means that a subsequent step is necessary to actually create a SIF container for use by Apptainer - a step involving the ``oci-archive`` bootstrap agent in the case of an OCI image archive.
 
 Like :ref:`best practices <sec:best_practices>`, troubleshooting scenarios and solutions emerge from experience. Contributions that allow additional experiences to be shared  are always encouraged. Please refer to :ref:`Contributing <contributing>` for additional details.
 
@@ -1834,13 +1833,13 @@ Like :ref:`best practices <sec:best_practices>`, troubleshooting scenarios and s
 .. _sec:deffile-vs-dockerfile:
 
 ------------------------------------------
-apptainer Definition file vs. Dockerfile
+Apptainer Definition file vs. Dockerfile
 ------------------------------------------
 
-On the following table, you can see which are the similarities/differences between a Dockerfile and a apptainer definition file:
+On the following table, you can see which are the similarities/differences between a Dockerfile and a Apptainer definition file:
 
 ================ ========================== ================ =============================
-apptainer Definition file                   Dockerfile
+Apptainer Definition file                   Dockerfile
 ------------------------------------------- ----------------------------------------------
 Section          Description                Section          Description
 ================ ========================== ================ =============================
