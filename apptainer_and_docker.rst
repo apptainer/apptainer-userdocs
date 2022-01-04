@@ -334,8 +334,8 @@ Environment variables offer an alternative means for authentication with Docker 
 
 .. code-block:: none
 
-    export apptainer_DOCKER_USERNAME=ilumb
-    export apptainer_DOCKER_PASSWORD=<redacted>
+    export APPTAINER_DOCKER_USERNAME=ilumb
+    export APPTAINER_DOCKER_PASSWORD=<redacted>
 
 Of course, the ``<redacted>`` plain-text password needs to be replaced by a valid one to be of practical use.
 

@@ -78,7 +78,7 @@ You can see them listed alphabetically below with their respective functionality
 #. **APPTAINER_ENVIRONMENT**: Contains all the environment variables that have been exported in your container.
 #. **APPTAINER_ENCRYPTION_PASSPHRASE**: Used to specify the plaintext passphrase to encrypt the container.
 #. **APPTAINER_ENCRYPTION_PEM_PATH**: Used to specify the path of the file containing public or private key to encrypt the container in PEM format.
-#. **APPTAINERENV_***: Allows you to transpose variables into the container at runtime. You can see more in detail how to use this variable in our :ref:`environment and metadata section <environment-and-metadata>`.
+#. **APPTAINERENV_**: Allows you to transpose variables into the container at runtime. You can see more in detail how to use this variable in our :ref:`environment and metadata section <environment-and-metadata>`.
 #. **APPTAINERENV_APPEND_PATH**: Used to append directories to the end of the ``$PATH`` environment variable. You can see more in detail on how to use this variable in our :ref:`environment and metadata section <environment-and-metadata>`.
 #. **APPTAINERENV_PATH**: A specified path to override the ``$PATH`` environment variable within the container. You can see more in detail on how to use this variable in our :ref:`environment and metadata section <environment-and-metadata>`.
 #. **APPTAINERENV_PREPEND_PATH**: Used to prepend directories to the beginning of `$PATH`` environment variable. You can see more in detail on how to use this variable in our :ref:`environment and metadata section <environment-and-metadata>`.
@@ -143,7 +143,7 @@ You can see them listed alphabetically below with their respective functionality
 
 #. **APPTAINER_NO_INIT** and **APPTAINER_NOSHIMINIT**: Considers not starting the ``shim`` process with ``--pid``.
 
-#. **APPTAINER_NO_NV**: Flag to disable Nvidia support. Opposite of ``apptainer_NV``.
+#. **APPTAINER_NO_NV**: Flag to disable Nvidia support. Opposite of ``APPTAINER_NV``.
 
 #. **APPTAINER_NO_PRIVS**: To drop all the privileges from root user in the container. Default is set to false.
 
@@ -209,14 +209,14 @@ You can see them listed alphabetically below with their respective functionality
 
 #. **APPTAINER_USER**: Used to specify a string of capabilities for the given user.
 
-#. **APPTAINER_USERNS** and **APPTAINER_UNSHARE_USERNS**: To specify that the container will run in a new user namespace, allowing apptainer to run completely unprivileged on recent kernels. This may not support every feature of apptainer. (Sandbox image only). Default is set to false.
+#. **APPTAINER_USERNS** and **APPTAINER_UNSHARE_USERNS**: To specify that the container will run in a new user namespace, allowing Apptainer to run completely unprivileged on recent kernels. This may not support every feature of Apptainer. (Sandbox image only). Default is set to false.
 
 ``W``
 ^^^^^
 
 #. **APPTAINER_WORKDIR**: The working directory to be used for ``/tmp``, ``/var/tmp`` and ``$HOME`` (if ``-c`` or ``--contain`` was also used)
 
-#. **APPTAINER_WRITABLE**: By default, all apptainer containers are available as read only, this option makes the file system accessible as read/write. Default set to false.
+#. **APPTAINER_WRITABLE**: By default, all Apptainer containers are available as read only, this option makes the file system accessible as read/write. Default set to false.
 
 #. **APPTAINER_WRITABLE_TMPFS**: Makes the file system accessible as read-write with non-persistent data (with overlay support only). Default is set to false.
 
@@ -300,7 +300,7 @@ Overview
 Docker images are comprised of layers that are assembled at runtime to create an
 image. You can use Docker layers to create a base image, and then add your own
 custom software. For example, you might use Docker’s Ubuntu image layers to
-create an Ubuntu apptainer container. You could do the same with CentOS,
+create an Ubuntu Apptainer container. You could do the same with CentOS,
 Debian, Arch, Suse, Alpine, BusyBox, etc.
 
 Or maybe you want a container that already has software installed. For instance,
@@ -309,7 +309,7 @@ GPU, but you don’t want to install from scratch. You can start with one of the
 ``nvidia/cuda`` containers and install your software on top of that.
 
 Or perhaps you have already invested in Docker and created your own Docker
-containers. If so, you can seamlessly convert them to apptainer with the
+containers. If so, you can seamlessly convert them to Apptainer with the
 ``docker`` bootstrap module.
 
 
@@ -368,7 +368,7 @@ Notes
 Docker containers are stored as a collection of tarballs called layers. When
 building from a Docker container the layers must be downloaded and then
 assembled in the proper order to produce a viable file system. Then the file
-system must be converted to apptainer Image File (sif) format.
+system must be converted to Apptainer Image File (sif) format.
 
 Building from Docker Hub is not considered reproducible because if any of the
 layers of the image are changed, the container will change. If reproducibility
@@ -387,12 +387,12 @@ For detailed information about setting your build environment see
 Overview
 """"""""
 
-You can use an existing container on apptainer Hub as your “base,” and then
+You can use an existing container on Apptainer Hub as your “base,” and then
 add customization. This allows you to build multiple images from the same
 starting point. For example, you may want to build several containers with the
 same custom python installation, the same custom compiler toolchain, or the same
 base MPI installation. Instead of building these from scratch each time, you
-could create a base container on apptainer Hub and then build new containers
+could create a base container on Apptainer Hub and then build new containers
 from that existing base container adding customizations in ``%post`` ,
 ``%environment``, ``%runscript``, etc.
 
@@ -418,9 +418,9 @@ be left blank if you want the latest build.
 Notes
 """""
 
-When bootstrapping from a apptainer Hub image, all previous definition files
+When bootstrapping from a Apptainer Hub image, all previous definition files
 that led to the creation of the current image will be stored in a directory
-within the container called ``/.apptainer.d/bootstrap_history``. apptainer
+within the container called ``/.apptainer.d/bootstrap_history``. Apptainer
 will also alert you if environment variables have been changed between the base
 image and the new image during bootstrap.
 
@@ -467,7 +467,7 @@ Also,``tag`` is mandatory that refers to the version of image you want to use.
 
 .. _sec:build-localimage:
 
-This module allows you to build a container from an existing apptainer
+This module allows you to build a container from an existing Apptainer
 container on your host system. The name is somewhat misleading because your
 container can be in either image or directory format.
 
@@ -514,7 +514,7 @@ Notes
 
 When building from a local container, all previous definition files that led to
 the creation of the current container will be stored in a directory within the
-container called ``/.apptainer.d/bootstrap_history``. apptainer will also
+container called ``/.apptainer.d/bootstrap_history``. Apptainer will also
 alert you if environment variables have been changed between the base image and
 the new image during bootstrap.
 
@@ -798,7 +798,7 @@ zypper build module is ``zypper`` itself.
 ``docker-daemon`` and ``docker-archive`` bootstrap agents
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-If you are using docker locally there are two options for creating apptainer
+If you are using docker locally there are two options for creating Apptainer
 images without the need for a repository. You can either build a SIF from a 
 ``docker-save`` tar file or you can convert any docker image present in 
 docker's daemon internal storage.
@@ -850,7 +850,7 @@ image stored in a ``docker-save`` formatted tar file:
 Keywords
 """"""""
 
-The ``docker-daemon`` bootstrap agent can be used in a apptainer definition file 
+The ``docker-daemon`` bootstrap agent can be used in a Apptainer definition file 
 as follows:
 
 .. code-block:: apptainer
