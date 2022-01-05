@@ -52,9 +52,9 @@ via an environment variable or a command line option.
 +------------------------+-------------------------------------------+--------------------------+
 | **Encryption Method**  | **Environment Variable**                  | **Commandline Option**   |
 +------------------------+-------------------------------------------+--------------------------+
-| Passphrase             | ``apptainer_ENCRYPTION_PASSPHRASE``       | ``--passphrase``         |
+| Passphrase             | ``APPTAINER_ENCRYPTION_PASSPHRASE``       | ``--passphrase``         |
 +------------------------+-------------------------------------------+--------------------------+
-| Asymmetric Key (PEM)   | ``apptainer_ENCRYPTION_PEM_PATH``         | ``--pem-path``           | 
+| Asymmetric Key (PEM)   | ``APPTAINER_ENCRYPTION_PEM_PATH``         | ``--pem-path``           | 
 +------------------------+-------------------------------------------+--------------------------+
 
 The ``-e|--encrypt`` flag is implicitly set when the ``--passphrase`` or
@@ -64,8 +64,8 @@ respected.
 
 #. ``--pem-path``
 #. ``--passphrase``
-#. ``apptainer_ENCRYPTION_PEM_PATH``
-#. ``apptainer_ENCRYPTION_PASSPHRASE``
+#. ``APPTAINER_ENCRYPTION_PEM_PATH``
+#. ``APPTAINER_ENCRYPTION_PASSPHRASE``
 
 Passphrase Encryption
 =====================
@@ -95,7 +95,7 @@ Using an environment variable
 
 .. code-block:: none
 
-        $ sudo apptainer_ENCRYPTION_PASSPHRASE=<secret> apptainer build --encrypt encrypted.sif encrypted.def
+        $ sudo APPTAINER_ENCRYPTION_PASSPHRASE=<secret> apptainer build --encrypt encrypted.sif encrypted.def
         Starting build...
 
 In this case it is necessary to use the ``--encrypt`` flag since the presence of
@@ -108,7 +108,7 @@ plain text passphrase in a file (e.g. ``secret.txt``) and use it like so.
 
 .. code-block:: none
 
-        $ export apptainer_ENCRYPTION_PASSPHRASE=$(cat secret.txt)
+        $ export APPTAINER_ENCRYPTION_PASSPHRASE=$(cat secret.txt)
 
         $ sudo -E apptainer build --encrypt encrypted.sif encrypted.def
         Starting build...
@@ -156,7 +156,7 @@ Encrypting with an environment variable
 
 .. code-block:: none
 
-        $ sudo apptainer_ENCRYPTION_PEM_PATH=rsa_pub.pem apptainer build --encrypt encrypted.sif encrypted.def
+        $ sudo APPTAINER_ENCRYPTION_PEM_PATH=rsa_pub.pem apptainer build --encrypt encrypted.sif encrypted.def
         Starting build...
 
 In this case it is necessary to use the ``--encrypt`` flag since the presence of
@@ -189,7 +189,7 @@ Running with a passphrase in an environment variable
 
 .. code-block:: none
 
-        $ apptainer_ENCRYPTION_PASSPHRASE="secret" apptainer run encrypted.sif
+        $ APPTAINER_ENCRYPTION_PASSPHRASE="secret" apptainer run encrypted.sif
 
 While this example shows how an environment variable can be used to set a
 passphrase, you should set the environment variable in a way that will not 
@@ -198,7 +198,7 @@ plain text passphrase in a file (e.g. ``secret.txt``) and use it like so.
 
 .. code-block:: none
 
-        $ export apptainer_ENCRYPTION_PASSPHRASE=$(cat secret.txt)
+        $ export APPTAINER_ENCRYPTION_PASSPHRASE=$(cat secret.txt)
 
         $ apptainer run encrypted.sif
 
@@ -220,4 +220,4 @@ Running using an environment variable
 
 .. code-block:: none
 
-        $ apptainer_ENCRYPTION_PEM_PATH=rsa_pri.pem apptainer run encrypted.sif
+        $ APPTAINER_ENCRYPTION_PEM_PATH=rsa_pri.pem apptainer run encrypted.sif

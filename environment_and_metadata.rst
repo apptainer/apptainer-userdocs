@@ -67,7 +67,7 @@ environment variables that the program sees are a combination of:
    passed into the container.
  - Any variables you set specifically for the container at runtime,
    using the ``--env``, ``--env-file`` options, or by setting
-   ``apptainerENV_`` variables outside of the container.
+   ``APPTAINERENV_`` variables outside of the container.
  - The ``PATH`` variable can be manipulated to add entries.
  - Runtime variables ``apptainer_xxx`` set by apptainer to provide
    information about the container.
@@ -184,10 +184,10 @@ environment variables for correct operation of most software.
    PROMPT_COMMAND=PS1="apptainer> "; unset PROMPT_COMMAND
    PS1=apptainer> 
    PWD=/home/dave/doc-tesrts
-   apptainer_COMMAND=exec
-   apptainer_CONTAINER=/home/dave/doc-tesrts/env.sif
-   apptainer_ENVIRONMENT=/.apptainer.d/env/91-environment.sh
-   apptainer_NAME=env.sif
+   APPTAINER_COMMAND=exec
+   APPTAINER_CONTAINER=/home/dave/doc-tesrts/env.sif
+   APPTAINER_ENVIRONMENT=/.apptainer.d/env/91-environment.sh
+   APPTAINER_NAME=env.sif
    TERM=xterm-256color
 
 
@@ -210,14 +210,14 @@ environment. apptainer will automatically set a number of
 environment variables in a container that can be inspected by any
 program running in the container.
 
-  - ``apptainer_COMMAND`` - how the container was started,
+  - ``APPTAINER_COMMAND`` - how the container was started,
     e.g. ``exec`` / ``run`` / ``shell``.
-  - ``apptainer_CONTAINER`` - the full path to the container image.
-  - ``apptainer_ENVIRONMENT`` - path inside the container to the
+  - ``APPTAINER_CONTAINER`` - the full path to the container image.
+  - ``APPTAINER_ENVIRONMENT`` - path inside the container to the
     shell script holding the container image environment settings.
-  - ``apptainer_NAME`` - name of the container image,
+  - ``APPTAINER_NAME`` - name of the container image,
     e.g. ``myfile.sif`` or ``docker://ubuntu``.
-  - ``apptainer_BIND`` - a list of bind paths that the user
+  - ``APPTAINER_BIND`` - a list of bind paths that the user
     requested, via flags or environment variables, when running the
     container.
 
@@ -366,7 +366,7 @@ Environment Variable Precedence
 When a container is run with apptainer 3.6, the container
 environment is constructed in the following order:
 
-  - Clear the environment, keeping just ``HOME`` and ``apptainer_APPNAME``.
+  - Clear the environment, keeping just ``HOME`` and ``APPTAINER_APPNAME``.
   - Take Docker defined environment variables, where Docker was the base image source.
   - If ``PATH`` is not defined set the apptainer default ``PATH`` *or*
   - If ``PATH`` is defined, add any missing path parts from apptainer defaults
@@ -374,7 +374,7 @@ environment is constructed in the following order:
     (``%environment``). These can override any previously set values.
   - Set SCIF (``--app``) environment variables
   - Set base environment essential vars (``PS1`` and ``LD_LIBRARY_PATH``)
-  - Inject ``apptainerENV_`` / ``--env`` / ``--env-file`` variables
+  - Inject ``APPTAINERENV_`` / ``--env`` / ``--env-file`` variables
     so they can override or modify any previous values:
   - Source any remaining scripts from ``/apptainer.d/env`` 
 
@@ -455,7 +455,7 @@ when you are writing the definition file, but can be obtained in the
 building.
 
 apptainer 3.7 and above allow this, through adding labels to the
-file defined by the ``apptainer_LABELS`` environment variable in the
+file defined by the ``APPTAINER_LABELS`` environment variable in the
 ``%post`` section:
 
 .. code-block:: apptainer
@@ -470,7 +470,7 @@ file defined by the ``apptainer_LABELS`` environment variable in the
     # We can now also set labels to a value at build time
     %post
       VAL="$(myprog --version)"
-      echo "my.label $VAL" >> "$apptainer_LABELS"
+      echo "my.label $VAL" >> "$APPTAINER_LABELS"
 
 Labels must be added to the file one per line, in a ``NAME VALUE`` format,
 where the name and value are separated by a space.
@@ -554,7 +554,7 @@ And the output would look like:
         touch .condarc
 
     %post
-        echo 'export RANDOM=123456' >>$apptainer_ENVIRONMENT
+        echo 'export RANDOM=123456' >>$APPTAINER_ENVIRONMENT
         #Installing all dependencies
         apt-get update && apt-get -y upgrade
         apt-get -y install \
@@ -600,27 +600,27 @@ And the output would look like:
     OCI_CMD="bash"
     # ENTRYPOINT only - run entrypoint plus args
     if [ -z "$OCI_CMD" ] && [ -n "$OCI_ENTRYPOINT" ]; then
-    apptainer_OCI_RUN="${OCI_ENTRYPOINT} $@"
+    APPTAINER_OCI_RUN="${OCI_ENTRYPOINT} $@"
     fi
 
     # CMD only - run CMD or override with args
     if [ -n "$OCI_CMD" ] && [ -z "$OCI_ENTRYPOINT" ]; then
     if [ $# -gt 0 ]; then
-        apptainer_OCI_RUN="$@"
+        APPTAINER_OCI_RUN="$@"
     else
-        apptainer_OCI_RUN="${OCI_CMD}"
+        APPTAINER_OCI_RUN="${OCI_CMD}"
     fi
     fi
 
     # ENTRYPOINT and CMD - run ENTRYPOINT with CMD as default args
     # override with user provided args
     if [ $# -gt 0 ]; then
-        apptainer_OCI_RUN="${OCI_ENTRYPOINT} $@"
+        APPTAINER_OCI_RUN="${OCI_ENTRYPOINT} $@"
     else
-        apptainer_OCI_RUN="${OCI_ENTRYPOINT} ${OCI_CMD}"
+        APPTAINER_OCI_RUN="${OCI_ENTRYPOINT} ${OCI_CMD}"
     fi
 
-    exec $apptainer_OCI_RUN
+    exec $APPTAINER_OCI_RUN
 
 ^^^^^^^^^^^^^^^^^^^
 ``-t`` / ``--test``

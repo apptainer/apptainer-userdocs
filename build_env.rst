@@ -23,22 +23,22 @@ Cache Folders
 apptainer will cache SIF container images generated from remote
 sources, and any OCI/docker layers used to create them. The cache is
 created at ``$HOME/.apptainer/cache`` by default. The location of
-the cache can be changed by setting the ``apptainer_CACHEDIR``
+the cache can be changed by setting the ``APPTAINER_CACHEDIR``
 environment variable.
 
 .. note::
 
    When you run builds as root, using ``sudo``, images will be cached
    in root’s home at ``/root`` and not your user’s home. Use the
-   ``-E`` option to sudo to pass through a ``apptainer_CACHEDIR``
+   ``-E`` option to sudo to pass through a ``APPTAINER_CACHEDIR``
    environment variable.
 
-If you change the value of ``apptainer_CACHEDIR`` be sure to choose
+If you change the value of ``APPTAINER_CACHEDIR`` be sure to choose
 a location that is:
 
  - Unique to you. Permissions are set on the cache so that private
    images cached for one user are not exposed to another. This means
-   that ``apptainer_CACHEDIR`` cannot be shared.
+   that ``APPTAINER_CACHEDIR`` cannot be shared.
  - Located on a filesystem with sufficient space for the number and size of
    container images anticipated.
  - Located on a filesystem that supports atomic rename, if possible.
@@ -46,7 +46,7 @@ a location that is:
 .. warning::
 
    If you are not certain that your ``$HOME`` or
-   ``apptainer_CACHEDIR`` filesytems support atomic rename, do not
+   ``APPTAINER_CACHEDIR`` filesytems support atomic rename, do not
    run apptainer in parallel using remote container URLs. Instead
    use ``apptainer pull`` to create a local SIF image, and then run
    this SIF image in a parallel step. An alternative is to use the
@@ -205,17 +205,17 @@ operations on filesystems that do not fully support ``--fakeroot``.
 The location for temporary directories defaults to
 ``/tmp``. apptainer will also respect the environment variable
 ``TMPDIR``, and both of these locations can be overridden by setting
-the environment variable ``apptainer_TMPDIR``.
+the environment variable ``APPTAINER_TMPDIR``.
 
 The temporary directory used during a build must be on a filesystem
 that has enough space to hold the entire container image,
 uncompressed, including any temporary files that are created and later
-removed during the build. You may need to set ``apptainer_TMPDIR``
+removed during the build. You may need to set ``APPTAINER_TMPDIR``
 when building a large container on a system which has a small ``/tmp``
 filesystem.
 
 Remember to use ``-E`` option to pass the value of
-``apptainer_TMPDIR`` to root's environment when executing the
+``APPTAINER_TMPDIR`` to root's environment when executing the
 ``build`` command with ``sudo``.
 
 .. warning::
@@ -227,7 +227,7 @@ Remember to use ``-E`` option to pass the value of
    runniing programs etc. A ``tmpfs`` also uses default mount options
    that can interfere with some container builds.
 
-   Set ``apptainer_TMPDIR`` to a disk location, or disable the
+   Set ``APPTAINER_TMPDIR`` to a disk location, or disable the
    ``tmpfs`` ``/tmp`` mount on your system if you experience
    problems.
 
@@ -236,8 +236,7 @@ Remember to use ``-E`` option to pass the value of
 Encrypted Containers
 --------------------
 
-Beginning in singularity/apptainer 3.4.0 it is possible to build and run encrypted
-containers.  The containers are decrypted at runtime entirely in kernel space, 
+It is possible to build and run encrypted containers.  The containers are decrypted at runtime entirely in kernel space, 
 meaning that no intermediate decrypted data is ever present on disk or in 
 memory.  See :ref:`encrypted containers <encryption>` for more details.
 
@@ -245,7 +244,7 @@ memory.  See :ref:`encrypted containers <encryption>` for more details.
 Environment Variables
 ---------------------
 
-#. If a flag is represented by both a CLI option and an environment variable, and both are set, the CLI option will always take precedence. This is true for all environment variables except for ``apptainer_BIND`` and ``apptainer_BINDPATH`` which is combined with the ``--bind`` option, argument pair if both are present.
+#. If a flag is represented by both a CLI option and an environment variable, and both are set, the CLI option will always take precedence. This is true for all environment variables except for ``APPTAINER_BIND`` and ``APPTAINER_BINDPATH`` which is combined with the ``--bind`` option, argument pair if both are present.
 
 #. Environment variables overwrite default values in the CLI code
 
@@ -261,36 +260,36 @@ environment variables at runtime.
 Docker
 ------
 
-**apptainer_DOCKER_LOGIN** Used for the interactive login for Docker Hub.
+**APPTAINER_DOCKER_LOGIN** Used for the interactive login for Docker Hub.
 
-**apptainer_DOCKER_USERNAME** Your Docker username.
+**APPTAINER_DOCKER_USERNAME** Your Docker username.
 
-**apptainer_DOCKER_PASSWORD** Your Docker password.
+**APPTAINER_DOCKER_PASSWORD** Your Docker password.
 
 **RUNSCRIPT_COMMAND** Is not obtained from the environment, but is a
 hard coded default (“/bin/bash”). This is the fallback command used in
 the case that the docker image does not have a CMD or ENTRYPOINT.
 **TAG** Is the default tag, ``latest``.
 
-**apptainer_NOHTTPS** This is relevant if you want to use a
+**APPTAINER_NOHTTPS** This is relevant if you want to use a
 registry that doesn’t have https, and it speaks for itself. If you
-export the variable ``apptainer_NOHTTPS`` you can force the software to not use https when
+export the variable ``APPTAINER_NOHTTPS`` you can force the software to not use https when
 interacting with a Docker registry. This use case is typically for use
 of a local registry.
 
 Library
 -------
 
-**apptainer_BUILDER** Used to specify the remote builder service URL. The default value is our remote builder.
+**APPTAINER_BUILDER** Used to specify the remote builder service URL. The default value is our remote builder.
 
-**apptainer_LIBRARY** Used to specify the library to pull from. Default is set to our Cloud Library.
+**APPTAINER_LIBRARY** Used to specify the library to pull from. Default is set to our Cloud Library.
 
-**apptainer_REMOTE** Used to build an image remotely (This does not require root). The default is set to false.
+**APPTAINER_REMOTE** Used to build an image remotely (This does not require root). The default is set to false.
 
 Encryption
 ----------
 
-**apptainer_ENCRYPTION_PASSPHRASE** Used to pass a plaintext passphrase to encrypt a container file system (with the ``--encrypt`` flag). The default is empty.
+**APPTAINER_ENCRYPTION_PASSPHRASE** Used to pass a plaintext passphrase to encrypt a container file system (with the ``--encrypt`` flag). The default is empty.
 
-**apptainer_ENCRYPTION_PEM_PATH** Used to specify the location of a public key to use for container encryption (with the ``--encrypt`` flag). The default is empty.
+**APPTAINER_ENCRYPTION_PEM_PATH** Used to specify the location of a public key to use for container encryption (with the ``--encrypt`` flag). The default is empty.
 

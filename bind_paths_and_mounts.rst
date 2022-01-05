@@ -18,10 +18,10 @@ on the host system with ease.
 Overview
 --------
 
-When apptainer ‘swaps’ the host operating system for the one inside your
+When Apptainer ‘swaps’ the host operating system for the one inside your
 container, the host file systems becomes inaccessible. But you may want to read
 and write files on the host system from within the container. To enable this
-functionality, apptainer will bind directories back into the container via two
+functionality, Apptainer will bind directories back into the container via two
 primary methods: system-defined bind paths and user-defined bind paths.
 
 -------------------------
@@ -40,11 +40,10 @@ is the path from the host and the second path is the path in the container.
 Disabling System Binds
 ======================
 
-The ``--no-mount`` flag, added in apptainer 3.7, allows specific
-system mounts to be disabled, even if they are set in the
+The ``--no-mount`` flag allows specific system mounts to be disabled, even if they are set in the
 ``apptainer.conf`` configuration file by the administrator.
 
-For example, if apptainer has been configured with ``mount hostfs =
+For example, if Apptainer has been configured with ``mount hostfs =
 yes`` then every filesystem on the host will be bind mounted to the
 container by default. If, e.g. a ``/project`` filesystem on your host
 conflicts with a ``/project`` directory in the container you are
@@ -71,10 +70,10 @@ User-defined bind paths
 If the system administrator has `not disabled user control of binds <\{admindocs\}/configfiles.html#bind-mount-management>`_,
 you will be able to request your own bind paths within your container.
 
-The apptainer action commands (``run``, ``exec``, ``shell``, and
+The Apptainer action commands (``run``, ``exec``, ``shell``, and
 ``instance start``) will accept the ``--bind/-B`` command-line option to specify
-bind paths, and will also honor the ``$apptainer_BIND`` (or
-``$apptainer_BINDPATH``) environment variable. The argument for this option is
+bind paths, and will also honor the ``$APPTAINER_BIND`` (or
+``$APPTAINER_BINDPATH``) environment variable. The argument for this option is
 a comma-delimited string of bind path specifications in the format
 ``src[:dest[:opts]]``, where ``src`` and ``dest`` are paths outside and inside
 of the container respectively. If ``dest`` is not given, it is set equal to
@@ -112,13 +111,13 @@ be:
 
 .. code-block:: none
 
-    $ export apptainer_BIND="/opt,/data:/mnt"
+    $ export APPTAINER_BIND="/opt,/data:/mnt"
 
     $ apptainer shell my_container.sif
 
-Using the environment variable ``$apptainer_BIND``, you can bind paths even
+Using the environment variable ``$APPTAINER_BIND``, you can bind paths even
 when you are running your container as an executable file with a runscript. If
-you bind many directories into your apptainer containers and they don’t
+you bind many directories into your Apptainer containers and they don’t
 change, you could even benefit by setting this variable in your ``.bashrc``
 file.
 
@@ -376,7 +375,7 @@ overlays instructions<overlay-sif>`:
     # Add the squashfs data image from above to the SIF
     $ apptainer sif add --datatype 4 --partarch 2 --partfs 1 --parttype 3 inputs.sif inputs.squashfs
 
-    # Run apptainer, binding data from the SIF file
+    # Run Apptainer, binding data from the SIF file
     $ apptainer run -B inputs.sif:/input-data:image-src=/ mycontainer.sif
     apptainer> ls /input-data
     1  2  3  4  5  6  7  8  9

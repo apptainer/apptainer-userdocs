@@ -189,7 +189,7 @@ process.
 
     %setup
         touch /file1
-        touch ${apptainer_ROOTFS}/file2
+        touch ${APPTAINER_ROOTFS}/file2
 
     %files
         /file1
@@ -202,7 +202,7 @@ process.
     %post
         apt-get update && apt-get install -y netcat
         NOW=`date`
-        echo "export NOW=\"${NOW}\"" >> $apptainer_ENVIRONMENT
+        echo "export NOW=\"${NOW}\"" >> $APPTAINER_ENVIRONMENT
 
     %runscript
         echo "Container was created $NOW"
@@ -238,7 +238,7 @@ for logical understanding.
 
 During the build process, commands in the ``%setup`` section are first executed
 on the host system outside of the container after the base OS has been installed.
-You can reference the container file system with the ``$apptainer_ROOTFS``
+You can reference the container file system with the ``$APPTAINER_ROOTFS``
 environment variable in the ``%setup`` section.
 
 .. note::
@@ -254,7 +254,7 @@ Consider the example from the definition file above:
 
     %setup
         touch /file1
-        touch ${apptainer_ROOTFS}/file2
+        touch ${APPTAINER_ROOTFS}/file2
 
 Here, ``file1`` is created at the root of the file system **on the host**.
 We'll use ``file1`` to demonstrate the usage of the ``%files`` section below.
@@ -339,7 +339,7 @@ Consider the example from the definition file above:
     %post
         apt-get update && apt-get install -y netcat
         NOW=`date`
-        echo "export NOW=\"${NOW}\"" >> $apptainer_ENVIRONMENT
+        echo "export NOW=\"${NOW}\"" >> $APPTAINER_ENVIRONMENT
 
 
 This ``%post`` scriptlet uses the Ubuntu package manager ``apt`` to update the
@@ -348,7 +348,7 @@ container and install the program ``netcat`` (that will be used in the
 
 The script is also setting an environment variable at build time.  Note that the
 value of this variable cannot be anticipated, and therefore cannot be set during
-the ``%environment`` section. For situations like this, the ``$apptainer_ENVIRONMENT``
+the ``%environment`` section. For situations like this, the ``$APPTAINER_ENVIRONMENT``
 variable is provided. Redirecting text to this variable will cause it to be
 written to a file called ``/.apptainer.d/env/91-environment.sh`` that will be
 sourced at runtime.
@@ -474,7 +474,7 @@ environment variables to your container in the ``%post`` section.
 
 At build time, the content of the ``%environment`` section is written to a file
 called ``/.apptainer.d/env/90-environment.sh`` inside of the container.  Text
-redirected to the ``$apptainer_ENVIRONMENT`` variable during ``%post`` is
+redirected to the ``$APPTAINER_ENVIRONMENT`` variable during ``%post`` is
 added to a file called ``/.apptainer.d/env/91-environment.sh``.
 
 At runtime, scripts in ``/.apptainer/env`` are sourced in order. This means

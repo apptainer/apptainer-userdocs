@@ -10,10 +10,10 @@ Appendix
 .. _apptainer-environment-variables:
 
 
-apptainer's environment variables
+Apptainer's environment variables
 ----------------------------------
 
-Apptainer 1.0 comes with some environment variables you can set or modify depending on your needs.
+Apptainer comes with some environment variables you can set or modify depending on your needs.
 You can see them listed alphabetically below with their respective functionality.
 
 ``A``
@@ -526,7 +526,7 @@ the new image during bootstrap.
 
 .. _sec:build-yum:
 
-This module allows you to build a Red Hat/CentOS/Scientific Linux style
+This module allows you to build a Red Hat/Rocky/Fedora Linux style
 container from a mirror URI.
 
 Overview
@@ -701,9 +701,9 @@ Notes
 Arch Linux is, by design, a very stripped down, light-weight OS. You may need to
 perform a significant amount of configuration to get a usable OS. Please refer
 to this
-`README.md <https://github.com/apptainerware/apptainer/blob/master/examples/arch/README.md>`_
+`README.md <https://github.com/apptainer/apptainer/blob/main/examples/arch/README.md>`_
 and the
-`Arch Linux example <https://github.com/apptainerware/apptainer/blob/master/examples/arch/apptainer>`_
+`Arch Linux example <https://github.com/apptainer/apptainer/blob/main/examples/arch/>`_
 for more info.
 
 .. _build-busybox:

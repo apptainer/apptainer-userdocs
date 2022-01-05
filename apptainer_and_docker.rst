@@ -16,7 +16,7 @@ are built from specifications known as ``Dockerfiles``. The public `Docker Hub <
 host images for use as Docker containers. Apptainer has from the outset emphasized the importance of interoperability with Docker. As a consequence, 
 this section of the Apptainer User Docs first makes its sole focus interoperabilty with Docker. In so doing, the following topics receive attention here:
 - Application of Apptainer action commands on ephemeral containers derived from public Docker images
-- Converting public Docker images into Apptainer's native format for containerization, namely the Apptainer Image Format (SIF)
+- Converting public Docker images into Apptainer's native format for containerization, namely the Singularilty Image Format (SIF)
 - Authenticated application of Apptainer commands to containers derived from private Docker images
 - Authenticated application of Apptainer commands to containers derived from private Docker images originating from private registries
 - Building SIF containers for Apptainer via the command line or definition files from a variety of sources for Docker images and image archives
@@ -27,7 +27,8 @@ Specifically, in documenting Apptainer interoperability as it relates to the OCI
 - OCI-compliant caching in Apptainer
 - Acquiring OCI images and image archives via Apptainer
 - Building SIF containers for Apptainer via the command line or definition files from a variety of sources for OCI images and image archives
-he section closes with a brief enumeration of emerging best practices plus consideration of troubleshooting common issues.
+
+The section closes with a brief enumeration of emerging best practices plus consideration of troubleshooting common issues.
 
 
 .. _sec:action_commands_prebuilt_public_docker_images:
@@ -181,9 +182,9 @@ From this it is evident that use is being made of Ubuntu 16.04 *within* this con
 
 .. _sec:use_prebuilt_public_docker_images:
 
----------------------------------------------------------
+--------------------------------------------
 Making use of public images from Docker Hub
----------------------------------------------------------
+--------------------------------------------
 
 Apptainer can make use of public images available from the `Docker Hub <https://hub.docker.com/>`_. By specifying the ``docker://`` URI for an image that has already been located, Apptainer can ``pull``  it - e.g.:
 
@@ -263,9 +264,9 @@ In our example ``docker://godlovedc/lolcow``, ``godlovedc`` specifies a Docker H
 
 .. _sec:using_prebuilt_private_images:
 
-----------------------------------------------------------
+---------------------------------------------
 Making use of private images from Docker Hub
-----------------------------------------------------------
+---------------------------------------------
 
 After successful authentication, Apptainer can also make use of *private* images available from the `Docker Hub <https://hub.docker.com/>`_. The three means available for authentication follow here. Before describing these means, it is instructive to illustrate the error generated when attempting access a private image *without* credentials:
 
@@ -351,9 +352,9 @@ Based upon these exports, ``$ apptainer pull docker://ilumb/mylolcow`` allows fo
 
 .. _sec:using_prebuilt_private_images_parivate_registries:
 
---------------------------------------------------------------
+-----------------------------------------------------
 Making use of private images from Private Registries
---------------------------------------------------------------
+-----------------------------------------------------
 
 Authentication is required to access *private* images that reside in Docker Hub. Of course, private images can also reside in **private registries**. Accounting for locations *other* than Docker Hub is easily achieved.
 
@@ -1117,27 +1118,27 @@ The runscript 'inherited' from the ``Dockerfile`` is:
     OCI_CMD=''
     # ENTRYPOINT only - run entrypoint plus args
     if [ -z "$OCI_CMD" ] && [ -n "$OCI_ENTRYPOINT" ]; then
-        apptainer_OCI_RUN="${OCI_ENTRYPOINT} $@"
+        APPTAINER_OCI_RUN="${OCI_ENTRYPOINT} $@"
     fi
 
     # CMD only - run CMD or override with args
     if [ -n "$OCI_CMD" ] && [ -z "$OCI_ENTRYPOINT" ]; then
         if [ $# -gt 0 ]; then
-            apptainer_OCI_RUN="$@"
+            APPTAINER_OCI_RUN="$@"
         else
-            apptainer_OCI_RUN="${OCI_CMD}"
+            APPTAINER_OCI_RUN="${OCI_CMD}"
         fi
     fi
 
     # ENTRYPOINT and CMD - run ENTRYPOINT with CMD as default args
     # override with user provided args
     if [ $# -gt 0 ]; then
-        apptainer_OCI_RUN="${OCI_ENTRYPOINT} $@"
+        APPTAINER_OCI_RUN="${OCI_ENTRYPOINT} $@"
     else
-        apptainer_OCI_RUN="${OCI_ENTRYPOINT} ${OCI_CMD}"
+        APPTAINER_OCI_RUN="${OCI_ENTRYPOINT} ${OCI_CMD}"
     fi
 
-    eval ${apptainer_OCI_RUN}
+    eval ${APPTAINER_OCI_RUN}
 
 From this Bourne shell script, it is evident that only an ``ENTRYPOINT`` is detailed in the ``Dockerfile``; thus the ``ENTRYPOINT only - run entrypoint plus args`` conditional block is executed. In this case then, :ref:`the third case of execution precedence <sec:def_files_execution_SUB_execution_precedence>` has been illustrated.
 
@@ -1738,7 +1739,7 @@ Container Caching
 
 To avoid fetching duplicate docker or OCI layers every time you want to ``run``, ``exec`` etc. a ``docker://`` or ``oci://`` container directly, Apptainer keeps a cache of layer files. The SIF format container that apptainer creates from these layers is also cached. This means that re-running a docker container, e.g. ``apptainer run docker://alpine`` is much faster until the upstream image changes in docker hub, and a new SIF must be built from updated layers.
 
-By default the cache directory is ``.apptainer/cache`` in your ``$HOME`` directory. You can modify the cache directory by setting the ``apptainer_CACHEDIR`` environment variable. To disable caching altogether, set the ``apptainer_DISABLE_CACHE`` environment variable.
+By default the cache directory is ``.apptainer/cache`` in your ``$HOME`` directory. You can modify the cache directory by setting the ``APPTAINER_CACHEDIR`` environment variable. To disable caching altogether, set the ``apptainer_DISABLE_CACHE`` environment variable.
 
 The ``apptainer cache`` command can be used to see the content of your cache dir, and clean the cache if needed:
 
@@ -1772,7 +1773,7 @@ Apptainer can make use of most Docker and OCI images without complication. Howev
 
 1. Accounting for trust
 Docker containers *allow for* privilege escalation. In a ``Dockerfile``, for example, the ``USER`` instruction allows for user and/or group settings to be made in the Linux operating environment. The trust model in Apptainer is completely different: Apptainer allows untrusted users to run untrusted containers in a trusted way. Because Apptainer containers embodied as SIF files execute in *user* space, there is no possibility for privilege escalation. In other words, those familiar with Docker, should *not* expect access to elevated user permissions; and as a corollary, use of the ``USER`` instruction must be *avoided*.
-Apptainer does, however, allow for fine-grained control over the permissions that containers require for execution. Given that Singularilty executes in user space, it is not surprising that permissions need to be externally established *for* the container through use of the ``capability`` command. :ref:`Detailed elsewhere in this documentation <security-options>`, Apptainer allows users and/or groups to be granted/revoked authorized capabilties. Owing to Apptainer's trust model, this fundamental best practice can be stated as follows:
+Apptainer does, however, allow for fine-grained control over the permissions that containers require for execution. Given that Apptainer executes in user space, it is not surprising that permissions need to be externally established *for* the container through use of the ``capability`` command. :ref:`Detailed elsewhere in this documentation <security-options>`, Apptainer allows users and/or groups to be granted/revoked authorized capabilties. Owing to Apptainer's trust model, this fundamental best practice can be stated as follows:
 
 "Employ ``apptainer capability`` to manage execution privileges for containers"
 2. Maintaining containers built from Docker and OCI images
@@ -1804,7 +1805,7 @@ For obvious reasons, it is desireable to completely *avoid* use of plain-text pa
 Short of converting an *entire* ``Dockerfile`` into a Apptainer definition file, informed specification of the ``%runscript`` entry in the def file *removes* any ambiguity associated with ``ENTRYPOINT`` :ref:`versus <sec:def_files_execution>` ``CMD`` and ultimately :ref:`execution precedence <sec:def_files_execution>`. Thus the best practice is:
 "Employ Apptainer's ``%runscript`` by default to avoid execution ambiguity"
 Note that the ``ENTRYPOINT`` can be bypassed completely, e.g., ``docker run -i -t --entrypoint /bin/bash godlovedc/lolcow``. This allows for an interactive session within the container, that may prove useful in validating the built runtime.
-t practices emerge from experience. Contributions that allow additional experiences to be shared as best practices are always encouraged. Please refer to :ref:`Contributing <contributing>` for additional details.
+Best practices emerge from experience. Contributions that allow additional experiences to be shared as best practices are always encouraged. Please refer to :ref:`Contributing <contributing>` for additional details.
 
 
 .. _sec:troubleshooting:
