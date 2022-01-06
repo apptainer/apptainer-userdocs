@@ -3,6 +3,8 @@ name: publish
 
 on:
   push:
+    branches:
+      - main
 
 jobs:
   publish:
