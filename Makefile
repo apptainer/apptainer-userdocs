@@ -55,7 +55,7 @@ ifndef SKIPCLI
 
 clidocs: cli/apptainer.rst
 
-vendor/github.com/apptainer/builddir/apptainer:
+vendor/github.com/hpcng/builddir/singularity:
 	export GOPATH=$$(pwd)/vendor &&\
 	cd $(APPTAINER_DIR) &&\
 	go mod vendor &&\
@@ -63,7 +63,7 @@ vendor/github.com/apptainer/builddir/apptainer:
 	cd builddir &&\
 	make
 
-cli/apptainer.rst: vendor/github.com/apptainer/builddir/apptainer
+cli/apptainer.rst: vendor/github.com/hpcng/builddir/singularity
 	export GOPATH=$$(pwd)/vendor &&\
 	go run $(APPTAINER_DIR)/cmd/docs/docs.go rst --dir cli
 
