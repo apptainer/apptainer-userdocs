@@ -1,10 +1,14 @@
 .. _contributing:
 
 
+<<<<<<< HEAD
 Contributing to Apptainer
 =========================
 
 Apptainer is an open source project, meaning we have the challenge of limited 
+=======
+{Singularity} is an open source project, meaning we have the challenge of limited 
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 resources. We are grateful for any support that you can offer. Helping other 
 users, raising issues, helping write documentation, or contributing code are all 
 ways to help!
@@ -14,6 +18,7 @@ Join the community
 ------------------
 
 This is a huge endeavor, and your help would be greatly appreciated! Post to 
+<<<<<<< HEAD
 online communities about apptainer, and request that your distribution vendor, 
 service provider, and system administrators include apptainer for you!
 
@@ -28,6 +33,20 @@ other users!
 =====
 Slack
 =====
+=======
+online communities about {Singularity}, and request that your distribution vendor, 
+service provider, and system administrators include {Singularity} for you!
+
+{Singularity} Google Group
+==========================
+
+If you have been using {Singularity} and having good luck with it, join our 
+`Google Group  <https://groups.google.com/g/singularity-ce>`_  and help out 
+other users! 
+
+{Singularity} on Slack
+======================
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 
 Many of our users come to Slack for quick help with an issue. You can find us at 
 `apptainer <https://apptainer.slack.com/>`_.
@@ -98,8 +117,13 @@ which also includes a `code of conduct
 Step 1. Fork the repo
 =====================
 
+<<<<<<< HEAD
 To contribute to apptainer, you should obtain a GitHub account and fork the 
 `apptainer <https://github.com/apptainer>`_ repository. Once forked, 
+=======
+To contribute to {Singularity}, you should obtain a GitHub account and fork the 
+`{Singularity} <https://github.com/hpcng/singularity>`_ repository. Once forked, 
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 clone your fork of the repo to your computer. (Obviously, you should replace 
 ``your-username`` with your GitHub username.)
 
@@ -180,7 +204,11 @@ on GitHub) and `submit a Pull Request
 <https://help.github.com/articles/creating-a-pull-request/>`_. Regardless of the 
 name of your branch, your PR should be submitted to the apptainer ``master`` 
 branch. Submitting your PR will open a conversation thread for the maintainers 
+<<<<<<< HEAD
 of apptainer to discuss your contribution. At this time, the continuous 
+=======
+of {Singularity} to discuss your contribution. At this time, the continuous 
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 integration that is linked with the code base will also be executed. If there is 
 an issue, or if the maintainers suggest changes, you can continue to push 
 commits to your branch and they will update the Pull Request.
@@ -188,7 +216,11 @@ commits to your branch and they will update the Pull Request.
 Step 6. Keep your branch in sync
 ================================
 
+<<<<<<< HEAD
 Cloning the repo will create an exact copy of the apptainer repository at that 
+=======
+Cloning the repo will create an exact copy of the {Singularity} repository at that 
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 moment. As you work, your branch may become out of date as others merge changes
 into the upstream master. In the event that you need to update a branch, you 
 will need to follow the next steps:
@@ -201,9 +233,3 @@ will need to follow the next steps:
         git push origin master && # to update your fork \
         git checkout new-feature && \
         git merge master 
-
-
-
-
-
-

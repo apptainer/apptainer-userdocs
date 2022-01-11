@@ -20,18 +20,37 @@ related to the build environment.
 Cache Folders
 -------------
 
+<<<<<<< HEAD
 apptainer will cache SIF container images generated from remote
+=======
+{Singularity} will cache SIF container images generated from remote
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 sources, and any OCI/docker layers used to create them. The cache is
 created at ``$HOME/.apptainer/cache`` by default. The location of
 the cache can be changed by setting the ``APPTAINER_CACHEDIR``
 environment variable.
 
-.. note::
+When you run builds as root, using ``sudo``, images will be cached
+in root’s home at ``/root`` and not your user’s home. Use the
+``-E`` option to sudo to pass through the ``SINGULARITY_CACHEDIR``
+environment variable, if you set it.
 
+.. code-block:: none
+
+    $ export SINGULARITY_CACHEDIR=/tmp/user/temporary-cache
+
+    # Running a build under your user account
+    $ singularity build --fakeroot myimage.sif mydef.def
+
+<<<<<<< HEAD
    When you run builds as root, using ``sudo``, images will be cached
    in root’s home at ``/root`` and not your user’s home. Use the
    ``-E`` option to sudo to pass through a ``APPTAINER_CACHEDIR``
    environment variable.
+=======
+    # Running a build with sudo, must use -E to pass env var
+    $ sudo -E singularity build myimage.sif mydef.def
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 
 If you change the value of ``APPTAINER_CACHEDIR`` be sure to choose
 a location that is:
@@ -46,12 +65,21 @@ a location that is:
 .. warning::
 
    If you are not certain that your ``$HOME`` or
+<<<<<<< HEAD
    ``APPTAINER_CACHEDIR`` filesytems support atomic rename, do not
    run apptainer in parallel using remote container URLs. Instead
    use ``apptainer pull`` to create a local SIF image, and then run
    this SIF image in a parallel step. An alternative is to use the
    ``--disable-cache`` option, but this will result in each
    apptainer instance independently fetching the container from the
+=======
+   ``SINGULARITY_CACHEDIR`` filesystems support atomic rename, do not
+   run {Singularity} in parallel using remote container URLs. Instead
+   use ``singularity pull`` to create a local SIF image, and then run
+   this SIF image in a parallel step. An alternative is to use the
+   ``--disable-cache`` option, but this will result in each
+   {Singularity} instance independently fetching the container from the
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
    remote source, into a temporary location.
 
 
@@ -67,7 +95,11 @@ different kinds of data that are cached:
     $HOME/.apptainer/cache/shub
 
 You can safely delete these directories, or content within
+<<<<<<< HEAD
 them. apptainer will re-create any directories and data that are
+=======
+them. {Singularity} will re-create any directories and data that are
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 needed in future runs.
 
 You should not add any additional files, or modify files in the cache,
@@ -75,12 +107,30 @@ as this may cause checksum / integrity errors when you run or build
 containers. If you experience problems use ``apptainer cache clean``
 to reset the cache to a clean, empty state.
     
+BoltDB Corruption Errors
+========================
+
+The library that {Singularity} uses to retrieve and cache Docker/OCI layers
+keeps track of them using a single file database. If your home directory is on a
+network filesystem which experiences interruptions, or you run out of storage,
+it is possible for this database to become inconsistent.
+
+If you observe error messages when trying to run {Singularity} that mention
+`github.com/etcd-io/bbolt` then you should remove the database file:
+
+.. code::
+
+    rm ~/.local/share/containers/cache/blob-info-cache-v1.boltdb
 
 --------------
 Cache commands
 --------------
 
+<<<<<<< HEAD
 The ``cache`` command for apptainer allows you to view and clean up
+=======
+The ``cache`` command for {Singularity} allows you to view and clean up
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 your cache, without manually inspecting the cache directories.
 
 .. note::
@@ -156,7 +206,11 @@ You can limit the cache list to a specific cache type with the
 Cleaning the Cache
 ==================
 
+<<<<<<< HEAD
 To reclaim space used by the apptainer cache, use ``apptainer
+=======
+To reclaim space used by the {Singularity} cache, use ``singularity
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 cache clean``.
 
 By default ``apptainer cache clean`` will remove all cache entries,
@@ -195,15 +249,26 @@ images, use the ``type`` / ``-T`` option:
 Temporary Folders
 -----------------
 
+<<<<<<< HEAD
 When building a container, or pulling/running a apptainer container
 from a Docker/OCI source, a temporary working space is required. The
 container is constructed in this temporary space before being packaged
 into a apptainer SIF image. Temporary space is also used when
+=======
+When building a container, or pulling/running a {Singularity} container
+from a Docker/OCI source, a temporary working space is required. The
+container is constructed in this temporary space before being packaged
+into a {Singularity} SIF image. Temporary space is also used when
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 running containers in unprivileged mode, and performing some
 operations on filesystems that do not fully support ``--fakeroot``.
 
 The location for temporary directories defaults to
+<<<<<<< HEAD
 ``/tmp``. apptainer will also respect the environment variable
+=======
+``/tmp``. {Singularity} will also respect the environment variable
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 ``TMPDIR``, and both of these locations can be overridden by setting
 the environment variable ``APPTAINER_TMPDIR``.
 
@@ -236,7 +301,12 @@ Remember to use ``-E`` option to pass the value of
 Encrypted Containers
 --------------------
 
+<<<<<<< HEAD
 It is possible to build and run encrypted containers.  The containers are decrypted at runtime entirely in kernel space, 
+=======
+Beginning in {Singularity} 3.4.0 it is possible to build and run encrypted
+containers.  The containers are decrypted at runtime entirely in kernel space, 
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 meaning that no intermediate decrypted data is ever present on disk or in 
 memory.  See :ref:`encrypted containers <encryption>` for more details.
 
@@ -291,5 +361,9 @@ Encryption
 
 **APPTAINER_ENCRYPTION_PASSPHRASE** Used to pass a plaintext passphrase to encrypt a container file system (with the ``--encrypt`` flag). The default is empty.
 
+<<<<<<< HEAD
 **APPTAINER_ENCRYPTION_PEM_PATH** Used to specify the location of a public key to use for container encryption (with the ``--encrypt`` flag). The default is empty.
 
+=======
+**SINGULARITY_ENCRYPTION_PEM_PATH** Used to specify the location of a public key to use for container encryption (with the ``--encrypt`` flag). The default is empty.
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543

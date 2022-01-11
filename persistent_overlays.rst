@@ -48,7 +48,11 @@ To use a persistent overlay, you must first have a container.
 File system image overlay
 =========================
 
+<<<<<<< HEAD
 Apptainer provides a command ``apptainer overlay create`` to
+=======
+Since 3.8, {Singularity} provides a command ``singularity overlay create`` to
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 create persistent overlay images. You can create a single EXT3 overlay image
 or adding a EXT3 writable overlay partition to an existing SIF image.
 
@@ -182,6 +186,7 @@ The example below shows the directory overlay in action.
 
     $ sudo apptainer shell --overlay my_overlay/ ubuntu.sif
 
+<<<<<<< HEAD
     apptainer ubuntu.sif:~> mkdir /data
 
     apptainer ubuntu.sif:~> chown user /data
@@ -192,6 +197,18 @@ The example below shows the directory overlay in action.
     /usr/bin/vim
 
     apptainer ubuntu.sif:~> exit
+=======
+    {Singularity} ubuntu.sif:~> mkdir /data
+
+    {Singularity} ubuntu.sif:~> chown user /data
+
+    {Singularity} ubuntu.sif:~> apt-get update && apt-get install -y vim
+
+    {Singularity} ubuntu.sif:~> which vim
+    /usr/bin/vim
+
+    {Singularity} ubuntu.sif:~> exit
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 
 .. _overlay-sif:
     
@@ -209,7 +226,11 @@ this, you must first create a file system image:
         mkfs.ext3 overlay.img
 
 Then, you can add the overlay to the SIF image using the ``sif``
+<<<<<<< HEAD
 functionality of apptainer.
+=======
+functionality of {Singularity}.
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 
 .. code-block:: none
 
@@ -248,6 +269,7 @@ were using a writable container.
 
     $ apptainer shell --overlay my_overlay/ ubuntu.sif
 
+<<<<<<< HEAD
     apptainer ubuntu.sif:~> ls -lasd /data
     4 drwxr-xr-x 2 user root 4096 Apr  9 10:21 /data
 
@@ -255,6 +277,15 @@ were using a writable container.
     /usr/bin/vim
 
     apptainer ubuntu.sif:~> exit
+=======
+    {Singularity} ubuntu.sif:~> ls -lasd /data
+    4 drwxr-xr-x 2 user root 4096 Apr  9 10:21 /data
+
+    {Singularity} ubuntu.sif:~> which vim
+    /usr/bin/vim
+
+    {Singularity} ubuntu.sif:~> exit
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 
 
 If you mount your container without the ``--overlay`` directory, your changes
@@ -264,12 +295,21 @@ will be gone.
 
     $ apptainer shell ubuntu.sif
 
+<<<<<<< HEAD
     apptainer ubuntu.sif:~> ls /data
     ls: cannot access 'data': No such file or directory
 
     apptainer ubuntu.sif:~> which vim
 
     apptainer ubuntu.sif:~> exit
+=======
+    {Singularity} ubuntu.sif:~> ls /data
+    ls: cannot access 'data': No such file or directory
+
+    {Singularity} ubuntu.sif:~> which vim
+
+    {Singularity} ubuntu.sif:~> exit
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 
 To resize an overlay, standard Linux tools which manipulate ext3
 images can be used.  For instance, to resize the 500MB file created

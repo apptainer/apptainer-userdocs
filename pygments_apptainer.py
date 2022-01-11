@@ -31,4 +31,3 @@ class ApptainerLexer(RegexLexer):
             (r'(.+?(?=^\s*%))|(.*)', using(BashLexer), '#pop'),
         ],
     }
-

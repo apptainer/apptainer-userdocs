@@ -1,6 +1,7 @@
 # Apptainer User Docs
 
 This repository holds user-facing documentation for the
+<<<<<<< HEAD
 [Apptainer](https://github.com/apptainer) container runtime.
 
 Contributions are always welcome! If you'd like to update or improve Apptainer's documentation please follow the instructions below, and submit a PR on GitHub.
@@ -8,6 +9,25 @@ Contributions are always welcome! If you'd like to update or improve Apptainer's
 ## Setting up an environment to contribute
 
 The apptainer user documentation is written in [reStructured Text (RST) format](http://docutils.sourceforge.net/rst.html) and generated using [Sphinx](https://pypi.org/project/Sphinx/). The [ReadTheDocs](https://readthedocs.org/) theme for Sphinx is used.
+=======
+[Apptainer](https://github.com/apptainer/apptainer) container runtime.
+
+This is a community project maintained as a sub-project by the
+[Apptainer](https:/apptainer.org) project,
+and contributions are always welcome! If you'd like to update or improve
+Apptainer's documentation please read the
+[Apptainer CONTRIBUTING file](https://github.com/apptainer/apptainer/CONTRIBUTING.md),
+follow the instructions below, and submit a PR on GitHub.
+
+
+
+## Setting up an environment to contribute
+
+The Apptainer user documentation is written in [reStructured Text (RST)
+format](http://docutils.sourceforge.net/rst.html) and generated using
+[Sphinx](https://pypi.org/project/Sphinx/). The
+[ReadTheDocs](https://readthedocs.org/) theme for Sphinx is used.
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 
 We use RST instead of markdown as it's better at handling large documents with many linked sections, and Sphinx makes it easy to produce online documentation as well as PDFs.
 
@@ -20,7 +40,13 @@ Sphinx is written in Python. To get setup to contribute:
 pip3 install --user Sphinx sphinx-rtd-theme
 ```
 
+<<<<<<< HEAD
 If your version of Python 3 does not come with `pip` / `pip3`, you may need to install a `python3-pip`package with `apt` or `yum`, or you can install pip follwing [the instructions here](https://pip.pypa.io/en/stable/installing/).
+=======
+If your version of python 3 does not come with `pip` / `pip3`, you may need to
+install a `python3-pip`package with `apt` or `yum`, or you can install pip
+following [the instructions here](https://pip.pypa.io/en/stable/installing/).
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 
 You're all set! After this you will only need to use your favorite editor to work with the RST files.
 
@@ -38,11 +64,27 @@ This project maintains the following structure:
 
 ### The conf.py file
 
+<<<<<<< HEAD
 This file sets the themes, extensions, variables and naming scheme for output created when building the documentation with Sphinx. Some important elements include:
 
 - `version` : Describes the current version of `apptainer` that the documentation is for. We set version to the `major.minor` values, e.g. `1.0`,as we are not creating separate documentation for each patch release.
 - `release`: Would be used to specify the current release of the software being documented, including patch number, alpha tags etc. We leave this the same as `version` as we only generate documentation for each `major.minor` version of Apptainer.
 - `html_theme`: Sets the theme to be used for HTML output. We are using the RTD or Read The Docs theme.
+=======
+This file sets the themes, extensions, variables and naming scheme for output
+created when building the documentation with Sphinx. Some important elements
+include:
+
+- `version` : Describes the current version of `Apptainer` that the
+  documentation is for. We set version to the `major.minor` values, e.g. `1.0`,
+  as we are not creating separate documentation for each patch release.
+- `release`: Would be used to specify the current release of the software being
+  documented, including patch number, alpha tags etc. We leave this the same as
+  `version` as we only generate documentation for each `major.minor` version of
+  apptainer.
+- `html_theme`: Sets the theme to be used for HTML output. We are using the RTD
+  or Read The Docs theme.
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 - `html_context`: Options here control links back to our GitHub repository.
 - `html_logo`: The logo for the sidebar
 - `html_favicon`: The `favicon`for the entire project
@@ -136,7 +178,11 @@ This will generate a folder called `_build/html` with the output. Open
 `index.html` to browse the documentation.
 
 The `SKIPCLI=1` option tells `make` not to generate the CLI reference, which is
+<<<<<<< HEAD
 created automatically from the apptainer source code. You can generate the CLI
+=======
+created automatically from the Apptainer source code. You can generate the CLI
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 documentation by running `make html` alone. This requires a Go build
 environment (see below).
 
@@ -164,24 +210,42 @@ Output is written into `_build/epub` and the final EPUB will be named
 
 ## Generating CLI docs
 
+<<<<<<< HEAD
 The Apptainer CLI docs are generated using the actual code from apptainer.
 To do this, we include apptainer as a git submodule, and whenever a Makefile
 target (like `make html`) is run, apptainer itself is compiled and used to
 generate the CLI docs.
 
 However, you might not want to compile apptainer, either because you can't on
+=======
+The Apptainer CLI docs are generated using the actual code from
+Apptainer.
+To do this, we include Apptainer as a git submodule, and whenever a Makefile
+target (like `make html`) is run, Apptainer itself is compiled and used to
+generate the CLI docs.
+
+However, you might not want to compile Apptainer, either because you can't on
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 your machine, or because you want to test out a quick change to the docs.  If
 this is the case, you can skip the CLI doc generation using the `SKIPCLI`
 argument.  For example, to rebuild the HTML docs without including the CLI docs,
 just run `make html SKIPCLI=1`.
 
+<<<<<<< HEAD
 If apptainer has been updated and you want to synchronize the CLI docs with
+=======
+If Apptainer has been updated and you want to synchronize the CLI docs with
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 the new version of Apptainer, you'll have to update the submodule.  To do
 this, just run:
 
 ```bash
 git submodule update --remote --merge
+<<<<<<< HEAD
 git add vendor/src/github.com/apptainer
+=======
+git add vendor/src/github.com/apptainer/apptainer
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 git commit
 ```
 

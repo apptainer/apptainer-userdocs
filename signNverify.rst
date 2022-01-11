@@ -7,17 +7,31 @@ Signing and Verifying Containers
 
 .. _sec:signNverify:
 
+<<<<<<< HEAD
 Apptainer provides the ability to create and manage PGP keys and use
 them to sign and verify containers. This provides a trusted method for
 Apptainer users to share containers. It ensures a bit-for-bit reproduction
+=======
+{Singularity} 3.0 introduced the ability to create and manage PGP keys and use
+them to sign and verify containers. This provides a trusted method for
+{Singularity} users to share containers. It ensures a bit-for-bit reproduction
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 of the original container as the author intended it.
 
 .. note::
 
+<<<<<<< HEAD
    Apptainer uses the new signature format as introduced in Singularity 3.6.0. 
     
    To verify containers signed with older versions of Singularity (versions earlier than 3.6.0)  the ``--legacy-insecure`` 
    flag must be provided to the ``apptainer verify`` command, as of containers signed by 3.6.0 cannot be verified by older versions.
+=======
+    {Singularity} 3.6.0 uses a new signature format. Containers signed
+    by 3.6.0 cannot be verifed by older versions of {Singularity}.
+
+    To verify containers signed with older versions of {Singularity} using 3.6.0
+    the ``--legacy-insecure`` flag must be provided to the ``singularity verify`` command.
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 
 
 .. _verify_container_from_library:
@@ -70,7 +84,11 @@ Generating and managing PGP keys
 To sign your own containers you first need to generate one or more keys.
 
 If you attempt to sign a container before you have generated any keys,
+<<<<<<< HEAD
 apptainer will guide you through the interactive process of creating a new
+=======
+{Singularity} will guide you through the interactive process of creating a new
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 key. Or you can use the ``newpair`` subcommand in the ``key`` command group
 like so:.
 
@@ -150,7 +168,11 @@ local machine and does not restore the *private* key (used for signing).
 Searching for keys
 ==================
 
+<<<<<<< HEAD
 apptainer allows you to search the keystore for public keys. You can search for names,
+=======
+{Singularity} allows you to search the keystore for public keys. You can search for names,
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 emails, and fingerprints (key IDs). When searching for a fingerprint, you need to use ``0x``
 before the fingerprint, check the example:
 
@@ -341,4 +363,3 @@ container is signed, and the default ``verify`` behavior without specifying
     2   |1       |NONE    |JSON.Generic
     3   |1       |NONE    |FS
     Container verified: my_container.sif
-

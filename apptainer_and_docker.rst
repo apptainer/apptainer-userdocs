@@ -1,15 +1,22 @@
 .. _apptainer-and-docker:
 
+=====================================
+Support for Docker and OCI Containers
+=====================================
 
-==========================
-Support for Docker and OCI
-==========================
+The Open Containers Initiative (OCI) container format, which grew out
+of Docker, is the dominant standard for cloud-focused containerized
+deployments of software. Although {Singularity}'s own container format
+has many unique advantages, it's likely you will need to work with
+Docker/OCI containers at some point.
 
+{Singularity} aims for maximum compatibility with Docker, within the
+constraints on a runtime that is well suited for use on shared systems
+and especially in HPC environments.
 
---------
-Overview
---------
+Using {Singularity} you can:
 
+<<<<<<< HEAD:apptainer_and_docker.rst
 Effort has been expended in developing `Docker <https://www.docker.com/>`_ containers. Deconstructed into one or more compressed archives 
 (typically split across multiple segments, or **layers** as they are known in Docker parlance) plus some metadata, images for these containers
 are built from specifications known as ``Dockerfiles``. The public `Docker Hub <https://hub.docker.com/>`_, as well as various private registries, 
@@ -42,26 +49,52 @@ Running action commands on public images from Docker Hub
 .. code-block:: none
 
     $ apptainer run docker://godlovedc/lolcow
+=======
+* Pull, run, and build from most containers on Docker Hub, without
+  changes.
+
+* Pull, run, and build from containers hosted on other registries,
+  including private registries deployed on premise, or in the cloud.
+
+* Pull and build from OCI containers in archive formats, or cached in
+  a local Docker daemon.
+
+This section will highlight these workflows, and discuss the
+limitations and best practices to keep in mind when creating
+containers targeting both Docker and {Singularity}.
+
+--------------------------
+Containers From Docker Hub
+--------------------------
+
+Docker Hub is the most common place that projects publish public
+container images. At some point, it's likely that you will want to run
+or build from containers that are hosted there.
+
+Public Containers
+=================
+
+It's easy to run a public Docker Hub container with
+{Singularity}. Just put ``docker://`` in front of the container
+repository and tag. To run the container that's called
+``sylabsio/lolcow:latest``:
+
+.. code-block:: none
+
+    $ singularity run docker://sylabsio/lolcow:latest
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
     INFO:    Converting OCI blobs to SIF format
     INFO:    Starting build...
     Getting image source signatures
-    Copying blob sha256:9fb6c798fa41e509b58bccc5c29654c3ff4648b608f5daa67c1aab6a7d02c118
-     45.33 MiB / 45.33 MiB [====================================================] 1s
-    Copying blob sha256:3b61febd4aefe982e0cb9c696d415137384d1a01052b50a85aae46439e15e49a
-     848 B / 848 B [============================================================] 0s
-    Copying blob sha256:9d99b9777eb02b8943c0e72d7a7baec5c782f8fd976825c9d3fb48b3101aacc2
-     621 B / 621 B [============================================================] 0s
-    Copying blob sha256:d010c8cf75d7eb5d2504d5ffa0d19696e8d745a457dd8d28ec6dd41d3763617e
-     853 B / 853 B [============================================================] 0s
-    Copying blob sha256:7fac07fb303e0589b9c23e6f49d5dc1ff9d6f3c8c88cabe768b430bdb47f03a9
-     169 B / 169 B [============================================================] 0s
-    Copying blob sha256:8e860504ff1ee5dc7953672d128ce1e4aa4d8e3716eb39fe710b849c64b20945
-     53.75 MiB / 53.75 MiB [====================================================] 2s
-    Copying config sha256:73d5b1025fbfa138f2cacf45bbf3f61f7de891559fa25b28ab365c7d9c3cbd82
-     3.33 KiB / 3.33 KiB [======================================================] 0s
+    Copying blob 16ec32c2132b done
+    Copying blob 5ca731fc36c2 done
+    Copying config fd0daa4d89 done
     Writing manifest to image destination
     Storing signatures
+    2021/10/04 14:50:21  info unpack layer: sha256:16ec32c2132b43494832a05f2b02f7a822479f8250c173d0ab27b3de78b2f058
+    2021/10/04 14:50:23  info unpack layer: sha256:5ca731fc36c28789c5ddc3216563e8bfca2ab3ea10347e07554ebba1c953242e
     INFO:    Creating SIF file...
+<<<<<<< HEAD:apptainer_and_docker.rst
     INFO:    Build complete: /home/vagrant/.apptainer/cache/oci-tmp/a692b57abc43035b197b10390ea2c12855d21649f2ea2cc28094d18b93360eeb/lolcow_latest.sif
     INFO:    Image cached as SIF at /home/vagrant/.apptainer/cache/oci-tmp/a692b57abc43035b197b10390ea2c12855d21649f2ea2cc28094d18b93360eeb/lolcow_latest.sif
      ___________________________________
@@ -93,64 +126,138 @@ Here ``docker`` is prepended to ensure that the ``run`` command of Apptainer is 
                 (__)\       )\/\
                     ||----w |
                     ||     ||
+=======
+     _____________________________
+    < Mon Oct 4 14:50:30 CDT 2021 >
+     -----------------------------
+	    \   ^__^
+	     \  (oo)\_______
+		(__)\       )\/\
+		    ||----w |
+		    ||     ||
+
+
+Note that {Singularity} retrieves blobs and configuration data from
+Docker Hub, extracts the layers that make up the Docker container, and
+creates a SIF file from them. This SIF file is kept in your
+{Singularity} :ref:`cache directory <sec:cache>`, so if you run the
+same Docker container again the downloads and conversion aren't
+required.
+
+To obtain the Docker container as a SIF file in a specific location,
+which you can move, share, and keep for later, ``singularity pull``
+it:
+
+.. code-block:: none
+
+    $ singularity pull docker://sylabsio/lolcow
+    INFO:    Using cached SIF image
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
+
+    $ ls -l lolcow_latest.sif
+    -rwxr-xr-x 1 myuser myuser 74993664 Oct  4 14:55 lolcow_latest.sif
+
+If it's the first time you pull the container it'll be downloaded and
+translated. If you have pulled the container before, it will be copied
+from the cache.
 
 .. note::
 
-    Image caching is :ref:`documented in detail below <sec:oci_overview>`.
-
-.. note::
-
+<<<<<<< HEAD:apptainer_and_docker.rst
     Use is made of the ``$HOME/.apptainer`` directory by default to :ref:`cache images <sec:cache>`. To cache images elsewhere, use of the environment variable ``APPTAINER_CACHEDIR`` can be made.
+=======
+   ``singularity pull`` of a Docker container actually runs a
+   ``singularity build`` behind the scenes, since we are translating
+   from OCI to SIF. If you ``singularity pull`` a Docker container
+   twice, the output file isn't identical because metadata such as
+   dates from the conversion will vary. This differs from pulling a
+   SIF container (e.g. from a ``library://`` URI), which always give
+   you an exact copy of the image.
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
-As the runtime of this container is encapsulated as a single SIF file, it is possible to
 
-.. code-block:: none
+Docker Hub Limits
+=================
 
+<<<<<<< HEAD:apptainer_and_docker.rst
     cd /home/vagrant/.apptainer/cache/oci-tmp/a692b57abc43035b197b10390ea2c12855d21649f2ea2cc28094d18b93360eeb/
+=======
+Docker Hub introduced limits on anonymous access to its API in
+November 2020. Every time you use a ``docker://`` URI to run, pull
+etc. a container {Singularity} will make requests to Docker Hub in
+order to check whether the container has been modified there. On
+shared systems, and when running containers in parallel, this can
+quickly exhaust the Docker Hub API limits.
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
-and then execute the SIF file directly:
+We recommend that you ``singularity pull`` a Docker image to a local
+SIF, and then always run from the SIF file, rather than using
+``singularity run docker://...`` repeatedly.
 
-.. code-block:: none
+Alternatively, if you have signed up for a Docker Hub account, make
+sure that you authenticate before using ``docker://`` container URIs.
 
-    ./lolcow_latest.sif
-     _______________________________________
-    / The secret source of humor is not joy \
-    | but sorrow; there is no humor in      |
-    | Heaven.                               |
-    |                                       |
-    \ -- Mark Twain                         /
-     ---------------------------------------
-            \   ^__^
-             \  (oo)\_______
-                (__)\       )\/\
-                    ||----w |
-                    ||     ||
+Authentication / Private Containers
+===================================
 
-.. note::
+To make use of the API limits under a Docker Hub account, or to access
+private containers, you'll need to authenticate to Docker Hub. There
+are a number of ways to do this with {Singularity}.
 
+<<<<<<< HEAD:apptainer_and_docker.rst
     SIF files abstract Apptainer containers as a single file. As with any executable, a SIF file can be executed directly.
 
 ``fortune | cowsay | lolcat`` is executed by *default* when this container is ``run`` by Apptainer. Apptainer's ``exec`` command allows a different command to be executed; for example:
+=======
+Singularity CLI Remote Command
+------------------------------
 
-.. code-block:: none
+The ``singularity remote login`` command supports logging into Docker
+Hub and other OCI registries. For Docker Hub, the registry hostname is
+``docker.io``, so you will need to login as below, specifying your
+username:
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
+.. code-block::
+
+<<<<<<< HEAD:apptainer_and_docker.rst
     $ apptainer exec docker://godlovedc/lolcow fortune
     Don't go around saying the world owes you a living.  The world owes you
     nothing.  It was here first.
             -- Mark Twain
+=======
+    $ singularity remote login --username myuser docker://docker.io
+    Password / Token:
+    INFO:    Token stored in /home/myuser/.singularity/remote.yaml
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
-.. note::
+The Password / Token you enter must be a Docker Hub CLI access token,
+which you should generate in the 'Security' section of your account
+profile page on Docker Hub.
 
+<<<<<<< HEAD:apptainer_and_docker.rst
     The *same* cached copy of the ``lolcow`` container is reused here by Apptainer ``exec``, and immediately below here by ``shell``.
+=======
+To check which Docker / OCI registries you are currently logged in to,
+use ``singularity remote list``.
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
-.. note::
+To logout of a registry, so that your credentials are forgotten, use
+``singularity remote logout``:
 
-    Execution defaults are documented below - see :ref:`Directing Execution <sec:def_files_execution>` and :ref:`Container Metadata <sec:inspect_container_metadata>`.
+.. code-block::
 
+<<<<<<< HEAD:apptainer_and_docker.rst
 In addition to non-interactive execution of an image from Docker Hub, pptainer provides support for an *interactive* ``shell`` session:
+=======
+   $ singularity remote logout docker://docker.io
+   INFO:    Logout succeeded
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
-.. code-block:: none
+Docker CLI Authentication
+-------------------------
 
+<<<<<<< HEAD:apptainer_and_docker.rst
     $ apptainer shell docker://godlovedc/lolcow
     apptainer lolcow_latest.sif:~> cat /etc/os-release
     NAME="Ubuntu"
@@ -236,42 +343,91 @@ In converting to SIF, individual layers of the Docker image have been *combined*
             "org.label-schema.usage.apptainer.deffile.from": "godlovedc/lolcow",
             "org.label-schema.usage.apptainer.version": "3.0.1-40.g84083b4f"
         }
+=======
+If you have the ``docker`` CLI installed on your machine, you can
+``docker login`` to your account. This stores authentication
+information in ``~/.docker/config.json``. The process that
+{Singularity} uses to retrieve Docker / OCI containers will attempt to
+use this information to login.
 
 .. note::
 
-    :ref:`Container Metadata <sec:inspect_container_metadata>` is documented below.
+   {Singularity} can only read credentials stored directly in
+   ``~/.docker/config.json``. It cannot read credentials from external
+   Docker credential helpers.
 
-SIF files built from Docker images are *not* crytographically signed:
+Interactive Login
+-----------------
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
-.. code-block:: none
+To perform a one-off interactive login, which will not store your
+credentials, use the ``--docker-login`` flag:
 
+.. code-block::
+
+   $ singularity pull --docker-login docker://sylabsio/private
+   Enter Docker Username: myuser
+   Enter Docker Password:
+
+Environment Variables
+---------------------
+
+<<<<<<< HEAD:apptainer_and_docker.rst
     $ apptainer verify lolcow_latest.sif
     Verifying image: lolcow_latest.sif
     ERROR:   verification failed: error while searching for signature blocks: no signatures found for system partition
+=======
+When calling {Singularity} in a CI/CD workflow, or other
+non-interactive scenario, it may be useful to specify Docker Hub login
+credentials using environment variables. These are often the default
+way of passing secrets into jobs within CI pipelines.
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
-The ``sign`` command allows a cryptographic signature to be added. Refer to
-:ref:`Signing and Verifying Containers <signNverify>` for details. But caution
-should be exercised in signing images from Docker Hub because, unless you build
-an image from scratch (OS mirrors) you are probably not really sure about the
-complete contents of that image.
+Singularity accepts a username, and password / token, as
+``SINGULARITY_DOCKER_USERNAME`` and ``SINGULARITY_DOCKER_PASSWORD``
+respectively. These environment variables will override any stored
+credentials.
 
-.. note::
+.. code-block::
 
-    ``pull`` is a one-time-only operation that builds a SIF file corresponding to the image retrieved from Docker Hub. Updates to the image on Docker Hub will *not* be reflected in the *local* copy.
+   $ export SINGULARITY_DOCKER_USERNAME=myuser
+   $ export SINGULARITY_DOCKER_PASSWORD=mytoken
+   $ singularity pull docker://sylabsio/private
 
-In our example ``docker://godlovedc/lolcow``, ``godlovedc`` specifies a Docker Hub user, whereas ``lolcow`` is the name of the repository. Adding the option to specifiy an image tag, the generic version of the URI is ``docker://<user>/<repo-name>[:<tag>]``. `Repositories on Docker Hub <https://docs.docker.com/docker-hub/repos/>`_ provides additional details.
+--------------------------------
+Containers From Other Registries
+--------------------------------
 
+You can use ``docker://`` URIs with {Singularity} to pull and run
+containers from OCI registries other than Docker Hub. To do this,
+you'll need to include the hostname or IP address of the registry in
+your ``docker://`` URI. Authentication with other registries is
+carried out in the same basic manner, but sometimes you'll need to
+retrieve your credentials using a specific tool, especially when
+working with Cloud Service Provider environments.
 
-.. _sec:using_prebuilt_private_images:
+Below are specific examples for some common registries. Most other
+registries follow a similar pattern for pulling public images, and
+authenticating to access private images.
 
+<<<<<<< HEAD:apptainer_and_docker.rst
 ---------------------------------------------
 Making use of private images from Docker Hub
 ---------------------------------------------
 
 After successful authentication, Apptainer can also make use of *private* images available from the `Docker Hub <https://hub.docker.com/>`_. The three means available for authentication follow here. Before describing these means, it is instructive to illustrate the error generated when attempting access a private image *without* credentials:
+=======
+Quay.io
+=======
 
-.. code-block:: none
+Quay is an OCI container registry used by a large number of projects,
+and hosted at ``https://quay.io``. To pull public containers from
+Quay, just include the ``quay.io`` hostname in your ``docker://`` URI:
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
+.. code-block::
+
+<<<<<<< HEAD:apptainer_and_docker.rst
     $ apptainer pull docker://ilumb/mylolcow
     INFO:    Starting build...
     FATAL:   Unable to pull docker://ilumb/mylolcow: conveyor failed to get: Error reading manifest latest in docker.io/ilumb/mylolcow: errors:
@@ -286,21 +442,38 @@ Authentication via Remote Login
 
 Users are able to supply credentials on a per registry basis with the ``remote`` command group. See :ref:`Managing OCI Registries <sec:managing_oci_registries>`
 for detailed instructions.
+=======
+    $ singularity pull docker://quay.io/bitnami/python:3.7
+    INFO:    Converting OCI blobs to SIF format
+    INFO:    Starting build...
+    ...
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
-Using this method of authentication will allow you to pull private images
-without needing to specify any of the login related environment variables
-or flags described below.
+    $ singularity run python_3.7.sif
+    Python 3.7.12 (default, Sep 24 2021, 11:48:27)
+    [GCC 8.3.0] on linux
+    Type "help", "copyright", "credits" or "license" for more information.
+    >>>
 
+To pull containers from private repositories you will need to generate
+a CLI token in the Quay web interface, then use it to login with
+{Singularity}. Use the same methods as described for Docker Hub above:
 
-.. _sec:authentication_via_docker_login:
+* Run ``singularity remote login --username myuser docker://quay.io``
+  to store your credentials for {Singularity}.
 
-Authentication via Interactive Login
-====================================
+* Use ``docker login quay.io`` if ``docker`` is on your machine.
 
+<<<<<<< HEAD:apptainer_and_docker.rst
 Interactive login is the first of two means provided for authentication with Docker Hub. It is enabled through use of the ``--docker-login`` option of Apptainer's ``pull`` command; for example:
+=======
+* Use the ``--docker-login`` flag for a one-time interactive login.
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
-.. code-block:: none
+* Set the ``SINGULARITY_DOCKER_USERNAME`` and
+  ``SINGULARITY_DOCKER_PASSWORD`` environment variables.
 
+<<<<<<< HEAD:apptainer_and_docker.rst
     $ apptainer pull --docker-login docker://ilumb/mylolcow
     Enter Docker Username: ilumb
     Enter Docker Password:
@@ -317,69 +490,128 @@ Interactive login is the first of two means provided for authentication with Doc
     Storing signatures
     INFO:    Creating SIF file...
     INFO:    Build complete: mylolcow_latest.sif
+=======
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
-After successful authentication, the private Docker image is pulled and converted to SIF as described above.
+NVIDIA NGC
+==========
 
-.. note::
+The NVIDIA NGC catalog at https://ngc.nvidia.com contains various GPU
+software, packaged in containers. Many of these containers are
+specifically documented by NVIDIA as supported by {Singularity}, with
+instructions available.
 
-    For interactive sessions, ``--docker-login`` is *recommended* as use of plain-text passwords in your environment is *avoided*. Encoded authentication data is communicated with Docker Hub via secure HTTP.
+Previously, an account and API token was required to pull NGC
+containers. However, they are now available to pull as a guest without
+login:
 
+.. code-block::
 
-.. _sec:authentication_via_environment_variables:
+   $ singularity pull docker://nvcr.io/nvidia/pytorch:21.09-py3
+   INFO:    Converting OCI blobs to SIF format
+   INFO:    Starting build...
 
-Authentication via Environment Variables
-========================================
+If you do need to pull containers using an NVIDIA account, e.g. if you
+have access to an NGC Private Registry, you will need to generate an
+API key in the web interface in order to authenticate.
 
-Environment variables offer an alternative means for authentication with Docker Hub. The **required** exports are as follows:
+Use one of the following authentication methods (detailed above for
+Docker Hub), with the username ``$oauthtoken`` and the password set to
+your NGC API key.
 
-.. code-block:: none
+* Run ``singularity remote login --username \$oauthtoken
+  docker://nvcr.io`` to store your credentials for {Singularity}.
 
+<<<<<<< HEAD:apptainer_and_docker.rst
     export APPTAINER_DOCKER_USERNAME=ilumb
     export APPTAINER_DOCKER_PASSWORD=<redacted>
+=======
+* Use ``docker login nvcr.io`` if ``docker`` is on your machine.
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
-Of course, the ``<redacted>`` plain-text password needs to be replaced by a valid one to be of practical use.
+* Use the ``--docker-login`` flag for a one-time interactive login.
 
+<<<<<<< HEAD:apptainer_and_docker.rst
 Based upon these exports, ``$ apptainer pull docker://ilumb/mylolcow`` allows for the retrieval of this private image.
+=======
+* Set the ``SINGULARITY_DOCKER_USERNAME="\$oauthtoken"`` and
+  ``SINGULARITY_DOCKER_PASSWORD`` environment variables.
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
-.. note::
-
-    This approach for authentication supports both interactive and non-interactive sessions. However, the requirement for a plain-text password assigned to an envrionment variable, is the security compromise for this flexibility.
-
-.. note::
-
-    When specifying passwords, 'special characters' (e.g., ``$``, ``#``, ``.``) need to be 'escaped' to avoid interpretation by the shell.
+See also: https://docs.nvidia.com/ngc/ngc-private-registry-user-guide/index.html
 
 
-.. _sec:using_prebuilt_private_images_parivate_registries:
+GitHub Container Registry
+=========================
 
+GitHub Container Registry is increasingly used to provide Docker
+containers alongside the source code of hosted projects. You can pull
+a public container from GitHub Container Registry using a ``ghcr.io``
+URI:
+
+.. code-block::
+
+   $ singularity pull docker://ghcr.io/containerd/alpine:latest
+   INFO:    Converting OCI blobs to SIF format
+   INFO:    Starting build...
+
+<<<<<<< HEAD:apptainer_and_docker.rst
 -----------------------------------------------------
 Making use of private images from Private Registries
 -----------------------------------------------------
+=======
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
-Authentication is required to access *private* images that reside in Docker Hub. Of course, private images can also reside in **private registries**. Accounting for locations *other* than Docker Hub is easily achieved.
+To pull private containers from GHCR you will need to generate a
+personal access token in the GitHub web interface in order to
+authenticate. This token must have required scopes. See
+`the GitHub documentation here. <https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry>`__
 
-In the complete command line specification
+Use one of the following authentication methods (detailed above for
+Docker Hub), with your username and personal access token:
 
-.. code-block:: none
+* Run ``singularity remote login --username myuser docker://ghcr.io`` to store your
+  credentials for {Singularity}.
 
-    docker://<registry>/<user>/<repo-name>[:<tag>]
+* Use ``docker login ghcr.io`` if ``docker`` is on your machine.
 
-``registry`` defaults to ``index.docker.io``. In other words,
+* Use the ``--docker-login`` flag for a one-time interactive login.
 
-.. code-block:: none
+* Set the ``SINGULARITY_DOCKER_USERNAME`` and
+  ``SINGULARITY_DOCKER_PASSWORD`` environment variables.
 
+<<<<<<< HEAD:apptainer_and_docker.rst
     $ apptainer pull docker://godlovedc/lolcow
+=======
+AWS ECR
+=======
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
-is functionally equivalent to
+To work with an AWS hosted Elastic Container Registry (ECR) generally
+requires authentication. There are various ways to generate
+credentials. You should follow one of the approaches in
+`the ECR guide <https://docs.aws.amazon.com/AmazonECR/latest/userguide/registry_auth.html>`__
+in order to obtain a username and password.
 
-.. code-block:: none
+.. warning::
 
+<<<<<<< HEAD:apptainer_and_docker.rst
     $ apptainer pull docker://index.docker.io/godlovedc/lolcow
+=======
+    The ECR Docker credential helper cannot be used, as {Singularity}
+    does not currently support external credential helpers used with
+    Docker, only reading credentials stored directly in the
+    ``.docker/config.json`` file.
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
-From the above example, it is evident that
+The ``get-login-password`` approach is the most straightforward. It
+uses the AWS CLI to request a password, which can then be used to
+authenticate to an ECR private registry in the specified region. The
+username used in conjunction with this password is always ``AWS``.
 
 .. code-block:: none
 
+<<<<<<< HEAD:apptainer_and_docker.rst
     $ apptainer pull docker://nvcr.io/nvidia/pytorch:18.11-py3
     INFO:    Starting build...
     Getting image source signatures
@@ -399,21 +631,33 @@ will retrieve a specific version of the `PyTorch platform <https://pytorch.org/>
 
     export APPTAINER_DOCKER_USERNAME='$oauthtoken'
     export APPTAINER_DOCKER_PASSWORD=<redacted>
+=======
+    $ aws ecr get-login-password --region region
 
-Upon use, these environment-variable settings allow for authentication with NGC.
+Then login using one of the following methods:
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
-.. note::
+* Run ``singularity remote login --username AWS
+  docker://<accountid>.dkr.ecr.<region>.amazonaws.com`` to store your
+  credentials for {Singularity}.
 
-    ``$oauthtoken`` is to be taken literally - it is not, for example, an environment variable.
+* Use ``docker login --username AWS
+  <accountid>.dkr.ecr.<region>.amazonaws.com`` if ``docker`` is on
+  your machine.
 
-    The password provided via these means is actually an API token. This token is generated via your NGC account, and is **required** for use of the service.
+* Use the ``--docker-login`` flag for a one-time interactive login.
 
-    For additional details regarding authentication with NGC, and much more, please consult the NGC `Getting Started <https://docs.nvidia.com/ngc/ngc-getting-started-guide/index.html>`_ documentation.
+* Set the ``SINGULARITY_DOCKER_USERNAME=AWS`` and
+  ``SINGULARITY_DOCKER_PASSWORD`` environment variables.
 
-Alternatively, for purely interactive use, ``--docker-login`` is recommended:
+You should now be able to pull containers from your ECR URI at
+``docker://<accountid>.dkr.ecr.<region>.amazonaws.com``.
 
-.. code-block:: none
 
+Azure ACR
+=========
+
+<<<<<<< HEAD:apptainer_and_docker.rst
     $ apptainer pull --docker-login docker://nvcr.io/nvidia/pytorch:18.11-py3
     Enter Docker Username: $oauthtoken
     Enter Docker Password:
@@ -430,27 +674,71 @@ Alternatively, for purely interactive use, ``--docker-login`` is recommended:
     INFO:    Build complete: pytorch_18.11-py3.sif
 
 Authentication aside, the outcome of the ``pull`` command is the Apptainer container ``pytorch_18.11-py3.sif`` - i.e., a locally stored copy, that has been coverted to SIF.
+=======
+An Azure hosted Azure Container Registry (ACR) will generally hold
+private images and require authentication to pull from. There are
+several ways to authenticate to ACR, depending on the account type you
+use in Azure. See the
+`ACR documentation <https://docs.microsoft.com/en-us/azure/container-registry/container-registry-authentication?tabs=azure-cli>`__
+for more information on these options.
 
+Generally, for identities, using ``az acr login`` from the Azure
+CLI will add credentials to ``.docker/config.json`` which can be read
+by {Singularity}.
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
+Service Principle accounts will have an explicit username and
+password, and you should authenticate using one of the following
+methods:
+
+<<<<<<< HEAD:apptainer_and_docker.rst
 ------------------------------------------------------
 Building images for Apptainer from Docker Registries
 ------------------------------------------------------
 
 The ``build`` command is used to **create** Apptainer containers. Because it is documented extensively :ref:`elsewhere in this manual <build-a-container>`, only specifics relevant to Docker are provided here - namely, working with Docker Hub via :ref:`the apptainer command line <sec:apptainer_build_cli>` and through :ref:`apptainer definition files <sec:apptainer_build_def_files>`.
+=======
+* Run ``singularity remote login --username myuser
+  docker://myregistry.azurecr.io`` to store your credentials for
+  {Singularity}.
 
+* Use ``docker login --username myuser myregistry.azurecr.io`` if
+  ``docker`` is on your machine.
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
+* Use the ``--docker-login`` flag for a one-time interactive login.
+
+<<<<<<< HEAD:apptainer_and_docker.rst
 .. _sec:apptainer_build_cli:
 
 Working from the Apptainer Command Line
 =========================================
+=======
+* Set the ``SINGULARITY_DOCKER_USERNAME`` and
+  ``SINGULARITY_DOCKER_PASSWORD`` environment variables.
 
-Remotely Hosted Images
-----------------------
+The recent repository-scoped access token preview may be more
+convenient. See the
+`preview documentation <https://docs.microsoft.com/en-us/azure/container-registry/container-registry-repository-scoped-permissions>`__
+which details how to use ``az acr token create`` to obtain a token
+name and password pair that can be used to authenticate with the above
+methods.
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
-In the simplest case, ``build`` is functionally equivalent to ``pull``:
+-------------------------------------
+Building From Docker / OCI Containers
+-------------------------------------
 
-.. code-block:: none
+If you wish to use an existing Docker or OCI container as the basis
+for a new container, you will need to specifiy it as the *bootstrap*
+source in a {Singularity} definition file.
 
+Just as you can run or pull containers from different registries using
+a ``docker://`` URI, you can use different headers in a definition file
+to instruct {Singularity} where to find the container you want to use
+as the starting point for your build.
+
+<<<<<<< HEAD:apptainer_and_docker.rst
     $ apptainer build mylolcow_latest.sif docker://godlovedc/lolcow
     INFO:    Starting build...
     Getting image source signatures
@@ -468,15 +756,27 @@ In the simplest case, ``build`` is functionally equivalent to ``pull``:
     INFO:    Build complete: mylolcow_latest.sif
 
 This ``build`` results in a *local* copy of the Docker image in SIF, as did ``pull`` :ref:`above <sec:use_prebuilt_public_docker_images>`. Here, ``build`` has named the Apptainer container ``mylolcow_latest.sif``.
+=======
 
-.. note::
+Registries In Definition Files
+==============================
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
-     ``docker://godlovedc/lolcow`` is the **target** provided as input for ``build``. Armed with this target, ``build`` applies the appropriate bootstrap agent to create the container - in this case, one appropriate for Docker Hub.
+When you wish to build from a Docker or OCI container that's hosted in
+a registry, such as Docker Hub, your definition file should begin with
+``Bootstrap: docker``, followed with a ``From:`` line which specifies
+the location of the container you wish to pull.
 
-In addition to a read-only container image in SIF (**default**), ``build`` allows for the creation of a writable (ch)root *directory* called a **sandbox** for interactive development via the ``--sandbox`` option:
+Docker Hub
+----------
 
-.. code-block:: none
+Docker Hub is the default registry, so when building from Docker Hub
+the ``From:`` header only needs to specify the container respository
+and tag:
 
+.. code-block:: singularity
+
+<<<<<<< HEAD:apptainer_and_docker.rst
     $ apptainer build --sandbox mylolcow_latest_sandbox docker://godlovedc/lolcow
     INFO:    Starting build...
     Getting image source signatures
@@ -492,35 +792,74 @@ In addition to a read-only container image in SIF (**default**), ``build`` allow
     Storing signatures
     INFO:    Creating sandbox directory...
     INFO:    Build complete: mylolcow_latest_sandbox
+=======
+    Bootstrap: docker
+    From: ubuntu:20.04
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
-After successful execution, the above command results in creation of the ``mylolcow_latest_sandbox`` directory with contents:
+If you ``singularity build`` a definition file with these lines,
+{Singularity} will fetch the ``ubuntu:20.04`` container image from
+Docker Hub, and extract it as the basis for your new container.
 
-.. code-block:: none
+Other Registries
+----------------
 
+<<<<<<< HEAD:apptainer_and_docker.rst
     bin  boot  core  dev  environment  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  apptainer  srv  sys  tmp  usr  var
 
 The ``build`` command of Apptainer allows (e.g., development) sandbox containers to be converted into (e.g., production) read-only SIF containers, and vice-versa. Consult the :ref:`Build a container <build-a-container>` documentation for the details.
 
 Implicit in the above command-line interactions is use of public images from Docker Hub. To make use of **private** images from Docker Hub, authentication is required. Available means for authentication were described above. Use of environment variables is functionally equivalent for Apptainer ``build`` as it is for ``pull``; see :ref:`Authentication via Environment Variables <sec:authentication_via_environment_variables>` above. For purely interactive use, authentication can be added to the ``build`` command as follows:
+=======
+To pull from a different Docker registry, you can either specify the
+hostname in the ``From:`` header, or use the separate ``Registry:``
+header. The following two examples are equivalent:
 
-.. code-block:: none
 
+.. code-block:: singularity
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
+
+    Bootstrap: docker
+    From: quay.io/bitnami/python:3.7
+
+<<<<<<< HEAD:apptainer_and_docker.rst
     apptainer build --docker-login mylolcow_latest_il.sif docker://ilumb/mylolcow
+=======
+.. code-block:: singularity
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
-(Recall that ``docker://ilumb/mylolcow`` is a private image available via Docker Hub.) See :ref:`Authentication via Interactive Login <sec:authentication_via_docker_login>` above regarding use of ``--docker-login``.
+   Bootstrap: docker
+   Registry: quay.io
+   From: bitnami/python:3.7
 
 
-Building Containers Remotely
-----------------------------
+Authentication During a Build
+-----------------------------
 
+<<<<<<< HEAD:apptainer_and_docker.rst
 By making use of the `Sylabs Cloud Remote Builder <https://cloud.sylabs.io/builder>`_, it is possible to build SIF containers *remotely* from images hosted at Docker Hub. The Sylabs Cloud Remote Builder is a **service** that can be used from the Apptainer command line or via its Web interface. Here use of the Apptainer CLI is emphasized.
 
 Once you have an account for Sylabs Cloud, and have logged in to the portal, select `Remote Builder <https://cloud.sylabs.io/builder>`_. The right-hand side of this page is devoted to use of the apptainer CLI. Self-generated API tokens are used to enable authenticated access to the Remote Builder. To create a token, follow the `instructions provided <https://cloud.sylabs.io/auth/tokens>`_. Once the token has been created, run ``apptainer remote login`` and paste it at the prompt.
 
 The above token provides *authenticated* use of the Sylabs Cloud Remote Builder when ``--remote`` is *appended* to the Apptainer ``build`` command. For example, for remotely hosted images:
+=======
+If you are building from an image in a private registry you will need
+to ensure that the credentials needed to access the image are
+available to {Singularity}.
 
-.. code-block:: none
+A build might be run as the ``root`` user, e.g. via ``sudo``, or under
+your own account with ``--fakeroot``.
 
+If you are running the build as ``root``, using ``sudo``, then any
+stored credentials or environment variables must be available to the
+``root`` user:
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
+
+* Use the ``--docker-login`` flag for a one-time interactive
+  login. I.E. run ``sudo singularity build --docker-login myimage.sif
+  Singularity``.
+
+<<<<<<< HEAD:apptainer_and_docker.rst
     $ apptainer build --remote lolcow_rb.sif docker://godlovedc/lolcow
     searching for available build agent.........INFO:    Starting build...
     Getting image source signatures
@@ -546,34 +885,67 @@ The above token provides *authenticated* use of the Sylabs Cloud Remote Builder 
      87.94 MiB / 87.94 MiB  100.00% 38.96 MiB/s 2s
     INFO:    Setting tag latest
      87.94 MiB / 87.94 MiB [===============================================================================] 100.00% 17.23 MiB/s 5s
+=======
+* Set the ``SINGULARITY_DOCKER_USERNAME`` and
+  ``SINGULARITY_DOCKER_PASSWORD`` environment variables. Pass the
+  environment variables through sudo to the ``root`` build process by
+  running ``sudo -E singularity build ...``.
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
-.. note::
+* Run ``sudo singularity remote login ...`` to store your credentials
+  for the ``root`` user on your system. This is separate from storing
+  the credentials under your own account.
 
-    Elevated privileges (e.g., via ``sudo``) are *not* required when use is made of the Sylabs Cloud Remote Builder.
+* Use ``sudo docker login`` if ``docker`` is on your
+  machine. This is separate from storing the credentials under your
+  own account.
 
+<<<<<<< HEAD:apptainer_and_docker.rst
 During the build process, progress can be monitored in the Sylabs Cloud portal on the Remote Builder page - as illustrated upon completion by the screenshot below. Once complete, this results in a *local* copy of the SIF file ``lolcow_rb.sif``. From the `Sylabs Library <https://cloud.sylabs.io/library>`_ it is evident that the 'original' SIF file remains available via this portal.
+=======
+If you are running the build under your account via the ``--fakeroot``
+feature you do not need to specially set credentials for the root
+user.
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
-.. image:: lolcow_sylabsrb.png
 
+Archives & Docker Daemon
+========================
 
-.. _sec:mandatory_headers_docker_locally_bootstrapped_cli:
+As well as being hosted in a registry, Docker / OCI containers might
+be found inside a running Docker daemon, or saved as an
+archive. {Singularity} can build from these locations by using
+specialised bootstrap agents.
 
-Locally Available Images: Cached by Docker
-------------------------------------------
+Containers Cached by the Docker Daemon
+--------------------------------------
 
+<<<<<<< HEAD:apptainer_and_docker.rst
 Apptainer containers can be built at the command line from images cached *locally* by Docker. Suppose, for example:
+=======
+If you have pulled or run a container on your machine under
+``docker``, it will be cached locally by the Docker daemon. The
+``docker images`` command will list containers that are available:
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
 .. code-block:: none
 
-    $ sudo docker images
+    $ docker images
     REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
-    godlovedc/lolcow    latest              577c1fe8e6d8        16 months ago       241MB
+    sylabsio/lolcow     latest              5a15b484bc65        2 hours ago         188MB
 
-This indicates that ``godlovedc/lolcow:latest`` has been cached locally by Docker. Then
+This indicates that ``sylabsio/lolcow:latest`` has been cached locally
+by Docker. You can directly build it into a SIF file using a
+``docker-daemon://`` URI specifying the ``REPOSITORY:TAG`` container
+name:
 
 .. code-block:: none
 
+<<<<<<< HEAD:apptainer_and_docker.rst
     $ sudo apptainer build lolcow_from_docker_cache.sif docker-daemon://godlovedc/lolcow:latest
+=======
+    $ singularity build lolcow_from_docker_cache.sif docker-daemon://sylabsio/lolcow:latest
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
     INFO:    Starting build...
     Getting image source signatures
     Copying blob sha256:a2022691bf950a72f9d2d84d557183cb9eee07c065a76485f1695784855c5193
@@ -595,6 +967,7 @@ This indicates that ``godlovedc/lolcow:latest`` has been cached locally by Docke
     INFO:    Creating SIF file...
     INFO:    Build complete: lolcow_from_docker_cache.sif
 
+<<<<<<< HEAD:apptainer_and_docker.rst
 results in ``lolcow_from_docker_cache.sif`` for native use by Apptainer. There are two important differences in syntax evident in the above ``build`` command:
 
 1. The ``docker`` part of the URI has been appended by ``daemon``. This ensures Apptainer seek an image locally cached by Docker to bootstrap the conversion process to SIF, as opposed to attempting to retrieve an image remotely hosted via Docker Hub.
@@ -607,32 +980,66 @@ results in ``lolcow_from_docker_cache.sif`` for native use by Apptainer. There a
 .. note::
 
     The Sylabs Cloud Remote Builder *does not* interoperate with local Docker daemons; therefore, images cached locally by Docker, *cannot* be used to bootstrap creation of SIF files via the Remote Builder service. Of course, a SIF file could be created locally as detailed above. Then, in a separate, manual step, :ref:`pushed to the Sylabs Cloud apptainer Library <sec:pushing_locally_available_images_to_library>`.
+=======
+The tag name must be included in the URI. Unlike when pulling from a
+registry, the ``docker-daemon`` bootstrap agent will not try to pull a
+``latest`` tag automatically.
 
 
+.. note::
 
-.. _sec:mandatory_headers_docker_locally_stored_bootstrap_cli:
+   In the example above, the build was performed without
+   ``sudo``. This is possible only when the user is part of the
+   ``docker`` group on the host, since {Singularity} must contact the
+   Docker daemon through its socket. If you are not part of the
+   ``docker`` group you will need to use ``sudo`` for the build to
+   complete successfully.
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
-Locally Available Images: Stored Archives
-------------------------------------------
+To build from an image cached by the Docker daemon in a definition
+file use ``Bootstrap: docker-daemon``, and a ``From:
+<REPOSITORY>:TAG`` line:
 
+.. code-block:: singularity
+
+    Bootstrap: docker-daemon
+    From: sylabsio/lolcow:latest
+
+
+<<<<<<< HEAD:apptainer_and_docker.rst
 apptainer containers can also be built at the command line from Docker images stored locally as ``tar`` files.
+=======
+Containers in Docker Archive Files
+----------------------------------
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
-The ``lolcow.tar`` file employed below in this example can be produced by making use of an environment in which Docker is available as follows:
+Docker allows containers to be exported into single file tar
+archives. These cannot be run directly, but are intended to be
+imported into Docker to run at a later date, or another
+location. {Singularity} can build from (or run) these archive files,
+by extracting them as part of the build process.
 
+<<<<<<< HEAD:apptainer_and_docker.rst
 1. Obtain a local copy of the image from Docker Hub via ``sudo docker pull godlovedc/lolcow``. Issuing the following command confirms that a copy of the desired image is available locally:
+=======
+If an image is listed by the ``docker images`` command, then we can
+create a tar archive file using ``docker save`` and the image ID:
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
 .. code-block:: none
 
         $ sudo docker images
-        REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
-        godlovedc/lolcow    latest              577c1fe8e6d8        17 months ago       241MB
+        REPOSITORY                        TAG               IMAGE ID       CREATED          SIZE
+        sylabsio/lolcow                   latest            5a15b484bc65   2 hours ago      188MB
 
-    2. Noting that the image identifier above is ``577c1fe8e6d8``, the required archive can be created by ``sudo docker save 577c1fe8e6d8 -o lolcow.tar``.
+	$ docker save 5a15b484bc65 -o lolcow.tar
 
-Thus ``lolcow.tar`` is a locally stored archive in the *current* working directory with contents:
+If we examine the contents of the tar file we can see that it contains
+the layers and metadata that make up a Docker container:
 
 .. code-block:: none
 
+<<<<<<< HEAD:apptainer_and_docker.rst
     $ sudo tar tvf lolcow.tar
     drwxr-xr-x 0/0               0 2017-09-21 19:37 02aefa059d08482d344293d0ad27182a0a9d330ebc73abd92a1f9744844f91e9/
     -rw-r--r-- 0/0               3 2017-09-21 19:37 02aefa059d08482d344293d0ad27182a0a9d330ebc73abd92a1f9744844f91e9/VERSION
@@ -668,27 +1075,44 @@ Through use of the ``docker-archive`` bootstrap agent, a SIF file (``lolcow_tar.
 .. code-block:: none
 
     $ apptainer build lolcow_tar.sif docker-archive://lolcow.tar
+=======
+    $ tar tvf lolcow.tar
+    drwxr-xr-x  0 0      0           0 Aug 16 11:22 2f0514a4c044af1ff4f47a46e14b6d46143044522fcd7a9901124209d16d6171/
+    -rw-r--r--  0 0      0           3 Aug 16 11:22 2f0514a4c044af1ff4f47a46e14b6d46143044522fcd7a9901124209d16d6171/VERSION
+    -rw-r--r--  0 0      0         401 Aug 16 11:22 2f0514a4c044af1ff4f47a46e14b6d46143044522fcd7a9901124209d16d6171/json
+    -rw-r--r--  0 0      0    75156480 Aug 16 11:22 2f0514a4c044af1ff4f47a46e14b6d46143044522fcd7a9901124209d16d6171/layer.tar
+    -rw-r--r--  0 0      0        1499 Aug 16 11:22 5a15b484bc657d2b418f2c20628c29945ec19f1a0c019d004eaf0ca1db9f952b.json
+    drwxr-xr-x  0 0      0           0 Aug 16 11:22 af7e389ea6636873dbc5adc17826e8401d96d3d384135b2f9fe990865af202ab/
+    -rw-r--r--  0 0      0           3 Aug 16 11:22 af7e389ea6636873dbc5adc17826e8401d96d3d384135b2f9fe990865af202ab/VERSION
+    -rw-r--r--  0 0      0         946 Aug 16 11:22 af7e389ea6636873dbc5adc17826e8401d96d3d384135b2f9fe990865af202ab/json
+    -rw-r--r--  0 0      0   118356480 Aug 16 11:22 af7e389ea6636873dbc5adc17826e8401d96d3d384135b2f9fe990865af202ab/layer.tar
+    -rw-r--r--  0 0      0         266 Dec 31  1969 manifest.json
+
+
+We can convert this tar file into a singularity container using the
+``docker-archive`` bootstrap agent. Because the agent accesses a file,
+rather than an object hosted by a service, it uses ``:<filename>``,
+not ``://<location>``. To build a tar archive directly to a SIF
+container:
+
+.. code-block:: none
+
+    $ singularity build lolcow_tar.sif docker-archive:lolcow.tar
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
     INFO:    Starting build...
     Getting image source signatures
-    Copying blob sha256:a2022691bf950a72f9d2d84d557183cb9eee07c065a76485f1695784855c5193
+    Copying blob sha256:2f0514a4c044af1ff4f47a46e14b6d46143044522fcd7a9901124209d16d6171
      119.83 MiB / 119.83 MiB [==================================================] 6s
-    Copying blob sha256:ae620432889d2553535199dbdd8ba5a264ce85fcdcd5a430974d81fc27c02b45
+    Copying blob sha256:af7e389ea6636873dbc5adc17826e8401d96d3d384135b2f9fe990865af202ab
      15.50 KiB / 15.50 KiB [====================================================] 0s
-    Copying blob sha256:c561538251751e3685c7c6e7479d488745455ad7f84e842019dcb452c7b6fecc
-     14.50 KiB / 14.50 KiB [====================================================] 0s
-    Copying blob sha256:f96e6b25195f1b36ad02598b5d4381e41997c93ce6170cab1b81d9c68c514db0
-     5.50 KiB / 5.50 KiB [======================================================] 0s
-    Copying blob sha256:7f7a065d245a6501a782bf674f4d7e9d0a62fa6bd212edbf1f17bad0d5cd0bfc
-     3.00 KiB / 3.00 KiB [======================================================] 0s
-    Copying blob sha256:70ca7d49f8e9c44705431e3dade0636a2156300ae646ff4f09c904c138728839
-     116.56 MiB / 116.56 MiB [==================================================] 6s
-    Copying config sha256:73d5b1025fbfa138f2cacf45bbf3f61f7de891559fa25b28ab365c7d9c3cbd82
+    Copying config sha256:5a15b484bc657d2b418f2c20628c29945ec19f1a0c019d004eaf0ca1db9f952b
      3.33 KiB / 3.33 KiB [======================================================] 0s
     Writing manifest to image destination
     Storing signatures
     INFO:    Creating SIF file...
     INFO:    Build complete: lolcow_tar.sif
 
+<<<<<<< HEAD:apptainer_and_docker.rst
 There are two important differences in syntax evident in the above ``build`` command:
 
 1. The ``docker`` part of the URI has been appended by ``archive``. This ensures Apptainer seek a Docker-format image archive stored locally as ``lolcow.tar`` to bootstrap the conversion process to SIF, as opposed to attempting to retrieve an image remotely hosted via Docker Hub.
@@ -704,24 +1128,174 @@ There are two important differences in syntax evident in the above ``build`` com
 
 
 .. _sec:pushing_locally_available_images_to_library:
+=======
 
-Pushing Locally Available Images to a Library
----------------------------------------------
+.. note::
 
+    The ``docker-archive`` bootstrap agent can also handle gzipped Docker
+    archives (``.tar.gz`` or ``.tgz`` files).
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
+
+
+<<<<<<< HEAD:apptainer_and_docker.rst
 The outcome of bootstrapping from an image cached locally by Docker, or one stored locally as an archive, is of course a *locally* stored SIF file. As noted above, this is the *only* option available, as the Sylabs Cloud Remote Builder *does not* interoperate with the Docker daemon or locally stored archives in the Docker image format. Once produced, however, it may be desirable to  make the resulting SIF file available through the Sylabs Library; therefore, the procedure to ``push`` a locally available SIF file to the Library is detailed here.
 
 From the `Sylabs Cloud Library <https://library.sylabs.io/>`_, select ``Create a new Project``. In this first of two steps, the publicly accessible project is created as illustrated below:
 
 .. image:: create_project.png
+=======
+To build an image using a definition file, which starts from a
+container in a Docker archive, use ``Bootstrap: docker-archive`` and
+specify the filename in the ``From:`` line:
 
-Because an access token for the cloud service already exists, attention can be focused on the ``push`` command prototyped towards the bottom of the following screenshot:
+.. code-block:: singularity
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
-.. image:: push_prototype.png
+    Bootstrap: docker-archive
+    From: lolcow.tar
 
-In fact, by simply replacing ``image.sif`` with ``lolcow_tar.sif``, the following upload is executed:
+.. _sec:optional_headers_def_files:
+
+-------------------------------------
+Differences and Limitations vs Docker
+-------------------------------------
+
+Though Docker / OCI container compatibility is a goal of
+{Singularity}, there are some differences and limitations due to the
+way {Singularity} was designed to work well on shared systems and HPC
+clusters. If you are having difficulty running a specific Docker
+container, check through the list of differences below. There are
+workarounds for many of the issues that you are most likely to face.
+
+Read-only by Default
+====================
+
+{Singularity}'s container image format (SIF) is generally
+read-only. This permits containers to be run in parallel from a shared
+location on a network filesystem, support in-built signing and
+verification, and offer encryption. A container's filesystem is
+mounted directly from the SIF, as SquashFS, so cannot be written to by
+default.
+
+When a container is run using Docker its layers are extracted, and the
+resulting container filesystem can be written to and modified by
+default. If a Docker container expects to write files, you will need
+to follow one of the following methods to allow it to run under
+{Singularity}.
+
+* A directory from the host can be passed into the container with the
+  ``--bind`` or ``--mount`` flags. It needs to be mounted inside the
+  container at the location where files will be written.
+
+* The ``--writable-tmpfs`` flag can be used to allow files to be
+  created in a special temporary overlay. Any changes are lost when
+  the container exits. The SIF file is never modified.
+
+* The container can be converted to a sandbox directory, and executed
+  with the ``--writable`` flag, which allows modification of the
+  sandbox content.
+
+* A writable overlay partition can be added to the SIF file, and the container
+  executed with the ``--writable`` flag. Any changes made are kept
+  permanently in the overlay partition.
+
+Of these methods, only ``--writable-tmpfs`` is always safe to run in
+parallel. Each time the container is executed, a separate temporary
+overlay is used and then discarded.
+
+Binding a directory into a container, or running a writable sandbox
+may or may not be safe, depending on the program executed. The program
+must use, and the filesystem support, some type of locking in order
+that the parallel runs do not interfere.
+
+A writable overlay file in a SIF partition cannot be used in
+parallel. {Singularity} will refuse to run concurrently using the same
+SIF writable overlay partition.
+
+Dockerfile ``USER``
+===================
+
+The ``Dockerfile`` used to build a Docker container may contain a
+``USER`` statement. This tells the container runtime that it should
+run the container under the specified user account.
+
+Because {Singularity} is designed to provide easy and safe access to
+data on the host system, work under batch schedulers, etc., it does
+not permit changing the user account the container is run as.
+
+Any ``USER`` statement in a ``Dockerfile`` will be ignored by
+{Singularity} when the container is run. In practice, this often does
+not affect the execution of the software in the container. Software
+that is written in a way that requires execution under a specific user
+account will generally require modification for use with {Singularity}.
+
+{Singularity}'s ``--fakeroot`` mode will start a container as a fake
+``root`` user, mapped to the user's real account outside of the
+container. Inside the container it is possible to change to another
+user account, which is mapped to a configured range of sub-uids / gids
+belonging to the original user. It may be possible to execute software
+expecting a fixed user account manually inside a ``--fakeroot`` shell,
+if your adminstrator has configured the system for ``--fakeroot``.
+
+Default Mounts / $HOME
+======================
+
+A default installation of {Singularity} will mount the user's home
+directory, ``/tmp`` directory, and the current working directory, into
+each container that is run. Administrators may also configure e.g. HPC
+project directories to automatically bind mount. Docker does not mount
+host directories into the container by default.
+
+The home directory mount is the most likely to cause problems when
+running Docker containers. Various software will look for packages,
+plugins, and configuration files in ``$HOME``. If you have, for
+example, installed packages for Python into your home directory (``pip
+install --user``) then a Python container may find and attempt to use
+them. This can cause conflicts and unexpected behaviour.
+
+If you experience issues, use the ``--contain`` option to stop
+{Singularity} automatically binding directories into the
+container. You may need to use ``--bind`` or ``--mount`` to then add
+back e.g. an HPC project directory that you need access to.
+
+.. code-block::
+
+   # Without --contain, python in the container finds packages
+   # in your $HOME directory.
+   $ singularity exec docker://python:3.9 pip list
+   Package    Version
+   ---------- -------
+   pip        21.2.4
+   rstcheck   3.3.1
+   setuptools 57.5.0
+   wheel      0.37.0
+
+   # With --contain, python in the container only finds packages
+   # installed in the container.
+   $ singularity exec --contain docker://python:3.9 pip list
+   Package    Version
+   ---------- -------
+   pip        21.2.4
+   setuptools 57.5.0
+   wheel      0.37.0
+
+
+Environment Propagation
+=======================
+
+{Singularity} propagates most environment variables set on the host
+into the container, by default. Docker does not propagate any host
+environment variables into the container. Environment variables may
+change the behaviour of software.
+
+To disable automatic propagation of environment variables, the
+``--cleanenv / -e`` flag can be specified. When ``--cleanenv`` is
+used, only variables on the host that are prefixed with
+``SINGULARITYENV_`` are set in the container:
 
 .. code-block:: none
 
+<<<<<<< HEAD:apptainer_and_docker.rst
     $ apptainer push lolcow_tar.sif library://ilumb/default/lolcow_tar
     INFO:    Now uploading lolcow_tar.sif to the library
      87.94 MiB / 87.94 MiB [=============================================================================] 100.00% 1.25 MiB/s 1m10s
@@ -735,84 +1309,200 @@ Finally, from the perspective of the Library, the *hosted* version of the SIF fi
 .. note::
 
     The hosted version of the SIF file in the Sylabs Cloud Apptainer Library is maintainable. In other words, if the image is updated locally, the update can be pushed to the Library and tagged appropriately.
+=======
+    # Set a host variable
+    $ export HOST_VAR=123
+    # Set a singularity container environment variable
+    $ export "SINGULARITYENV_FORCE_VAR="123"
 
+    $ singularity run library://alpine env | grep VAR
+    FORCE_VAR=123
+    HOST_VAR=ABC
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
+    $ singularity run --cleanenv library://alpine env | grep VAR
+    FORCE_VAR=123
+
+<<<<<<< HEAD:apptainer_and_docker.rst
 .. _sec:apptainer_build_def_files:
+=======
+Any environment variables set via an ``ENV`` line in a ``Dockerfile``
+will be available when the container is run with {Singularity}.
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
-Working with Definition Files
-=============================
 
-.. _sec:def_file_mandatory_headers_remotely_bootstrapped:
+Namespace & Device Isolation
+============================
 
-Mandatory Header Keywords: Remotely Bootstrapped
--------------------------------------------------
+Because {Singularity} favors an integration over isolation approach it
+does not, by default, use all the methods through which a container
+can be isolated from the host system. This makes it much easier to run
+a {Singularity} container like any other program, while the unique
+security model ensures safety. You can access the host's network, GPUs,
+and other devices directly. Processes in the container are not
+numbered separately from host processes. Hostnames are not changed,
+etc.
 
+<<<<<<< HEAD:apptainer_and_docker.rst
 Akin to a set of blueprints that explain how to build a custom container, Apptainer definition files (or "def files") are considered in detail :ref:`elsewhere in this manual <definition-files>`. Therefore, only def file nuances specific to interoperability with Docker receive consideration here.
 
 Apptainer definition files are comprised of two parts - a **header** plus **sections**.
+=======
+Most containers are not impacted by the differences in isolation. If
+you require more isolation, than {Singularity} provides by default, you
+can enable some of the extra namespaces that Docker uses, with flags:
 
-When working with repositories such as Docker Hub, ``Bootstrap`` and ``From`` are **mandatory** keywords within the header; for example, if the file ``lolcow.def`` has contents
+* ``--ipc / -i`` creates a separate IPC (inter process communication)
+  namespace, for SystemV IPC objects and POSIX message queues.
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
+* ``--net / -n`` creates a new network namespace, abstracting the container
+  networking from the host.
+
+<<<<<<< HEAD:apptainer_and_docker.rst
 .. code-block:: apptainer
+=======
+* ``--userns / -u`` runs the container unprivileged, inside a user
+  namespace and avoiding setuid setup code. This prevents executing
+  SIF images directly. They will be extracted to a directory sandbox.
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
-    Bootstrap: docker
-    From: godlovedc/lolcow
+* ``--uts`` creates a new UTS namespace, which allows a different
+  hostname and/or NIS domain for the container.
 
-then
-
-.. code-block:: none
-
-    sudo Apptainer build lolcow.sif lolcow.def
-
-creates a Apptainer container in SIF by bootstrapping from the public ``godlovedc/lolcow`` image from Docker Hub.
-
-In the above definition file, ``docker`` is one of numerous, possible bootstrap agents; this, and other bootstrap agents receive attention :ref:`in the appendix <build-docker-module>`.
-
-.. TODO-ND remote builder content
-
-Through :ref:`the means for authentication described above <sec:using_prebuilt_private_images>`, definition files permit use of private images hosted via Docker Hub. For example, if the file ``mylolcow.def`` has contents
-
-.. code-block:: apptainer
-
-    Bootstrap: docker
-    From: ilumb/mylolcow
-
-then
-
-.. code-block:: none
-
-    sudo apptainer build --docker-login mylolcow.sif mylolcow.def
-
-creates a apptainer container in SIF by bootstrapping from the *private* ``ilumb/mylolcow`` image from Docker Hub after successful :ref:`interactive authentication <sec:authentication_via_docker_login>`.
-
-Alternatively, if :ref:`environment variables have been set as above <sec:authentication_via_environment_variables>`, then
-
-.. code-block:: none
-
-    $ sudo -E apptainer build mylolcow.sif mylolcow.def
-
-enables authenticated use of the private image.
+To limit presentation of devices from the host into the container, use
+the ``--contain`` flag. As well as preventing automatic binds of host
+directories into the container, ``--contain`` sets up a minimal
+``/dev`` directory, rather than binding in the entire host ``/dev``
+tree.
 
 .. note::
 
-    The ``-E`` option is required to preserve the user's existing environment variables upon ``sudo`` invocation - a priviledge escalation *required* to create apptainer containers via the ``build`` command.
+<<<<<<< HEAD:apptainer_and_docker.rst
+    sudo Apptainer build lolcow.sif lolcow.def
 
+creates a Apptainer container in SIF by bootstrapping from the public ``godlovedc/lolcow`` image from Docker Hub.
+=======
+   When using the ``--nv`` or ``--rocm`` flags, GPU devices are
+   present in the container even when ``--contain`` is used.
 
-Remotely Bootstrapped and Built Containers
-------------------------------------------
+Init Shim Process
+=================
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
-Consider again :ref:`the definition file used the outset of the section above <sec:def_file_mandatory_headers_remotely_bootstrapped>`:
+When a {Singularity} container is run using the ``--pid / p`` option,
+or started as an instance (which implies ``--pid``), a shim init
+process is executed that will run the container payload itself.
 
+The shim process helps to ensure signals are propagated correctly from
+the terminal, or batch schedulers etc. when containers are not
+designed for interactive use. Because Docker does not provide an init
+process by default, some containers have been designed to run their
+own init process, which cannot operate under the control of
+{Singularity}'s shim.
+
+For example, a container using the ``tini`` init process will produce
+warnings when started as an instance, or if run with ``--pid``. To
+work around this, use the ``--no-init`` flag to disable the shim:
+
+<<<<<<< HEAD:apptainer_and_docker.rst
 .. code-block:: apptainer
+=======
+.. code-block::
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
-    Bootstrap: docker
-    From: godlovedc/lolcow
+    $ singularity run --pid tini_example.sif
+    [WARN  tini (2690)] Tini is not running as PID 1 .
+    Zombie processes will not be re-parented to Tini, so zombie reaping won't work.
+    To fix the problem, run Tini as PID 1.
 
+    $ singularity run --pid --no-init tini_example.sif
+    ...
+    # NO WARNINGS
+
+-----------------------------
+Docker-like ``--compat`` Flag
+-----------------------------
+
+<<<<<<< HEAD:apptainer_and_docker.rst
+    sudo apptainer build --docker-login mylolcow.sif mylolcow.def
+
+creates a apptainer container in SIF by bootstrapping from the *private* ``ilumb/mylolcow`` image from Docker Hub after successful :ref:`interactive authentication <sec:authentication_via_docker_login>`.
+=======
+If Docker-like behavior is important, {Singularity} can be started
+with the ``--compat`` flag. This flag is a convenient short-hand
+alternative to using all of:
+
+* ``--containall``
+* ``--no-init``
+* ``--no-umask``
+* ``--writable-tmpfs``
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
+
+A container run with ``--compat`` has:
+
+* A writable root filesystem, using a temporary overlay where changes
+  are discarded at container exit.
+
+<<<<<<< HEAD:apptainer_and_docker.rst
+    $ sudo -E apptainer build mylolcow.sif mylolcow.def
+=======
+* No automatic bind mounts of ``$HOME`` or other directories from the
+  host into the container.
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
+
+* Empty temporary ``$HOME`` and ``/tmp`` directories, the contents of
+  which will be discarded at container exit.
+
+* A minimal ``/dev`` tree, that does not expose host devices inside
+  the container (except GPUs when used with ``--nv`` or ``--rocm``).
+
+<<<<<<< HEAD:apptainer_and_docker.rst
+    The ``-E`` option is required to preserve the user's existing environment variables upon ``sudo`` invocation - a priviledge escalation *required* to create apptainer containers via the ``build`` command.
+=======
+* An clean environment, not including environment variables set on the
+  host.
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
+
+* Its own PID and IPC namespaces.
+
+* No shim init process.
+
+These options will allow most, but not all, Docker / OCI containers to
+execute correctly under {Singularity}. The user namespace and network
+namespace are not used, as these negate benefits of SIF and direct
+access to high performance cluster networks.
+
+<<<<<<< HEAD:apptainer_and_docker.rst
+.. code-block:: apptainer
+=======
+--------------------------
+CMD / ENTRYPOINT Behaviour
+--------------------------
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
+
+When a container is run using ``docker``, its default behavior depends
+on the ``CMD`` and/or ``ENTRYPOINT`` set in the ``Dockerfile`` that
+was used to build it, along with any arguments on the command
+line. The ``CMD`` and ``ENTRYPOINT`` can also be overridden by flags.
+
+<<<<<<< HEAD:apptainer_and_docker.rst
 With two small adjustments to the apptainer ``build`` command, the Sylabs Cloud Remote Builder can be utilized:
+=======
+A {Singularity} container has the concept of a *runscript*, which is a
+single shell script defining what happens when you ``singularity run``
+the container. Because there is no internal concept of ``CMD`` and
+``ENTRYPOINT``, {Singularity} must create a runscript from the ``CMD``
+and ``ENTRYPOINT`` when converting a Docker container. The behavior of
+this script mirrors Docker as closely as possible.
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
+If the Docker container only has an ``ENTRYPOINT`` - that
+``ENTRYPOINT`` is run, with any arguments appended:
 
 .. code-block:: none
 
+<<<<<<< HEAD:apptainer_and_docker.rst
     $ apptainer build --remote lolcow_rb_def.sif lolcow.def
     searching for available build agent......INFO:    Starting build...
     Getting image source signatures
@@ -840,44 +1530,87 @@ With two small adjustments to the apptainer ``build`` command, the Sylabs Cloud 
      87.94 MiB / 87.94 MiB [===============================================================================] 100.00% 19.08 MiB/s 4s
 
 In the above, ``--remote`` has been added as the ``build`` option that causes use of the Remote Builder service. A much more subtle change, however, is the *absence* of ``sudo`` ahead of ``apptainer build``. Though subtle here, this absence is notable, as users can build containers via the Remote Builder with *escalated privileges*; in other words, steps in container creation that *require* ``root`` access *are* enabled via the Remote Builder even for (DevOps) users *without* admninistrative privileges locally.
+=======
+   # ENTRYPOINT="date"
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
-In addition to the command-line support described above, the Sylabs Cloud Remote Builder also allows definition files to be copied and pasted into its Graphical User Interface (GUI). After pasting a definition file, and having that file validated by the service, the build-centric part of the GUI appears as illustrated below. By clicking on the ``Build`` button, creation of the container is initiated.
+   # Runs 'date'
+   $ singularity run mycontainer.sif
+   Wed 06 Oct 2021 02:42:54 PM CDT
 
-.. image:: build_gui.png
+   # Runs 'date --utc`
+   $ singularity run mycontainer.sif --utc
+   Wed 06 Oct 2021 07:44:27 PM UTC
 
-Once the build process has been completed, the corresponding SIF file can be retrieved from the service - as shown below. A log file for the ``build`` process is provided by the GUI, and made available for download as a text file (not shown here).
-
-.. image:: build_output.png
-
-A copy of the SIF file created by the service remains in the Sylabs Cloud Apptainer Library as illustrated below.
-
-.. image:: mysylabslibrary.png
-
-.. note::
-
-    The Sylabs Cloud is currently available as an Alpha Preview. In addition to the Apptainer Library and Remote Builder, a Keystore service is also available. All three services make use of a *freemium* pricing model in supporting apptainer Community Edition. In contrast, all three services are included in apptainerPRO - an enterprise grade subscription for apptainer that is offered for a fee from Sylabs. For addtional details regarding the different offerings available for apptainer, please `consult the Sylabs website <https://www.sylabs.io/apptainer/>`_.
-
-
-.. _sec:mandatory_headers_docker_locally_bootstrapped_def_file:
-
-Mandatory Header Keywords: Locally Bootstrapped
-------------------------------------------------
-
-When ``docker-daemon`` is the bootstrap agent in a Apptainer definition file, SIF containers can be created from images cached locally by Docker. Suppose the definition file ``lolcow-d.def`` has contents:
-
-.. code-block:: apptainer
-
-    Bootstrap: docker-daemon
-    From: godlovedc/lolcow:latest
-
-.. note::
-
-    Again, the image tag ``latest`` is **required** when bootstrapping creation of a container for Apptainer from an image locally cached by Docker.
-
-Then,
+If the Docker container only has a ``CMD`` - the ``CMD`` is run, or is
+*replaced* with any arguments:
 
 .. code-block:: none
 
+<<<<<<< HEAD:apptainer_and_docker.rst
+A copy of the SIF file created by the service remains in the Sylabs Cloud Apptainer Library as illustrated below.
+=======
+   # CMD="date"
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
+
+   # Runs 'date'
+   $ singularity run mycontainer.sif
+   Wed 06 Oct 2021 02:45:39 PM CDT
+
+   # Runs 'echo hello'
+   $ singularity run mycontainer.sif echo hello
+   hello
+
+<<<<<<< HEAD:apptainer_and_docker.rst
+    The Sylabs Cloud is currently available as an Alpha Preview. In addition to the Apptainer Library and Remote Builder, a Keystore service is also available. All three services make use of a *freemium* pricing model in supporting apptainer Community Edition. In contrast, all three services are included in apptainerPRO - an enterprise grade subscription for apptainer that is offered for a fee from Sylabs. For addtional details regarding the different offerings available for apptainer, please `consult the Sylabs website <https://www.sylabs.io/apptainer/>`_.
+=======
+If the Docker container has a ``CMD`` *and* ``ENTRYPOINT``, then we
+run ``ENTRYPOINT`` with either ``CMD`` as default arguments, or
+replaced with any user supplied arguments:
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
+
+.. code-block:: none
+
+   # ENTRYPOINT="date"
+   # CMD="--utc"
+
+   # Runs 'date --utc'
+   $ singularity run mycontainer.sif
+   Wed 06 Oct 2021 07:48:43 PM UTC
+
+<<<<<<< HEAD:apptainer_and_docker.rst
+When ``docker-daemon`` is the bootstrap agent in a Apptainer definition file, SIF containers can be created from images cached locally by Docker. Suppose the definition file ``lolcow-d.def`` has contents:
+
+.. code-block:: apptainer
+=======
+   # Runs 'date -R'
+   $ singularity run mycontainer.sif -R
+   Wed, 06 Oct 2021 14:49:07 -0500
+
+There is no flag to override an ``ENTRYPOINT`` set for a Docker
+container. Instead, use ``singularity exec`` to run an arbitrary
+program inside a container.
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
+
+
+.. _sec:best_practices:
+
+<<<<<<< HEAD:apptainer_and_docker.rst
+    Again, the image tag ``latest`` is **required** when bootstrapping creation of a container for Apptainer from an image locally cached by Docker.
+=======
+-------------------------------------------------------
+Best Practices for Docker & {Singularity} Compatibility
+-------------------------------------------------------
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
+
+As detailed previously, {Singularity} can make use of most Docker and
+OCI images without issues, or via simple workarounds. In general,
+however, there are some best practices that should be applied when
+creating Docker / OCI containers that will also be run using
+{Singularity}.
+
+
+<<<<<<< HEAD:apptainer_and_docker.rst
     $ sudo apptainer build lolcow_from_docker_cache.sif lolcow-d.def
     Build target already exists. Do you want to overwrite? [N/y] y
     INFO:    Starting build...
@@ -900,26 +1633,54 @@ Then,
     Storing signatures
     INFO:    Creating SIF file...
     INFO:    Build complete: lolcow_from_docker_cache.sif
+=======
+    1. **Don't require execution by a specific user**
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
-In other words, this is the definition-file counterpart to :ref:`the command-line invocation provided above <sec:mandatory_headers_docker_locally_bootstrapped_cli>`.
+    Avoid using the ``USER`` instruction in your Docker file, as it is
+    ignored by Singularity. Install and configure software inside the
+    container so that it can be run by any user.
 
-.. note::
+    2. **Don't install software under /root or in another user's home
+       directory**
 
+<<<<<<< HEAD:apptainer_and_docker.rst
     The ``sudo`` requirement in the above ``build`` request originates from Apptainer; it is the standard requirement when use is made of definition files. In other words, membership of the issuing user in the ``docker`` Linux group is of no consequence in this context.
+=======
+    Because a Docker container builds and runs as the ``root`` user by
+    default, it's tempting to install software into root's home
+    directory (``/root``). Permissions on ``/root`` are usually set so
+    that it is inaccessible to non-root users. When the container is
+    run as another user the software may be inaccessible.
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
-.. TODO-ND remote builder content note - exclusion above
+    Software inside another user's home directory,
+    e.g. ``/home/myapp``, may be obscured by {Singularity}'s automatic
+    mounts onto ``/home``.
 
+<<<<<<< HEAD:apptainer_and_docker.rst
 Alternatively when ``docker-archive`` is the bootstrap agent in a Apptainer definition file, SIF containers can be created from images stored locally by Docker. Suppose the definition file ``lolcow-da.def`` has contents:
 
 .. code-block:: apptainer
+=======
+    Install software into system-wide locations in the container,
+    such as under ``/usr`` or ``/opt`` to avoid these issues.
 
-    Bootstrap: docker-archive
-    From: lolcow.tar
+    3. **Support a read-only filesystem**
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
-Then,
+    Because of the immutable nature of the SIF format, a container run
+    with {Singularity} is read-only by default.
 
-.. code-block:: none
+    Try to ensure your container will run with a read-only
+    filesystem. If this is not possible, document exactly where the
+    container needs to write, so that a user can bind in a writable
+    location, or use ``--writable-tmpfs`` as appropriate.
 
+    You can test read-only execution with Docker using ``docker
+    run --read-only --tmpfs /run --tmpfs /tmp sylabsio/lolcow``.
+
+<<<<<<< HEAD:apptainer_and_docker.rst
     $ sudo apptainer build lolcow_tar_def.sif lolcow-da.def
     INFO:    Starting build...
     Getting image source signatures
@@ -941,49 +1702,93 @@ Then,
     Storing signatures
     INFO:    Creating SIF file...
     INFO:    Build complete: lolcow_tar_def.sif
+=======
+    4. **Be careful writing to /tmp**
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
-through ``build`` results in the SIF file ``lolcow_tar_def.sif``. In other words, this is the definition-file counterpart to :ref:`the command-line invocation provided above <sec:mandatory_headers_docker_locally_stored_bootstrap_cli>` .
+    {Singularity} mounts the *host* ``/tmp`` into the container, by
+    default. This means you must be be careful when writing sensitive
+    information to ``/tmp``, and should ensure your container cleans
+    up files it writes there.
 
-.. TODO-ND RB Test
+    5. **Consider library caches / ldconfig**
+
+    If your ``Dockerfile`` adds libraries and / or manipulates the ld
+    search path in the container (``ld.so.conf`` / ``ld.so.conf.d``),
+    you should ensure the library cache is updated during the build.
+
+    Because Singularity runs containers read-only by default, the
+    cache and any missing library symlinks may not be able to be
+    updated / created at execution time.
+
+    Run ``ldconfig`` toward the *end* of your ``Dockerfile`` to ensure
+    symbolic links and the the ``ld.so.cache`` are up-to-date.
 
 
-.. _sec:optional_headers_def_files:
-
-Optional Header Keywords
-------------------------
-
-In the two-previous examples, the ``From`` keyword specifies *both* the ``user`` and ``repo-name`` in making use of Docker Hub. *Optional* use of ``Namespace`` permits the more-granular split across two keywords:
-
+<<<<<<< HEAD:apptainer_and_docker.rst
 .. code-block:: apptainer
+=======
+.. _sec:troubleshooting:
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
-    Bootstrap: docker
-    Namespace: godlovedc
-    From: lolcow
+---------------
+Troubleshooting
+---------------
 
-.. note::
+Registry Authentication Issues
+==============================
 
-    In `their documentation <https://docs.docker.com/docker-hub/repos/>`_, "Docker ID namespace" and ``user`` are employed as synonyms in the text and examples, respectively.
+If you experience problems pulling containers from a private registry,
+check your credentials carefully. You can ``singularity pull`` with
+the ``--docker-login`` flag to perform an interactive login. This may
+be useful if you are unsure whether you have stored credentials
+properly via ``singularity remote login`` or ``docker login``.
 
-.. note::
+OCI registries expect different values for username and password
+fields. Some require a token to be generated and used instead of your
+account password. Some take a generic username, and rely only on the
+token to identify you. Consult the documentation for your registry
+carefully. Look for instructions that detail how to login via ``docker
+login`` without external helper programs, if possible.
 
-    The default value for the optional keyword ``Namespace`` is ``library``.
+Container Doesn't Start
+=======================
 
+If a Docker container fails to start, the most common cause is that it
+needs to write files, while {Singularity} runs read-only by default.
 
-Private Images and Registries
------------------------------
+Try running with the ``--writable-tmpfs`` option, or the ``--compat``
+flag (which enables additional compatibility fixes).
 
+<<<<<<< HEAD:apptainer_and_docker.rst
 Thus far, use of Docker Hub has been assumed. To make use of a different repository of Docker images the **optional** ``Registry`` keyword can be added to the Apptainer definition file. For example, to make use of a Docker image from the NVIDIA GPU Cloud (NGC) corresponding definition file is:
 
 .. code-block:: apptainer
+=======
+You can also look for error messages mentioning 'permission denied' or
+'read-only filesystem'. Note where the program is attempting to write,
+and use ``--bind`` or ``--mount`` to bind a directory from the host
+system into that location. This will allow the container to write the
+needed files, which will appear in the directory you bind in.
 
-    Bootstrap: docker
-    From: nvidia/pytorch:18.11-py3
-    Registry: nvcr.io
+Unexpected Container Behaviour
+==============================
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
-This def file ``ngc_pytorch.def`` can be passed as a specification to ``build`` as follows:
+If a Docker container runs, but exhibits unexpected behavior, the most
+likely cause is the different level of isolation that Singularity
+provides vs Docker.
 
-.. code-block:: none
+Try running the container with the ``--contain`` option, or the
+``--compat`` option (which is more strict). This disables the
+automatic mount of your home directory, which is a common source of
+issues where software in the container loads configuration or packages
+that may be present there.
 
+Getting Help
+============
+
+<<<<<<< HEAD:apptainer_and_docker.rst
     $ sudo apptainer build --docker-login mypytorch.sif ngc_pytorch.def
     Enter Docker Username: $oauthtoken
     Enter Docker Password: <obscured>
@@ -998,28 +1803,80 @@ This def file ``ngc_pytorch.def`` can be passed as a specification to ``build`` 
     Storing signatures
     INFO:    Creating SIF file...
     INFO:    Build complete: mypytorch.sif
+=======
+The community Slack channels and mailing list are excellent places to
+ask for help with running a specific Docker container. Other users may
+have already had success running the same container or
+software. Please don't report issues with specific Docker containers
+on GitHub, unless you believe they are due to a bug in {Singularity}.
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
 
-After successful authentication via interactive use of the ``--docker-login`` option, output as the SIF container ``mypytorch.sif`` is (ultimately) produced. As above, :ref:`use of environment variables <sec:authentication_via_environment_variables>` is another option available for authenticating private Docker type repositories such as NGC; once set, the ``build`` command is as above save for the absence of the ``--docker-login`` option.
+
+.. _sec:deffile-vs-dockerfile:
+
+--------------------------------------------
+{Singularity} Definition file vs. Dockerfile
+--------------------------------------------
+
+An alternative to running Docker containers with {Singularity} is to
+re-write the ``Dockerfile`` as a definition file, and build a native
+SIF image.
+
+The table below gives a quick reference comparing Dockerfile and
+{Singularity} definition files. For more detail please see :ref:`definition-files`.
+
+================ =========================== ================ =============================
+{Singularity} Definition file                Dockerfile
+-------------------------------------------- ----------------------------------------------
+Section          Description                 Section          Description
+================ =========================== ================ =============================
+``Bootstrap``    | Defines the source of
+                 | the base image to build
+                 | your container from.      \-               | Can only bootstrap
+                 | Many bootstrap agents                      | from Docker Hub.
+                 | are supported, e.g.
+                 | ``library``, ``docker``,
+                 | ``http``, ``shub``,
+                 | ``yum``, ``debootstrap``.
+
+``From:``        | Specifies the base        ``FROM``         | Creates a layer from
+                 | image from which to the                    | the specified docker image.
+                 | build the container.
+
+``%setup``       | Run setup commands        \-               | Not supported.
+                 | outside of the
+                 | container (on the host
+                 | system) after the base
+                 | image bootstrap.
+
+``%files``       | Copy files from           ``COPY``         | Copy files from
+                 | your host to                               | your host to
+                 | the container, or                          | the container, or
+                 | between build stages.                      | between build stages.
+
+``%environment`` | Declare and set           ``ENV``          | Declare and set
+                 | container environment                      | a container environment
+                 | variables.                                 | variable.
+
+``%help``        | Provide a help
+                 | section for your          \-               | Not supported.
+                 | container image.
+
+``%post``        | Commands that will                         | Commands that will
+                 | be run at                 ``RUN``          | be run at
+                 | build-time.                                | build-time.
 
 
-.. _sec:def_files_execution:
+``%runscript```  | Commands that will
+                 | be run when you           ``ENTRYPOINT``   | Commands / arguments
+                 | ``singularity run``       ``CMD``          | that will run in the
+                 | the container image.                       | container image.
 
-Directing Execution
--------------------
+``%startscript`` | Commands that will
+                 | be run when               \-               | Not Applicable.
+                 | an instance is started.
 
-The ``Dockerfile`` corresponding to ``godlovedc/lolcow`` (and `available here <https://hub.docker.com/r/godlovedc/lolcow/dockerfile>`_) is as follows:
-
-.. code-block:: none
-
-    FROM ubuntu:16.04
-
-    RUN apt-get update && apt-get install -y fortune cowsay lolcat
-
-    ENV PATH /usr/games:${PATH}
-    ENV LC_ALL=C
-
-    ENTRYPOINT fortune | cowsay | lolcat
-
+<<<<<<< HEAD:apptainer_and_docker.rst
 The execution-specific part of this ``Dockerfile`` is the ``ENTRYPOINT`` - "... an optional definition for the first part of the command to be run ..." according to `the available documentation <https://docs.docker.com/search/?q=ENTRYPOINT>`_. After conversion to SIF, execution of ``fortune | cowsay | lolcat`` *within* the container produces the output:
 
 .. code-block:: none
@@ -1906,6 +2763,12 @@ Section          Description                Section          Description
                  | at the very end          ``HEALTHCHECK``  | Commands that verify
                  | of the build process                      | the health status of
                  | to validate the                           | the container.
+=======
+``%test``        | Commands that run
+                 | at the very end           ``HEALTHCHECK``  | Commands that verify
+                 | of the build process                       | the health status of
+                 | to validate the                            | the container.
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543:singularity_and_docker.rst
                  | container using
                  | a method of your
                  | choice. (to verify
@@ -1915,15 +2778,13 @@ Section          Description                Section          Description
                  | the container)
 
 ``%apps``        | Allows you to install
-                 | internal modules           \-             | Not supported.
+                 | internal modules           \-              | Not supported.
                  | based on the concept
                  | of SCIF-apps.
 
 ``%labels``      | Section to add and
-                 | define metadata          ``LABEL``        | Section to declare
-                 | within your container.                    | metadata as a
-                                                             | key-value pair.
+                 | define metadata           ``LABEL``        | Declare container
+                 | describing your                            | metadata as a
+                 | container.                                 | key-value pair.
 
-================ ========================== ================ =============================
-
-.. TODO-ND SIFtool - does it have more to offer here???
+================ =========================== ================ =============================

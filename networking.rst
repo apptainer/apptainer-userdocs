@@ -7,7 +7,7 @@ Network virtualization
 
 .. _sec:networking:
 
-apptainer provides full integration with `cni
+{Singularity} provides full integration with `cni
 <https://github.com/containernetworking/cni>`_ , to make network
 virtualization easy. The following options can be used with the the
 action commands (``exec``, ``run``, and ``shell``) to create and
@@ -20,7 +20,15 @@ configure a virtualized network for a container.
    containers would allow users to affect networking on the host, or
    in a cluster.
 
+<<<<<<< Updated upstream
+<<<<<<< HEAD
    apptainer 1.0 allows the administrator to permit a list of
+=======
+   {Singularity} 3.8 allows the administrator to permit a list of
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
+=======
+   Aptainer allows the administrator to permit a list of
+>>>>>>> Stashed changes
    unprivileged users and/or groups to use specified network
    configurations. This is accomplished through settings in
    ``apptainer.conf``. See the administrator guide for details.
@@ -34,10 +42,10 @@ to add to the ``/etc/resolv.conf`` file.
 
 .. code-block:: none
 
-    $ nslookup sylabs.io | grep Server
+    $ nslookup apptainer.org | grep Server
     Server:		127.0.0.53
 
-    $ sudo apptainer exec --dns 8.8.8.8 ubuntu.sif nslookup sylabs.io | grep Server
+    $ sudo apptainer exec --dns 8.8.8.8 ubuntu.sif nslookup apptainer.org | grep Server
     Server:		8.8.8.8
 
     $ sudo apptainer exec --dns 8.8.8.8 ubuntu.sif cat /etc/resolv.conf
@@ -62,7 +70,11 @@ within the container.
 =========
 
 Passing the ``--net`` flag will cause the container to join a new network
+<<<<<<< HEAD
 namespace when it initiates.  New in apptainer 3.0, a bridge interface will
+=======
+namespace when it initiates.  New in {Singularity} 3.0, a bridge interface will
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 also be set up by default.
 
 .. code-block:: none
@@ -95,7 +107,11 @@ bring up a dedicated interface inside container.
 When invoked, the ``--network`` option searches the apptainer configuration
 directory (commonly ``/usr/local/etc/apptainer/network/``) for the cni
 configuration file corresponding to the requested network type(s). Several
+<<<<<<< HEAD
 configuration files are installed with apptainer by default corresponding to
+=======
+configuration files are installed with {Singularity} by default corresponding to
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 the following network types:
 
     - bridge
@@ -112,13 +128,17 @@ Administrators can permit certain users or groups to request other
 network configurations through options in
 ``apptainer.conf``. Additional cni configuration files can be added
 to the ``network`` configuration directory as required, and
+<<<<<<< HEAD
 apptainer's provided configurations may also be modified.
+=======
+{Singularity}'s provided configurations may also be modified.
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 
 ``--network-args``
 ==================
 
 The ``--network-args`` option provides a convenient way to specify arguments to
-pass directly to the cni plugins.  It must be used in conjuction with the
+pass directly to the cni plugins.  It must be used in conjunction with the
 ``--net`` flag.
 
 For instance, let's say you want to start an `NGINX <https://www.nginx.com/>`_

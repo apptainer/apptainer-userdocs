@@ -6,9 +6,15 @@ Security Options
 
 .. _sec:security_options:
 
+<<<<<<< HEAD
 apptainer 3.0 introduces many new security related options to the container
 runtime.  This document will describe the new methods users have for specifying
 the security scope and context when running apptainer containers.
+=======
+{Singularity} 3.0 introduces many new security related options to the container
+runtime.  This document will describe the new methods users have for specifying
+the security scope and context when running {Singularity} containers.
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 
 
 ------------------
@@ -28,7 +34,11 @@ Linux Capabilities
      similar use cases, the :ref:`fakeroot feature <fakeroot>` is a better
      option.
 
+<<<<<<< HEAD
 apptainer provides full support for granting and revoking Linux capabilities
+=======
+{Singularity} provides full support for granting and revoking Linux capabilities
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 on a user or group basis.  For example, let us suppose that an admin has
 decided to grant a user (named ``pinger``) capabilities to open raw sockets so
 that they can use ``ping`` in a container where the binary is controlled via
@@ -52,7 +62,11 @@ like so:
     rtt min/avg/max/mdev = 73.178/73.178/73.178/0.000 ms
 
 If the admin decides that it is no longer necessary to allow the user
+<<<<<<< HEAD
 ``pinger`` to open raw sockets within apptainer containers, they can revoke
+=======
+``pinger`` to open raw sockets within {Singularity} containers, they can revoke
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 the appropriate Linux capability and ``pinger`` will not be able to add that
 capability to their containers anymore:
 
@@ -66,7 +80,11 @@ capability to their containers anymore:
 Another scenario which is atypical of shared resource environments, but useful
 in cloud-native architectures is dropping capabilities when spawning containers
 as the root user to help minimize attack surfaces. With a default installation
+<<<<<<< HEAD
 of apptainer, containers created by the root user will maintain all
+=======
+of {Singularity}, containers created by the root user will maintain all
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 capabilities. This behavior is configurable if desired. Check out the
 `capability configuration <\{admindocs\}/configfiles.html#capability.json>`_
 and `root default capabilities <\{admindocs\}/configfiles.html#setuid-and-capabilities>`_
@@ -102,7 +120,11 @@ Of course appropriate caution should be exercised when using this keyword.
 -----------------------------
 Building encrypted containers
 -----------------------------
+<<<<<<< HEAD
 Beginning in apptainer 3.4.0 it is possible to build and run encrypted
+=======
+Beginning in {Singularity} 3.4.0 it is possible to build and run encrypted
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 containers.  The containers are decrypted at runtime entirely in kernel space,
 meaning that no intermediate decrypted data is ever present on disk. See
 :ref:`encrypted containers <encryption>` for more details.
@@ -112,7 +134,11 @@ meaning that no intermediate decrypted data is ever present on disk. See
 Security related action options
 -------------------------------
 
+<<<<<<< HEAD
 apptainer 3.0 introduces many new flags that can be passed to the action
+=======
+{Singularity} 3.0 introduces many new flags that can be passed to the action
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 commands; ``shell``, ``exec``, and ``run`` allowing fine grained control of
 security.
 
@@ -135,9 +161,15 @@ The most well-known SetUID binaries are owned by root and allow a user to
 execute a command with elevated privileges.  But other SetUID binaries may
 allow a user to execute a command as a service account.
 
+<<<<<<< HEAD
 By default SetUID is disallowed within apptainer containers as a security
 precaution.  But the root user can override this precaution and allow SetUID
 binaries to behave as expected within a apptainer container with the
+=======
+By default SetUID is disallowed within {Singularity} containers as a security
+precaution.  But the root user can override this precaution and allow SetUID
+binaries to behave as expected within a {Singularity} container with the
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 ``--allow-setuid`` option like so:
 
 .. code-block:: none
@@ -189,7 +221,11 @@ as an option to drop all capabilities when entering the container.
 ==============
 
 The ``--security`` flag allows the root user to leverage security modules such
+<<<<<<< HEAD
 as SELinux, AppArmor, and seccomp within your apptainer container. You can
+=======
+as SELinux, AppArmor, and seccomp within your {Singularity} container. You can
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 also change the UID and GID of the user within the container at runtime.
 
 For instance:
@@ -205,11 +241,19 @@ For instance:
 To use seccomp to blacklist a command follow this procedure. (It is actually
 preferable from a security standpoint to whitelist commands but this will
 suffice for a simple example.)  Note that this example was run on Ubuntu and
+<<<<<<< HEAD
 that apptainer was installed with the ``libseccomp-dev`` and ``pkg-config``
 packages as dependencies.
 
 First write a configuration file.  An example configuration file is installed
 with apptainer, normally at ``/usr/local/etc/apptainer/seccomp-profiles/default.json``.
+=======
+that {Singularity} was installed with the ``libseccomp-dev`` and ``pkg-config``
+packages as dependencies.
+
+First write a configuration file.  An example configuration file is installed
+with {Singularity}, normally at ``/usr/local/etc/singularity/seccomp-profiles/default.json``.
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 For this example, we will use a much simpler configuration file to blacklist the
 ``mkdir`` command.
 

@@ -7,7 +7,11 @@ Definition Files
 
 .. _sec:deffiles:
 
+<<<<<<< HEAD
 A apptainer Definition File (or "def file" for short) is like a set of
+=======
+A {Singularity} Definition File (or "def file" for short) is like a set of
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 blueprints explaining how to build a custom container. It includes specifics
 about the base OS to build or the base container to start from, software to
 install, environment variables to set at runtime, files to add from the host
@@ -18,7 +22,11 @@ Overview
 --------
 
 
+<<<<<<< HEAD
 A apptainer Definition file is divided into two parts:
+=======
+A {Singularity} Definition file is divided into two parts:
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 
 #. **Header**: The Header describes the core operating system to build within
    the container. Here you will configure the base operating system features
@@ -38,14 +46,22 @@ A apptainer Definition file is divided into two parts:
 For more in-depth and practical examples of def files, see the `apptainer examples
 repository <https://github.com/apptainer/tree/master/examples>`_
 
+<<<<<<< HEAD
 For a comparison between Dockerfile and apptainer definition file,
+=======
+For a comparison between Dockerfile and {Singularity} definition file,
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 please see: :ref:`this section <sec:deffile-vs-dockerfile>`.
 
 ------
 Header
 ------
 
+<<<<<<< HEAD
 The header should be written at the top of the def file. It tells apptainer
+=======
+The header should be written at the top of the def file. It tells {Singularity}
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 about the base operating system that it should use to build the container. It is
 composed of several keywords.
 
@@ -57,7 +73,11 @@ will pull a container from the `Container Library
 bootstrap agent will pull docker layers from `Docker Hub
 <https://hub.docker.com/>`_ as a base OS to start your image.
 
+<<<<<<< HEAD
 Starting with apptainer 3.2, the ``Bootstrap`` keyword needs to be the first
+=======
+Starting with {Singularity} 3.2, the ``Bootstrap`` keyword needs to be the first
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 entry in the header section.  This breaks compatibility with older versions
 that allow the parameters of the header to appear in any order.
 
@@ -138,7 +158,11 @@ the build will continue.
 
 To enforce that the bootstrap image verifies correctly and has been
 signed by one or more keys, you can use the ``Fingerprints:`` header
+<<<<<<< HEAD
 introduced in apptainer 3.7.
+=======
+introduced in {Singularity} 3.7.
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 
 .. code-block:: apptainer
 
@@ -261,7 +285,11 @@ We'll use ``file1`` to demonstrate the usage of the ``%files`` section below.
 The ``file2`` is created at the root of the file system **within the
 container**.
 
+<<<<<<< HEAD
 In later versions of Apptainer the ``%files`` section is provided as a safer
+=======
+In later versions of {Singularity} the ``%files`` section is provided as a safer
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 alternative to copying files from the host system into the container during the
 build. Because of the potential danger involved in running the ``%setup``
 scriptlet with elevated privileges on the host system during the build, it's
@@ -319,11 +347,17 @@ executed so that they are available during the build and configuration process.
 =====
 
 In some circumstances, it may be redundant to build different containers for
+<<<<<<< HEAD
 each app with nearly equivalent dependencies. Apptainer supports installing
 apps within internal modules based on the concept of `Standard Container
 Integration Format (SCI-F) <https://sci-f.github.io/>`_
 All the apps are handled by apptainer at this point. More information on
 Apps :ref:`here <apps>`.
+=======
+each app with nearly equivalent dependencies. {Singularity} supports installing
+apps within internal modules based on the concept of the `Scientific Filesystem (SCIF) <https://sci-f.github.io/>`_.
+More information on defining and using SCIF Apps :ref:`here <apps>`.
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 
 %post
 =====
@@ -482,7 +516,11 @@ that variables in the ``%post`` section take precedence over those added  via
 ``%environment``.
 
 See :ref:`Environment and Metadata <environment-and-metadata>` for more
+<<<<<<< HEAD
 information about the apptainer container environment.
+=======
+information about the {Singularity} container environment.
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 
 .. _startscript:
 
@@ -543,7 +581,11 @@ the container at runtime are printed as a single string (``$*``) and then they
 are passed to echo via a quoted array (``$@``) which ensures that all of the
 arguments are properly parsed by the executed command. The ``exec`` preceding
 the final ``echo`` command replaces the current entry in the process table
+<<<<<<< HEAD
 (which originally was the call to apptainer). Thus the runscript shell process
+=======
+(which originally was the call to {Singularity}). Thus the runscript shell process
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 ceases to exist, and only the process running within the container remains.
 
 Running the container built using this def file will yield the following:
@@ -634,10 +676,14 @@ Multi-Stage Builds
 ------------------
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 Starting with apptainer v3.2 multi-stage builds are supported where one environment 
 =======
 Starting with Singularity v3.2 multi-stage builds are supported where one environment
 >>>>>>> de5c4ef98283f80100a46cc06bf501c17096b71f
+=======
+Starting with {Singularity} v3.2 multi-stage builds are supported where one environment
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 can be used for compilation, then the resulting binary can be copied into a final
 environment. This allows a slimmer final image that does not require the entire
 development stack.
@@ -695,17 +741,28 @@ which to run easily. Each entry point can carry out a different task
 with its own environment, metadata etc., without the need for a
 collection of different containers.
 
+<<<<<<< HEAD
 Apptainer implements SCIF, and you can read more about how to use it
 below.
 
 SCIF is not specfic to Apptainer. You can learn more about it at the
+=======
+{Singularity} implements SCIF, and you can read more about how to use it
+below.
+
+SCIF is not specific to {Singularity}. You can learn more about it at the
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 project's site: `<https://sci-f.github.io/>`_ which includes extended
 tutorials, the specification, and other information.
 
 SCIF %app* sections
 ===================
 
+<<<<<<< HEAD
 SCIF apps within a Apptainer container are created using ``%app*``
+=======
+SCIF apps within a {Singularity} container are created using ``%app*``
+>>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 sections in a definition file. These ``%app*`` sections, which will impact the
 way the container runs a specific ``--app`` can exist alongside any of the 
 primary sections (i.e.  ``%post``,``%runscript``, ``%environment``, etc.).  As
