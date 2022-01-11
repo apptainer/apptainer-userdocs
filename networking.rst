@@ -20,11 +20,8 @@ configure a virtualized network for a container.
    containers would allow users to affect networking on the host, or
    in a cluster.
 
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-   apptainer 1.0 allows the administrator to permit a list of
-=======
-   {Singularity} 3.8 allows the administrator to permit a list of
+
+   {Singularity} 1.0 allows the administrator to permit a list of
 >>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 =======
    Aptainer allows the administrator to permit a list of
@@ -70,12 +67,7 @@ within the container.
 =========
 
 Passing the ``--net`` flag will cause the container to join a new network
-<<<<<<< HEAD
-namespace when it initiates.  New in apptainer 3.0, a bridge interface will
-=======
-namespace when it initiates.  New in {Singularity} 3.0, a bridge interface will
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
-also be set up by default.
+namespace when it initiates.  A bridge interface will also be set up by default.
 
 .. code-block:: none
 
@@ -107,11 +99,7 @@ bring up a dedicated interface inside container.
 When invoked, the ``--network`` option searches the apptainer configuration
 directory (commonly ``/usr/local/etc/apptainer/network/``) for the cni
 configuration file corresponding to the requested network type(s). Several
-<<<<<<< HEAD
-configuration files are installed with apptainer by default corresponding to
-=======
 configuration files are installed with {Singularity} by default corresponding to
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 the following network types:
 
     - bridge
@@ -128,11 +116,9 @@ Administrators can permit certain users or groups to request other
 network configurations through options in
 ``apptainer.conf``. Additional cni configuration files can be added
 to the ``network`` configuration directory as required, and
-<<<<<<< HEAD
-apptainer's provided configurations may also be modified.
+Apptainer's provided configurations may also be modified.
 =======
-{Singularity}'s provided configurations may also be modified.
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
+
 
 ``--network-args``
 ==================
