@@ -3,24 +3,14 @@
 ========================
 
 
-<<<<<<< HEAD
-Welcome to the Apptainer User Guide!
-
-This guide aims to give an introduction to apptainer, brief
-=======
 Welcome to the {Singularity} User Guide!
 
 This guide aims to give an introduction to {Singularity}, brief
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 installation instructions, and cover topics relevant to users building
 and running containers.
 
 For a detailed guide to installation and configuration, please see the
-<<<<<<< HEAD
-separate Admin Guide for this version of Apptainer at
-=======
 separate Admin Guide for this version of {Singularity} at
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 `<\{admindocs\}/>`__.
 
 
@@ -29,17 +19,10 @@ Getting Started & Background Information
 
 .. toctree::
    :maxdepth: 2
-<<<<<<< HEAD
-              
-   Introduction to apptainer <introduction>
-   Quick Start <quick_start>
-   Security in apptainer <security>
-=======
 
    Introduction to {Singularity} <introduction>
    Quick Start <quick_start>
    Security in {Singularity} <security>
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 
 Building Containers
 ===================
@@ -55,10 +38,6 @@ non-root user.
    Build a container <build_a_container>
    The Definition File <definition_files>
    Build Environment <build_env>
-<<<<<<< HEAD
-   apptainer and Docker <apptainer_and_docker>
-=======
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
    Fakeroot feature <fakeroot>
 
 Container Signing & Encryption
@@ -105,9 +84,6 @@ networking and security configuration.
    Security Options <security_options>
    Network Options <networking>
    Cgroups Support <cgroups>
-<<<<<<< HEAD
-   apptainer and MPI applications <mpi>
-=======
 
 Compatibility
 =============
@@ -124,7 +100,6 @@ applications.
    Support for Docker / OCI Containers <singularity_and_docker>
    OCI Runtime Support <oci_runtime>
    Singularity and MPI applications <mpi>
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
    GPU Support <gpu>
 
 Get Involved

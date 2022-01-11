@@ -73,11 +73,7 @@ listen to traffic, etc. Anything done in this dedicated network won't affect the
     ``--network-args="portmap=80:80/tcp"``
 
 .. warning::
-<<<<<<< HEAD
-    For unprivileged installation of apptainer or if ``allow setuid = no`` is set in ``apptainer.conf``
-=======
     For unprivileged installation of {Singularity} or if ``allow setuid = no`` is set in ``singularity.conf``
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
     users won't be able to use a ``fakeroot`` network.
 
 ----------------------------
@@ -88,13 +84,8 @@ Fakeroot depends on user mappings set in ``/etc/subuid`` and group mappings in `
 needs to be listed in those files with a valid mapping (see the admin-guide for details), if you can't edit
 the files ask an administrator.
 
-<<<<<<< HEAD
-In apptainer ``3.5`` a ``apptainer config fakeroot`` command has been added to allow configuration
-of the ``/etc/subuid`` and ``/etc/subgid`` mappings from the apptainer command line. You must be a root
-=======
 In {Singularity} ``3.5`` a ``singularity config fakeroot`` command has been added to allow configuration
 of the ``/etc/subuid`` and ``/etc/subgid`` mappings from the {Singularity} command line. You must be a root
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 user or run with ``sudo`` to use ``config fakeroot``, as the mapping files are security sensitive. See the
 admin-guide for more details.
 
@@ -118,11 +109,7 @@ Build
 
 With fakeroot an unprivileged user can now build an image from a definition file with few restrictions. Some bootstrap
 methods that require creation of block devices (like ``/dev/null``) may not always work correctly with **"fake root"**,
-<<<<<<< HEAD
-apptainer uses seccomp filters to give programs the illusion that block device creation succeeded. This appears to
-=======
 {Singularity} uses seccomp filters to give programs the illusion that block device creation succeeded. This appears to
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 work with ``yum`` bootstraps and *may* work with other bootstrap methods, although ``debootstrap`` is known to not work.
 
 Examples

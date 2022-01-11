@@ -68,11 +68,7 @@ The ``:latest`` is the container tag. Tags are used to have different
 version of the same container.
 
 .. note::
-<<<<<<< HEAD
-    When pushing your container, theres no need to add a ``.sif`` (apptainer Image Format) to the end of the container name, (like
-=======
     When pushing your container, there's no need to add a ``.sif`` (Singularity Image Format) to the end of the container name, (like
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
     on your local machine), because all containers on the library are SIF containers.
 
 Let's assume you have your container (v1.0.1), and you want to push
@@ -87,11 +83,7 @@ You can download the container with that tag by replacing the
 ``:latest``, with the tagged container you want to download.
 
 To set a description against the container image as you push it, use
-<<<<<<< HEAD
-the `-D` flag introduced in apptainer 3.7. This provides an
-=======
 the `-D` flag introduced in {Singularity} 3.7. This provides an
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 alternative to setting the description via the web interface:
 
 .. code-block:: console
@@ -102,11 +94,7 @@ alternative to setting the description via the web interface:
     Library storage: using 13.24 MiB out of 11.00 GiB quota (0.1% used)
     Container URL: https://cloud.sylabs.io/library/myuser/examples/alpine
 
-<<<<<<< HEAD
-Note that when you push to a library that supports it, apptainer 3.7
-=======
 Note that when you push to a library that supports it, {Singularity} 3.7
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 and above will report your quota usage and the direct URL to view the
 container in your web browser.
                
@@ -134,11 +122,7 @@ Here's a typical pull command:
     $ apptainer pull file-out.sif docker://alpine:latest
 
 .. note::
-<<<<<<< HEAD
-    If there's no tag after the container name, apptainer automatically will pull the container with the ``:latest`` tag.
-=======
     If there's no tag after the container name, {Singularity} automatically will pull the container with the ``:latest`` tag.
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 
 To pull a container with a specific tag, just add the tag to the library URL:
 

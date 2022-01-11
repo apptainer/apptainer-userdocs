@@ -7,19 +7,11 @@ Overview
 --------
 
 The ``remote`` command group allows users to manage the service endpoints
-<<<<<<< HEAD
-apptainer will interact with for many common command flows. This includes
-managing credentials for image storage services, remote builders, and key 
-servers used to locate public keys for SIF image verification. Currently,
-there are three main types of remote endpoints managed by this command group:
-the public Sylabs Cloud (or local apptainer Enterprise installation), OCI 
-=======
 {Singularity} will interact with for many common command flows. This includes
 managing credentials for image storage services, remote builders, and key
 servers used to locate public keys for SIF image verification. Currently,
 there are three main types of remote endpoints managed by this command group:
 the public Sylabs Cloud (or local {Singularity} Enterprise installation), OCI
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 registries and keyservers.
 
 -------------------
@@ -33,11 +25,7 @@ Sylabs introduced the online `Sylabs Cloud
 <https://cloud.sylabs.io/library>`_ their container
 images with others.
 
-<<<<<<< HEAD
-A fresh, default installation of apptainer is configured to connect
-=======
 A fresh, default installation of {Singularity} is configured to connect
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 to the public `cloud.sylabs.io <https://cloud.sylabs.io>`__
 services. If you only want to use the public services you just need to
 obtain an authentication token, and then ``apptainer remote login``:
@@ -72,11 +60,7 @@ If you see any errors you may need to check if your system requires
 proxy environment variables to be set, or if a firewall is blocking
 access to ``*.sylabs.io``. Talk to your system administrator.
 
-<<<<<<< HEAD
-You can interact with the public Sylabs Cloud using various apptainer commands:
-=======
 You can interact with the public Sylabs Cloud using various {Singularity} commands:
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 
 `pull <cli/apptainer_pull.html>`_,
 `push <cli/apptainer_push.html>`_,
@@ -111,16 +95,6 @@ Generally, users and administrators should manage remote endpoints
 using the ``apptainer remote`` command, and avoid editing
 ``remote.yaml`` configuration files directly.
 
-<<<<<<< HEAD
-.. note::
-
-   The following commands in this section configures apptainer to use
-   and authenticate to the public Sylabs Cloud, a private installation
-   of apptainer Enterprise, or community-developed services that are
-   API compatible.
-
-=======
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 List and Login to Remotes
 =========================
 
@@ -152,17 +126,10 @@ or was revoked:
 .. code-block:: console
 
     # Login to the default remote endpoint
-<<<<<<< HEAD
-    $ apptainer remote login
-                
-    # Login to another remote endpoint                
-    $ apptainer remote login <remote_name>
-=======
     $ singularity remote login
 
     # Login to another remote endpoint
     $ singularity remote login <remote_name>
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 
     # example...
     $ apptainer remote login SylabsCloud
@@ -179,13 +146,8 @@ replaces your existing credential. If you enter an incorrect token
 your existing token will not be replaced:
 
 .. code-block:: console
-<<<<<<< HEAD
-   
-    $ apptainer remote login
-=======
 
     $ singularity remote login
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
     An access token is already set for this remote. Replace it? [N/y]y
     Generate an access token at https://cloud.sylabs.io/auth/tokens, and paste it here.
     Token entered will be hidden for security.
@@ -208,22 +170,13 @@ To ``add`` a remote endpoint (for the current user only):
 
     $ apptainer remote add <remote_name> <remote_uri>
 
-<<<<<<< HEAD
-For example, if you have an installation of apptainer enterprise
-=======
 For example, if you have an installation of {Singularity} enterprise
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 hosted at enterprise.example.com:
 
 .. code-block:: none
 
-<<<<<<< HEAD
-    $ apptainer remote add myremote https://enterprise.example.com
-   
-=======
     $ singularity remote add myremote https://enterprise.example.com
 
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
     INFO:    Remote "myremote" added.
     INFO:    Authenticating with remote: myremote
     Generate an API Key at https://enterprise.example.com/auth/tokens, and paste here:
@@ -241,23 +194,13 @@ system) an administrative user should run:
 
     # example..
 
-<<<<<<< HEAD
-    $ sudo apptainer remote add --global company-remote https://enterprise.example.com
-    [sudo] password for dave: 
-=======
     $ sudo singularity remote add --global company-remote https://enterprise.example.com
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
     INFO:    Remote "company-remote" added.
     INFO:    Global option detected. Will not automatically log into remote.
 
 .. note:: Global remote configurations can only be modified by the
-<<<<<<< HEAD
-     root user and are stored in the ``etc/apptainer/remote.yaml``
-     file, at the apptainer installation location.
-=======
      root user and are stored in the ``etc/singularity/remote.yaml``
      file, at the {Singularity} installation location.
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 
 Conversely, to ``remove`` an endpoint:
 
@@ -325,11 +268,7 @@ The default remote shows up with a ``YES`` under the ``ACTIVE`` column in the ou
     * Active cloud services keyserver
 
 
-<<<<<<< HEAD
-apptainer 3.7 introduces the ability for an administrator to make a remote
-=======
 {Singularity} 3.7 introduces the ability for an administrator to make a remote
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 the only usable remote for the system by using the ``--exclusive`` flag:
 
 .. code-block:: none
@@ -372,31 +311,18 @@ If you do not want to switch remote with ``remote use`` you can:
 Keyserver Configurations
 ------------------------
 
-<<<<<<< HEAD
-By default, apptainer will use the keyserver correlated to the active cloud
-service endpoint. This behavior can be changed or supplemented via the
-``add-keyserver`` and ``remove-keyserver`` commands. These commands allow an
-administrator to create a global list of key servers used to verify container
-signatures by default, where ``order 1`` is the first in the list. Other 
-operations performed by apptainer that reach out to a keyserver will only
-=======
 By default, {Singularity} will use the keyserver correlated to the active cloud
 service endpoint. This behavior can be changed or supplemented via the
 ``add-keyserver`` and ``remove-keyserver`` commands. These commands allow an
 administrator to create a global list of key servers used to verify container
 signatures by default, where ``order 1`` is the first in the list. Other
 operations performed by {Singularity} that reach out to a keyserver will only
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 use the first entry, or ``order 1``, keyserver.
 
 When we list our default remotes, we can see that the default keyserver is
 ``https://keys.sylabs.io`` and the asterisk next to its order indicates that
 it is the keyserver associated to the current remote endpoint. We can also see
-<<<<<<< HEAD
-the ``INSECURE`` column indicating that apptainer will use TLS when
-=======
 the ``INSECURE`` column indicating that {Singularity} will use TLS when
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 communicating with the keyserver.
 
 .. code-block:: none
@@ -463,11 +389,7 @@ placed, we can use the ``--order`` flag:
 Since we specified ``--order 1``, the ``https://pgp.example.com`` keyserver was
 placed as the first entry in the list and the default keyserver was moved to
 second in the list. With the keyserver configuration above, all image default
-<<<<<<< HEAD
-image verification performed by apptainer will first reach out to
-=======
 image verification performed by {Singularity} will first reach out to
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 ``https://pgp.example.com`` and then to ``https://keys.sylabs.io`` when
 searching for public keys.
 
@@ -476,15 +398,9 @@ using it:
 
 .. code-block:: none
 
-<<<<<<< HEAD
-    $ apptainer remote login --username ian https://pgp.example.com
-    Password (or token when username is empty): 
-    INFO:    Token stored in /home/ian/.apptainer/remote.yaml
-=======
     $ singularity remote login --username ian https://pgp.example.com
     Password (or token when username is empty):
     INFO:    Token stored in /home/ian/.singularity/remote.yaml
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 
 Now we can see that ``https://pgp.example.com`` is logged in:
 
@@ -522,25 +438,15 @@ Now we can see that ``https://pgp.example.com`` is logged in:
 Managing OCI Registries
 -----------------------
 
-<<<<<<< HEAD
-It is common for users of apptainer to use OCI registries as sources for
-their container images. Some registries require credentials to access certain
-images or the registry itself. Previously, the only methods in apptainer to
-=======
 It is common for users of {Singularity} to use OCI registries as sources for
 their container images. Some registries require credentials to access certain
 images or the registry itself. Previously, the only methods in {Singularity} to
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 supply credentials to registries were to supply credentials for each command or
 set environment variables for a single registry.
 See :ref:`Authentication via Interactive Login <sec:authentication_via_docker_login>`
 and :ref:`Authentication via Environment Variables <sec:authentication_via_environment_variables>`
 
-<<<<<<< HEAD
-apptainer 3.7 introduces the ability for users to supply credentials on a per
-=======
 {Singularity} 3.7 introduces the ability for users to supply credentials on a per
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 registry basis with the ``remote`` command group.
 
 Users can login to an oci registry with the ``remote login`` command by
@@ -548,15 +454,9 @@ specifying a ``docker://`` prefix to the registry hostname:
 
 .. code-block:: none
 
-<<<<<<< HEAD
-    $ apptainer remote login --username ian docker://docker.io
-    Password (or token when username is empty): 
-    INFO:    Token stored in /home/ian/.apptainer/remote.yaml
-=======
     $ singularity remote login --username ian docker://docker.io
     Password (or token when username is empty):
     INFO:    Token stored in /home/ian/.singularity/remote.yaml
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 
     $ apptainer remote list
     Cloud Services Endpoints
@@ -580,30 +480,18 @@ specifying a ``docker://`` prefix to the registry hostname:
     docker://docker.io  NO
 
 Now we can see that ``docker://docker.io`` shows up under
-<<<<<<< HEAD
-``Authenticated Logins`` and apptainer will automatically supply the
-configured credentials when interacting with DockerHub. We can also see
-the ``INSECURE`` column indicating that apptainer will use TLS when
-=======
 ``Authenticated Logins`` and {Singularity} will automatically supply the
 configured credentials when interacting with DockerHub. We can also see
 the ``INSECURE`` column indicating that {Singularity} will use TLS when
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 communicating with the registry.
 
 We can login to multiple OCI registries at the same time:
 
 .. code-block:: none
 
-<<<<<<< HEAD
-    $ apptainer remote login --username ian docker://registry.example.com
-    Password (or token when username is empty): 
-    INFO:    Token stored in /home/ian/.apptainer/remote.yaml
-=======
     $ singularity remote login --username ian docker://registry.example.com
     Password (or token when username is empty):
     INFO:    Token stored in /home/ian/.singularity/remote.yaml
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 
     $ apptainer remote list
     Cloud Services Endpoints
@@ -627,13 +515,8 @@ We can login to multiple OCI registries at the same time:
     docker://docker.io             NO
     docker://registry.example.com  NO
 
-<<<<<<< HEAD
-apptainer will supply the correct credentials for the registry based off of
-the hostname when using the following commands with a ``docker://`` or 
-=======
 {Singularity} will supply the correct credentials for the registry based off of
 the hostname when using the following commands with a ``docker://`` or
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 ``oras://`` URI:
 
 `pull <cli/apptainer_pull.html>`_,

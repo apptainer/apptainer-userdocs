@@ -12,10 +12,6 @@ def variableReplace(app, docname, source):
 # Add the needed variables to be replaced either on code or on text on the next
 # dictionary structure.
 variable_replacements = {
-<<<<<<< HEAD
-    "{InstallationVersion}" : "3.8.0",
-    "\{admindocs\}" : "https://apptainer.org/admin-docs/3.8"
-=======
     "{InstallationVersion}" : "3.8.5",
     "\{admindocs\}" : "https://singularity.hpcng.org/admin-docs/3.8",
     "\{version\}": "3.8",
@@ -25,7 +21,6 @@ variable_replacements = {
     # replace to SingularityPRO so that it is clearer where docs
     # diverge a bit from Singularity<->SingularityPRO due to long-term backports etc.
     "{Singularity}": "Singularity",
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 }
 
 

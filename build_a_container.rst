@@ -11,13 +11,8 @@ Build a Container
 download and assemble existing containers from external resources like the
 `Container Library <https://cloud.sylabs.io/library>`_ and
 `Docker Hub <https://hub.docker.com/>`_. You can use it to convert containers
-<<<<<<< HEAD
-between the formats supported by Apptainer. And you can use it in conjunction
-with a :ref:`apptainer definition <definition-files>` file to create a
-=======
 between the formats supported by {Singularity}. And you can use it in conjunction
 with a :ref:`{Singularity} definition <definition-files>` file to create a
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 container from scratch and customized it to fit your needs.
 
 --------
@@ -42,11 +37,7 @@ can be one of the following:
 
 -  path to a **directory** to build from a sandbox
 
-<<<<<<< HEAD
--  path to a :ref:`singularity definition file <definition-files>`
-=======
 -  path to a :ref:`{Singularity} definition file <definition-files>`
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 
 ``build`` can produce containers in two different formats that can be specified
 as follows.
@@ -71,11 +62,7 @@ Library.
 
 .. code-block:: none
 
-<<<<<<< HEAD
-    $ sudo apptainer build lolcow.sif library://sylabs-jms/testing/lolcow
-=======
     $ sudo singularity build lolcow.sif library://lolcow
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 
 The first argument (``lolcow.sif``) specifies a path and name for your
 container. The second argument (``library://lolcow``) gives
@@ -88,19 +75,11 @@ Downloading an existing container from Docker Hub
 -------------------------------------------------
 
 You can use ``build`` to download layers from Docker Hub and assemble them into
-<<<<<<< HEAD
-Apptainer containers.
-
-.. code-block:: none
-
-    $ sudo apptainer build lolcow.sif docker://godlovedc/lolcow
-=======
 {Singularity} containers.
 
 .. code-block:: none
 
     $ sudo singularity build lolcow.sif docker://sylabsio/lolcow
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 
 .. _create_a_writable_container:
 
@@ -115,11 +94,7 @@ recommended to do so as root.
 
 .. code-block:: none
 
-<<<<<<< HEAD
-    $ sudo apptainer build --sandbox lolcow/ library://sylabs-jms/testing/lolcow
-=======
     $ sudo singularity build --sandbox lolcow/ library://lolcow
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 
 The resulting directory operates just like a container in a SIF file. To make
 changes within the container, use the ``--writable`` flag when you invoke your
@@ -145,18 +120,6 @@ you wanted to convert it to SIF container called ``production.sif`` you could:
 
 Use care when converting a sandbox directory to the default SIF format. If
 changes were made to the writable container before conversion, there is no
-<<<<<<< HEAD
-record of those changes in the Apptainer definition file rendering your
-container non-reproducible. It is a best practice to build your immutable
-production containers directly from a Apptainer definition file instead.
-
------------------------------------------------------
-Building containers from Apptainer definition files
------------------------------------------------------
-
-Of course, Apptainer definition files can be used as the target when building
-a container. For detailed information on writing Apptainer definition files,
-=======
 record of those changes in the {Singularity} definition file rendering your
 container non-reproducible. It is a best practice to build your immutable
 production containers directly from a {Singularity} definition file instead.
@@ -167,7 +130,6 @@ Building containers from {Singularity} definition files
 
 Of course, {Singularity} definition files can be used as the target when building
 a container. For detailed information on writing {Singularity} definition files,
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 please see the :doc:`Container Definition docs <definition_files>`. Let’s say
 you already have the following container definition file called ``lolcow.def``,
 and you want to use it to build a SIF container.
@@ -206,15 +168,10 @@ requires root privileges.
 -----------------------------
 Building encrypted containers
 -----------------------------
-<<<<<<< HEAD
-It is possible to build and run encrypted containers.  The containers are decrypted at runtime entirely in kernel space, 
-meaning that no intermediate decrypted data is ever present on disk or in memory.  See :ref:`encrypted containers <encryption>` for more details.
-=======
 Beginning in {Singularity} 3.4.0 it is possible to build and run encrypted
 containers.  The containers are decrypted at runtime entirely in kernel space,
 meaning that no intermediate decrypted data is ever present on disk or in
 memory.  See :ref:`encrypted containers <encryption>` for more details.
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 
 -------------
 Build options
@@ -223,11 +180,7 @@ Build options
 ``--builder``
 =============
 
-<<<<<<< HEAD
-Apptainer provides an option to perform a remote build. The
-=======
 {Singularity} 3.0 introduces the option to perform a remote build. The
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 ``--builder`` option allows you to specify a URL to a different build service.
 For instance, you may need to specify a URL to build to an on-premises
 installation of the remote builder.  This option must be used in conjunction
@@ -243,17 +196,10 @@ without echoing any output to your terminal.
 ``--encrypt``
 ==============
 
-<<<<<<< HEAD
-Specifies that Apptainer should use a secret saved in either the 
-``APPTAINER_ENCRYPTION_PASSPHRASE`` or ``APPTAINER_ENCRYPTION_PEM_PATH``
-environment variable to build an encrypted container.  See :ref:`encrypted 
-containers <encryption>` for more details.   
-=======
 Specifies that {Singularity} should use a secret saved in either the
 ``SINGULARITY_ENCRYPTION_PASSPHRASE`` or ``SINGULARITY_ENCRYPTION_PEM_PATH``
 environment variable to build an encrypted container.  See :ref:`encrypted
 containers <encryption>` for more details.
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 
 ``--fakeroot``
 ==============
@@ -264,21 +210,13 @@ fakeroot feature <fakeroot>` for details.
 ``--force``
 ===========
 
-<<<<<<< HEAD
-The ``--force`` option will delete and overwrite an existing Apptainer image
-=======
 The ``--force`` option will delete and overwrite an existing {Singularity} image
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 without presenting the normal interactive prompt.
 
 ``--json``
 ==========
 
-<<<<<<< HEAD
-The ``--json`` option will force Apptainer to interpret a given definition
-=======
 The ``--json`` option will force {Singularity} to interpret a given definition
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 file as a json.
 
 ``--library``
@@ -314,11 +252,7 @@ container file system at build time. See :ref:`encrypted containers
 ``--remote``
 ============
 
-<<<<<<< HEAD
-Apptainer gives the ability to build a container on an external
-=======
 {Singularity} 3.0 introduces the ability to build a container on an external
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 resource running a remote builder.  (The default remote builder is located at
 "https://cloud.sylabs.io/builder".)
 
@@ -336,11 +270,7 @@ sections.  Acceptable arguments include ``all``, ``none`` or any combination of
 the following: ``setup``, ``post``, ``files``, ``environment``, ``test``,
 ``labels``.
 
-<<<<<<< HEAD
-Under normal build conditions, the Apptainer definition file is saved into
-=======
 Under normal build conditions, the {Singularity} definition file is saved into
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 a container’s meta-data so that there is a record showing how the container was
 built. Using the ``--section`` option may render this meta-data useless, so use
 care if you value reproducibility.
@@ -355,11 +285,7 @@ start from scratch).
 By default if you build into an existing sandbox container, the  ``build``
 command will prompt you to decide whether or not to overwrite the container.
 Instead of this behavior you can use the ``--update`` option to build _into_ an
-<<<<<<< HEAD
-existing container. This will cause Apptainer to skip the header and build
-=======
 existing container. This will cause {Singularity} to skip the header and build
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 any sections that are in the definition file into the existing container.
 
 The ``--update`` option is only valid when used with sandbox containers.

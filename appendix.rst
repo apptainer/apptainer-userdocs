@@ -10,17 +10,10 @@ Appendix
 .. _apptainer-environment-variables:
 
 
-<<<<<<< HEAD
-Apptainer's environment variables
-----------------------------------
-
-Apptainer comes with some environment variables you can set or modify depending on your needs.
-=======
 {Singularity}'s environment variables
 -------------------------------------
 
 {Singularity} 3.0 comes with some environment variables you can set or modify depending on your needs.
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 You can see them listed alphabetically below with their respective functionality.
 
 ``A``
@@ -61,11 +54,7 @@ You can see them listed alphabetically below with their respective functionality
 ``D``
 ^^^^^
 
-<<<<<<< HEAD
 #. **APPTAINER_DEFFILE**: Shows the Apptainer recipe that was used to generate the image.
-=======
-#. **SINGULARITY_DEFFILE**: Shows the {Singularity} recipe that was used to generate the image.
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 
 #. **APPTAINER_DESC**: Contains a description of the capabilities.
 
@@ -81,21 +70,7 @@ You can see them listed alphabetically below with their respective functionality
 
 #. **APPTAINER_DOCKER_PASSWORD**: To specify the password for docker authentication.
 
-<<<<<<< HEAD
 #. **APPTAINER_DROP_CAPS**: To specify a list (comma separated string) of capabilities to be dropped. Default is an empty string.
-=======
-#. **SINGULARITY_DOWNLOAD_CONCURRENCY**: To specify how many concurrent streams
-   when downloading (pulling) an image from cloud library.
-
-#. **SINGULARITY_DOWNLOAD_PART_SIZE**: To specify the size of each part (bytes)
-   when concurrent downloads are enabled.
-
-#. **SINGULARITY_DOWNLOAD_BUFFER_SIZE**: To specify the transfer buffer size
-   (bytes) when concurrent downloads are enabled.
-
-#. **SINGULARITY_DROP_CAPS**: To specify a list (comma separated string)
-   of capabilities to be dropped. Default is an empty string.
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 
 ``E``
 ^^^^^
@@ -179,15 +154,7 @@ You can see them listed alphabetically below with their respective functionality
 
 #. **APPTAINER_NO_PRIVS**: To drop all the privileges from root user in the container. Default is set to false.
 
-<<<<<<< HEAD
 #. **APPTAINER_NV**: To enable experimental Nvidia support. Default is set to false.
-=======
-#. **SINGULARITY_NV**: To enable Nvidia GPU support. Default is
-   set to false.
-
-#. **SINGULARITY_NVCCLI**: To use nvidia-container-cli for container GPU setup
-   (experimental, only unprivileged).
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 
 ``O``
 ^^^^^
@@ -249,22 +216,14 @@ You can see them listed alphabetically below with their respective functionality
 
 #. **APPTAINER_USER**: Used to specify a string of capabilities for the given user.
 
-<<<<<<< HEAD
 #. **APPTAINER_USERNS** and **APPTAINER_UNSHARE_USERNS**: To specify that the container will run in a new user namespace, allowing Apptainer to run completely unprivileged on recent kernels. This may not support every feature of Apptainer. (Sandbox image only). Default is set to false.
-=======
-#. **SINGULARITY_USERNS** and **SINGULARITY_UNSHARE_USERNS**: To specify that the container will run in a new user namespace, allowing {Singularity} to run completely unprivileged on recent kernels. This may not support every feature of {Singularity}. (Sandbox image only). Default is set to false.
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 
 ``W``
 ^^^^^
 
 #. **APPTAINER_WORKDIR**: The working directory to be used for ``/tmp``, ``/var/tmp`` and ``$HOME`` (if ``-c`` or ``--contain`` was also used)
 
-<<<<<<< HEAD
 #. **APPTAINER_WRITABLE**: By default, all Apptainer containers are available as read only, this option makes the file system accessible as read/write. Default set to false.
-=======
-#. **SINGULARITY_WRITABLE**: By default, all {Singularity} containers are available as read only, this option makes the file system accessible as read/write. Default set to false.
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 
 #. **APPTAINER_WRITABLE_TMPFS**: Makes the file system accessible as read-write with non-persistent data (with overlay support only). Default is set to false.
 
@@ -348,11 +307,7 @@ Overview
 Docker images are comprised of layers that are assembled at runtime to create an
 image. You can use Docker layers to create a base image, and then add your own
 custom software. For example, you might use Docker’s Ubuntu image layers to
-<<<<<<< HEAD
-create an Ubuntu Apptainer container. You could do the same with CentOS,
-=======
 create an Ubuntu {Singularity} container. You could do the same with CentOS,
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 Debian, Arch, Suse, Alpine, BusyBox, etc.
 
 Or maybe you want a container that already has software installed. For instance,
@@ -361,11 +316,7 @@ GPU, but you don’t want to install from scratch. You can start with one of the
 ``nvidia/cuda`` containers and install your software on top of that.
 
 Or perhaps you have already invested in Docker and created your own Docker
-<<<<<<< HEAD
-containers. If so, you can seamlessly convert them to Apptainer with the
-=======
 containers. If so, you can seamlessly convert them to {Singularity} with the
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 ``docker`` bootstrap module.
 
 
@@ -389,11 +340,7 @@ optional and defaults to ``library``. This is the correct namespace to use for
 some official containers (ubuntu for example). ``tag`` is also optional and will
 default to ``latest``
 
-<<<<<<< HEAD
-See :ref:`apptainer and Docker <apptainer-and-docker>` for more detailed
-=======
 See :ref:`{Singularity} and Docker <singularity-and-docker>` for more detailed
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 info on using Docker registries.
 
 .. code-block:: apptainer
@@ -408,23 +355,6 @@ The Registry keyword is optional. It will default to ``index.docker.io``.
 
 The Namespace keyword is optional. It will default to ``library``.
 
-<<<<<<< HEAD
-.. code-block:: apptainer
-
-    IncludeCmd: yes
-
-The IncludeCmd keyword is optional. If included, and if a ``%runscript`` is not
-specified, a Docker ``CMD`` will take precedence over ``ENTRYPOINT`` and will be
-used as a runscript. Note that the ``IncludeCmd`` keyword is considered valid if
-it is not empty! This means that ``IncludeCmd: yes`` and ``IncludeCmd: no`` are
-identical. In both cases the ``IncludeCmd`` keyword is not empty, so the Docker
-``CMD`` will take precedence over an ``ENTRYPOINT``.
-
- See :ref:`apptainer and Docker <apptainer-and-docker>` for more info on
- order of operations for determining a runscript.
-
-=======
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 Notes
 """""
 
@@ -483,11 +413,7 @@ Notes
 
 When bootstrapping from a Apptainer Hub image, all previous definition files
 that led to the creation of the current image will be stored in a directory
-<<<<<<< HEAD
-within the container called ``/.apptainer.d/bootstrap_history``. Apptainer
-=======
 within the container called ``/.singularity.d/bootstrap_history``. {Singularity}
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 will also alert you if environment variables have been changed between the base
 image and the new image during bootstrap.
 
@@ -534,11 +460,7 @@ Also,``tag`` is mandatory that refers to the version of image you want to use.
 
 .. _sec:build-localimage:
 
-<<<<<<< HEAD
-This module allows you to build a container from an existing Apptainer
-=======
 This module allows you to build a container from an existing {Singularity}
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 container on your host system. The name is somewhat misleading because your
 container can be in either image or directory format.
 
@@ -585,11 +507,7 @@ Notes
 
 When building from a local container, all previous definition files that led to
 the creation of the current container will be stored in a directory within the
-<<<<<<< HEAD
-container called ``/.apptainer.d/bootstrap_history``. Apptainer will also
-=======
 container called ``/.singularity.d/bootstrap_history``. {Singularity} will also
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 alert you if environment variables have been changed between the base image and
 the new image during bootstrap.
 
@@ -832,11 +750,7 @@ This module allows you to build a Suse style container from a mirror URI.
 
 .. note::
    ``zypper`` version 1.11.20 or greater is required on the host system, as
-<<<<<<< HEAD
-   apptainer requires the ``--releasever`` flag.
-=======
    {Singularity} requires the ``--releasever`` flag.
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 
 Overview
 """"""""
@@ -877,15 +791,9 @@ zypper build module is ``zypper`` itself.
 ``docker-daemon`` and ``docker-archive`` bootstrap agents
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-<<<<<<< HEAD
-If you are using docker locally there are two options for creating Apptainer
-images without the need for a repository. You can either build a SIF from a 
-``docker-save`` tar file or you can convert any docker image present in 
-=======
 If you are using docker locally there are two options for creating {Singularity}
 images without the need for a repository. You can either build a SIF from a
 ``docker-save`` tar file or you can convert any docker image present in
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 docker's daemon internal storage.
 
 
@@ -911,11 +819,7 @@ residing in docker's daemon internal storage:
     Storing signatures
     2019/12/11 14:53:24  info unpack layer: sha256:eb7c47c7f0fd0054242f35366d166e6b041dfb0b89e5f93a82ad3a3206222502
     INFO:    Creating SIF file...
-<<<<<<< HEAD
-    apptainer> 
-=======
     Singularity>
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 
 while ``docker-archive`` permits you to do the same thing starting from a docker
 image stored in a ``docker-save`` formatted tar file:
@@ -934,20 +838,12 @@ image stored in a ``docker-save`` formatted tar file:
     Storing signatures
     2019/12/11 15:25:09  info unpack layer: sha256:eb7c47c7f0fd0054242f35366d166e6b041dfb0b89e5f93a82ad3a3206222502
     INFO:    Creating SIF file...
-<<<<<<< HEAD
-    apptainer> 
-=======
     Singularity>
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 
 Keywords
 """"""""
 
-<<<<<<< HEAD
-The ``docker-daemon`` bootstrap agent can be used in a Apptainer definition file 
-=======
 The ``docker-daemon`` bootstrap agent can be used in a {Singularity} definition file
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 as follows:
 
 .. code-block:: apptainer

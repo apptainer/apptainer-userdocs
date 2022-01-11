@@ -290,11 +290,7 @@ has been built based on the hybrid model:
     $ mpirun -n <NUMBER_OF_RANKS> apptainer exec <PATH/TO/MY/IMAGE> </PATH/TO/BINARY/WITHIN/CONTAINER>
 
 Practically, this command will first start a process instantiating ``mpirun``
-<<<<<<< HEAD
-and then apptainer containers on compute nodes. Finally, when the containers
-=======
 and then {Singularity} containers on compute nodes. Finally, when the containers
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 start, the MPI binary is executed:
 
 .. code-block:: none
@@ -316,11 +312,7 @@ Bind model
 Similar to the *Hybrid Approach*, the basic idea behind the *Bind Approach* is to start the MPI
 application by calling the MPI launcher (e.g., `mpirun`) from the host. The main difference between
 the hybrid and bind approach is the fact that with the bind approach, the container usually does
-<<<<<<< HEAD
-not include any MPI implementation. This means that apptainer needs to mount/bind the MPI
-=======
 not include any MPI implementation. This means that {Singularity} needs to mount/bind the MPI
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 available on the host into the container.
 
 Technically this requires two steps:
@@ -341,11 +333,7 @@ The drawbacks are:
   - The user must ensure that the host MPI is compatible with the MPI used to compile
     and install the application in the container.
 
-<<<<<<< HEAD
-The creation of a apptainer container for the bind model is based on the following steps:
-=======
 The creation of a {Singularity} container for the bind model is based on the following steps:
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 
 1. Compile your application on a system with the target MPI implementation, as you would do
    to install your application on any system.
@@ -434,11 +422,7 @@ Batch Scheduler / Slurm
 If your target system is setup with a batch system such as SLURM, a standard
 way to execute MPI applications is through a batch script. The following
 example illustrates the context of a batch script for Slurm that aims at
-<<<<<<< HEAD
-starting a apptainer container on each node allocated to the execution of
-=======
 starting a {Singularity} container on each node allocated to the execution of
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 the job. It can easily be adapted for all major batch systems available.
 
 .. code-block:: none
@@ -471,11 +455,7 @@ Alternative Launchers
 On many systems it is common to use an alternative launcher to start
 MPI applications, e.g. Slurm's ``srun`` rather than the ``mpirun``
 provided by the MPI installation. This approach is supported with
-<<<<<<< HEAD
-apptainer as long as the container MPI version supports the same
-=======
 {Singularity} as long as the container MPI version supports the same
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 process management interface (e.g. PMI2 / PMIx) and version as is used
 by the launcher.
 
@@ -492,11 +472,7 @@ that MPI implementations are built to support them. You may need to
 install or bind Infiniband/Omnipath libraries into your containers
 when using these interconnects.
 
-<<<<<<< HEAD
-By default apptainer exposes every device in ``/dev`` to the
-=======
 By default {Singularity} exposes every device in ``/dev`` to the
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 container. If you run a container using the ``--contain`` or
 ``--containall`` flags a minimal ``/dev`` is used instead. You may
 need to bind in additional ``/dev/`` entries manually to
@@ -534,11 +510,7 @@ interconnect libraries may not be available or configured properly
 with the MPI stack in the container.
 
 Please check the following things carefully before asking questions in
-<<<<<<< HEAD
-the apptainer community:
-=======
 the {Singularity} community:
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 
  - For the hybrid mode, is the MPI version on the host compatible with
    the version in the container? Newer MPI versions can generally
@@ -553,15 +525,8 @@ the {Singularity} community:
    container? Is the MPI stack in the container configured correctly
    to use them?
 
-<<<<<<< HEAD
-We recommend using the apptainer Google Group or Slack Channel to
-ask for MPI advice from the apptainer community. HPC cluster
-configurations vary greatly and most MPI problems are related to MPI /
-interconnect configuration, and not caused by issues in apptainer
-=======
 We recommend using the {Singularity} Google Group or Slack Channel to
 ask for MPI advice from the {Singularity} community. HPC cluster
 configurations vary greatly and most MPI problems are related to MPI /
 interconnect configuration, and not caused by issues in {Singularity}
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 itself.

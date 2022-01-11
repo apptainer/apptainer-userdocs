@@ -4,34 +4,16 @@
 Limiting Container Resources with Cgroups
 =========================================
 
-<<<<<<< HEAD
-Starting in singularity/apptainer 3.0, users have the ability to limit container resources
-using cgroups.
-=======
 The cgroups (control groups) functionality of the Linux kernel allows you to
 limit and meter the resources used by a process, or group of processes. Using
 cgroups you can limit memory and CPU usage. You can also rate limit block IO,
 network IO, and control access to device nodes.
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 
 There are two versions of cgroups in common use. Cgroups v1 sets resource limits
 for a process within separate hierarchies per resource class. Cgroups v2, the
 default in newer Linux distributions, implements a unified hierarchy,
 simplifying the structure of resource limits on processes.
 
-<<<<<<< HEAD
-apptainer cgroups support can be configured and utilized via a TOML file. An
-example file is typically installed at ``/usr/local/etc/apptainer/cgroups/cgroups.toml`` (but may also be installed 
-in other locations such as ``/etc/apptainer/cgroups/cgroups.toml`` depending 
-on your installation method).  You can copy and edit this file to suit your 
-needs.  Then when you need to limit your container resources, apply the settings 
-in the TOML file by using the path as an argument to the ``--apply-cgroups`` 
-option like so:
-
-.. code-block:: none
-
-    $ sudo apptainer shell --apply-cgroups /path/to/cgroups.toml my_container.sif
-=======
 * v1 documentation: https://www.kernel.org/doc/Documentation/cgroup-v1/cgroups.txt
 * v2 documentation: https://www.kernel.org/doc/Documentation/cgroup-v2.txt
 
@@ -79,7 +61,6 @@ You can read more about how systemd can control resources uses at the link
 below, which details the properties you can set using ``systemd-run``.
 
 https://www.freedesktop.org/software/systemd/man/systemd.resource-control.html
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 
 ------------------------------------
 Using Singularity to Create a Cgroup
@@ -136,12 +117,7 @@ Start your container, applying the toml file, e.g.:
 
 .. code-block:: none
 
-<<<<<<< HEAD
-    $ sudo apptainer instance start --apply-cgroups /home/$USER/cgroups.toml \
-        my_container.sif instance1
-=======
   $ sudo singularity run --apply-cgroups path/to/cgroups.toml library://alpine
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 
 After that, you can verify that the container is only using 500MB of memory.
 This example assumes that there is only one running container. If you are
@@ -150,30 +126,14 @@ running multiple containers you will find multiple cgroups trees under the
 
 .. code-block:: none
 
-<<<<<<< HEAD
-    $ cat /sys/fs/cgroup/memory/apptainer/*/memory.limit_in_bytes
-=======
   # cgroups v1
   $ cat /sys/fs/cgroup/memory/singularity/*/memory.limit_in_bytes
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
     524288000
 
   # cgroups v2 - note translation of memory.limit_in_bytes -> memory.max
   $ cat /sys/fs/cgroup/singularity/*/memory.max
   524288000
 
-<<<<<<< HEAD
-After you are finished with this example, be sure to cleanup your instance with
-the following command.
-
-.. code-block:: none
-
-    $ sudo apptainer instance stop instance1
-
-Similarly, the remaining examples can be tested by starting instances and
-examining the contents of the appropriate subdirectories of ``/sys/fs/cgroup/``.
-=======
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 
 Limiting CPU
 ------------

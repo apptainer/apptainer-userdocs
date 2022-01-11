@@ -11,11 +11,7 @@ root file system.
 Overview
 --------
 
-<<<<<<< HEAD
-In apptainer >= v3.4.0 a new feature to build and run encrypted containers has
-=======
 In {Singularity} >= v3.4.0 a new feature to build and run encrypted containers has
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 been added to allow users to encrypt the file system image within a SIF.  This
 encryption can be performed using either a passphrase or asymmetrically via an
 RSA key pair in Privacy Enhanced Mail (PEM/PKCS1) format. The container is encrypted
@@ -42,11 +38,7 @@ file is more secure and is therefore recommended for production use.
 
 .. note::
 
-<<<<<<< HEAD
-        In apptainer 3.4, the definition file stored with the container will
-=======
         In {Singularity} 3.4, the definition file stored with the container will
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
         not be encrypted. If it contains sensitive information you should remove
         it before encryption via ``apptainer sif del 1 myimage.sif``. Metadata
         encryption will be addressed in a future release.
@@ -124,11 +116,7 @@ plain text passphrase in a file (e.g. ``secret.txt``) and use it like so.
 PEM File Encryption
 ===================
 
-<<<<<<< HEAD
-apptainer currently supports RSA encryption using a public/private key-pair. 
-=======
 {Singularity} currently supports RSA encryption using a public/private key-pair. 
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 Keys are supplied in PEM format. The public key is used to encrypt containers that
 can be decrypted on a host that has access to the secret private key.
 
@@ -232,8 +220,4 @@ Running using an environment variable
 
 .. code-block:: none
 
-<<<<<<< HEAD
-        $ APPTAINER_ENCRYPTION_PEM_PATH=rsa_pri.pem apptainer run encrypted.sif
-=======
         $ SINGULARITY_ENCRYPTION_PEM_PATH=rsa_pri.pem singularity run encrypted.sif
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
