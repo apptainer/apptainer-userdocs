@@ -50,18 +50,22 @@ On Debian-based systems, including Ubuntu:
       libseccomp-dev \
       pkg-config \
       squashfs-tools \
-      cryptsetup
+      cryptsetup \
+      curl wget git
 
 On CentOS/RHEL:
 
 .. code::
    # Install basic tools for compiling
    sudo yum groupinstall -y 'Development Tools'
+   # Ensure EPEL repository is available
+   sudo yum install -y epel-release
    # Install RPM packages for dependencies
    sudo yum install -y \
       libseccomp-devel \
       squashfs-tools \
-      cryptsetup
+      cryptsetup \
+      wget git
 
 There are 3 broad steps to installing {Singularity}:
 
@@ -83,6 +87,16 @@ of Go. This corresponds to the Go Release Maintenance Policy and Security
 Policy, ensuring critical bug fixes and security patches are available for all
 supported language versions.
 
+If you are building rpm or debian packages using the packaging supplied
+in the ``dist`` directory, and the operating system distribution of Go
+is below the minimum required by {Singularity}, the packages can make
+use of the native Go to compile a newer version of Go whose source
+tarball is included with the package source.  That capability is
+supplied so packages can be built on systems with no access to the
+internet.  If you are not building a package or don't want to incur the
+overhead of compiling the Go toolchain from source, install a local
+binary copy of Go as follows.
+
 .. note::
 
    If you have previously installed Go from a download, rather than an
@@ -99,7 +113,7 @@ page). Alternatively, follow the commands here:
 
 .. code-block:: none
 
-    $ export VERSION=1.17.2 OS=linux ARCH=amd64 && \  # Replace the values as needed
+    $ export VERSION=1.17.5 OS=linux ARCH=amd64 && \  # Replace the values as needed
       wget https://dl.google.com/go/go$VERSION.$OS-$ARCH.tar.gz && \ # Downloads the required Go package
       sudo tar -C /usr/local -xzvf go$VERSION.$OS-$ARCH.tar.gz && \ # Extracts the archive
       rm go$VERSION.$OS-$ARCH.tar.gz    # Deletes the ``tar`` file
