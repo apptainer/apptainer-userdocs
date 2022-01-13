@@ -758,10 +758,10 @@ similar to this:
    learn more about {Singularity}, I thought these items might be of interest:
 
        - Security: A discussion of security concerns is discussed at
-       \{admindocs\}/admin_quickstart.html
+       {admindocs}/admin_quickstart.html
 
        - Installation:
-       \{admindocs\}/installation.html
+       {admindocs}/installation.html
 
    If you have questions about any of the above, you can contact one of the
    sources listed at https://singularity.hpcng.org/help. I can do my best

@@ -36,7 +36,7 @@ open raw sockets so that they can use ``ping`` in a container where the
 binary is controlled via capabilities. For information about how to
 manage capabilities as an admin please refer to the `capability admin
 docs
-<\{admindocs\}/configfiles.html#capability.json>`_.
+<{admindocs}/configfiles.html#capability.json>`_.
 
 To take advantage of this granted capability as a user, ``pinger`` must
 also request the capability when executing a container with the
@@ -69,9 +69,9 @@ spawning containers as the root user to help minimize attack surfaces.
 With a default installation of {Singularity}, containers created by the
 root user will maintain all capabilities. This behavior is configurable
 if desired. Check out the `capability configuration
-<\{admindocs\}/configfiles.html#capability.json>`_
+<{admindocs}/configfiles.html#capability.json>`_
 and `root default capabilities
-<\{admindocs\}/configfiles.html#setuid-and-capabilities>`_
+<{admindocs}/configfiles.html#setuid-and-capabilities>`_
 sections of the admin docs for more information.
 
 Assuming the root user will execute containers with the ``CAP_NET_RAW``

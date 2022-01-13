@@ -7,7 +7,7 @@
 .. _sec:bindpaths:
 
 Unless `disabled by the system administrator
-<\{admindocs\}/configfiles.html#bind-mount-management>`_,
+<{admindocs}/configfiles.html#bind-mount-management>`_,
 {Singularity} allows you to map directories on your host system to
 directories within your container using bind mounts. This allows you to
 read and write data on the host system with ease.
@@ -68,7 +68,7 @@ Multiple mounts can be disabled by specifying them separated by commas:
 *************************
 
 Unless the system administrator has `disabled user control of binds
-<\{admindocs\}/configfiles.html#bind-mount-management>`_,
+<{admindocs}/configfiles.html#bind-mount-management>`_,
 you will be able to request your own bind paths within your container.
 
 The {Singularity} action commands (``run``, ``exec``, ``shell``, and
