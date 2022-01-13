@@ -73,7 +73,7 @@ listen to traffic, etc. Anything done in this dedicated network won't affect the
     ``--network-args="portmap=80:80/tcp"``
 
 .. warning::
-    For unprivileged installation of {Singularity} or if ``allow setuid = no`` is set in ``singularity.conf``
+    For unprivileged installation of {Singularity} or if ``allow setuid = no`` is set in ``apptainer.conf``
     users won't be able to use a ``fakeroot`` network.
 
 ----------------------------
@@ -81,13 +81,13 @@ Requirements / Configuration
 ----------------------------
 
 Fakeroot depends on user mappings set in ``/etc/subuid`` and group mappings in ``/etc/subgid``, so your username 
-needs to be listed in those files with a valid mapping (see the admin-guide for details), if you can't edit
+needs to be listed in those files with a valid mapping (see the `<\{admindocs\}/>` for details), if you can't edit
 the files ask an administrator.
 
-In {Singularity} ``3.5`` a ``singularity config fakeroot`` command has been added to allow configuration
+In {Singularity} you can set `fakeroot` by simply running ``apptainer config fakeroot``, and then will set configuration
 of the ``/etc/subuid`` and ``/etc/subgid`` mappings from the {Singularity} command line. You must be a root
 user or run with ``sudo`` to use ``config fakeroot``, as the mapping files are security sensitive. See the
-admin-guide for more details.
+`<\{admindocs\}/>` for more details.
 
 -----
 Usage

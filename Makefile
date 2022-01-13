@@ -15,7 +15,10 @@ APPTAINER_DIR = $(CURDIR)/vendor/src/github.com/apptainer
 =======
 # This is a custom target that represents the CLI docs generated from Singularity
 CLIDOCS = cli/singularity.rst
+<<<<<<< HEAD
 >>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
+=======
+>>>>>>> main
 
 # User-friendly check for sphinx-build
 ifeq ($(shell which $(SPHINXBUILD) >/dev/null 2>&1; echo $$?), 1)
@@ -61,6 +64,7 @@ ifndef SKIPCLI
 clidocs: cli/apptainer.rst
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 vendor/github.com/hpcng/builddir/singularity:
 	export GOPATH=$$(pwd)/vendor &&\
 	cd $(APPTAINER_DIR) &&\
@@ -69,10 +73,15 @@ vendor/github.com/hpcng/builddir/singularity:
 apptainer_source/builddir/apptainer:
 	cd apptainer_source &&\
 >>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
+=======
+apptainer_source/builddir/apptainer:
+	cd apptainer_source &&\
+>>>>>>> main
 	./mconfig &&\
 	cd builddir &&\
 	make
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 cli/apptainer.rst: vendor/github.com/hpcng/builddir/singularity
 	export GOPATH=$$(pwd)/vendor &&\
@@ -82,6 +91,11 @@ cli/apptainer.rst: apptainer_source/builddir/apptainer
 	cd apptainer_source &&\
 	go run ./cmd/docs rst --dir ../cli
 >>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
+=======
+cli/apptainer.rst: apptainer_source/builddir/apptainer
+	cd apptainer_source &&\
+	go run ./cmd/docs rst --dir ../cli
+>>>>>>> main
 
 endif
 

@@ -99,7 +99,7 @@ applications.
 
    Support for Docker / OCI Containers <singularity_and_docker>
    OCI Runtime Support <oci_runtime>
-   Singularity and MPI applications <mpi>
+   {Singularity} and MPI applications <mpi>
    GPU Support <gpu>
 
 Get Involved

@@ -54,7 +54,11 @@ You can see them listed alphabetically below with their respective functionality
 ``D``
 ^^^^^
 
+<<<<<<< HEAD
 #. **APPTAINER_DEFFILE**: Shows the Apptainer recipe that was used to generate the image.
+=======
+#. **SINGULARITY_DEFFILE**: Shows the {Singularity} recipe that was used to generate the image.
+>>>>>>> main
 
 #. **APPTAINER_DESC**: Contains a description of the capabilities.
 
@@ -70,7 +74,21 @@ You can see them listed alphabetically below with their respective functionality
 
 #. **APPTAINER_DOCKER_PASSWORD**: To specify the password for docker authentication.
 
+<<<<<<< HEAD
 #. **APPTAINER_DROP_CAPS**: To specify a list (comma separated string) of capabilities to be dropped. Default is an empty string.
+=======
+#. **SINGULARITY_DOWNLOAD_CONCURRENCY**: To specify how many concurrent streams
+   when downloading (pulling) an image from cloud library.
+
+#. **SINGULARITY_DOWNLOAD_PART_SIZE**: To specify the size of each part (bytes)
+   when concurrent downloads are enabled.
+
+#. **SINGULARITY_DOWNLOAD_BUFFER_SIZE**: To specify the transfer buffer size
+   (bytes) when concurrent downloads are enabled.
+
+#. **SINGULARITY_DROP_CAPS**: To specify a list (comma separated string)
+   of capabilities to be dropped. Default is an empty string.
+>>>>>>> main
 
 ``E``
 ^^^^^
@@ -133,6 +151,13 @@ You can see them listed alphabetically below with their respective functionality
    syntax understood by the ``--mount`` flag. Multiple mounts should be
    separated by newline characters.
 
+``M``
+^^^^^
+
+#. **SINGULARITY_MOUNT**: To specify host to container mounts, using the
+   syntax understood by the ``--mount`` flag. Multiple mounts should be
+   separated by newline characters.
+
 ``N``
 ^^^^^
 
@@ -154,7 +179,15 @@ You can see them listed alphabetically below with their respective functionality
 
 #. **APPTAINER_NO_PRIVS**: To drop all the privileges from root user in the container. Default is set to false.
 
+<<<<<<< HEAD
 #. **APPTAINER_NV**: To enable experimental Nvidia support. Default is set to false.
+=======
+#. **SINGULARITY_NV**: To enable Nvidia GPU support. Default is
+   set to false.
+
+#. **SINGULARITY_NVCCLI**: To use nvidia-container-cli for container GPU setup
+   (experimental, only unprivileged).
+>>>>>>> main
 
 ``O``
 ^^^^^
@@ -216,14 +249,22 @@ You can see them listed alphabetically below with their respective functionality
 
 #. **APPTAINER_USER**: Used to specify a string of capabilities for the given user.
 
+<<<<<<< HEAD
 #. **APPTAINER_USERNS** and **APPTAINER_UNSHARE_USERNS**: To specify that the container will run in a new user namespace, allowing Apptainer to run completely unprivileged on recent kernels. This may not support every feature of Apptainer. (Sandbox image only). Default is set to false.
+=======
+#. **SINGULARITY_USERNS** and **SINGULARITY_UNSHARE_USERNS**: To specify that the container will run in a new user namespace, allowing {Singularity} to run completely unprivileged on recent kernels. This may not support every feature of {Singularity}. (Sandbox image only). Default is set to false.
+>>>>>>> main
 
 ``W``
 ^^^^^
 
 #. **APPTAINER_WORKDIR**: The working directory to be used for ``/tmp``, ``/var/tmp`` and ``$HOME`` (if ``-c`` or ``--contain`` was also used)
 
+<<<<<<< HEAD
 #. **APPTAINER_WRITABLE**: By default, all Apptainer containers are available as read only, this option makes the file system accessible as read/write. Default set to false.
+=======
+#. **SINGULARITY_WRITABLE**: By default, all {Singularity} containers are available as read only, this option makes the file system accessible as read/write. Default set to false.
+>>>>>>> main
 
 #. **APPTAINER_WRITABLE_TMPFS**: Makes the file system accessible as read-write with non-persistent data (with overlay support only). Default is set to false.
 

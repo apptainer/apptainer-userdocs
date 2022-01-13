@@ -147,10 +147,10 @@ operating system will prolong the use-fullness of the development
 effort considerably.
 
 -------------------------------------------------------------------
-Complicated work-flows that require custom installation and/or data
+Complicated workflows that requires custom installation and/or data
 -------------------------------------------------------------------
 
-Consolidating a work-flow into a {Singularity} container simplifies
+Consolidating a workflow into a {Singularity} container simplifies
 distribution and replication of scientific results. Making containers
 available along with published work enables other scientists to build
-upon (and verify) previous scientific work.
+upon (and verify) previous scientific work, all in one hand.

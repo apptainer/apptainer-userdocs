@@ -30,34 +30,41 @@ Quick Installation Steps
 You will need a Linux system to run {Singularity} natively. Options for
 using {Singularity} on Mac and Windows machines, along with alternate
 Linux installation options are discussed in the `installation section of the
-admin guide
-<\{admindocs\}/installation.html>`__.
+admin guide <\{admindocs\}/installation.html>`__.
 
 Install system dependencies
 ===========================
 
-You must first install development libraries to your host. Assuming Ubuntu
-(apply similar to RHEL derivatives):
+You must first install development tools and libraries to your host.
 
-.. code-block:: none
+On Debian-based systems, including Ubuntu:
 
-    $ sudo apt-get update && sudo apt-get install -y \
-        build-essential \
-        libssl-dev \
-        uuid-dev \
-        libgpgme11-dev \
-        squashfs-tools \
-        libseccomp-dev \
-        wget \
-        pkg-config \
-        git \
-        cryptsetup
+.. code::
 
-.. note::
-    Note that ``squashfs-tools`` is only a dependency for commands that build
-    images. The ``build`` command obviously relies on ``squashfs-tools``, but
-    other commands may do so as well if they are ran using container images
-    from Docker Hub for instance.
+   # Ensure repositories are up-to-date
+   sudo apt-get update
+   # Install debian packages for dependencies
+   sudo apt-get install -y \
+      build-essential \
+      libseccomp-dev \
+      pkg-config \
+      squashfs-tools \
+      cryptsetup \
+      curl wget git
+
+On CentOS/RHEL:
+
+.. code::
+   # Install basic tools for compiling
+   sudo yum groupinstall -y 'Development Tools'
+   # Ensure EPEL repository is available
+   sudo yum install -y epel-release
+   # Install RPM packages for dependencies
+   sudo yum install -y \
+      libseccomp-devel \
+      squashfs-tools \
+      cryptsetup \
+      wget git
 
 There are 3 broad steps to installing {Singularity}:
 
@@ -70,11 +77,24 @@ There are 3 broad steps to installing {Singularity}:
 Install Go
 ==========
 
-{Singularity} v3 and above is written primarily in Go, so you will need Go
-installed to compile it from source.
+{Singularity} is written in Go, and may require a newer version of Go than is
+available in the repositories of your distribution. We recommend installing the
+latest version of Go from the [official binaries](https://golang.org/dl/).
 
-This is one of several ways to `install and configure Go
-<https://golang.org/doc/install>`_.
+{Singularity} aims to maintain support for the two most recent stable versions
+of Go. This corresponds to the Go Release Maintenance Policy and Security
+Policy, ensuring critical bug fixes and security patches are available for all
+supported language versions.
+
+If you are building rpm or debian packages using the packaging supplied
+in the ``dist`` directory, and the operating system distribution of Go
+is below the minimum required by {Singularity}, the packages can make
+use of the native Go to compile a newer version of Go whose source
+tarball is included with the package source.  That capability is
+supplied so packages can be built on systems with no access to the
+internet.  If you are not building a package or don't want to incur the
+overhead of compiling the Go toolchain from source, install a local
+binary copy of Go as follows.
 
 .. note::
 
@@ -92,7 +112,7 @@ page). Alternatively, follow the commands here:
 
 .. code-block:: none
 
-    $ export VERSION=1.17.2 OS=linux ARCH=amd64 && \  # Replace the values as needed
+    $ export VERSION=1.17.5 OS=linux ARCH=amd64 && \  # Replace the values as needed
       wget https://dl.google.com/go/go$VERSION.$OS-$ARCH.tar.gz && \ # Downloads the required Go package
       sudo tar -C /usr/local -xzvf go$VERSION.$OS-$ARCH.tar.gz && \ # Extracts the archive
       rm go$VERSION.$OS-$ARCH.tar.gz    # Deletes the ``tar`` file
@@ -335,7 +355,7 @@ layers into a usable {Singularity} file.
 
 .. code-block:: none
 
-    $ singularity pull docker://sylabsio/lolcow
+    $ apptainer pull docker://sylabsio/lolcow
 
 Pulling Docker images reduces reproducibility. If you were to pull a Docker
 image today and then wait six months and pull again, you are not guaranteed to
@@ -351,7 +371,7 @@ container like so:
 
     $ apptainer build ubuntu.sif library://ubuntu
 
-    $ singularity build lolcow.sif docker://sylabsio/lolcow
+    $ apptainer build lolcow.sif docker://sylabsio/lolcow
 
 Unlike ``pull``, ``build`` will convert your image to the latest {Singularity}
 image format after downloading it.
@@ -407,12 +427,11 @@ host system.
     uid=1000(david) gid=1000(david) groups=1000(david),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),116(lpadmin),126(sambashare)
 
 ``shell`` also works with the ``library://``, ``docker://``, and ``shub://``
-URIs. This creates an ephemeral container that disappears when the shell is
-exited.
+URIs. This creates an ephemeral container that disappears when the shell is exited.
 
 .. code-block:: none
 
-    $ singularity shell library://lolcow
+    $ apptainer shell library://lolcow
 
 Executing Commands
 ==================
@@ -440,7 +459,7 @@ disappears.
 
 .. code-block:: none
 
-    $ singularity exec library://lolcow cowsay "Fresh from the library!"
+    $ apptainer exec library://lolcow cowsay "Fresh from the library!"
      _________________________
     < Fresh from the library! >
      -------------------------
@@ -462,7 +481,7 @@ command, or simply by calling the container as though it were an executable.
 
 .. code-block:: none
 
-    $ singularity run lolcow_latest.sif
+    $ apptainer run lolcow_latest.sif
     ______________________________
     < Mon Aug 16 13:01:55 CDT 2021 >
      ------------------------------
@@ -489,7 +508,7 @@ This creates an ephemeral container that runs and then disappears.
 
 .. code-block:: none
 
-    $ singularity run library://lolcow
+    $ apptainer run library://lolcow
     ______________________________
     < Mon Aug 16 13:12:33 CDT 2021 >
      ------------------------------
@@ -551,7 +570,7 @@ Build images from scratch
 
 .. _sec:buildimagesfromscratch:
 
-{Singularity} v3.0 and above produces immutable images in the Singularity Image File (SIF)
+{Singularity} produces immutable images in the Singularity Image File (SIF)
 format. This ensures reproducible and verifiable images and allows for many
 extra benefits such as the ability to sign and verify your containers.
 
@@ -578,7 +597,7 @@ directory.
 You can use commands like ``shell``, ``exec`` , and ``run`` with this directory
 just as you would with a {Singularity} image. If you pass the ``--writable``
 option when you use your container you can also write files within the sandbox
-directory (provided you have the permissions to do so).
+directory (as long as you have the permissions to do so).
 
 .. code-block:: none
 
@@ -690,7 +709,7 @@ to this:
 
     Dear shared resource administrator,
 
-    We are interested in having {Singularity} (https://singularity.hpcng.org)
+    We are interested in having {Singularity} (https://apptainer.org)
     installed on our shared resource. {Singularity} containers will allow us to
     build encapsulated environments, meaning that our work is reproducible and
     we are empowered to choose all dependencies including libraries, operating

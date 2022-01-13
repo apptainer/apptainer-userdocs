@@ -58,6 +58,10 @@ running, you can disable the ``hostfs`` binds:
     $ apptainer run --no-mount hostfs mycontainer.sif
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
 Multiple mounts can be disabled by specifying them separated by
 commas:
 
@@ -165,6 +169,7 @@ To mount the same directory read-only in the container, add the ``ro`` option:
 
 You can bind multiple directories in a single command with multiple
 ``--mount`` flags:
+<<<<<<< HEAD
 
 .. code-block:: none
 
@@ -187,6 +192,30 @@ possible with the ``--bind`` flag. For example:
         --mount type=bind,src=/my:path,dst=/mnt \
 	mycontainer.sif
 
+=======
+
+.. code-block:: none
+
+    $ singularity shell --mount type=bind,src=/opt,dst=/opt \
+                        --mount type=bind,src=/data,dst=/data \
+                        my_container.sif
+
+This will bind ``/opt`` on the host to ``/opt`` in the container and ``/data``
+on the host to ``/mnt`` in the container.
+
+The mount string can be quoted and escaped according to CSV rules,
+wrapping each field in double quotes if necessary
+characters. ``--mount`` allows bind mounting paths that are not
+possible with the ``--bind`` flag. For example:
+
+.. code-block:: none
+
+    # Mount a path containing ':' (not possible with --bind)
+    $ singularity run \
+        --mount type=bind,src=/my:path,dst=/mnt \
+	mycontainer.sif
+
+>>>>>>> main
     # Mount a path containing a ','
     $ singularity run \
         --mount type=bind,"src=/comma,dir",dst=/mnt \

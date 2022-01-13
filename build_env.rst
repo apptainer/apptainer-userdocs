@@ -21,10 +21,14 @@ Cache Folders
 -------------
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 apptainer will cache SIF container images generated from remote
 =======
 {Singularity} will cache SIF container images generated from remote
 >>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
+=======
+{Singularity} will cache SIF container images generated from remote
+>>>>>>> main
 sources, and any OCI/docker layers used to create them. The cache is
 created at ``$HOME/.apptainer/cache`` by default. The location of
 the cache can be changed by setting the ``APPTAINER_CACHEDIR``
@@ -38,6 +42,7 @@ environment variable, if you set it.
 .. code-block:: none
 
     $ export SINGULARITY_CACHEDIR=/tmp/user/temporary-cache
+<<<<<<< HEAD
 
     # Running a build under your user account
     $ singularity build --fakeroot myimage.sif mydef.def
@@ -51,6 +56,14 @@ environment variable, if you set it.
     # Running a build with sudo, must use -E to pass env var
     $ sudo -E singularity build myimage.sif mydef.def
 >>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
+=======
+
+    # Running a build under your user account
+    $ singularity build --fakeroot myimage.sif mydef.def
+
+    # Running a build with sudo, must use -E to pass env var
+    $ sudo -E singularity build myimage.sif mydef.def
+>>>>>>> main
 
 If you change the value of ``APPTAINER_CACHEDIR`` be sure to choose
 a location that is:
@@ -66,6 +79,7 @@ a location that is:
 
    If you are not certain that your ``$HOME`` or
 <<<<<<< HEAD
+<<<<<<< HEAD
    ``APPTAINER_CACHEDIR`` filesytems support atomic rename, do not
    run apptainer in parallel using remote container URLs. Instead
    use ``apptainer pull`` to create a local SIF image, and then run
@@ -73,13 +87,18 @@ a location that is:
    ``--disable-cache`` option, but this will result in each
    apptainer instance independently fetching the container from the
 =======
+=======
+>>>>>>> main
    ``SINGULARITY_CACHEDIR`` filesystems support atomic rename, do not
    run {Singularity} in parallel using remote container URLs. Instead
    use ``singularity pull`` to create a local SIF image, and then run
    this SIF image in a parallel step. An alternative is to use the
    ``--disable-cache`` option, but this will result in each
    {Singularity} instance independently fetching the container from the
+<<<<<<< HEAD
 >>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
+=======
+>>>>>>> main
    remote source, into a temporary location.
 
 
@@ -96,10 +115,14 @@ different kinds of data that are cached:
 
 You can safely delete these directories, or content within
 <<<<<<< HEAD
+<<<<<<< HEAD
 them. apptainer will re-create any directories and data that are
 =======
 them. {Singularity} will re-create any directories and data that are
 >>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
+=======
+them. {Singularity} will re-create any directories and data that are
+>>>>>>> main
 needed in future runs.
 
 You should not add any additional files, or modify files in the cache,
@@ -127,10 +150,14 @@ Cache commands
 --------------
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 The ``cache`` command for apptainer allows you to view and clean up
 =======
 The ``cache`` command for {Singularity} allows you to view and clean up
 >>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
+=======
+The ``cache`` command for {Singularity} allows you to view and clean up
+>>>>>>> main
 your cache, without manually inspecting the cache directories.
 
 .. note::
@@ -207,10 +234,14 @@ Cleaning the Cache
 ==================
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 To reclaim space used by the apptainer cache, use ``apptainer
 =======
 To reclaim space used by the {Singularity} cache, use ``singularity
 >>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
+=======
+To reclaim space used by the {Singularity} cache, use ``singularity
+>>>>>>> main
 cache clean``.
 
 By default ``apptainer cache clean`` will remove all cache entries,
@@ -250,6 +281,7 @@ Temporary Folders
 -----------------
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 When building a container, or pulling/running a apptainer container
 from a Docker/OCI source, a temporary working space is required. The
 container is constructed in this temporary space before being packaged
@@ -260,15 +292,25 @@ from a Docker/OCI source, a temporary working space is required. The
 container is constructed in this temporary space before being packaged
 into a {Singularity} SIF image. Temporary space is also used when
 >>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
+=======
+When building a container, or pulling/running a {Singularity} container
+from a Docker/OCI source, a temporary working space is required. The
+container is constructed in this temporary space before being packaged
+into a {Singularity} SIF image. Temporary space is also used when
+>>>>>>> main
 running containers in unprivileged mode, and performing some
 operations on filesystems that do not fully support ``--fakeroot``.
 
 The location for temporary directories defaults to
 <<<<<<< HEAD
+<<<<<<< HEAD
 ``/tmp``. apptainer will also respect the environment variable
 =======
 ``/tmp``. {Singularity} will also respect the environment variable
 >>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
+=======
+``/tmp``. {Singularity} will also respect the environment variable
+>>>>>>> main
 ``TMPDIR``, and both of these locations can be overridden by setting
 the environment variable ``APPTAINER_TMPDIR``.
 
@@ -302,8 +344,11 @@ Encrypted Containers
 --------------------
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 It is possible to build and run encrypted containers.  The containers are decrypted at runtime entirely in kernel space, 
 =======
+=======
+>>>>>>> main
 Beginning in {Singularity} 3.4.0 it is possible to build and run encrypted
 containers.  The containers are decrypted at runtime entirely in kernel space, 
 >>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
@@ -362,8 +407,12 @@ Encryption
 **APPTAINER_ENCRYPTION_PASSPHRASE** Used to pass a plaintext passphrase to encrypt a container file system (with the ``--encrypt`` flag). The default is empty.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 **APPTAINER_ENCRYPTION_PEM_PATH** Used to specify the location of a public key to use for container encryption (with the ``--encrypt`` flag). The default is empty.
 
 =======
 **SINGULARITY_ENCRYPTION_PEM_PATH** Used to specify the location of a public key to use for container encryption (with the ``--encrypt`` flag). The default is empty.
 >>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
+=======
+**SINGULARITY_ENCRYPTION_PEM_PATH** Used to specify the location of a public key to use for container encryption (with the ``--encrypt`` flag). The default is empty.
+>>>>>>> main

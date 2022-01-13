@@ -21,7 +21,7 @@ Overview
 
 .. _sec:instances:
 
-{Singularity} v2.4 introduced the concept of *instances* allowing users to run
+{Singularity} has a nice feature fetched in the concept of *instances*. This allows users to run
 services in {Singularity}. This page will help you understand instances using an
 elementary example followed by a more useful example running an NGINX web server
 using instances. In the end, you will find a more detailed example of running an
@@ -133,7 +133,7 @@ If you want to poke around inside of your instance, you can do a normal
 
     $ apptainer shell instance://instance3
 
-    apptainer>
+    Apptainer>
 
 When you are finished with your instance you can clean it up with the
 ``instance stop`` command as follows:
@@ -387,7 +387,7 @@ If you shell into the instance, you can see the running processes:
 
 .. code-block:: none
 
-    $ sudo singularity shell instance://pdf
+    $ sudo apptainer shell instance://pdf
     {Singularity}: Invoking an interactive shell within container...
 
     {Singularity} final.sif:/home/ysub> ps auxf
@@ -575,7 +575,7 @@ boot, and shutdown gracefully automatically. This is usually performed by an ini
 or another supervisor daemon installed on your host. Many init and supervisor
 daemons support managing processes via pid files.
 
-You can specify a `--pid-file` option to `singularity instance start` to write
+You can specify a `--pid-file` option to `apptainer instance start` to write
 the PID for an instance to the specified file, e.g.
 
 .. code-block:: none

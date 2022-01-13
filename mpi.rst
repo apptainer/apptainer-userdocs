@@ -1,14 +1,9 @@
 .. _mpi:
 
-<<<<<<< HEAD
-================================
-apptainer and MPI applications
-================================
-=======
 ==================================
 {Singularity} and MPI applications
 ==================================
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
+
 
 .. _sec-mpi:
 
@@ -17,19 +12,11 @@ is a standard extensively used by HPC applications to implement various communic
 across compute nodes of a single system or across compute platforms.
 There are two main open-source implementations of MPI at the
 moment - `OpenMPI <https://www.open-mpi.org/>`_ and `MPICH <https://www.mpich.org/>`_,
-<<<<<<< HEAD
 both of which are supported by apptainer. The goal of this page is to
 demonstrate the development and running of MPI programs using apptainer containers.
 
 There are several ways of carrying this out, the most popular way of
-executing MPI applications installed in a apptainer container is to rely on the
-=======
-both of which are supported by {Singularity}. The goal of this page is to
-demonstrate the development and running of MPI programs using {Singularity} containers.
-
-There are several ways of carrying this out, the most popular way of
 executing MPI applications installed in a {Singularity} container is to rely on the
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 MPI implementation available on the host. This is called the *Host MPI* or
 the *Hybrid* model since both the MPI implementations provided by system
 administrators (on the host) and in the containers will be used.
@@ -49,25 +36,20 @@ requires to bind/mount the MPI version available on the host into the container.
 Hybrid model
 ------------
 
-<<<<<<< HEAD
-The basic idea behind the *Hybrid Approach* is when you execute a apptainer
-=======
 The basic idea behind the *Hybrid Approach* is when you execute a {Singularity}
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 container with MPI code, you will call ``mpiexec`` or a similar launcher on the
 ``apptainer`` command itself. The MPI process outside of the container will
 then work in tandem with MPI inside the container and the containerized MPI code
 to instantiate the job.
 
-<<<<<<< HEAD
 The Open MPI/apptainer workflow in detail:
 
 1. The MPI launcher (e.g., ``mpirun``, ``mpiexec``) is called by the resource manager or the user directly from a shell.
 2. Open MPI then calls the process management daemon (ORTED).
 3. The ORTED process launches the apptainer container requested by the launcher command.
-4. apptainer instantiates the container and namespace environment.
-5. apptainer then launches the MPI application within the container.
-=======
+4.  {Singularity} instantiates the container and namespace environment.
+5.  {Singularity} then launches the MPI application within the container.
+
 The Open MPI/{Singularity} workflow in detail:
 
 1. The MPI launcher (e.g., ``mpirun``, ``mpiexec``) is called by the resource manager or the user directly from a shell.
@@ -75,7 +57,6 @@ The Open MPI/{Singularity} workflow in detail:
 3. The ORTED process launches the {Singularity} container requested by the launcher command.
 4. {Singularity} instantiates the container and namespace environment.
 5. {Singularity} then launches the MPI application within the container.
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 6. The MPI application launches and loads the Open MPI libraries.
 7. The Open MPI libraries connect back to the ORTED process via the Process Management Interface (PMI).
 
@@ -101,11 +82,7 @@ framework installed on the host from source.
 Test Application
 ================
 
-<<<<<<< HEAD
-To illustrate how apptainer can be used to execute MPI applications, we will
-=======
 To illustrate how {Singularity} can be used to execute MPI applications, we will
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 assume for a moment that the application is ``mpitest.c``, a simple Hello World:
 
 .. code-block:: c
@@ -272,13 +249,8 @@ If the host MPI is Open MPI, the definition file looks like:
 Running an MPI Application
 ==========================
 
-<<<<<<< HEAD
-The standard way to execute MPI applications with hybrid apptainer containers is to
-run the native ``mpirun`` command from the host, which will start apptainer
-=======
 The standard way to execute MPI applications with hybrid {Singularity} containers is to
 run the native ``mpirun`` command from the host, which will start {Singularity}
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 containers and ultimately MPI ranks within the containers.
 
 Assuming your container with MPI and your application is already built,
@@ -377,8 +349,8 @@ The environment section adds paths for binaries and libraries under
 ``$MPI_DIR`` - which we will need to set when running the container.
 
 
-Running an MPI Application
-==========================
+Running one more MPI Application
+================================
 
 When running our bind mode container we need to ``--bind`` our host's
 MPI installation into the container. We also need to set the

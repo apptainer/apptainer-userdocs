@@ -11,11 +11,10 @@ root file system.
 Overview
 --------
 
-In {Singularity} >= v3.4.0 a new feature to build and run encrypted containers has
-been added to allow users to encrypt the file system image within a SIF.  This
-encryption can be performed using either a passphrase or asymmetrically via an
-RSA key pair in Privacy Enhanced Mail (PEM/PKCS1) format. The container is encrypted
-in transit, at rest, and even while running. In other words, there is no
+{Singularity} allows to build and run encrypted containers as well allows users to 
+encrypt the file system image within a SIF.  This encryption can be performed using 
+either a passphrase or asymmetrically via an RSA key pair in Privacy Enhanced Mail (PEM/PKCS1) format. 
+The container is encrypted in transit, at rest, and even while running. In other words, there is no
 intermediate, decrypted version of the container on disk.  Container decryption
 occurs at runtime completely within kernel space.  
 
@@ -38,7 +37,7 @@ file is more secure and is therefore recommended for production use.
 
 .. note::
 
-        In {Singularity} 3.4, the definition file stored with the container will
+        {Singularity} enforces that the definition file stored with the container will
         not be encrypted. If it contains sensitive information you should remove
         it before encryption via ``apptainer sif del 1 myimage.sif``. Metadata
         encryption will be addressed in a future release.
@@ -220,4 +219,4 @@ Running using an environment variable
 
 .. code-block:: none
 
-        $ SINGULARITY_ENCRYPTION_PEM_PATH=rsa_pri.pem singularity run encrypted.sif
+        $ APPTAINER_ENCRYPTION_PEM_PATH=rsa_pri.pem apptainer run encrypted.sif

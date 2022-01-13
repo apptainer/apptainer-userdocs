@@ -2,6 +2,7 @@
 
 This repository holds user-facing documentation for the
 <<<<<<< HEAD
+<<<<<<< HEAD
 [Apptainer](https://github.com/apptainer) container runtime.
 
 Contributions are always welcome! If you'd like to update or improve Apptainer's documentation please follow the instructions below, and submit a PR on GitHub.
@@ -23,6 +24,21 @@ follow the instructions below, and submit a PR on GitHub.
 
 ## Setting up an environment to contribute
 
+=======
+[Apptainer](https://github.com/apptainer/apptainer) container runtime.
+
+This is a community project maintained as a sub-project by the
+[Apptainer](https:/apptainer.org) project,
+and contributions are always welcome! If you'd like to update or improve
+Apptainer's documentation please read the
+[Apptainer CONTRIBUTING file](https://github.com/apptainer/apptainer/CONTRIBUTING.md),
+follow the instructions below, and submit a PR on GitHub.
+
+
+
+## Setting up an environment to contribute
+
+>>>>>>> main
 The Apptainer user documentation is written in [reStructured Text (RST)
 format](http://docutils.sourceforge.net/rst.html) and generated using
 [Sphinx](https://pypi.org/project/Sphinx/). The
@@ -46,7 +62,10 @@ If your version of Python 3 does not come with `pip` / `pip3`, you may need to i
 If your version of python 3 does not come with `pip` / `pip3`, you may need to
 install a `python3-pip`package with `apt` or `yum`, or you can install pip
 following [the instructions here](https://pip.pypa.io/en/stable/installing/).
+<<<<<<< HEAD
 >>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
+=======
+>>>>>>> main
 
 You're all set! After this you will only need to use your favorite editor to work with the RST files.
 
@@ -179,10 +198,14 @@ This will generate a folder called `_build/html` with the output. Open
 
 The `SKIPCLI=1` option tells `make` not to generate the CLI reference, which is
 <<<<<<< HEAD
+<<<<<<< HEAD
 created automatically from the apptainer source code. You can generate the CLI
 =======
 created automatically from the Apptainer source code. You can generate the CLI
 >>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
+=======
+created automatically from the Apptainer source code. You can generate the CLI
+>>>>>>> main
 documentation by running `make html` alone. This requires a Go build
 environment (see below).
 
@@ -211,6 +234,7 @@ Output is written into `_build/epub` and the final EPUB will be named
 ## Generating CLI docs
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 The Apptainer CLI docs are generated using the actual code from apptainer.
 To do this, we include apptainer as a git submodule, and whenever a Makefile
 target (like `make html`) is run, apptainer itself is compiled and used to
@@ -218,6 +242,8 @@ generate the CLI docs.
 
 However, you might not want to compile apptainer, either because you can't on
 =======
+=======
+>>>>>>> main
 The Apptainer CLI docs are generated using the actual code from
 Apptainer.
 To do this, we include Apptainer as a git submodule, and whenever a Makefile
@@ -225,27 +251,38 @@ target (like `make html`) is run, Apptainer itself is compiled and used to
 generate the CLI docs.
 
 However, you might not want to compile Apptainer, either because you can't on
+<<<<<<< HEAD
 >>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
+=======
+>>>>>>> main
 your machine, or because you want to test out a quick change to the docs.  If
 this is the case, you can skip the CLI doc generation using the `SKIPCLI`
 argument.  For example, to rebuild the HTML docs without including the CLI docs,
 just run `make html SKIPCLI=1`.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 If apptainer has been updated and you want to synchronize the CLI docs with
 =======
 If Apptainer has been updated and you want to synchronize the CLI docs with
 >>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
+=======
+If Apptainer has been updated and you want to synchronize the CLI docs with
+>>>>>>> main
 the new version of Apptainer, you'll have to update the submodule.  To do
 this, just run:
 
 ```bash
 git submodule update --remote --merge
 <<<<<<< HEAD
+<<<<<<< HEAD
 git add vendor/src/github.com/apptainer
 =======
 git add vendor/src/github.com/apptainer/apptainer
 >>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
+=======
+git add vendor/src/github.com/apptainer/apptainer
+>>>>>>> main
 git commit
 ```
 

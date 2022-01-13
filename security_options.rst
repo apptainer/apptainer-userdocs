@@ -6,8 +6,8 @@ Security Options
 
 .. _sec:security_options:
 
-{Singularity} 3.0 introduces many new security related options to the container
-runtime.  This document will describe the new methods users have for specifying
+{Singularity} incorporated many new security related options to the container
+runtime.  This document will describe the methods users have for specifying
 the security scope and context when running {Singularity} containers.
 
 
@@ -102,7 +102,7 @@ Of course appropriate caution should be exercised when using this keyword.
 -----------------------------
 Building encrypted containers
 -----------------------------
-Beginning in {Singularity} 3.4.0 it is possible to build and run encrypted
+{Singularity} makes possible to build and run encrypted
 containers.  The containers are decrypted at runtime entirely in kernel space,
 meaning that no intermediate decrypted data is ever present on disk. See
 :ref:`encrypted containers <encryption>` for more details.
@@ -112,7 +112,7 @@ meaning that no intermediate decrypted data is ever present on disk. See
 Security related action options
 -------------------------------
 
-{Singularity} 3.0 introduces many new flags that can be passed to the action
+{Singularity} comprises flags that can be passed to the action
 commands; ``shell``, ``exec``, and ``run`` allowing fine grained control of
 security.
 

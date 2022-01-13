@@ -36,7 +36,7 @@ A {Singularity} Definition file is divided into two parts:
    intended for ``/bin/sh``
 
 For more in-depth and practical examples of def files, see the `apptainer examples
-repository <https://github.com/apptainer/tree/master/examples>`_
+repository <https://github.com/apptainer/apptainer/tree/master/examples>`_
 
 For a comparison between Dockerfile and {Singularity} definition file,
 please see: :ref:`this section <sec:deffile-vs-dockerfile>`.
@@ -57,7 +57,7 @@ will pull a container from the `Container Library
 bootstrap agent will pull docker layers from `Docker Hub
 <https://hub.docker.com/>`_ as a base OS to start your image.
 
-Starting with {Singularity} 3.2, the ``Bootstrap`` keyword needs to be the first
+{Singularity} demands that the ``Bootstrap`` keyword needs to be the first
 entry in the header section.  This breaks compatibility with older versions
 that allow the parameters of the header to appear in any order.
 
@@ -137,8 +137,7 @@ one that has been modified after signing, will produce a warning but
 the build will continue.
 
 To enforce that the bootstrap image verifies correctly and has been
-signed by one or more keys, you can use the ``Fingerprints:`` header
-introduced in {Singularity} 3.7.
+signed by one or more keys, you can use the ``Fingerprints:`` header.
 
 .. code-block:: apptainer
 
@@ -631,15 +630,7 @@ After building the help can be displayed like so:
 Multi-Stage Builds
 ------------------
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-Starting with apptainer v3.2 multi-stage builds are supported where one environment 
-=======
-Starting with Singularity v3.2 multi-stage builds are supported where one environment
->>>>>>> de5c4ef98283f80100a46cc06bf501c17096b71f
-=======
-Starting with {Singularity} v3.2 multi-stage builds are supported where one environment
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
+{Singularity} multi-stage builds are supported where one environment
 can be used for compilation, then the resulting binary can be copied into a final
 environment. This allows a slimmer final image that does not require the entire
 development stack.
@@ -697,28 +688,17 @@ which to run easily. Each entry point can carry out a different task
 with its own environment, metadata etc., without the need for a
 collection of different containers.
 
-<<<<<<< HEAD
-Apptainer implements SCIF, and you can read more about how to use it
-below.
-
-SCIF is not specfic to Apptainer. You can learn more about it at the
-=======
 {Singularity} implements SCIF, and you can read more about how to use it
 below.
 
 SCIF is not specific to {Singularity}. You can learn more about it at the
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
-project's site: `<https://sci-f.github.io/>`_ which includes extended
+main project's site: `<https://sci-f.github.io/>`_ which includes extended
 tutorials, the specification, and other information.
 
 SCIF %app* sections
 ===================
 
-<<<<<<< HEAD
-SCIF apps within a Apptainer container are created using ``%app*``
-=======
 SCIF apps within a {Singularity} container are created using ``%app*``
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
 sections in a definition file. These ``%app*`` sections, which will impact the
 way the container runs a specific ``--app`` can exist alongside any of the 
 primary sections (i.e.  ``%post``,``%runscript``, ``%environment``, etc.).  As

@@ -44,7 +44,7 @@ Mounting an OCI Filesystem Bundle
 
 `BusyBox <https://busybox.net/about.html>`_ is used here for the purpose of illustration.
 
-Suppose the apptainer Image Format (SIF) file ``busybox_latest.sif`` exists locally. (Recall: 
+Suppose the Singularity Image Format (SIF) file ``busybox_latest.sif`` exists locally. (Recall: 
 
 .. code-block:: none
 
@@ -726,7 +726,7 @@ Beyond ``root.path``, the ``config.json`` file includes a multitude of additiona
 
 	- ``ociVersion`` - a mandatory property that identifies the version of the OCI runtime specification that the bundle is compliant with 
 
-	- ``process`` - an optional property that specifies the container process. When invoked via {Singularity}, subproperties such as ``args`` are populated by making use of the contents of the ``.singularity.d`` directory, e.g. via ``$ sudo cat /var/tmp/busybox/config.json | jq [.process.args]``:
+	- ``process`` - an optional property that specifies the container process. When invoked via {Singularity}, subproperties such as ``args`` are populated by making use of the contents of the ``.apptainer.d`` directory, e.g. via ``$ sudo cat /var/tmp/busybox/config.json | jq [.process.args]``:
 
 	.. code-block:: json
 

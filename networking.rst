@@ -19,13 +19,8 @@ configure a virtualized network for a container.
    default. Unrestricted ability to configure networking for
    containers would allow users to affect networking on the host, or
    in a cluster.
-
-
-   {Singularity} 1.0 allows the administrator to permit a list of
->>>>>>> 6910ee5cb0bbe15b17c418636870ad46bae27543
-=======
-   Aptainer allows the administrator to permit a list of
->>>>>>> Stashed changes
+   
+   {Singularity} allows the administrator to permit a list of
    unprivileged users and/or groups to use specified network
    configurations. This is accomplished through settings in
    ``apptainer.conf``. See the administrator guide for details.
@@ -67,7 +62,8 @@ within the container.
 =========
 
 Passing the ``--net`` flag will cause the container to join a new network
-namespace when it initiates.  A bridge interface will also be set up by default.
+namespace when it initiates.  New in {Singularity} 3.0, a bridge interface will
+also be set up by default.
 
 .. code-block:: none
 
@@ -116,9 +112,7 @@ Administrators can permit certain users or groups to request other
 network configurations through options in
 ``apptainer.conf``. Additional cni configuration files can be added
 to the ``network`` configuration directory as required, and
-Apptainer's provided configurations may also be modified.
-=======
-
+{Singularity}'s provided configurations may also be modified.
 
 ``--network-args``
 ==================

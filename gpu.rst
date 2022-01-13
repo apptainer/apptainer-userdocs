@@ -14,11 +14,18 @@ up-to-date Ubuntu 20.04 container, from an older RHEL 7 host.
 Applications that support OpenCL for compute acceleration can also be used
 easily, with an additional bind option.
 
-With {Singularity} 3.9 experimental support has been introduced to
+Some experimental support has been introduced to
 use Nvidia's ``nvidia-container-cli`` tooling for GPU container
 setup. This functionality, accessible via the new ``--nvccli`` flag,
 improves compatibility with OCI runtimes and exposes additional
 container configuration options.
+
+.. note::
+
+  Before using it in production, make sure to run all proper capabilities tests,
+  and if you find any bugs or misbehaviors, feel free to `open an issue !<https://github.com/apptainer/apptainer/issues>`.
+
+
 
 -----------------------------
 NVIDIA GPUs & CUDA (Standard)
@@ -57,7 +64,7 @@ problems running applications compiled for the latest versions of CUDA.
 
 {Singularity} will find the NVIDIA/CUDA libraries on your host using
 the list of libraries in the configuration file
-``etc/singularity/nvbliblist``, and resolving paths through the
+``etc/apptainer/nvbliblist``, and resolving paths through the
 ``ldconfig`` cache. At time of release this list is approriate for the
 latest stable CUDA version. It can be modified by the administrator to
 add additional libraries if necessary. See the admin guide for more
@@ -143,7 +150,7 @@ inside a container. The ``nvidia-container-runtime`` explicitly binds the device
 into the container dependent on the value of ``NVIDIA_VISIBLE_DEVICES``.
 
 To control which GPUs are used in a {Singularity} container that is run with
-``--nv`` you can set ``SINGULARITYENV_CUDA_VISIBLE_DEVICES`` before running the
+``--nv`` you can set ``APPTAINERENV_CUDA_VISIBLE_DEVICES`` before running the
 container, or ``CUDA_VISIBLE_DEVICES`` inside the container.  This variable will
 limit the GPU devices that CUDA programs see.
 
@@ -152,11 +159,11 @@ we could do:
 
 .. code-block:: none
 
-    $ apptainerENV_CUDA_VISIBLE_DEVICES=0 apptainer run --nv tensorflow_latest-gpu.sif
+    $ APPTAINERENV_CUDA_VISIBLE_DEVICES=0 apptainer run --nv tensorflow_latest-gpu.sif
 
     # or
 
-    $ export apptainerENV_CUDA_VISIBLE_DEVICES=0
+    $ export APPTAINERENV_CUDA_VISIBLE_DEVICES=0
     $ apptainer run tensorflow_latest-gpu.sif
 
 
@@ -187,16 +194,14 @@ driver unload.
 NVIDIA GPUs & CUDA (nvidia-container-cli)
 -----------------------------------------
 
-{Singularity} 3.9 introduces the ``--nvccli`` option, which will
-instruct {Singularity} to perform GPU container setup using the
-``nvidia-container-cli`` utility. This utility must be installed
+With the ``--nvccli`` option, is possible to instruct {Singularity} to perform 
+GPU container setup using the ``nvidia-container-cli`` utility. This utility must be installed
 separately from {Singularity}. It is available in the repositories of
-some distributions, and at:
-https://nvidia.github.io/libnvidia-container/
+some distributions, and at https://nvidia.github.io/libnvidia-container.
 
 .. warning::
 
-   This feature is considered experimental in {Singularity} 3.9. It
+   This feature is considered experimental as of now. It
    cannot not replace the legacy NVIDIA support in all situations, and
    should be tested carefully before use in production workflows.
 
@@ -221,7 +226,7 @@ Requirements & Limitations
 
 * ``nvidia-container-cli`` must be installed on your host.
   Its path must be set in
-  ``singularity.conf``. This value will be set at build time if
+  ``apptainer.conf``. This value will be set at build time if
   ``nvidia-container-cli`` is found on the search ``$PATH``.
 
 * For security reasons, ``--nvccli`` cannot be used with
@@ -236,8 +241,7 @@ Requirements & Limitations
 
 * There are known problems with library discovery for the current
   ``nvidia-container-cli`` in recent Debian distributions. See `this
-  GitHub issue
-  <https://github.com/NVIDIA/nvidia-docker/issues/1399>`__
+  GitHub issue <https://github.com/NVIDIA/nvidia-docker/issues/1399>`__
 
 
 Example - tensorflow-gpu
@@ -249,7 +253,7 @@ large container into a sandbox:
 
 .. code-block:: none
 
-    $ singularity build --sandbox tensorflow_latest-gpu docker://tensorflow/tensorflow:latest-gpu
+    $ apptainer build --sandbox tensorflow_latest-gpu docker://tensorflow/tensorflow:latest-gpu
     INFO:    Starting build...
     ...
     INFO:    Creating sandbox directory...
@@ -260,7 +264,7 @@ Then run the container with ``nvidia-container-cli`` GPU support:
 
 .. code-block:: none
 
-    $ singularity run -uw --nv --nvccli tensorflow_latest-gpu
+    $ apptainer run -uw --nv --nvccli tensorflow_latest-gpu
 
     ________                               _______________
     ___  __/__________________________________  ____/__  /________      __
@@ -272,14 +276,14 @@ Then run the container with ``nvidia-container-cli`` GPU support:
     You are running this container as user with ID 1000 and group 1000,
     which should map to the ID and group for your user on the Docker host. Great!
 
-    Singularity>
+    Apptainer>
 
 You can verify the GPU is available within the container by using the
 tensorflow ``list_local_devices()`` function:
 
 .. code-block:: none
 
-    Singularity> python
+    Apptainer> python
     Python 2.7.15+ (default, Jul  9 2019, 16:51:35)
     [GCC 7.4.0] on linux2
     Type "help", "copyright", "credits" or "license" for more information.
@@ -305,7 +309,7 @@ When running with ``--nvccli``, by default {Singularity} will expose
 all GPUs on the host inside the container. This mirrors the
 functionality of the standard GPU support for the most common use-case.
 
-Setting the ``SINGULARITY_CUDA_VISIBLE_DEVICES`` environment variable
+Setting the ``APPTAINER_CUDA_VISIBLE_DEVICES`` environment variable
 before running a container is still supported, to control which GPUs
 are used by CUDA programs that honor
 ``CUDA_VISIBLE_DEVICES``. However, more powerful GPU isolation is
@@ -319,11 +323,11 @@ on a system with 4 GPUs, run the following:
 .. code-block:: none
 
     $ export NVIDIA_VISIBLE_DEVICES=1,2
-    $ singularity run -uwc --nv --nvccli tensorflow_latest-gpu
+    $ apptainer run -uwc --nv --nvccli tensorflow_latest-gpu
 
 Note that:
 
-* ``NVIDIA_VISIBLE_DEVICES`` is not prepended with ``SINGULARITY_`` as
+* ``NVIDIA_VISIBLE_DEVICES`` is not prepended with ``APPTAINER_`` as
   this variable controls container setup, and is not passed into the
   container.
 
@@ -341,7 +345,7 @@ no GPUs will be available in the container, and a warning will be shown:
 
 .. code-block:: none
 
-    $ singularity run -uwc --nv --nvccli tensorflow_latest-gpu
+    $ apptainer run -uwc --nv --nvccli tensorflow_latest-gpu
     WARNING: When using nvidia-container-cli with --contain NVIDIA_VISIBLE_DEVICES
     must be set or no GPUs will be available in container.
 
@@ -365,7 +369,7 @@ Other GPU Options
 
 In ``--nvccli`` mode, {Singularity} understands the following
 additional environment variables. Note that these environment
-variables are read from the environment where ``singularity`` is
+variables are read from the environment where ``apptainer`` is
 run. {Singularity} does not currently read these settings from the
 container environment.
 
@@ -397,7 +401,7 @@ https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/user-guide.htm
 AMD GPUs & ROCm
 ---------------
 
-{Singularity} 3.5 adds a ``--rocm`` flag to support GPU compute with the ROCm
+with the instruction of the ``--rocm`` flag, {Singularity} is able to support and provide GPU compute with the ROCm
 framework using AMD Radeon GPU cards.
 
 Commands that ``run``, or otherwise execute containers (``shell``, ``exec``) can
@@ -468,7 +472,7 @@ tensorflow ``list_local_devices()`` function:
 
 .. code-block:: none
 
-    Singularity> ipython
+    Apptainer> ipython
     Python 3.5.2 (default, Jul 10 2019, 11:58:48)
     Type 'copyright', 'credits' or 'license' for more information
     IPython 7.8.0 -- An enhanced Interactive Python. Type '?' for help.

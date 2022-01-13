@@ -22,19 +22,19 @@ container. Other details such as the version of {Singularity} used are
 present as :ref:`labels <sec:labels>` on a container. You can also
 specify your own to be recorded against your container.
 
-----------------------------
-Changes in {Singularity} 3.6
-----------------------------
+---------------------------------------------------
+Some improvements from basis specs in {Singularity} 
+---------------------------------------------------
 
-{Singularity} 3.6 modified the ways in which environment variables
-are handled to allow long-term stability and consistency that has
-been lacking in prior versions. It also introduced new ways of setting
+In a trial to improve how to get into working with environment variables, {Singularity}  
+modified the ways in which environment variables are handled to allow long-term 
+stability and consistency that has been lacking since its first high-level specifications. It also introduced new ways of setting
 environment variables, such as the ``--env`` and ``--env-file``
 options.
 
 .. warning::
 
-   If you have containers built with {Singularity} <3.6, and frequently
+   If you have containers built with earlier versions of Singularity (prior to 3.6), and frequently
    set and override environment variables, please review this section
    carefully. Some behavior has changed.
 
@@ -69,7 +69,7 @@ environment variables that the program sees are a combination of:
    using the ``--env``, ``--env-file`` options, or by setting
    ``APPTAINERENV_`` variables outside of the container.
  - The ``PATH`` variable can be manipulated to add entries.
- - Runtime variables ``SINGULARITY_xxx`` set by {Singularity} to provide
+ - Runtime variables ``APPTAINER_xxx`` set by {Singularity} to provide
    information about the container.
 
 The environment variables from the base image or definition file used
@@ -145,10 +145,10 @@ is launched. The ``%runscript`` is set to echo the value.
    Hello
 
 .. warning::
-   {Singularity} 3.6 uses an embedded shell interpreter to evaluate and setup container
+   {Singularity} uses an embedded shell interpreter to evaluate and setup container
    environments, therefore all commands executed from the ``%environment`` section have
-   an execution timeout of **5 seconds** for {Singularity} 3.6 and a **1 minute** timeout since
-   {Singularity} 3.7. While it is fine to source a script from there, it is not recommended
+   an execution timeout of **1 minute**.
+   While it is fine to source a script from there, it is not recommended
    to use this section to run potentially long initialization tasks because this would
    impact users running the image and the execution could abort due to timeout.
 
@@ -196,7 +196,7 @@ environment variables for correct operation of most software.
    If you work on a host system that sets a lot of environment
    variables, e.g. because you use software made available through
    environment modules / lmod, you may see strange behavior in your
-   container. Check your host environment with ``env`` for variables
+   container. You may want to check your host environment with ``env`` for variables
    such as ``PYTHONPATH`` that can change the way code runs, and
    consider using ``--cleanenv``.
 
@@ -233,8 +233,6 @@ your workflow.
 ``--env`` option
 ----------------
 
-*New in {Singularity} 3.6*
-
 The ``--env`` option on the ``run/exec/shell`` commands allows you to
 specify environment variables as ``NAME=VALUE`` pairs:
 
@@ -254,8 +252,6 @@ variables include special characters.
 ``--env-file`` option
 ---------------------
 
-*New in {Singularity} 3.6*
-
 The ``--env-file`` option lets you provide a file that contains
 environment variables as ``NAME=VALUE`` pairs, e.g.:
 
@@ -269,11 +265,11 @@ environment variables as ``NAME=VALUE`` pairs, e.g.:
   Hello from a file
 
 
-``apptainerENV_`` prefix
+``APPTAINERENV_`` prefix
 --------------------------
 
 If you export an environment variable on your host called
-``apptainerENV_xxx`` *before* you run a container, then it will set
+``APPTAINERENV_xxx`` *before* you run a container, then it will set
 the environment variable ``xxx`` inside the container:
 
 .. code-block::
@@ -281,7 +277,7 @@ the environment variable ``xxx`` inside the container:
    $ apptainer run env.sif
    Hello
 
-   $ export apptainerENV_MYVAR="Overridden"
+   $ export APPTAINERENV_MYVAR="Overridden"
    $ apptainer run env.sif
    Overridden
 
@@ -312,11 +308,11 @@ block.
 
 If your container depends on things that are bind mounted into it, or
 you have another need to modify the ``PATH`` variable when starting a
-container, you can do so with ``apptainerENV_APPEND_PATH`` or
-``apptainerENV_PREPEND_PATH``.
+container, you can do so with ``APPTAINERENV_APPEND_PATH`` or
+``APPTAINERENV_PREPEND_PATH``.
 
 If you set a variable on your host called
-``apptainerENV_APPEND_PATH`` then its value will be appended
+``APPTAINERENV_APPEND_PATH`` then its value will be appended
 (added to the end) of the ``PATH`` variable in the container.
 
 .. code-block::
@@ -324,7 +320,7 @@ If you set a variable on your host called
    $ apptainer exec env.sif sh -c 'echo $PATH'
    /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-   $ export apptainerENV_APPEND_PATH="/endpath"
+   $ export APPTAINERENV_APPEND_PATH="/endpath"
    $ apptainer exec env.sif sh -c 'echo $PATH'
    /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/endpath
 
@@ -332,7 +328,7 @@ Alternatively you could use the ``--env`` option to set a
 ``APPEND_PATH`` variable, e.g. ``--env APPEND_PATH=/endpath``.
 
 If you set a variable on your host called
-``apptainerENV_PREPEND_PATH`` then its value will be prepended
+``APPTAINERENV_PREPEND_PATH`` then its value will be prepended
 (added to the start) of the ``PATH`` variable in the container.
 
 .. code-block::
@@ -340,7 +336,7 @@ If you set a variable on your host called
    $ apptainer exec env.sif sh -c 'echo $PATH'
    /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-   $ export apptainerENV_PREPEND_PATH="/startpath"
+   $ export APPTAINERENV_PREPEND_PATH="/startpath"
    $ apptainer exec env.sif sh -c 'echo $PATH'
    /startpath:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
@@ -363,8 +359,7 @@ effect as ``--env APPEND_PATH="/endpath"``.
 Environment Variable Precedence
 -------------------------------
 
-When a container is run with {Singularity} 3.6, the container
-environment is constructed in the following order:
+When starting to run, the container environment is constructed in the following order:
 
   - Clear the environment, keeping just ``HOME`` and ``APPTAINER_APPNAME``.
   - Take Docker defined environment variables, where Docker was the base image source.
@@ -398,7 +393,7 @@ new files.
    <https://en.wikipedia.org/wiki/Umask>`__.
 
    
-{Singularity} 3.7 and above set the ``umask`` in the container to match
+{Singularity} sets the ``umask`` in the container to match
 the value outside, unless:
 
   - The ``--fakeroot`` option is used, in which case a ``0022`` umask
@@ -407,11 +402,6 @@ the value outside, unless:
     non-root users who may use the same container later.
   - The ``--no-umask`` option is used, in which case a ``0022`` umask
     is set.
-
-.. note::
-
-   In {Singularity} 3.6 and below a default ``0022`` umask was always applied.
-
 
 .. _sec:metadata:
 
@@ -446,16 +436,10 @@ modifying an existing label when ``--force`` is not used:
 
 .. code-block::
 
-  $ singularity build test2.sif test2.def
+  $ apptainer build test2.sif test2.def
   ...
   INFO:    Adding labels
   WARNING: Label: OWNER already exists and force option is false, not overwriting
-
-
-.. note::
-
-  {Singularity} 3.0 through 3.8 did not inherit labels from Docker/OCI images
-  during a build.
 
 
 Custom Labels
@@ -481,8 +465,9 @@ when you are writing the definition file, but can be obtained in the
 ``%post`` section of your definition file while the container is
 building.
 
-{Singularity} 3.7 and above allow this, through adding labels to the
-file defined by the ``SINGULARITY_LABELS`` environment variable in the
+{Singularity} allows this, through adding labels to the
+file defined by the ``APPTAINER_LABELS`` 3692020
+environment variable in the
 ``%post`` section:
 
 .. code-block:: apptainer
@@ -528,7 +513,7 @@ Running inspect without any options, or with the ``-l`` or
     org.label-schema.schema-version: 1.0
     org.label-schema.usage.apptainer.deffile.bootstrap: library
     org.label-schema.usage.apptainer.deffile.from: ubuntu:latest
-    org.label-schema.usage.apptainer.version: 3.7.0-rc.1
+    org.label-schema.usage.apptainer.version: 1.0.0-rc.1
                 
 We can easily see when the container was built, the source of the base
 image, and the exact version of {Singularity} that was used to build it.
@@ -732,7 +717,7 @@ And the output would look like:
                                     "org.label-schema.schema-version": "1.0",
                                     "org.label-schema.usage.apptainer.deffile.bootstrap": "library",
                                     "org.label-schema.usage.apptainer.deffile.from": "ubuntu:latest",
-                                    "org.label-schema.usage.apptainer.version": "3.7.0-rc.1"
+                                    "org.label-schema.usage.apptainer.version": "1.0.0-rc.1"
                             }
                     }
             },
@@ -749,9 +734,8 @@ environment files that are used when a container is executed.
 
 *You should not manually modify* files under ``/.apptainer.d``, from
 your definition file during builds, or directly within your container
-image. Recent 3.x versions of {Singularity} replace older action scripts
-dynamically, at runtime, to support new features. In the longer term,
-metadata will be moved outside of the container, and stored only in
+image. {Singularity} replaces older action scripts dynamically, at runtime, 
+to support new features. In the longer term, metadata will be moved outside of the container, and stored only in
 the SIF file metadata descriptor.
 
 .. code-block:: none

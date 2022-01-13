@@ -48,7 +48,7 @@ To use a persistent overlay, you must first have a container.
 File system image overlay
 =========================
 
-Since 3.8, {Singularity} provides a command ``singularity overlay create`` to
+{Singularity} provides a command ``apptainer overlay create`` to
 create persistent overlay images. You can create a single EXT3 overlay image
 or adding a EXT3 writable overlay partition to an existing SIF image.
 
@@ -90,10 +90,6 @@ So for example:
 
 Create an overlay image 
 -------------------------------
-
-.. note::
-
-    This may be only available for versions of Singularity earlier than 3.8
 
 You can use tools like ``dd`` and ``mkfs.ext3`` to create and format
 an empty ext3 file system image, which holds all changes made in your
@@ -141,9 +137,9 @@ that were placed into ``overlay.img``.
 .. code-block:: none
 
    $ apptainer shell --overlay overlay.img ubuntu.sif
-   apptainer> echo $USER
+   Apptainer> echo $USER
    dtrudg
-   apptainer> echo "Hello" > /hello
+   Apptainer> echo "Hello" > /hello
                 
 .. note::
 

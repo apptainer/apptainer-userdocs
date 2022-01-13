@@ -10,8 +10,8 @@ Security Policy
 If you suspect you have found a vulnerability in {Singularity} we want
 to work with you so that it can be investigated, fixed, and disclosed
 in a responsible manner. Please follow the steps in our published
-`Security Policy <https://singularity.hpcng.org/security-policy/>`__, which begins
-with contacting us privately via singularity‑security@hpcng.org
+`Security Policy <https://apptainer.org/security-policy/>`__, which begins
+with contacting us privately via security@apptainer.org
 
 We disclose vulnerabilities found in {Singularity} through public
 CVE reports, and notifications on our community channels. We encourage
@@ -124,7 +124,7 @@ PIDs etc. provided by other runtimes, {Singularity} can make use of
 additional namespaces and functionality such as seccomp and cgroups.
 
 
-apptainer Image Format (SIF)
+Singularity Image Format (SIF)
 ##############################
 
 {Singularity} uses SIF as its default container format. A SIF
@@ -143,7 +143,7 @@ corrupted.
 
 We use private PGP keys to create a container signature, and the
 public key in order to verify the container. Verification of signed
-containers happens automatically in ``singularity pull`` commands
+containers happens automatically in ``apptainer pull`` commands
 against the Sylabs Cloud Container Library. A Keystore in the Sylabs
 Cloud makes it easier to share and obtain public keys for container
 verification.

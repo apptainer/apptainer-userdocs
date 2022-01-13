@@ -11,11 +11,11 @@ The ``remote`` command group allows users to manage the service endpoints
 managing credentials for image storage services, remote builders, and key
 servers used to locate public keys for SIF image verification. Currently,
 there are three main types of remote endpoints managed by this command group:
-the public Sylabs Cloud (or local {Singularity} Enterprise installation), OCI
+the public Cloud Library (or local {Singularity} Enterprise installation), OCI
 registries and keyservers.
 
 -------------------
-Public Sylabs Cloud
+Public Cloud
 -------------------
 
 Sylabs introduced the online `Sylabs Cloud
@@ -147,7 +147,7 @@ your existing token will not be replaced:
 
 .. code-block:: console
 
-    $ singularity remote login
+    $ apptainer remote login
     An access token is already set for this remote. Replace it? [N/y]y
     Generate an access token at https://cloud.sylabs.io/auth/tokens, and paste it here.
     Token entered will be hidden for security.
@@ -175,7 +175,7 @@ hosted at enterprise.example.com:
 
 .. code-block:: none
 
-    $ singularity remote add myremote https://enterprise.example.com
+    $ apptainer remote add myremote https://enterprise.example.com
 
     INFO:    Remote "myremote" added.
     INFO:    Authenticating with remote: myremote
@@ -268,7 +268,7 @@ The default remote shows up with a ``YES`` under the ``ACTIVE`` column in the ou
     * Active cloud services keyserver
 
 
-{Singularity} 3.7 introduces the ability for an administrator to make a remote
+{Singularity} provides the ability for an administrator to make a remote
 the only usable remote for the system by using the ``--exclusive`` flag:
 
 .. code-block:: none
@@ -398,7 +398,7 @@ using it:
 
 .. code-block:: none
 
-    $ singularity remote login --username ian https://pgp.example.com
+    $ apptainer remote login --username ian https://pgp.example.com
     Password (or token when username is empty):
     INFO:    Token stored in /home/ian/.singularity/remote.yaml
 
@@ -446,7 +446,7 @@ set environment variables for a single registry.
 See :ref:`Authentication via Interactive Login <sec:authentication_via_docker_login>`
 and :ref:`Authentication via Environment Variables <sec:authentication_via_environment_variables>`
 
-{Singularity} 3.7 introduces the ability for users to supply credentials on a per
+{Singularity} also introduces the ability for users to supply credentials on a per
 registry basis with the ``remote`` command group.
 
 Users can login to an oci registry with the ``remote login`` command by
@@ -454,7 +454,7 @@ specifying a ``docker://`` prefix to the registry hostname:
 
 .. code-block:: none
 
-    $ singularity remote login --username ian docker://docker.io
+    $ apptainer remote login --username ian docker://docker.io
     Password (or token when username is empty):
     INFO:    Token stored in /home/ian/.singularity/remote.yaml
 
@@ -489,7 +489,7 @@ We can login to multiple OCI registries at the same time:
 
 .. code-block:: none
 
-    $ singularity remote login --username ian docker://registry.example.com
+    $ apptainer remote login --username ian docker://registry.example.com
     Password (or token when username is empty):
     INFO:    Token stored in /home/ian/.singularity/remote.yaml
 

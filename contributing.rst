@@ -51,8 +51,8 @@ love so nobody feels left out!
 
 You can contribute to the documentation by `raising an issue to suggest an 
 improvement <https://github.com/apptainer-userdocs/issues/new>`_ or by 
-sending a `pull request <https://github.com/apptainer-userdocs/compare>`_ on `our repository 
-for documentation <https://github.com/apptainer-userdocs>`_.
+sending a `pull request <https://github.com/apptainer/apptainer-userdocs/compare>`_ on `our repository 
+for documentation <https://github.com/apptainer/apptainer-userdocs>`_.
 
 The current documentation is generated with:
 
@@ -94,7 +94,7 @@ Step 1. Fork the repo
 =====================
 
 To contribute to {Singularity}, you should obtain a GitHub account and fork the 
-`{Singularity} <https://github.com/hpcng/singularity>`_ repository. Once forked, 
+`{Singularity} <https://github.com/apptainer/apptainer>`_ repository. Once forked, 
 clone your fork of the repo to your computer. (Obviously, you should replace 
 ``your-username`` with your GitHub username.)
 
@@ -190,7 +190,7 @@ will need to follow the next steps:
 
 .. code-block:: none
 
-    $ git remote add upstream https://github.com/apptainer.git && # to add a new remote named "upstream" \
+    $ git remote add upstream https://github.com/apptainer/apptainer.git && # to add a new remote named "upstream" \
         git checkout master && # or another branch to be updated \
         git pull upstream master && \
         git push origin master && # to update your fork \
