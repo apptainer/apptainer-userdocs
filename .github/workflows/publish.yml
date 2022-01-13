@@ -65,9 +65,9 @@ jobs:
       - name: Update website repo
         run: |
           git clone git@github.com:apptainer/apptainer.org.git ~/apptainer.org
-          rm -rf ~/apptainer.org/static/apptainer/user-docs/${GITHUB_REF##*/}
-          cp -r _build/html ~/apptainer.org/static/apptainer/user-docs/${GITHUB_REF##*/}
+          rm -rf ~/apptainer.org/static/docs/user/${GITHUB_REF##*/}
+          cp -r _build/html ~/apptainer.org/static/docs/user/${GITHUB_REF##*/}
           cd ~/apptainer.org
-          git add static/apptainer/user-docs/${GITHUB_REF##*/}
+          git add static/docs/user/${GITHUB_REF##*/}
           git commit -m "Update ${GITHUB_REF##*/} userdocs"
           git push
