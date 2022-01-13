@@ -17,6 +17,10 @@ jobs:
         with:
           go-version: 1.17.3
 
+      - name: Update repositories
+        run: |
+          sudo apt update
+
       - name: Install Apptainer dependencies
         run: |
           sudo apt-get install -f -y build-essential libssl-dev uuid-dev squashfs-tools libseccomp-dev cryptsetup-bin libgpgme-dev
