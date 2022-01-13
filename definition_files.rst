@@ -381,14 +381,14 @@ hardware. If you want to build a container without running the
 same hardware that will be used on the production system), you can do
 so with the ``--notest`` build option:
 
-.. code-block:: none
+.. code-block::
 
     $ sudo singularity build --notest my_container.sif my_container.def
 
 Running the test command on a container built with this def file yields the
 following:
 
-.. code-block:: none
+.. code-block::
 
     $ singularity test my_container.sif
     Container base is Ubuntu as expected.
@@ -461,7 +461,7 @@ Perl) that complain when no locale is set.
 After building this container, you can verify that the environment variables are
 set appropriately at runtime with the following command:
 
-.. code-block:: none
+.. code-block::
 
     $ singularity exec my_container.sif env | grep -E 'LISTEN_PORT|LC_ALL'
     LISTEN_PORT=12345
@@ -502,7 +502,7 @@ Here the netcat program is used to listen for TCP traffic on the port indicated
 by the ``$LISTEN_PORT`` variable (set in the ``%environment`` section above).
 The script can be invoked like so:
 
-.. code-block:: none
+.. code-block::
 
     $ singularity instance start my_container.sif instance1
     INFO:    instance started successfully
@@ -546,7 +546,7 @@ ceases to exist, and only the process running within the container remains.
 
 Running the container built using this def file will yield the following:
 
-.. code-block:: none
+.. code-block::
 
     $ ./my_container.sif
     Container was created Thu Dec  6 20:01:56 UTC 2018
@@ -584,7 +584,7 @@ Finally, the last label named ``MyLabel`` has the value of ``Hello World``.
 
 To inspect the available labels on your image you can do so by running the following command:
 
-.. code-block:: none
+.. code-block::
 
     $ singularity inspect my_container.sif
 
@@ -621,7 +621,7 @@ Consider the example from the def file above:
 
 After building the help can be displayed like so:
 
-.. code-block:: none
+.. code-block::
 
     $ singularity run-help my_container.sif
         This is a demo container used to illustrate a def file that uses all
@@ -766,7 +766,7 @@ option becomes available allowing the following functions:
 
 To run a specific app within the container:
 
-.. code-block:: none
+.. code-block::
 
     % singularity run --app foo my_container.sif
     RUNNING FOO
@@ -776,7 +776,7 @@ file above. You can execute the following command to search the list of active
 environment variables and ``grep`` to determine if the variable changes
 depending on the app we specify:
 
-.. code-block:: none
+.. code-block::
 
     $ singularity exec --app foo my_container.sif env | grep SOFTWARE
     SOFTWARE=foo

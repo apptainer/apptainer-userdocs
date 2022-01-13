@@ -111,7 +111,7 @@ archive suitable to the environment you are in. Once the Download is complete,
 extract the archive to ``/usr/local`` (or use other instructions on go installation
 page). Alternatively, follow the commands here:
 
-.. code-block:: none
+.. code-block::
 
     $ export VERSION=1.17.5 OS=linux ARCH=amd64 && \  # Replace the values as needed
       wget https://dl.google.com/go/go$VERSION.$OS-$ARCH.tar.gz && \ # Downloads the required Go package
@@ -120,7 +120,7 @@ page). Alternatively, follow the commands here:
 
 Set the Environment variable ``PATH`` to point to Go:
 
-.. code-block:: none
+.. code-block::
 
     $ echo 'export PATH=/usr/local/go/bin:$PATH' >> ~/.bashrc && \
       source ~/.bashrc
@@ -135,7 +135,7 @@ You can download {Singularity} from one of the releases. To see a full list, vis
 After deciding on a release to install, you can run the following commands to
 proceed with the installation.
 
-.. code-block:: none
+.. code-block::
 
     $ export VERSION={InstallationVersion} && # adjust this as necessary \
         wget https://github.com/hpcng/singularity/releases/download/v${VERSION}/singularity-${VERSION}.tar.gz && \
@@ -150,7 +150,7 @@ Compile the {Singularity} source code
 Now you are ready to build {Singularity}. Dependencies will be automatically
 downloaded. You can build {Singularity} using the following commands:
 
-.. code-block:: none
+.. code-block::
 
     $ ./mconfig && \
         make -C builddir && \
@@ -171,7 +171,7 @@ system from within a container.
 The ``help`` command gives an overview of {Singularity} options and subcommands as
 follows:
 
-.. code-block:: none
+.. code-block::
 
     $ singularity help
 
@@ -230,7 +230,7 @@ follows:
 
 Information about subcommand can also be viewed with the ``help`` command.
 
-.. code-block:: none
+.. code-block::
 
     $ singularity help verify
     Verify cryptographic signatures attached to an image
@@ -272,14 +272,14 @@ and arguments.
 For example, to pass the ``--debug`` option to the main ``singularity`` command
 and run {Singularity} with debugging messages on:
 
-.. code-block:: none
+.. code-block::
 
     $ singularity --debug run library://lolcow
 
 To pass the ``--containall`` option to the ``run`` command and run a
 {Singularity} image in an isolated manner:
 
-.. code-block:: none
+.. code-block::
 
     $ singularity run --containall library://lolcow
 
@@ -287,7 +287,7 @@ To pass the ``--containall`` option to the ``run`` command and run a
 Linux capabilities for a particular user, you would use the  ``list`` command in
 the ``capability`` command group like so:
 
-.. code-block:: none
+.. code-block::
 
     $ singularity capability list dave
 
@@ -295,7 +295,7 @@ Container authors might also write help docs specific to a container or for an
 internal module called an ``app``. If those help docs exist for a particular
 container, you can view them like so.
 
-.. code-block:: none
+.. code-block::
 
     $ singularity inspect --helpfile container.sif  # See the container's help, if provided
 
@@ -308,7 +308,7 @@ Download pre-built images
 You can use the ``search`` command to locate groups, collections, and
 containers of interest on the `Container Library <https://cloud.sylabs.io/library>`_ .
 
-.. code-block:: none
+.. code-block::
 
     singularity search tensorflow
     Found 22 container images for amd64 matching "tensorflow":
@@ -345,7 +345,7 @@ commands to download pre-built images from an external resource like the
 When called on a native {Singularity} image like those provided on the Container Library, ``pull``
 simply downloads the image file to your system.
 
-.. code-block:: none
+.. code-block::
 
     $ singularity pull library://lolcow
 
@@ -354,7 +354,7 @@ served from a registry. In this case ``pull`` does not just download an image
 file. Docker images are stored in layers, so ``pull`` must also combine those
 layers into a usable {Singularity} file.
 
-.. code-block:: none
+.. code-block::
 
     $ singularity pull docker://sylabsio/lolcow
 
@@ -368,7 +368,7 @@ You can also use the ``build`` command to download pre-built images from an
 external resource. When using ``build`` you must specify a name for your
 container like so:
 
-.. code-block:: none
+.. code-block::
 
     $ singularity build ubuntu.sif library://ubuntu
 
@@ -395,7 +395,7 @@ in addition to a local image path.
 For demonstration, we will use a ``lolcow_latest.sif`` image that can be pulled
 from the Container Library:
 
-.. code-block:: none
+.. code-block::
 
     $ singularity pull library://lolcow
 
@@ -406,7 +406,7 @@ The `shell <cli/singularity_shell.html>`_
 command allows you to spawn a new shell within your container and interact with
 it as though it were a small virtual machine.
 
-.. code-block:: none
+.. code-block::
 
     $ singularity shell lolcow_latest.sif
 
@@ -419,7 +419,7 @@ should not rely on that to determine whether you are in container or not).
 Once inside of a {Singularity} container, you are the same user as you are on the
 host system.
 
-.. code-block:: none
+.. code-block::
 
     {Singularity} lolcow_latest.sif:~> whoami
     david
@@ -431,7 +431,7 @@ host system.
 URIs. This creates an ephemeral container that disappears when the shell is
 exited.
 
-.. code-block:: none
+.. code-block::
 
     $ singularity shell library://lolcow
 
@@ -443,7 +443,7 @@ command allows you to execute a custom command within a container by specifying
 the image file. For instance, to execute the ``cowsay`` program within the
 ``lolcow_latest.sif`` container:
 
-.. code-block:: none
+.. code-block::
 
     $ singularity exec lolcow_latest.sif cowsay moo
      _____
@@ -459,7 +459,7 @@ the image file. For instance, to execute the ``cowsay`` program within the
 URIs. This creates an ephemeral container that executes a command and
 disappears.
 
-.. code-block:: none
+.. code-block::
 
     $ singularity exec library://lolcow cowsay "Fresh from the library!"
      _________________________
@@ -481,7 +481,7 @@ defined scripts that define the actions a container should perform when someone
 runs it. The runscript can be triggered with the `run <cli/singularity_run.html>`_
 command, or simply by calling the container as though it were an executable.
 
-.. code-block:: none
+.. code-block::
 
     $ singularity run lolcow_latest.sif
     ______________________________
@@ -508,7 +508,7 @@ command, or simply by calling the container as though it were an executable.
 ``run`` also works with the ``library://``, ``docker://``, and ``shub://`` URIs.
 This creates an ephemeral container that runs and then disappears.
 
-.. code-block:: none
+.. code-block::
 
     $ singularity run library://lolcow
     ______________________________
@@ -526,7 +526,7 @@ Working with Files
 
 Files on the host are reachable from within the container.
 
-.. code-block:: none
+.. code-block::
 
     $ echo "Hello from inside the container" > $HOME/hostfile.txt
 
@@ -542,7 +542,7 @@ You can specify additional directories to bind mount into your container with
 the ``--bind`` option. In this example, the ``data`` directory on the host
 system is bind mounted to the ``/mnt`` directory inside the container.
 
-.. code-block:: none
+.. code-block::
 
     $ echo "Drink milk (and never eat hamburgers)." > /data/cow_advice.txt
 
@@ -552,7 +552,7 @@ system is bind mounted to the ``/mnt`` directory inside the container.
 Pipes and redirects also work with {Singularity} commands just like they do with
 normal Linux commands.
 
-.. code-block:: none
+.. code-block::
 
     $ cat /data/cow_advice.txt | singularity exec lolcow_latest.sif cowsay
      ________________________________________
@@ -588,7 +588,7 @@ Sandbox Directories
 To build into a ``sandbox`` (container in a directory) use the
 ``build --sandbox`` command and option:
 
-.. code-block:: none
+.. code-block::
 
     $ sudo singularity build --sandbox ubuntu/ library://ubuntu
 
@@ -601,7 +601,7 @@ just as you would with a {Singularity} image. If you pass the ``--writable``
 option when you use your container you can also write files within the sandbox
 directory (provided you have the permissions to do so).
 
-.. code-block:: none
+.. code-block::
 
     $ sudo singularity exec --writable ubuntu touch /foo
 
@@ -617,7 +617,7 @@ to another. For instance, if you have already created a sandbox (directory) and
 want to convert it to the default immutable image format (squashfs) you can do
 so:
 
-.. code-block:: none
+.. code-block::
 
     $ singularity build new-sif sandbox
 
@@ -662,7 +662,7 @@ Here is an example of a definition file:
 To build a container from this definition file (assuming it is a file
 named lolcow.def), you would call build like so:
 
-.. code-block:: none
+.. code-block::
 
     $ sudo singularity build lolcow.sif lolcow.def
 
@@ -707,7 +707,7 @@ to many common questions.
 If you need to request an installation you may decide to draft a message similar
 to this:
 
-.. code-block:: none
+.. code-block::
 
     Dear shared resource administrator,
 

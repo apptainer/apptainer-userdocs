@@ -595,7 +595,7 @@ installed on your system. It may seem counter-intuitive to install YUM on a
 system that uses a different package manager, but you can do so. For instance,
 on Ubuntu you can install it like so:
 
-.. code-block:: none
+.. code-block::
 
     $ sudo apt-get update && sudo apt-get install yum
 
@@ -659,13 +659,13 @@ Notes
 In order to use the ``debootstrap`` build module, you must have ``debootstrap``
 installed on your system. On Ubuntu you can install it like so:
 
-.. code-block:: none
+.. code-block::
 
     $ sudo apt-get update && sudo apt-get install debootstrap
 
 On CentOS you can install it from the epel repos like so:
 
-.. code-block:: none
+.. code-block::
 
     $ sudo yum update && sudo yum install epel-release && sudo yum install debootstrap.noarch
 
