@@ -1,6 +1,7 @@
 
 .. _appendix:
 
+========
 Appendix
 ========
 
@@ -9,7 +10,7 @@ Appendix
 
 .. _singularity-environment-variables:
 
-
+-------------------------------------
 {Singularity}'s environment variables
 -------------------------------------
 
@@ -17,7 +18,7 @@ Appendix
 You can see them listed alphabetically below with their respective functionality.
 
 ``A``
-^^^^^
+=====
 
 #. **SINGULARITY_ADD_CAPS**: To specify a list (comma separated string) of capabilities to be added. Default is an empty string.
 
@@ -30,7 +31,7 @@ You can see them listed alphabetically below with their respective functionality
 #. **SINGULARITY_APPLY_CGROUPS**: Used to apply cgroups from an input file for container processes. (it requires root privileges)
 
 ``B``
-^^^^^
+=====
 
 #. **SINGULARITY_BINDPATH** and **SINGULARITY_BIND**: Comma separated string ``source:<dest>`` list of paths to bind between the host and the container.
 
@@ -39,7 +40,7 @@ You can see them listed alphabetically below with their respective functionality
 #. **SINGULARITY_BUILDER**: To specify the remote builder service URL. Defaults to our remote builder.
 
 ``C``
-^^^^^
+=====
 
 #. **SINGULARITY_CACHEDIR**: Specifies the directory for image downloads to be cached in. See :ref:`sec:cache`.
 
@@ -52,7 +53,7 @@ You can see them listed alphabetically below with their respective functionality
 #. **SINGULARITY_CONTAINLIBS**: Used to specify a string of file names (comma separated string) to bind to the ``/.singularity.d/libs`` directory.
 
 ``D``
-^^^^^
+=====
 
 #. **SINGULARITY_DEFFILE**: Shows the {Singularity} recipe that was used to generate the image.
 
@@ -83,7 +84,7 @@ You can see them listed alphabetically below with their respective functionality
    of capabilities to be dropped. Default is an empty string.
 
 ``E``
-^^^^^
+=====
 
 #. **SINGULARITY_ENVIRONMENT**: Contains all the environment variables that have been exported in your container.
 #. **SINGULARITY_ENCRYPTION_PASSPHRASE**: Used to specify the plaintext passphrase to encrypt the container.
@@ -94,19 +95,19 @@ You can see them listed alphabetically below with their respective functionality
 #. **SINGULARITYENV_PREPEND_PATH**: Used to prepend directories to the beginning of `$PATH`` environment variable. You can see more in detail on how to use this variable in our :ref:`environment and metadata section <environment-and-metadata>`.
 
 ``F``
-^^^^^
+=====
 
 #. **SINGULARITY_FAKEROOT**: Set to false by default, considers running the container in a new user namespace as uid 0 (experimental).
 
 #. **SINGULARITY_FORCE**: Forces to kill the instance.
 
 ``G``
-^^^^^
+=====
 
 #. **SINGULARITY_GROUP**: Used to specify a string of capabilities for the given group.
 
 ``H``
-^^^^^
+=====
 
 #. **SINGULARITY_HELPFILE**: Specifies the runscript helpfile, if it exists.
 
@@ -115,22 +116,22 @@ You can see them listed alphabetically below with their respective functionality
 #. **SINGULARITY_HOSTNAME**: The container's hostname.
 
 ``I``
-^^^^^
+=====
 
 #. **SINGULARITY_IMAGE**: Filename of the container.
 
 ``J``
-^^^^^
+=====
 
 #. **SINGULARITY_JSON**: Specifies the structured json of the def file, every node as each section in the def file.
 
 ``K``
-^^^^^
+=====
 
 #. **SINGULARITY_KEEP_PRIVS**: To let root user keep privileges in the container. Default is set to false.
 
 ``L``
-^^^^^
+=====
 
 #. **SINGULARITY_LABELS**: Specifies the labels associated with the image.
 
@@ -144,7 +145,7 @@ You can see them listed alphabetically below with their respective functionality
    separated by newline characters.
 
 ``N``
-^^^^^
+=====
 
 #. **SINGULARITY_NAME**: Specifies a custom image name.
 
@@ -171,17 +172,17 @@ You can see them listed alphabetically below with their respective functionality
    (experimental, only unprivileged).
 
 ``O``
-^^^^^
+=====
 
 #. **SINGULARITY_OVERLAY** and **SINGULARITY_OVERLAYIMAGE**: To indicate the use of an overlay file system image for persistent data storage or as read-only layer of container.
 
 ``P``
-^^^^^
+=====
 
 #. **SINGULARITY_PWD** and **SINGULARITY_TARGET_PWD**: The initial working directory for payload process inside the container.
 
 ``R``
-^^^^^
+=====
 
 #. **SINGULARITY_REMOTE**: To build an image remotely. (Does not require root) Default is set to false.
 
@@ -190,7 +191,7 @@ You can see them listed alphabetically below with their respective functionality
 #. **SINGULARITY_RUNSCRIPT**: Specifies the runscript of the image.
 
 ``S``
-^^^^^
+=====
 
 #. **SINGULARITY_SANDBOX**: To specify that the format of the image should be a sandbox. Default is set to false.
 
@@ -207,14 +208,14 @@ You can see them listed alphabetically below with their respective functionality
 #. **SINGULARITY_SIGNAL**: Specifies a signal sent to the instance.
 
 ``T``
-^^^^^
+=====
 
 #. **SINGULARITY_TEST**: Specifies the test script for the image.
 
 #. **SINGULARITY_TMPDIR**: Used with the ``build`` command, to consider a temporary location for the build. See :ref:`sec:temporaryfolders`.
 
 ``U``
-^^^^^
+=====
 
 #. **SINGULARITY_UNSHARE_PID**: To specify that the container will run in a new PID namespace. Default is set to false.
 
@@ -233,7 +234,7 @@ You can see them listed alphabetically below with their respective functionality
 #. **SINGULARITY_USERNS** and **SINGULARITY_UNSHARE_USERNS**: To specify that the container will run in a new user namespace, allowing {Singularity} to run completely unprivileged on recent kernels. This may not support every feature of {Singularity}. (Sandbox image only). Default is set to false.
 
 ``W``
-^^^^^
+=====
 
 #. **SINGULARITY_WORKDIR**: The working directory to be used for ``/tmp``, ``/var/tmp`` and ``$HOME`` (if ``-c`` or ``--contain`` was also used)
 
@@ -244,6 +245,7 @@ You can see them listed alphabetically below with their respective functionality
 
 .. _buildmodules:
 
+-------------
 Build Modules
 -------------
 
@@ -251,7 +253,7 @@ Build Modules
 
 
 ``library`` bootstrap agent
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+===========================
 
 .. _sec:build-library-module:
 
@@ -310,7 +312,7 @@ if it is signed by keys matching *all* of the specified fingerprints.
 
 
 ``docker`` bootstrap agent
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+==========================
 
 .. _sec:build-docker-module:
 
@@ -389,7 +391,7 @@ For detailed information about setting your build environment see
 
 
 ``shub`` bootstrap agent
-^^^^^^^^^^^^^^^^^^^^^^^^
+========================
 
 Overview
 """"""""
@@ -435,7 +437,7 @@ image and the new image during bootstrap.
 
 
 ``oras`` bootstrap agent
-^^^^^^^^^^^^^^^^^^^^^^^^
+========================
 
 Overview
 """"""""
@@ -470,7 +472,7 @@ Also,``tag`` is mandatory that refers to the version of image you want to use.
 
 
 ``localimage`` bootstrap agent
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+==============================
 
 .. _sec:build-localimage:
 
@@ -529,7 +531,7 @@ the new image during bootstrap.
 
 
 ``yum`` bootstrap agent
-^^^^^^^^^^^^^^^^^^^^^^^
+=======================
 
 .. _sec:build-yum:
 
@@ -603,7 +605,7 @@ on Ubuntu you can install it like so:
 
 
 ``debootstrap`` build agent
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+===========================
 
 .. _sec:build-debootstrap:
 
@@ -674,7 +676,7 @@ On CentOS you can install it from the epel repos like so:
 
 
 ``arch`` bootstrap agent
-^^^^^^^^^^^^^^^^^^^^^^^^
+========================
 
 .. _sec:build-arch:
 
@@ -717,7 +719,7 @@ for more info.
 
 
 ``busybox`` bootstrap agent
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+===========================
 
 .. _sec:build-busybox:
 
@@ -756,7 +758,7 @@ disk space!
 
 
 ``zypper`` bootstrap agent
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+==========================
 
 .. _sec:build-zypper:
 
@@ -803,7 +805,7 @@ zypper build module is ``zypper`` itself.
 .. _docker-daemon-archive:
 
 ``docker-daemon`` and ``docker-archive`` bootstrap agents
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+=========================================================
 
 If you are using docker locally there are two options for creating {Singularity}
 images without the need for a repository. You can either build a SIF from a
@@ -878,7 +880,7 @@ Note that differently from the ``docker://`` bootstrap agent both ``docker-daemo
 .. _scratch-agent:
 
 ``scratch`` bootstrap agent
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+===========================
 
 The scratch bootstrap agent allows you to start from a completely
 empty container. You are then responsible for adding any and all
