@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Apptainer User Docs
 
 This repository holds user-facing documentation for the
@@ -16,21 +15,6 @@ follow the instructions below, and submit a PR on GitHub.
 ## Setting up an environment to contribute
 
 The Apptainer user documentation is written in [reStructured Text (RST)
-=======
-# apptainer User Docs
-
-This repository holds user-facing documentation for the
-[apptainer](https://github.com/hpcng/apptainer) container runtime.
-
-This is a community project led by [HPCng](https:/hpcng.org), and
-contributions are always welcome! If you'd like to update or improve
-apptainer's documentation please follow the instructions below, and submit a
-PR on GitHub.
-
-## Setting up an environment to contribute
-
-The apptainer user documentation is written in [reStructured Text (RST)
->>>>>>> First batch replacements pointing to Apptainer
 format](http://docutils.sourceforge.net/rst.html) and generated using
 [Sphinx](https://pypi.org/project/Sphinx/). The
 [ReadTheDocs](https://readthedocs.org/) theme for Sphinx is used.
@@ -80,13 +64,8 @@ This file sets the themes, extensions, variables and naming scheme for output
 created when building the documentation with Sphinx. Some important elements
 include:
 
-<<<<<<< HEAD
 - `version` : Describes the current version of `Apptainer` that the
   documentation is for. We set version to the `major.minor` values, e.g. `1.0`,
-=======
-- `version` : Describes the current version of `apptainer` that the
-  documentation is for. We set version to the `major.minor` values, e.g. `3.5`,
->>>>>>> First batch replacements pointing to Apptainer
   as we are not creating separate documentation for each patch release.
 - `release`: Would be used to specify the current release of the software being
   documented, including patch number, alpha tags etc. We leave this the same as
@@ -187,11 +166,7 @@ This will generate a folder called `_build/html` with the output. Open
 `index.html` to browse the documentation.
 
 The `SKIPCLI=1` option tells `make` not to generate the CLI reference, which is
-<<<<<<< HEAD
 created automatically from the Apptainer source code. You can generate the CLI
-=======
-created automatically from the apptainer source code. You can generate the CLI
->>>>>>> First batch replacements pointing to Apptainer
 documentation by running `make html` alone. This requires a Go build
 environment (see below).
 
@@ -219,7 +194,6 @@ Output is written into `_build/epub` and the final EPUB will be named
 
 ## Generating CLI docs
 
-<<<<<<< HEAD
 The Apptainer CLI docs are generated using the actual code from
 Apptainer.
 To do this, we include Apptainer as a git submodule, and whenever a Makefile
@@ -227,41 +201,20 @@ target (like `make html`) is run, Apptainer itself is compiled and used to
 generate the CLI docs.
 
 However, you might not want to compile Apptainer, either because you can't on
-=======
-The apptainer CLI docs are generated using the actual code from apptainer.
-To do this, we include apptainer as a git submodule, and whenever a Makefile
-target (like `make html`) is run, apptainer itself is compiled and used to
-generate the CLI docs.
-
-However, you might not want to compile apptainer, either because you can't on
->>>>>>> First batch replacements pointing to Apptainer
 your machine, or because you want to test out a quick change to the docs.  If
 this is the case, you can skip the CLI doc generation using the `SKIPCLI`
 argument.  For example, to rebuild the HTML docs without including the CLI docs,
 just run `make html SKIPCLI=1`.
 
-<<<<<<< HEAD
 If Apptainer has been updated and you want to synchronize the CLI docs with
 the new version of Apptainer, you'll have to update the submodule.  To do
-=======
-If apptainer has been updated and you want to synchronize the CLI docs with
-the new version of apptainer, you'll have to update the submodule.  To do
->>>>>>> First batch replacements pointing to Apptainer
 this, just run:
 
 ```bash
 git submodule update --remote --merge
-<<<<<<< HEAD
 git add vendor/src/github.com/apptainer/apptainer
 git commit
 ```
 
-This will update the Apptainer submodule to the latest version of the master
-=======
-git add vendor/src/github.com/hpcng/apptainer
-git commit
-```
-
-This will update the apptainer submodule to the latest version of the master
->>>>>>> First batch replacements pointing to Apptainer
+This will update the {Singularity} submodule to the latest version of the master
 branch.
