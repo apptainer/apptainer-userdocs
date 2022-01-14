@@ -284,7 +284,7 @@ To pass the ``--containall`` option to the ``run`` command and run a
 
    $ singularity run --containall library://lolcow
 
-{Singularity} 2.4 introduced the concept of command groups. For
+{Singularity} has the concept of command groups. For
 instance, to list Linux capabilities for a particular user, you would
 use the ``list`` command in the ``capability`` command group like so:
 
@@ -583,7 +583,7 @@ do with normal Linux commands.
 
 .. _sec:buildimagesfromscratch:
 
-{Singularity} v3.0 and above produces immutable images in the
+{Singularity} produces immutable images in the
 Singularity Image File (SIF) format. This ensures reproducible and
 verifiable images and allows for many extra benefits such as the ability
 to sign and verify your containers.

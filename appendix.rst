@@ -13,7 +13,7 @@
  {Singularity}'s environment variables
 ***************************************
 
-{Singularity} 3.0 comes with some environment variables you can set or
+{Singularity} comes with some environment variables you can set or
 modify depending on your needs. You can see them listed alphabetically
 below with their respective functionality.
 

@@ -41,7 +41,7 @@ container.
 Disabling System Binds
 ======================
 
-The ``--no-mount`` flag, added in {Singularity} 3.7, allows specific
+The ``--no-mount`` flag allows specific
 system mounts to be disabled, even if they are set in the
 ``singularity.conf`` configuration file by the administrator.
 
@@ -83,7 +83,7 @@ specified as ``ro`` (read-only) or ``rw`` (read/write, which is the
 default). The ``--bind/-B`` option can be specified multiple times, or a
 comma-delimited string of bind path specifications can be used.
 
-{Singularity} 3.9 adds an additional ``--mount`` flag, which provides a
+{Singularity} also has a ``--mount`` flag, which provides a
 longer-form method of specifying binds in ``--mount
 type=bind,src=<source>,dst=<destination>[,<option>]...`` format. This is
 compatible with the ``--mount`` syntax for binds in Docker and other OCI
@@ -201,7 +201,7 @@ defined within the container. The bind point is a directory within the
 container that {Singularity} can use as a destination to bind a
 directory on the host system.
 
-Starting in version 3.0, {Singularity} will do its best to bind mount
+{Singularity} will do its best to bind mount
 requested paths into a container regardless of whether the appropriate
 bind point exists within the container. {Singularity} can often carry
 out this operation even in the absence of the "overlay fs" feature.
@@ -264,8 +264,8 @@ mount a remote computer's filesystem to your local host, over ssh:
    # Now mounted to my local machine:
    $ ythel:/home/dave on /home/dave/other_host type fuse.sshfs (rw,nosuid,nodev,relatime,user_id=1000,group_id=1000)
 
-{Singularity} 3.6 introduces the ``--fusemount`` option, which allows
-you directly expose FUSE filesystems inside a container. The FUSE
+{Singularity} has a ``--fusemount`` option, which allows
+you to directly expose FUSE filesystems inside a container. The FUSE
 command / driver that mounts a particular type of filesystem can be
 located on the host, or in the container.
 
@@ -274,12 +274,6 @@ The FUSE command *must* be based on libfuse3 to work correctly with
 that provides FUSE commands such as ``sshfs`` based on FUSE 2 then you
 can install FUSE 3 versions of the commands you need inside your
 container.
-
-.. note::
-
-   ``--fusemount`` functionality was present in a hidden preview state
-   from {Singularity} 3.4. The behavior has changed for the final
-   supported version introduced in {Singularity} 3.6.
 
 FUSE mount definitions
 ======================
@@ -348,7 +342,7 @@ added to your container, you can use the ``container`` mount type:
  Image Mounts
 **************
 
-In {Singularity} 3.6 and above you can mount a directory contained in an
+In {Singularity} you can mount a directory contained in an
 image file into a container. This may be useful if you want to
 distribute directories containing a large number of data files as a
 single image file.

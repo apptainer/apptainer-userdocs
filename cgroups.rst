@@ -75,7 +75,7 @@ https://www.freedesktop.org/software/systemd/man/systemd.resource-control.html
  Using Singularity to Create a Cgroup
 **************************************
 
-{Singularity} 3.9 and above can directly apply resource limitations to
+{Singularity} allows you to directly apply resource limitations to
 systems configured for both cgroups v1 and the v2 unified hierarchy.
 Resource limits are specified using a TOML file that represents the
 `resources` section of the OCI runtime-spec:

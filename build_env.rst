@@ -254,7 +254,7 @@ Remember to use ``-E`` option to pass the value of
  Encrypted Containers
 **********************
 
-Beginning in {Singularity} 3.4.0 it is possible to build and run
+With {Singularity} it is possible to build and run
 encrypted containers. The containers are decrypted at runtime entirely
 in kernel space, meaning that no intermediate decrypted data is ever
 present on disk or in memory. See :ref:`encrypted containers

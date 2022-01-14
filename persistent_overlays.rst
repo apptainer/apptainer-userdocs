@@ -47,7 +47,7 @@ To use a persistent overlay, you must first have a container.
 File system image overlay
 =========================
 
-Since 3.8, {Singularity} provides a command ``singularity overlay
+{Singularity} provides a command ``singularity overlay
 create`` to create persistent overlay images. You can create a single
 EXT3 overlay image or adding a EXT3 writable overlay partition to an
 existing SIF image.
@@ -89,69 +89,6 @@ So for example:
    $ singularity build /tmp/nginx.sif docker://nginx
    $ singularity overlay create --size 1024 --create-dir /var/cache/nginx /tmp/nginx.sif
    $ echo "test" | singularity exec /tmp/nginx.sif sh -c "cat > /var/cache/nginx/test"
-
-Create an overlay image (< 3.8)
--------------------------------
-
-You can use tools like ``dd`` and ``mkfs.ext3`` to create and format an
-empty ext3 file system image, which holds all changes made in your
-container within a single file. Using an overlay image file makes it
-easy to transport your modifications as a single additional file
-alongside the original SIF container image.
-
-Workloads that write a very large number of small files into an overlay
-image, rather than a directory, are also faster on HPC parallel
-filesystems. Each write is a local operation within the single open
-image file, and does not cause additional metadata operations on the
-parallel filesystem.
-
-To create an overlay image file with 500MBs of empty space:
-
-.. code::
-
-   $ dd if=/dev/zero of=overlay.img bs=1M count=500 && \
-       mkfs.ext3 overlay.img
-
-Now you can use this overlay with your container, though filesystem
-permissions still control where you can write, so ``sudo`` is needed to
-run the container as ``root`` if you need to write to ``/`` inside the
-container.
-
-.. code::
-
-   $ sudo singularity shell --overlay overlay.img ubuntu.sif
-
-To manage permissions in the overlay, so the container is writable by
-unprivileged users you can create a directory structure on your host,
-set permissions on it as needed, and include it in the overlay with the
-``-d`` option to ``mkfs.ext3``:
-
-.. code::
-
-   $ mkdir -p overlay/upper overlay/work
-   $ dd if=/dev/zero of=overlay.img bs=1M count=500 && \
-        mkfs.ext3 -d overlay overlay.img
-
-Now the container will be writable as the unprivileged user who created
-the ``overlay/upper`` and ``overlay/work`` directories that were placed
-into ``overlay.img``.
-
-.. code::
-
-   $ singularity shell --overlay overlay.img ubuntu.sif
-   Singularity> echo $USER
-   dtrudg
-   Singularity> echo "Hello" > /hello
-
-.. note::
-
-   The ``-d`` option to ``mkfs.ext3`` does not support ``uid`` or
-   ``gid`` values >65535. To allow writes from users with larger uids
-   you can create the directories for your overlay with open
-   permissions, e.g. ``mkdir -p -m 777 overlay/upper overlay/work``. At
-   runtime files and directories created in the overlay will have the
-   correct ``uid`` and ``gid``, but it is not possible to lock down
-   permissions so that the overlay is only writable by certain users.
 
 Directory overlay
 =================

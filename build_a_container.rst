@@ -167,7 +167,7 @@ machine requires root privileges.
  Building encrypted containers
 *******************************
 
-Beginning in {Singularity} 3.4.0 it is possible to build and run
+With {Singularity} it is possible to build and run
 encrypted containers. The containers are decrypted at runtime entirely
 in kernel space, meaning that no intermediate decrypted data is ever
 present on disk or in memory. See :ref:`encrypted containers
@@ -180,7 +180,7 @@ present on disk or in memory. See :ref:`encrypted containers
 ``--builder``
 =============
 
-{Singularity} 3.0 introduces the option to perform a remote build. The
+{Singularity} gives the option to perform a remote build. The
 ``--builder`` option allows you to specify a URL to a different build
 service. For instance, you may need to specify a URL to build to an on
 premises installation of the remote builder. This option must be used in
@@ -255,7 +255,7 @@ container file system at build time. See :ref:`encrypted containers
 ``--remote``
 ============
 
-{Singularity} 3.0 introduces the ability to build a container on an
+{Singularity} includes the ability to build a container on an
 external resource running a remote builder. (The default remote builder
 is located at "https://cloud.sylabs.io/builder".)
 
@@ -317,7 +317,7 @@ your build environment. Libraries are mounted during the execution of
 .. note::
 
     This option can't be set via the environment variable `SINGULARITY_ROCM`.
-    Singularity will attempt to bind binaries listed in SINGULARITY_CONFDIR/rocmliblist.conf,
+    Singularity will attempt to bind binaries listed in `SINGULARITY_CONFDIR/rocmliblist.conf`,
     if the mount destination doesn't exist inside the container, they are ignored.
 
 ``--bind``
