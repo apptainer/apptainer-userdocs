@@ -22,35 +22,6 @@ details such as the version of {Singularity} used are present as
 :ref:`labels <sec:labels>` on a container. You can also specify your own
 to be recorded against your container.
 
-******************************
- Changes in {Singularity} 3.6
-******************************
-
-{Singularity} 3.6 modified the ways in which environment variables are
-handled to allow long-term stability and consistency that has been
-lacking in prior versions. It also introduced new ways of setting
-environment variables, such as the ``--env`` and ``--env-file`` options.
-
-.. warning::
-
-   If you have containers built with {Singularity} <3.6, and frequently
-   set and override environment variables, please review this section
-   carefully. Some behavior has changed.
-
-Summary of changes
-==================
-
-   -  When building a container, the environment defined in the base
-      image (e.g. a Docker image) is available during the ``%post``
-      section of the build.
-
-   -  An environment variable set in a container image, from the
-      bootstrap base image, or in the ``%environment`` section of a
-      definition file *will not* be overridden by a host environment
-      variable of the same name. The ``--env``, ``--env-file``, or
-      ``SINGULARITYENV_`` methods must be used to explicitly override a
-      environment variable set by the container image.
-
 **********************
  Environment Overview
 **********************
@@ -148,11 +119,10 @@ The ``%runscript`` is set to echo the value.
 
 .. warning::
 
-   {Singularity} 3.6 uses an embedded shell interpreter to evaluate and
+   {Singularity} uses an embedded shell interpreter to evaluate and
    setup container environments, therefore all commands executed from
-   the ``%environment`` section have an execution timeout of **5
-   seconds** for {Singularity} 3.6 and a **1 minute** timeout since
-   {Singularity} 3.7. While it is fine to source a script from there, it
+   the ``%environment`` section have an execution timeout of **1 minute**. 
+   While it is fine to source a script from there, it
    is not recommended to use this section to run potentially long
    initialization tasks because this would impact users running the
    image and the execution could abort due to timeout.
@@ -263,8 +233,6 @@ variables include special characters.
 ``--env-file`` option
 =====================
 
-*New in {Singularity} 3.6*
-
 The ``--env-file`` option lets you provide a file that contains
 environment variables as ``NAME=VALUE`` pairs, e.g.:
 
@@ -364,7 +332,7 @@ as ``--env APPEND_PATH="/endpath"``.
 Environment Variable Precedence
 ===============================
 
-When a container is run with {Singularity} 3.6, the container
+When a container is run with {Singularity}, the container
 environment is constructed in the following order:
 
    -  Clear the environment, keeping just ``HOME`` and
@@ -400,7 +368,7 @@ new files.
    A detailed description of what the ``umask`` is, and how it works can
    be found at `Wikipedia <https://en.wikipedia.org/wiki/Umask>`__.
 
-{Singularity} 3.7 and above set the ``umask`` in the container to match
+{Singularity} sets the ``umask`` in the container to match
 the value outside, unless:
 
    -  The ``--fakeroot`` option is used, in which case a ``0022`` umask
@@ -410,11 +378,6 @@ the value outside, unless:
 
    -  The ``--no-umask`` option is used, in which case a ``0022`` umask
       is set.
-
-.. note::
-
-   In {Singularity} 3.6 and below a default ``0022`` umask was always
-   applied.
 
 .. _sec:metadata:
 
@@ -427,9 +390,8 @@ it was built, etc. This metadata includes the definition file used to
 build the container and labels, which are specific pieces of information
 set automatically or explicitly when the container is built.
 
-For containers that are generated with {Singularity} version 3.0 and
-later, default labels are represented using the `rc1 Label Schema
-<http://label-schema.org/rc1/>`_.
+{Singularity} container default labels are represented using the
+`rc1 Label Schema <http://label-schema.org/rc1/>`_.
 
 .. _sec:labels:
 
@@ -480,7 +442,7 @@ when you are writing the definition file, but can be obtained in the
 ``%post`` section of your definition file while the container is
 building.
 
-{Singularity} 3.7 and above allow this, through adding labels to the
+{Singularity} allows this, through adding labels to the
 file defined by the ``SINGULARITY_LABELS`` environment variable in the
 ``%post`` section:
 
@@ -741,7 +703,7 @@ environment files that are used when a container is executed.
 
 *You should not manually modify* files under ``/.singularity.d``, from
 your definition file during builds, or directly within your container
-image. Recent 3.x versions of {Singularity} replace older action scripts
+image. {Singularity} replaces older action scripts
 dynamically, at runtime, to support new features. In the longer term,
 metadata will be moved outside of the container, and stored only in the
 SIF file metadata descriptor.
@@ -783,7 +745,7 @@ SIF file metadata descriptor.
    ``/.singularity.d/env/90-environment.sh``. Whenever possible, avoid
    modifying or creating environment files manually to prevent potential
    issues building & running containers with future versions of
-   {Singularity}. Beginning with {Singularity} 3.6, additional
+   {Singularity}. Additional
    facilities such as ``--env`` and ``--env-file`` are available to
    allow manipulation of the container environment at runtime.
 

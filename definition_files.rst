@@ -55,7 +55,7 @@ Library <https://cloud.sylabs.io/library>`_ as a base. Similarly, the
 ``docker`` bootstrap agent will pull docker layers from `Docker Hub
 <https://hub.docker.com/>`_ as a base OS to start your image.
 
-Starting with {Singularity} 3.2, the ``Bootstrap`` keyword needs to be
+The ``Bootstrap`` keyword needs to be
 the first entry in the header section. This breaks compatibility with
 older versions that allow the parameters of the header to appear in any
 order.
@@ -132,8 +132,7 @@ that has been modified after signing, will produce a warning but the
 build will continue.
 
 To enforce that the bootstrap image verifies correctly and has been
-signed by one or more keys, you can use the ``Fingerprints:`` header
-introduced in {Singularity} 3.7.
+signed by one or more keys, you can use the ``Fingerprints:`` header.
 
 .. code:: singularity
 
@@ -255,7 +254,7 @@ host**. We'll use ``file1`` to demonstrate the usage of the ``%files``
 section below. The ``file2`` is created at the root of the file system
 **within the container**.
 
-In later versions of {Singularity} the ``%files`` section is provided as
+The ``%files`` section is provided as
 a safer alternative to copying files from the host system into the
 container during the build. Because of the potential danger involved in
 running the ``%setup`` scriptlet with elevated privileges on the host
@@ -633,7 +632,7 @@ After building the help can be displayed like so:
  Multi-Stage Builds
 ********************
 
-Starting with {Singularity} v3.2 multi-stage builds are supported where
+Multi-stage builds are supported where
 one environment can be used for compilation, then the resulting binary
 can be copied into a final environment. This allows a slimmer final
 image that does not require the entire development stack.

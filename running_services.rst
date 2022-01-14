@@ -21,7 +21,7 @@ isolated version of the container image that runs in the background.
 
 .. _sec:instances:
 
-{Singularity} v2.4 introduced the concept of *instances* allowing users
+{Singularity} has the concept of *instances* allowing users
 to run services in {Singularity}. This page will help you understand
 instances using an elementary example followed by a more useful example
 running an NGINX web server using instances. In the end, you will find a

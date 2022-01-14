@@ -280,7 +280,7 @@ in the output of ``remote list``:
 
    * Active cloud services keyserver
 
-{Singularity} 3.7 introduces the ability for an administrator to make a
+An administrator can make a
 remote the only usable remote for the system by using the
 ``--exclusive`` flag:
 

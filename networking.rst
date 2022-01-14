@@ -18,7 +18,7 @@ configure a virtualized network for a container.
    default. Unrestricted ability to configure networking for containers
    would allow users to affect networking on the host, or in a cluster.
 
-   {Singularity} 3.8 allows the administrator to permit a list of
+   {Singularity} allows the administrator to permit a list of
    unprivileged users and/or groups to use specified network
    configurations. This is accomplished through settings in
    ``singularity.conf``. See the administrator guide for details.

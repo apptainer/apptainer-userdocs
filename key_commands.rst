@@ -6,7 +6,7 @@
 
 .. _sec:key_commands:
 
-{Singularity} 3.2 introduces the abilities to import, export and remove
+{Singularity} has the ability to import, export and remove
 PGP keys following the OpenPGP standard via `GnuPGP (GPG)
 <https://www.gnupg.org/gph/en/manual.html>`_. These commands only modify
 the local keyring and are not related to the cloud keystore.
@@ -14,11 +14,11 @@ the local keyring and are not related to the cloud keystore.
 .. _key_import:
 
 ******************************
- Changes in {Singularity} 3.7
+ Global keyring
 ******************************
 
-{Singularity} 3.7 introduces a global keyring which can be managed by
-administrators with the new ``--global`` option. This global keyring is
+{Singularity} has a global keyring which can be managed by
+administrators with the ``--global`` option. This global keyring is
 used by ECL
 ({admindocs}/configfiles.html#ecl-toml)
 and allows administrators to manage public keys used during ECL image
@@ -28,7 +28,7 @@ verification.
  Key import command
 ********************
 
-{Singularity} 3.2 allows you import keys reading either from binary or
+{Singularity} allows you to import keys reading either from binary or
 armored key format and automatically detect if it is a private or public
 key and add it to the correspondent local keystore.
 

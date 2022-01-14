@@ -6,7 +6,7 @@
 
 .. _sec:signnverify:
 
-{Singularity} 3.0 introduced the ability to create and manage PGP keys
+{Singularity} has the ability to create and manage PGP keys
 and use them to sign and verify containers. This provides a trusted
 method for {Singularity} users to share containers. It ensures a
 bit-for-bit reproduction of the original container as the author
@@ -14,11 +14,8 @@ intended it.
 
 .. note::
 
-   {Singularity} 3.6.0 uses a new signature format. Containers signed by
-   3.6.0 cannot be verifed by older versions of {Singularity}.
-
-   To verify containers signed with older versions of {Singularity}
-   using 3.6.0 the ``--legacy-insecure`` flag must be provided to the
+   To verify containers signed with Singularity versions older than
+   3.6.0 the ``--legacy-insecure`` flag must be provided to the
    ``singularity verify`` command.
 
 .. _verify_container_from_library:
