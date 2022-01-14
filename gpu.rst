@@ -15,7 +15,7 @@ older RHEL 7 host.
 Applications that support OpenCL for compute acceleration can also be
 used easily, with an additional bind option.
 
-With {Singularity} 3.9 experimental support has been introduced to use
+Recently, {Singularity} experimental support has been introduced to use
 Nvidia's ``nvidia-container-cli`` tooling for GPU container setup. This
 functionality, accessible via the new ``--nvccli`` flag, improves
 compatibility with OCI runtimes and exposes additional container
@@ -194,7 +194,7 @@ avoid driver unload.
  NVIDIA GPUs & CUDA (nvidia-container-cli)
 *******************************************
 
-{Singularity} 3.9 introduces the ``--nvccli`` option, which will
+{Singularity} incorporates ``--nvccli`` option, which will
 instruct {Singularity} to perform GPU container setup using the
 ``nvidia-container-cli`` utility. This utility must be installed
 separately from {Singularity}. It is available in the repositories of
@@ -203,7 +203,7 @@ https://nvidia.github.io/libnvidia-container/
 
 .. warning::
 
-   This feature is considered experimental in {Singularity} 3.9. It
+   This feature is considered experimental in {Singularity} as of now. It
    cannot not replace the legacy NVIDIA support in all situations, and
    should be tested carefully before use in production workflows.
 
@@ -392,7 +392,7 @@ https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/user-guide.htm
  AMD GPUs & ROCm
 *****************
 
-{Singularity} 3.5 adds a ``--rocm`` flag to support GPU compute with the
+{Singularity} has a ``--rocm`` flag to support GPU compute with the
 ROCm framework using AMD Radeon GPU cards.
 
 Commands that ``run``, or otherwise execute containers (``shell``,

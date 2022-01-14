@@ -16,7 +16,7 @@ local {Singularity} Enterprise installation), OCI registries and
 keyservers.
 
 *********************
- Public Sylabs Cloud
+ Public Cloud Library
 *********************
 
 Sylabs introduced the online `Sylabs Cloud
@@ -280,7 +280,7 @@ in the output of ``remote list``:
 
    * Active cloud services keyserver
 
-{Singularity} 3.7 introduces the ability for an administrator to make a
+{Singularity} offers the ability for an administrator to make a
 remote the only usable remote for the system by using the
 ``--exclusive`` flag:
 

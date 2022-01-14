@@ -769,11 +769,15 @@ additional properties - for example:
    -  ``ociVersion`` - a mandatory property that identifies the version
       of the OCI runtime specification that the bundle is compliant with
 
+<<<<<<< HEAD
    -  ``process`` - an optional property that specifies the container
       process. When invoked via {Singularity}, subproperties such as
       ``args`` are populated by making use of the contents of the
       ``.singularity.d`` directory, e.g. via ``$ sudo cat
       /var/tmp/busybox/config.json | jq [.process.args]``:
+=======
+	- ``process`` - an optional property that specifies the container process. When invoked via apptainer, subproperties such as ``args`` are populated by making use of the contents of the ``.apptainer.d`` directory, e.g. via ``$ sudo cat /var/tmp/busybox/config.json | jq [.process.args]``:
+>>>>>>> First batch replacements pointing to Apptainer
 
    .. code:: json
 

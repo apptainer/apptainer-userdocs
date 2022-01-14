@@ -1,4 +1,4 @@
-.. _singularity-and-docker:
+.. _apptainer-and-docker:
 
 #######################################
  Support for Docker and OCI Containers
@@ -212,35 +212,6 @@ registries follow a similar pattern for pulling public images, and
 authenticating to access private images.
 
 Quay.io
-=======
-
-Quay is an OCI container registry used by a large number of projects,
-and hosted at ``https://quay.io``. To pull public containers from Quay,
-just include the ``quay.io`` hostname in your ``docker://`` URI:
-
-.. code::
-
-   $ singularity pull docker://quay.io/bitnami/python:3.7
-   INFO:    Converting OCI blobs to SIF format
-   INFO:    Starting build...
-   ...
-
-   $ singularity run python_3.7.sif
-   Python 3.7.12 (default, Sep 24 2021, 11:48:27)
-   [GCC 8.3.0] on linux
-   Type "help", "copyright", "credits" or "license" for more information.
-   >>>
-
-To pull containers from private repositories you will need to generate a
-CLI token in the Quay web interface, then use it to login with
-{Singularity}. Use the same methods as described for Docker Hub above:
-
--  Run ``singularity remote login --username myuser docker://quay.io``
-   to store your credentials for {Singularity}.
--  Use ``docker login quay.io`` if ``docker`` is on your machine.
--  Use the ``--docker-login`` flag for a one-time interactive login.
--  Set the ``SINGULARITY_DOCKER_USERNAME`` and
-   ``SINGULARITY_DOCKER_PASSWORD`` environment variables.
 
 NVIDIA NGC
 ==========
@@ -308,7 +279,6 @@ Docker Hub), with your username and personal access token:
    ``SINGULARITY_DOCKER_PASSWORD`` environment variables.
 
 AWS ECR
-=======
 
 To work with an AWS hosted Elastic Container Registry (ECR) generally
 requires authentication. There are various ways to generate credentials.

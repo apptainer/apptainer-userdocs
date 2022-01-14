@@ -143,10 +143,10 @@ systems or compilers. The atmospheric and weather applications are a
 good example of this. Porting them to a contained operating system will
 prolong the use-fullness of the development effort considerably.
 
-Complicated work-flows that require custom installation and/or data
+Complicated workflows that require custom installation and/or data
 ===================================================================
 
-Consolidating a work-flow into a {Singularity} container simplifies
+Consolidating a workflow into a {Singularity} container simplifies
 distribution and replication of scientific results. Making containers
 available along with published work enables other scientists to build
 upon (and verify) previous scientific work.

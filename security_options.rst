@@ -6,8 +6,8 @@
 
 .. _sec:security_options:
 
-{Singularity} 3.0 introduces many new security related options to the
-container runtime. This document will describe the new methods users
+{Singularity} implements security related options to the
+container runtime. This document will describe the methods users
 have for specifying the security scope and context when running
 {Singularity} containers.
 
@@ -116,7 +116,7 @@ details.
  Security related action options
 *********************************
 
-{Singularity} 3.0 introduces many new flags that can be passed to the
+{Singularity} counts in with some flags that can be passed to the
 action commands; ``shell``, ``exec``, and ``run`` allowing fine grained
 control of security.
 

@@ -99,12 +99,10 @@ mappings in ``/etc/subgid``, so your username needs to be listed in
 those files with a valid mapping (see the admin-guide for details), if
 you can't edit the files ask an administrator.
 
-In {Singularity} ``3.5`` a ``singularity config fakeroot`` command has
-been added to allow configuration of the ``/etc/subuid`` and
-``/etc/subgid`` mappings from the {Singularity} command line. You must
-be a root user or run with ``sudo`` to use ``config fakeroot``, as the
-mapping files are security sensitive. See the admin-guide for more
-details.
+{Singularity} provides the ``singularity config fakeroot`` command 
+to allow configuration of the ``/etc/subuid`` and ``/etc/subgid`` mappings 
+from the {Singularity} command line. You must be a root user or run with ``sudo`` to use ``config fakeroot``, as the
+mapping files are security sensitive. See the `<\{\admindocs\}/>` for more details.
 
 *******
  Usage

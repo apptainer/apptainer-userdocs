@@ -21,7 +21,7 @@ isolated version of the container image that runs in the background.
 
 .. _sec:instances:
 
-{Singularity} v2.4 introduced the concept of *instances* allowing users
+{Singularity} incorporate the concept of *instances* allowing users
 to run services in {Singularity}. This page will help you understand
 instances using an elementary example followed by a more useful example
 running an NGINX web server using instances. In the end, you will find a
@@ -120,7 +120,7 @@ You can also filter the instance list by supplying a pattern:
    INSTANCE NAME    PID      IP              IMAGE
    instance2        22443                    /home/dave/instances/alpine_latest.s
 
-You can use the ``singularity run/exec`` commands on instances:
+You can use the ``apptainer run/exec`` commands on instances:
 
 .. code::
 
@@ -133,7 +133,7 @@ executed inside of the instance. Similarly with ``exec``, it will
 execute the given command in the instance.
 
 If you want to poke around inside of your instance, you can do a normal
-``singularity shell`` command, but give it the instance URI:
+``apptainer shell`` command, but give it the instance URI:
 
 .. code::
 

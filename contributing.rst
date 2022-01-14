@@ -29,8 +29,8 @@ help out other users!
 ======================
 
 Many of our users come to Slack for quick help with an issue. You can
-find us at `singularity-container
-<https://singularity-container.slack.com/>`_.
+find us at `apptainer-container
+<https://apptainer.slack.com/>`_.
 
 .. _contributing-to-documentation:
 
@@ -41,11 +41,11 @@ find us at `singularity-container
 ****************
 
 For general bugs/issues, you can open an issue `at the GitHub repo
-<https://github.com/hpcng/singularity/issues/new>`_. However, if you
+<https://github.com/apptainer/apptainer/issues/new>`_. However, if you
 find a security related issue/problem, please email the Singularity Security Team directly at
 singularity-security@hpcng.org. More information about the Singularity security policies
 and procedures can be found `here
-<https://singularity.hpcng.org/security-policy/>`__
+<https://apptainer.org/security-policy/>`__
 
 *********************
  Write Documentation
@@ -56,13 +56,11 @@ dilemma… We tend to focus on the code features and functionality before
 working on documentation. And there is very good reason for this: we
 want to share the love so nobody feels left out!
 
-You can contribute to the documentation by `raising an issue to suggest
-an improvement
-<https://github.com/hpcng/singularity-userdocs/issues/new>`_ or by
-sending a `pull request
-<https://github.com/hpcng/singularity-userdocs/compare>`_ on `our
-repository for documentation
-<https://github.com/hpcng/singularity-userdocs>`_.
+You can contribute to the documentation by `raising an issue to suggest an 
+improvement <https://github.com/apptainer/apptainer-userdocs/issues/new>`_ or by 
+sending a `pull request 
+<https://github.com/apptainer/apptainer-userdocs/compare>`_ on `our repository 
+for documentation <https://github.com/apptainer/apptainer-userdocs>`_.
 
 The current documentation is generated with:
 
@@ -74,10 +72,11 @@ Other dependencies include:
 -  `Python 3.5 or newer <https://www.python.org/downloads/>`_.
 -  `Sphinx <https://pypi.org/project/Sphinx/>`_.
 
-More information about contributing to the documentation, instructions
-on how to install the dependencies, and how to generate the files can be
-obtained `here
-<https://github.com/hpcng/singularity-userdocs/blob/master/README.md>`__.
+- `Sphinx <https://pypi.org/project/Sphinx/>`_.
+
+More information about contributing to the documentation, instructions on how to 
+install the dependencies, and how to generate the files can be obtained 
+`here <https://github.com/apptainer/apptainer-userdocs/blob/master/README.md>`__.
 
 For more information on using Git and GitHub to create a pull request
 suggesting additions and edits to the docs, see the :ref:`section on
@@ -95,24 +94,24 @@ We use the traditional `GitHub Flow
 that you fork the main repo, create a new branch to make changes, and
 submit a pull request (PR) to the master branch.
 
-Check out our official `CONTRIBUTING.md
-<https://github.com/hpcng/singularity/blob/master/CONTRIBUTING.md>`_
-document, which also includes a `code of conduct
-<https://github.com/hpcng/singularity/blob/master/CONTRIBUTING.md#code-of-conduct>`_.
+Check out our official `CONTRIBUTING.md 
+<https://github.com/apptainer/apptainer/blob/master/CONTRIBUTING.md>`_ document, 
+which also includes a `code of conduct 
+<https://github.com/apptainer/apptainer/blob/master/CONTRIBUTING.md#code-of-conduct>`_.
 
 Step 1. Fork the repo
 =====================
 
 To contribute to {Singularity}, you should obtain a GitHub account and
-fork the `{Singularity} <https://github.com/hpcng/singularity>`_
+fork the `{Singularity} <https://github.com/apptainer/apptainer>`_
 repository. Once forked, clone your fork of the repo to your computer.
 (Obviously, you should replace ``your-username`` with your GitHub
 username.)
 
 .. code::
 
-   $ git clone https://github.com/your-username/singularity.git && \
-       cd singularity/
+    $ git clone https://github.com/your-username/apptainer.git && \
+        cd apptainer/
 
 Step 2. Checkout a new branch
 =============================
@@ -196,16 +195,17 @@ your branch and they will update the Pull Request.
 Step 6. Keep your branch in sync
 ================================
 
-Cloning the repo will create an exact copy of the {Singularity}
-repository at that moment. As you work, your branch may become out of
-date as others merge changes into the upstream master. In the event that
-you need to update a branch, you will need to follow the next steps:
+Cloning the repo will create an exact copy of the apptainer repository at that 
+moment. As you work, your branch may become out of date as others merge changes
+into the upstream master. In the event that you need to update a branch, you 
+will need to follow the next steps:
 
-.. code::
+.. code-block:: none
 
-   $ git remote add upstream https://github.com/hpcng/singularity.git && # to add a new remote named "upstream" \
-       git checkout master && # or another branch to be updated \
-       git pull upstream master && \
-       git push origin master && # to update your fork \
-       git checkout new-feature && \
-       git merge master
+    $ git remote add upstream https://github.com/apptainer/apptainer.git && # to add a new remote named "upstream" \
+        git checkout master && # or another branch to be updated \
+        git pull upstream master && \
+        git push origin master && # to update your fork \
+        git checkout new-feature && \
+        git merge master 
+

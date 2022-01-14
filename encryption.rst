@@ -11,8 +11,8 @@ encrypting the root file system.
  Overview
 **********
 
-In {Singularity} >= v3.4.0 a new feature to build and run encrypted
-containers has been added to allow users to encrypt the file system
+{Singularity} provides a feature to build and run encrypted
+containers as well allows users to encrypt the file system
 image within a SIF. This encryption can be performed using either a
 passphrase or asymmetrically via an RSA key pair in Privacy Enhanced
 Mail (PEM/PKCS1) format. The container is encrypted in transit, at rest,
@@ -39,11 +39,10 @@ production use.
 
 .. note::
 
-   In {Singularity} 3.4, the definition file stored with the container
-   will not be encrypted. If it contains sensitive information you
-   should remove it before encryption via ``singularity sif del 1
-   myimage.sif``. Metadata encryption will be addressed in a future
-   release.
+   If you are using Singularity version 3.4, it's worth to mention that the definition 
+   file stored with the container will not be encrypted. If it contains sensitive 
+   information you should remove it before encryption via ``singularity sif del 1
+   myimage.sif``. Metadata encryption will be addressed future releases of {Singularity}.
 
 An ``-e|--encrypt`` flag to ``singularity build`` is used to indicate
 that the container needs to be encrypted.
@@ -54,7 +53,7 @@ build time via an environment variable or a command line option.
 +------------------------+-------------------------------------------+--------------------------+
 | **Encryption Method**  | **Environment Variable**                  | **Commandline Option**   |
 +------------------------+-------------------------------------------+--------------------------+
-| Passphrase             | ``SINGULARITY_ENCRYPTION_PASSPHRASE``     | ``--passphrase``         |
+| Passphrase             | ``apptainer_ENCRYPTION_PASSPHRASE``     | ``--passphrase``         |
 +------------------------+-------------------------------------------+--------------------------+
 | Asymmetric Key (PEM)   | ``SINGULARITY_ENCRYPTION_PEM_PATH``       | ``--pem-path``           |
 +------------------------+-------------------------------------------+--------------------------+
@@ -66,8 +65,8 @@ following precedence is respected.
 
 #. ``--pem-path``
 #. ``--passphrase``
-#. ``SINGULARITY_ENCRYPTION_PEM_PATH``
-#. ``SINGULARITY_ENCRYPTION_PASSPHRASE``
+#. ``apptainer_ENCRYPTION_PEM_PATH``
+#. ``apptainer_ENCRYPTION_PASSPHRASE``
 
 Passphrase Encryption
 =====================

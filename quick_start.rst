@@ -17,8 +17,8 @@ If you need to request an installation on your shared resource, see the
 :ref:`requesting an installation section <installation-request>` for
 information to send to your system administrator.
 
-For any additional help or support contact the Singularity Community:
-https://singularity.hpcng.org/help
+For any additional help or support contact the apptainer Community:
+https://apptainer.hpcng.org/help
 
 .. _quick-installation:
 
@@ -132,16 +132,16 @@ Download {Singularity} from a release
 
 You can download {Singularity} from one of the releases. To see a full
 list, visit `the GitHub release page
-<https://github.com/hpcng/singularity/releases>`_. After deciding on a
+<https://github.com/apptainer/apptainer/releases>`_. After deciding on a
 release to install, you can run the following commands to proceed with
 the installation.
 
 .. code::
 
    $ export VERSION={InstallationVersion} && # adjust this as necessary \
-       wget https://github.com/hpcng/singularity/releases/download/v${VERSION}/singularity-${VERSION}.tar.gz && \
-       tar -xzf singularity-${VERSION}.tar.gz && \
-       cd singularity-${VERSION}
+       wget https://github.com/apptainer/apptainer/releases/download/v${VERSION}/apptainer-${VERSION}.tar.gz && \
+       tar -xzf apptainer-${VERSION}.tar.gz && \
+       cd apptainer-${VERSION}
 
 .. _compile:
 
@@ -284,7 +284,7 @@ To pass the ``--containall`` option to the ``run`` command and run a
 
    $ singularity run --containall library://lolcow
 
-{Singularity} 2.4 introduced the concept of command groups. For
+{Singularity} has the concept of command groups. For
 instance, to list Linux capabilities for a particular user, you would
 use the ``list`` command in the ``capability`` command group like so:
 
@@ -583,7 +583,7 @@ do with normal Linux commands.
 
 .. _sec:buildimagesfromscratch:
 
-{Singularity} v3.0 and above produces immutable images in the
+{Singularity} produces immutable images in the
 Singularity Image File (SIF) format. This ensures reproducible and
 verifiable images and allows for many extra benefits such as the ability
 to sign and verify your containers.
@@ -710,7 +710,7 @@ using the `Remote Builder <https://cloud.sylabs.io/builder>`_.
 This quickstart document just scratches the surface of all of the things
 you can do with {Singularity}!
 
-If you need additional help or support, see https://singularity.hpcng.org/help.
+If you need additional help or support, see https://apptainer.hpcng.org/help.
 
 .. _installation-request:
 
@@ -731,7 +731,7 @@ similar to this:
 
    Dear shared resource administrator,
 
-   We are interested in having {Singularity} (https://singularity.hpcng.org)
+   We are interested in having {Singularity} (https://apptainer.org)
    installed on our shared resource. {Singularity} containers will allow us to
    build encapsulated environments, meaning that our work is reproducible and
    we are empowered to choose all dependencies including libraries, operating

@@ -10,7 +10,7 @@ and running containers.
 
 For a detailed guide to installation and configuration, please see the
 separate Admin Guide for this version of {Singularity} at
-{admindocs}.
+`<\{admindocs\}/>`.
 
 ******************************************
  Getting Started & Background Information

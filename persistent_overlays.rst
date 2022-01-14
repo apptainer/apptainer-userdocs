@@ -47,7 +47,7 @@ To use a persistent overlay, you must first have a container.
 File system image overlay
 =========================
 
-Since 3.8, {Singularity} provides a command ``singularity overlay
+{Singularity} provides a command ``singularity overlay
 create`` to create persistent overlay images. You can create a single
 EXT3 overlay image or adding a EXT3 writable overlay partition to an
 existing SIF image.
@@ -90,7 +90,7 @@ So for example:
    $ singularity overlay create --size 1024 --create-dir /var/cache/nginx /tmp/nginx.sif
    $ echo "test" | singularity exec /tmp/nginx.sif sh -c "cat > /var/cache/nginx/test"
 
-Create an overlay image (< 3.8)
+Create an overlay image
 -------------------------------
 
 You can use tools like ``dd`` and ``mkfs.ext3`` to create and format an
@@ -209,7 +209,7 @@ functionality of {Singularity}.
 
 .. code::
 
-   $ singularity sif add --datatype 4 --partfs 2 --parttype 4 --partarch 2 --groupid 1 ubuntu_latest.sif overlay.img
+   $ apptainer sif add --datatype 4 --partfs 2 --parttype 4 --partarch 2 --groupid 1 ubuntu_latest.sif overlay.img
 
 Below is the explanation what each parameter means, and how it can
 possibly affect the operation:
@@ -226,7 +226,7 @@ possibly affect the operation:
    there's no more than one group, therefore we can assume it is 1.
 
 All of these options are documented within the CLI help. Access it by
-running ``singularity sif add --help``.
+running ``apptainer sif add --help``.
 
 After you've completed the steps above, you can shell into your
 container with the ``--writable`` option.

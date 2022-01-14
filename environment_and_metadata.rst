@@ -23,10 +23,10 @@ details such as the version of {Singularity} used are present as
 to be recorded against your container.
 
 ******************************
- Changes in {Singularity} 3.6
+ Changes in {Singularity} 
 ******************************
 
-{Singularity} 3.6 modified the ways in which environment variables are
+{Singularity} modified the ways in which environment variables are
 handled to allow long-term stability and consistency that has been
 lacking in prior versions. It also introduced new ways of setting
 environment variables, such as the ``--env`` and ``--env-file`` options.
@@ -110,7 +110,7 @@ If I build a singularity container from the image
 
 .. code::
 
-   $ singularity exec python.sif env | grep PYTHON_VERSION
+   $ apptainer exec python.sif env | grep PYTHON_VERSION
    PYTHON_VERSION=3.7.7
 
 This happens because the ``Dockerfile`` used to build that container has
@@ -148,11 +148,10 @@ The ``%runscript`` is set to echo the value.
 
 .. warning::
 
-   {Singularity} 3.6 uses an embedded shell interpreter to evaluate and
+   {Singularity} uses an embedded shell interpreter to evaluate and
    setup container environments, therefore all commands executed from
-   the ``%environment`` section have an execution timeout of **5
-   seconds** for {Singularity} 3.6 and a **1 minute** timeout since
-   {Singularity} 3.7. While it is fine to source a script from there, it
+   the ``%environment`` section have an execution timeout of **1 minute**. 
+   While it is fine to source a script from there, it
    is not recommended to use this section to run potentially long
    initialization tasks because this would impact users running the
    image and the execution could abort due to timeout.
@@ -184,18 +183,18 @@ environment variables for correct operation of most software.
 
 .. code::
 
-   $ singularity exec --cleanenv env.sif env
+   $ apptainer exec --cleanenv env.sif env
    HOME=/home/dave
    LANG=C
-   LD_LIBRARY_PATH=/.singularity.d/libs
+   LD_LIBRARY_PATH=/.apptainer.d/libs
    PATH=/startpath:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
    PROMPT_COMMAND=PS1="Singularity> "; unset PROMPT_COMMAND
    PS1=Singularity>
    PWD=/home/dave/doc-tesrts
-   SINGULARITY_COMMAND=exec
-   SINGULARITY_CONTAINER=/home/dave/doc-tesrts/env.sif
-   SINGULARITY_ENVIRONMENT=/.singularity.d/env/91-environment.sh
-   SINGULARITY_NAME=env.sif
+   apptainer_COMMAND=exec
+   apptainer_CONTAINER=/home/dave/doc-tesrts/env.sif
+   apptainer_ENVIRONMENT=/.apptainer.d/env/91-environment.sh
+   apptainer_NAME=env.sif
    TERM=xterm-256color
 
 .. warning::
@@ -263,8 +262,6 @@ variables include special characters.
 ``--env-file`` option
 =====================
 
-*New in {Singularity} 3.6*
-
 The ``--env-file`` option lets you provide a file that contains
 environment variables as ``NAME=VALUE`` pairs, e.g.:
 
@@ -289,7 +286,7 @@ the environment variable ``xxx`` inside the container:
    Hello
 
    $ export SINGULARITYENV_MYVAR="Overridden"
-   $ singularity run env.sif
+   $ apptainer run env.sif
    Overridden
 
 Manipulating ``PATH``
@@ -341,11 +338,11 @@ to the start) of the ``PATH`` variable in the container.
 
 .. code::
 
-   $ singularity exec env.sif sh -c 'echo $PATH'
+   $ apptainer exec env.sif sh -c 'echo $PATH'
    /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-   $ export SINGULARITYENV_PREPEND_PATH="/startpath"
-   $ singularity exec env.sif sh -c 'echo $PATH'
+   $ export apptainerENV_PREPEND_PATH="/startpath"
+   $ apptainer exec env.sif sh -c 'echo $PATH'
    /startpath:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 Alternatively you could use the ``--env`` option to set a
@@ -364,8 +361,7 @@ as ``--env APPEND_PATH="/endpath"``.
 Environment Variable Precedence
 ===============================
 
-When a container is run with {Singularity} 3.6, the container
-environment is constructed in the following order:
+When starting to run the container, environment is constructed in the following order:
 
    -  Clear the environment, keeping just ``HOME`` and
       ``SINGULARITY_APPNAME``.
@@ -400,7 +396,7 @@ new files.
    A detailed description of what the ``umask`` is, and how it works can
    be found at `Wikipedia <https://en.wikipedia.org/wiki/Umask>`__.
 
-{Singularity} 3.7 and above set the ``umask`` in the container to match
+{Singularity} sets the ``umask`` in the container to match
 the value outside, unless:
 
    -  The ``--fakeroot`` option is used, in which case a ``0022`` umask
@@ -410,11 +406,6 @@ the value outside, unless:
 
    -  The ``--no-umask`` option is used, in which case a ``0022`` umask
       is set.
-
-.. note::
-
-   In {Singularity} 3.6 and below a default ``0022`` umask was always
-   applied.
 
 .. _sec:metadata:
 
@@ -427,8 +418,7 @@ it was built, etc. This metadata includes the definition file used to
 build the container and labels, which are specific pieces of information
 set automatically or explicitly when the container is built.
 
-For containers that are generated with {Singularity} version 3.0 and
-later, default labels are represented using the `rc1 Label Schema
+{Singularity} containers default labels are represented using the `rc1 Label Schema
 <http://label-schema.org/rc1/>`_.
 
 .. _sec:labels:
@@ -480,7 +470,7 @@ when you are writing the definition file, but can be obtained in the
 ``%post`` section of your definition file while the container is
 building.
 
-{Singularity} 3.7 and above allow this, through adding labels to the
+{Singularity} allow this, through adding labels to the
 file defined by the ``SINGULARITY_LABELS`` environment variable in the
 ``%post`` section:
 
@@ -741,10 +731,9 @@ environment files that are used when a container is executed.
 
 *You should not manually modify* files under ``/.singularity.d``, from
 your definition file during builds, or directly within your container
-image. Recent 3.x versions of {Singularity} replace older action scripts
-dynamically, at runtime, to support new features. In the longer term,
-metadata will be moved outside of the container, and stored only in the
-SIF file metadata descriptor.
+image. {Singularity} replaces older action scripts dynamically, at runtime, 
+to support new features. In the longer term, metadata will be moved outside 
+of the container, and stored only in the SIF file metadata descriptor.
 
 .. code::
 
@@ -783,8 +772,7 @@ SIF file metadata descriptor.
    ``/.singularity.d/env/90-environment.sh``. Whenever possible, avoid
    modifying or creating environment files manually to prevent potential
    issues building & running containers with future versions of
-   {Singularity}. Beginning with {Singularity} 3.6, additional
-   facilities such as ``--env`` and ``--env-file`` are available to
+   {Singularity}. Additional facilities such as ``--env`` and ``--env-file`` are available to
    allow manipulation of the container environment at runtime.
 
 -  **labels.json**: The json file that stores a containers labels

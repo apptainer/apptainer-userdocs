@@ -7,13 +7,13 @@
 ..
    TODO oci & oci-archive along with http & https
 
-.. _singularity-environment-variables:
+.. _apptainer-environment-variables:
 
 ***************************************
  {Singularity}'s environment variables
 ***************************************
 
-{Singularity} 3.0 comes with some environment variables you can set or
+{Singularity} comes with some environment variables you can set or
 modify depending on your needs. You can see them listed alphabetically
 below with their respective functionality.
 
@@ -23,7 +23,7 @@ below with their respective functionality.
 #. **SINGULARITY_ADD_CAPS**: To specify a list (comma separated string)
    of capabilities to be added. Default is an empty string.
 
-#. **SINGULARITY_ALL**: List all the users and groups capabilities.
+#. **apptainer_ALL**: List all the users and groups capabilities.
 
 #. **SINGULARITY_ALLOW_SETUID**: To specify that setuid binaries should
    or not be allowed in the container. (root only) Default is set to
@@ -74,7 +74,7 @@ below with their respective functionality.
 #. **SINGULARITY_DEFFILE**: Shows the {Singularity} recipe that was used
    to generate the image.
 
-#. **SINGULARITY_DESC**: Contains a description of the capabilities.
+#. **apptainer_DESC**: Contains a description of the capabilities.
 
 #. **SINGULARITY_DETACHED**: To submit a build job and print the build
    ID (no real-time logs and also requires ``--remote``). Default is set
@@ -202,7 +202,7 @@ below with their respective functionality.
 ``N``
 =====
 
-#. **SINGULARITY_NAME**: Specifies a custom image name.
+#. **apptainer_NAME**: Specifies a custom image name.
 
 #. **SINGULARITY_NETWORK**: Used to specify a desired network. If more
    than one parameters is used, addresses should be separated by commas,
@@ -282,7 +282,7 @@ below with their respective functionality.
 #. **SINGULARITY_SHELL**: The path to the program to be used as an
    interactive shell.
 
-#. **SINGULARITY_SIGNAL**: Specifies a signal sent to the instance.
+#. **apptainer_SIGNAL**: Specifies a signal sent to the instance.
 
 ``T``
 =====
@@ -310,7 +310,7 @@ below with their respective functionality.
 #. **SINGULARITY_UPDATE**: To run the definition over an existing
    container (skips the header). Default is set to false.
 
-#. **SINGULARITY_URL**: Specifies the key server ``URL``.
+#. **apptainer_URL**: Specifies the key server ``URL``.
 
 #. **SINGULARITY_USER**: Used to specify a string of capabilities for
    the given user.
@@ -797,14 +797,14 @@ all of the information necessary for that particular bootstrap module to
 build a core operating system.
 
 Notes
------
+"""""
 
-Arch Linux is, by design, a very stripped down, light-weight OS. You may
-need to perform a significant amount of configuration to get a usable
-OS. Please refer to this `README.md
-<https://github.com/singularityware/singularity/blob/master/examples/arch/README.md>`_
-and the `Arch Linux example
-<https://github.com/singularityware/singularity/blob/master/examples/arch/Singularity>`_
+Arch Linux is, by design, a very stripped down, light-weight OS. You may need to
+perform a significant amount of configuration to get a usable OS. Please refer
+to this
+`README.md <https://github.com/apptainer/apptainer/blob/master/examples/arch/README.md>`_
+and the
+`Arch Linux example <https://github.com/apptainer/apptainer/blob/master/examples/arch/apptainer>`_
 for more info.
 
 .. _build-busybox:

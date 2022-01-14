@@ -41,9 +41,8 @@ container.
 Disabling System Binds
 ======================
 
-The ``--no-mount`` flag, added in {Singularity} 3.7, allows specific
-system mounts to be disabled, even if they are set in the
-``singularity.conf`` configuration file by the administrator.
+The ``--no-mount`` flag allows specific system mounts to be disabled, 
+even if they are set in the ``singularity.conf`` configuration file by the administrator.
 
 For example, if {Singularity} has been configured with ``mount hostfs =
 yes`` then every filesystem on the host will be bind mounted to the
@@ -83,7 +82,7 @@ specified as ``ro`` (read-only) or ``rw`` (read/write, which is the
 default). The ``--bind/-B`` option can be specified multiple times, or a
 comma-delimited string of bind path specifications can be used.
 
-{Singularity} 3.9 adds an additional ``--mount`` flag, which provides a
+{Singularity} offers an additional ``--mount`` flag, which provides a
 longer-form method of specifying binds in ``--mount
 type=bind,src=<source>,dst=<destination>[,<option>]...`` format. This is
 compatible with the ``--mount`` syntax for binds in Docker and other OCI
@@ -201,10 +200,9 @@ defined within the container. The bind point is a directory within the
 container that {Singularity} can use as a destination to bind a
 directory on the host system.
 
-Starting in version 3.0, {Singularity} will do its best to bind mount
-requested paths into a container regardless of whether the appropriate
-bind point exists within the container. {Singularity} can often carry
-out this operation even in the absence of the "overlay fs" feature.
+{Singularity} will do its best to bind mount requested paths into a container 
+regardless of whether the appropriatebind point exists within the container. 
+{Singularity} can often carry out this operation even in the absence of the "overlay fs" feature.
 
 However, binding paths to non-existent points within the container can
 result in unexpected behavior when used in conjunction with the
@@ -264,7 +262,7 @@ mount a remote computer's filesystem to your local host, over ssh:
    # Now mounted to my local machine:
    $ ythel:/home/dave on /home/dave/other_host type fuse.sshfs (rw,nosuid,nodev,relatime,user_id=1000,group_id=1000)
 
-{Singularity} 3.6 introduces the ``--fusemount`` option, which allows
+{Singularity} has the ``--fusemount`` option, which allows
 you directly expose FUSE filesystems inside a container. The FUSE
 command / driver that mounts a particular type of filesystem can be
 located on the host, or in the container.
@@ -278,8 +276,8 @@ container.
 .. note::
 
    ``--fusemount`` functionality was present in a hidden preview state
-   from {Singularity} 3.4. The behavior has changed for the final
-   supported version introduced in {Singularity} 3.6.
+   {Singularity}, as of this behavior has evolved for to a fully
+   supported state.
 
 FUSE mount definitions
 ======================
@@ -348,7 +346,7 @@ added to your container, you can use the ``container`` mount type:
  Image Mounts
 **************
 
-In {Singularity} 3.6 and above you can mount a directory contained in an
+In {Singularity} you can mount a directory contained in an
 image file into a container. This may be useful if you want to
 distribute directories containing a large number of data files as a
 single image file.

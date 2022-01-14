@@ -82,7 +82,7 @@ future runs.
 
 You should not add any additional files, or modify files in the cache,
 as this may cause checksum / integrity errors when you run or build
-containers. If you experience problems use ``singularity cache clean``
+containers. If you experience problems use ``apptainer cache clean``
 to reset the cache to a clean, empty state.
 
 BoltDB Corruption Errors
@@ -119,7 +119,7 @@ your cache, without manually inspecting the cache directories.
 Listing Cache
 =============
 
-To view a summary of cache usage, use ``singularity cache list``:
+To view a summary of cache usage, use ``apptainer cache list``:
 
 .. code::
 
@@ -127,7 +127,7 @@ To view a summary of cache usage, use ``singularity cache list``:
    There are 4 container file(s) using 59.45 MB and 23 oci blob file(s) using 379.10 MB of space
    Total space used: 438.55 MB
 
-To view detailed information, use ``singularity cache list -v``:
+To view detailed information, use ``apptainer cache list -v``:
 
 .. code::
 
@@ -181,7 +181,7 @@ Cleaning the Cache
 To reclaim space used by the {Singularity} cache, use ``singularity
 cache clean``.
 
-By default ``singularity cache clean`` will remove all cache entries,
+By default ``apptainer cache clean`` will remove all cache entries,
 after asking you to confirm:
 
 .. code::
@@ -254,7 +254,7 @@ Remember to use ``-E`` option to pass the value of
  Encrypted Containers
 **********************
 
-Beginning in {Singularity} 3.4.0 it is possible to build and run
+WIth {Singularity} it is possible to build and run
 encrypted containers. The containers are decrypted at runtime entirely
 in kernel space, meaning that no intermediate decrypted data is ever
 present on disk or in memory. See :ref:`encrypted containers
