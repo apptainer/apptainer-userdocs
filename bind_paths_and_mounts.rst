@@ -269,11 +269,21 @@ you to directly expose FUSE filesystems inside a container. The FUSE
 command / driver that mounts a particular type of filesystem can be
 located on the host, or in the container.
 
-The FUSE command *must* be based on libfuse3 to work correctly with
-{Singularity} ``--fusemount``. If you are using an older distribution
-that provides FUSE commands such as ``sshfs`` based on FUSE 2 then you
-can install FUSE 3 versions of the commands you need inside your
-container.
+Requirements
+============
+
+The FUSE command *must* be based on libfuse3 3.3.0 or greater to work
+correctly with {Singularity}. Older versions do not support the way in
+which the {Singularity} runtime passes a pre-mounted file descriptor
+into the container.
+
+If you are using an older distribution that provides FUSE commands such
+as ``sshfs`` based on FUSE 2 then you can install FUSE 3 versions of the
+commands you need inside your container. EL7 distributions can install a
+compatible version of FUSE 3 from the EPEL repository. EL8 distributions
+ship FUSE 3.2.1 as a base package. Unfortunately this is an older version
+which does not fully support the way in which {Singularity} prepares FUSE
+mounts.
 
 FUSE mount definitions
 ======================
@@ -287,16 +297,16 @@ A fusemount definition for {Singularity} consists of 3 parts:
 -  **type** specifies how and where the FUSE mount will be run. The
    options are:
 
-   -  ``container`` - use a FUSE command on the host, to mount a
+   -  ``host`` - use a FUSE command on the host, to mount a
       filesystem into the container, with the fuse process attached.
 
-   -  ``host`` - use a FUSE command inside the container, to mount a
+   -  ``container`` - use a FUSE command inside the container, to mount a
       filesystem into the container, with the fuse process attached.
 
-   -  ``container-daemon`` - use a FUSE command on the host, to mount a
+   -  ``host-daemon`` - use a FUSE command on the host, to mount a
       filesystem into the container, with the fuse process detached.
 
-   -  ``host-daemon`` - use a FUSE command inside the container, to
+   -  ``container-daemon`` - use a FUSE command inside the container, to
       mount a filesystem into the container, with the fuse process
       detached.
 
