@@ -43,9 +43,9 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Singularity User Guide'
-author = u'Singularity Project Contributors'
-copyright = u'2017-2021, HPCng'
+project = u'Apptainer User Guide'
+author = u'ApptainerProject Contributors'
+copyright = u'2021-2022, Apptainer'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
