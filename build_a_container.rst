@@ -177,14 +177,6 @@ present on disk or in memory. See :ref:`encrypted containers
  Build options
 ***************
 
-``--detached``
-==============
-
-When used in combination with the ``--remote`` option, the
-``--detached`` option will detach the build from your terminal and allow
-it to build in the background without echoing any output to your
-terminal.
-
 ``--encrypt``
 =============
 
