@@ -45,9 +45,6 @@ below with their respective functionality.
 #. **SINGULARITY_BOOT**: Set to false by default, considers if executing
    ``/sbin/init`` when container boots (root only).
 
-#. **SINGULARITY_BUILDER**: To specify the remote builder service URL.
-   Defaults to our remote builder.
-
 ``C``
 =====
 
