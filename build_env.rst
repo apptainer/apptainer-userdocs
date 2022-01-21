@@ -304,9 +304,6 @@ typically for use of a local registry.
 Library
 -------
 
-**SINGULARITY_BUILDER** Used to specify the remote builder service URL.
-The default value is our remote builder.
-
 **SINGULARITY_LIBRARY** Used to specify the library to pull from.
 Default is set to our Cloud Library.
 

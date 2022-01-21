@@ -739,10 +739,6 @@ from Docker Hub and use images directly from official repositories such
 as Ubuntu, Debian, CentOS, Arch, and BusyBox. You can also use an
 existing container on your host system as a base.
 
-If you want to build {Singularity} images but you don't have
-administrative (root) access on your build system, you can build images
-using the `Remote Builder <https://cloud.sylabs.io/builder>`_.
-
 This quickstart document just scratches the surface of all of the things
 you can do with {Singularity}!
 

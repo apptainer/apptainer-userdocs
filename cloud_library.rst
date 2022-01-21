@@ -12,11 +12,6 @@ The Sylabs Cloud Library is the place to :ref:`push <push>` your
 containers to the cloud so other users can :ref:`pull <pull>`,
 :ref:`verify <signNverify>`, and use them.
 
-The Sylabs Cloud also provides a :ref:`Remote Builder <remote_builder>`,
-allowing you to build containers on a secure remote service. This is
-convenient so that you can build containers on systems where you do not
-have root privileges.
-
 .. _make_a_account:
 
 *****************
@@ -37,7 +32,7 @@ Making an account is easy, and straightforward:
  Creating a Access token
 *************************
 
-Access tokens for pushing a container, and remote builder.
+Access tokens for pushing a container.
 
 To generate a access token, do the following steps:
 
@@ -273,20 +268,6 @@ You can also limit results to only signed containers with the
                Signed by: 9FF48D6202271D3C842C53BD0D237BE8BB5B5C76
        ...
 
-.. _remote_builder:
-
-****************
- Remote Builder
-****************
-
-The remote builder service can build your container in the cloud
-removing the requirement for root access.
-
-Here's a typical remote build command:
-
-.. code::
-
-   $ singularity build --remote file-out.sif docker://ubuntu:18.04
 
 Building from a definition file:
 ================================
@@ -320,7 +301,4 @@ After building, you can test your container like so:
    $ ./ubuntu.sif
    hello world from ubuntu container!
 
-You can also use the web GUI to build containers remotely. First, go to
-https://cloud.sylabs.io/builder (make sure you are signed in). Then you
-can copy and paste, upload, or type your definition file. When you are
-finished, click build. Then you can download the container with the URL.
+

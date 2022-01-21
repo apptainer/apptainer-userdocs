@@ -8,8 +8,8 @@
 
 The ``remote`` command group allows users to manage the service
 endpoints {Singularity} will interact with for many common command
-flows. This includes managing credentials for image storage services,
-remote builders, and key servers used to locate public keys for SIF
+flows. This includes managing credentials for image storage services
+and key servers used to locate public keys for SIF
 image verification. Currently, there are three main types of remote
 endpoints managed by this command group: the public Sylabs Cloud (or
 local {Singularity} Enterprise installation), OCI registries and
@@ -20,8 +20,7 @@ keyservers.
 *********************
 
 Sylabs introduced the online `Sylabs Cloud
-<https://cloud.sylabs.io/home>`_ to enable users to `Create
-<https://cloud.sylabs.io/builder>`_, `Secure
+<https://cloud.sylabs.io/home>`_ to enable users to `Secure
 <https://cloud.sylabs.io/keystore?sign=true>`_, and `Share
 <https://cloud.sylabs.io/library>`_ their container images with others.
 
@@ -316,8 +315,6 @@ If you do not want to switch remote with ``remote use`` you can:
 
 -  Make ``push`` and ``pull`` use an alternative library server with the
    ``--library`` option.
--  Make ``build --remote`` use an alternative remote builder with the
-   ``--builder`` option.
 -  Make ``keys`` use an alternative keyserver with the ``-url`` option.
 
 **************************
