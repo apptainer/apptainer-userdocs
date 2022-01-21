@@ -29,8 +29,8 @@ help out other users!
 ======================
 
 Many of our users come to Slack for quick help with an issue. You can
-find us at `singularity-container
-<https://singularity-container.slack.com/>`_.
+find us at `apptainer
+<https://apptainer.slack.com/>`_.
 
 .. _contributing-to-documentation:
 
@@ -41,11 +41,11 @@ find us at `singularity-container
 ****************
 
 For general bugs/issues, you can open an issue `at the GitHub repo
-<https://github.com/hpcng/singularity/issues/new>`_. However, if you
+<https://github.com/apptainer/apptainer/issues/new>`_. However, if you
 find a security related issue/problem, please email the Singularity Security Team directly at
 singularity-security@hpcng.org. More information about the Singularity security policies
 and procedures can be found `here
-<https://singularity.hpcng.org/security-policy/>`__
+<https://apptainer.org/security-policy/>`__
 
 *********************
  Write Documentation
@@ -58,11 +58,11 @@ want to share the love so nobody feels left out!
 
 You can contribute to the documentation by `raising an issue to suggest
 an improvement
-<https://github.com/hpcng/singularity-userdocs/issues/new>`_ or by
+<https://github.com/apptainer/apptainer-userdocs/issues/new>`_ or by
 sending a `pull request
-<https://github.com/hpcng/singularity-userdocs/compare>`_ on `our
+<https://github.com/apptainer/apptainer-userdocs/compare>`_ on `our
 repository for documentation
-<https://github.com/hpcng/singularity-userdocs>`_.
+<https://github.com/apptainer/apptainer-userdocs>`_.
 
 The current documentation is generated with:
 
@@ -77,7 +77,7 @@ Other dependencies include:
 More information about contributing to the documentation, instructions
 on how to install the dependencies, and how to generate the files can be
 obtained `here
-<https://github.com/hpcng/singularity-userdocs/blob/master/README.md>`__.
+<https://github.com/apptainer/apptainer-userdocs/blob/master/README.md>`__.
 
 For more information on using Git and GitHub to create a pull request
 suggesting additions and edits to the docs, see the :ref:`section on
@@ -96,15 +96,15 @@ that you fork the main repo, create a new branch to make changes, and
 submit a pull request (PR) to the master branch.
 
 Check out our official `CONTRIBUTING.md
-<https://github.com/hpcng/singularity/blob/master/CONTRIBUTING.md>`_
+<https://github.com/apptainer/apptainer/blob/master/CONTRIBUTING.md>`_
 document, which also includes a `code of conduct
-<https://github.com/hpcng/singularity/blob/master/CONTRIBUTING.md#code-of-conduct>`_.
+<https://github.com/apptainer/apptainer/blob/master/CONTRIBUTING.md#code-of-conduct>`_.
 
 Step 1. Fork the repo
 =====================
 
 To contribute to {Singularity}, you should obtain a GitHub account and
-fork the `{Singularity} <https://github.com/hpcng/singularity>`_
+fork the `{Singularity} <https://github.com/apptainer/apptainer>`_
 repository. Once forked, clone your fork of the repo to your computer.
 (Obviously, you should replace ``your-username`` with your GitHub
 username.)

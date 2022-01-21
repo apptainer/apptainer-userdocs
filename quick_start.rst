@@ -18,7 +18,7 @@ If you need to request an installation on your shared resource, see the
 information to send to your system administrator.
 
 For any additional help or support contact the Singularity Community:
-https://singularity.hpcng.org/help
+https://apptainer.org/help
 
 .. _quick-installation:
 
@@ -132,14 +132,14 @@ Download {Singularity} from a release
 
 You can download {Singularity} from one of the releases. To see a full
 list, visit `the GitHub release page
-<https://github.com/hpcng/singularity/releases>`_. After deciding on a
+<https://github.com/apptainer/apptainer/releases>`_. After deciding on a
 release to install, you can run the following commands to proceed with
 the installation.
 
 .. code::
 
    $ export VERSION={InstallationVersion} && # adjust this as necessary \
-       wget https://github.com/hpcng/singularity/releases/download/v${VERSION}/singularity-${VERSION}.tar.gz && \
+       wget https://github.com/apptainer/apptainer/releases/download/v${VERSION}/singularity-${VERSION}.tar.gz && \
        tar -xzf singularity-${VERSION}.tar.gz && \
        cd singularity-${VERSION}
 
@@ -710,7 +710,7 @@ using the `Remote Builder <https://cloud.sylabs.io/builder>`_.
 This quickstart document just scratches the surface of all of the things
 you can do with {Singularity}!
 
-If you need additional help or support, see https://singularity.hpcng.org/help.
+If you need additional help or support, see https://apptainer.org/help.
 
 .. _installation-request:
 
@@ -731,7 +731,7 @@ similar to this:
 
    Dear shared resource administrator,
 
-   We are interested in having {Singularity} (https://singularity.hpcng.org)
+   We are interested in having {Singularity} (https://apptainer.org)
    installed on our shared resource. {Singularity} containers will allow us to
    build encapsulated environments, meaning that our work is reproducible and
    we are empowered to choose all dependencies including libraries, operating
@@ -764,7 +764,7 @@ similar to this:
        {admindocs}/installation.html
 
    If you have questions about any of the above, you can contact one of the
-   sources listed at https://singularity.hpcng.org/help. I can do my best
+   sources listed at https://apptainer.org/help. I can do my best
    to facilitate this interaction if help is needed.
 
    Thank you kindly for considering this request!
