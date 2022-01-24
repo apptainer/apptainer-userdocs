@@ -1,6 +1,6 @@
 def variableReplace(app, docname, source):
     """
-    Takes the source on rst and replaces all the needed variables declared on 
+    Takes the source on rst and replaces all the needed variables declared on
     variable_replacements structure
     """
     result = source[0]
