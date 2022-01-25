@@ -45,9 +45,6 @@ below with their respective functionality.
 #. **SINGULARITY_BOOT**: Set to false by default, considers if executing
    ``/sbin/init`` when container boots (root only).
 
-#. **SINGULARITY_BUILDER**: To specify the remote builder service URL.
-   Defaults to our remote builder.
-
 ``C``
 =====
 
@@ -75,10 +72,6 @@ below with their respective functionality.
    to generate the image.
 
 #. **SINGULARITY_DESC**: Contains a description of the capabilities.
-
-#. **SINGULARITY_DETACHED**: To submit a build job and print the build
-   ID (no real-time logs and also requires ``--remote``). Default is set
-   to false.
 
 #. **SINGULARITY_DISABLE_CACHE**: To disable all caching of docker/oci,
    library, oras, etc. downloads and built SIFs. Default is set to
@@ -254,9 +247,8 @@ below with their respective functionality.
 ``R``
 =====
 
-#. **SINGULARITY_REMOTE**: To build an image remotely. (Does not require
-   root) Default is set to false.
 #. **SINGULARITY_ROOTFS**: To reference the system file location.
+
 #. **SINGULARITY_RUNSCRIPT**: Specifies the runscript of the image.
 
 ``S``

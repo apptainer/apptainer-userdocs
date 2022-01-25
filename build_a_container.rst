@@ -177,23 +177,6 @@ present on disk or in memory. See :ref:`encrypted containers
  Build options
 ***************
 
-``--builder``
-=============
-
-{Singularity} gives the option to perform a remote build. The
-``--builder`` option allows you to specify a URL to a different build
-service. For instance, you may need to specify a URL to build to an on
-premises installation of the remote builder. This option must be used in
-conjunction with ``--remote``.
-
-``--detached``
-==============
-
-When used in combination with the ``--remote`` option, the
-``--detached`` option will detach the build from your terminal and allow
-it to build in the background without echoing any output to your
-terminal.
-
 ``--encrypt``
 =============
 
@@ -251,13 +234,6 @@ container file system at build time. See :ref:`encrypted containers
 This flag allows you to pass the location of a public key to encrypt the
 container file system at build time. See :ref:`encrypted containers
 <encryption>` for more details.
-
-``--remote``
-============
-
-{Singularity} includes the ability to build a container on an
-external resource running a remote builder. (The default remote builder
-is located at "https://cloud.sylabs.io/builder".)
 
 ``--sandbox``
 =============
@@ -367,11 +343,6 @@ of the build do not use this temporary filesystem.
 
 -  If you want to make internally **modular containers**, check out the
    getting started guide `here <https://sci-f.github.io/tutorials>`_
-
--  If you want to **build your containers** on the Remote Builder,
-   (because you don’t have root access on a Linux machine or want to
-   host your container on the cloud) check out `this site
-   <https://cloud.sylabs.io/builder>`_
 
 -  If you want to **build a container with an encrypted file system**
    look :ref:`here <encryption>`.
