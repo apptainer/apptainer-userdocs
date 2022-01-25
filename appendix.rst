@@ -73,10 +73,6 @@ below with their respective functionality.
 
 #. **SINGULARITY_DESC**: Contains a description of the capabilities.
 
-#. **SINGULARITY_DETACHED**: To submit a build job and print the build
-   ID (no real-time logs and also requires ``--remote``). Default is set
-   to false.
-
 #. **SINGULARITY_DISABLE_CACHE**: To disable all caching of docker/oci,
    library, oras, etc. downloads and built SIFs. Default is set to
    false.
@@ -251,9 +247,8 @@ below with their respective functionality.
 ``R``
 =====
 
-#. **SINGULARITY_REMOTE**: To build an image remotely. (Does not require
-   root) Default is set to false.
 #. **SINGULARITY_ROOTFS**: To reference the system file location.
+
 #. **SINGULARITY_RUNSCRIPT**: Specifies the runscript of the image.
 
 ``S``
