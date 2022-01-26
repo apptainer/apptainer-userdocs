@@ -45,7 +45,7 @@ master_doc = 'index'
 # General information about the project.
 project = u'Apptainer User Guide'
 author = u'Apptainer Project Contributors'
-copyright = u'2021-2022, Apptainer a Series of LF Projects LLC'
+copyright = u'2021-2022, Apptainer a Series of LF Projects LLC \xA9 2017-2022, Sylabs Inc'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
