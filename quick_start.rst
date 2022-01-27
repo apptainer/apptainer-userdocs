@@ -6,10 +6,10 @@
 
 .. _sec:quickstart:
 
-This guide is intended for running {Singularity} on a computer where you
-have root (administrative) privileges, and will install {Singularity}
+This guide is intended for running {Project} on a computer where you
+have root (administrative) privileges, and will install {Project}
 from source code. Other installation options, including building an RPM
-package and installing {Singularity} without root privileges are
+package and installing {Project} without root privileges are
 discussed in the `installation section of the admin guide
 <{admindocs}/installation.html>`__.
 
@@ -17,7 +17,7 @@ If you need to request an installation on your shared resource, see the
 :ref:`requesting an installation section <installation-request>` for
 information to send to your system administrator.
 
-For any additional help or support contact the Singularity Community:
+For any additional help or support contact the {Project} Community:
 https://apptainer.org/help
 
 .. _quick-installation:
@@ -26,8 +26,8 @@ https://apptainer.org/help
  Quick Installation Steps
 **************************
 
-You will need a Linux system to run {Singularity} natively. Options for
-using {Singularity} on Mac and Windows machines, along with alternate
+You will need a Linux system to run {Project} natively. Options for
+using {Project} on Mac and Windows machines, along with alternate
 Linux installation options are discussed in the `installation section of
 the admin guide
 <{admindocs}/installation.html>`__.
@@ -67,29 +67,29 @@ On CentOS/RHEL:
       cryptsetup \
       wget git
 
-There are 3 broad steps to installing {Singularity}:
+There are 3 broad steps to installing {Project}:
 
 #. :ref:`Installing Go <install>`
-#. :ref:`Downloading {Singularity} <download>`
-#. :ref:`Compiling {Singularity} Source Code <compile>`
+#. :ref:`Downloading {Project} <download>`
+#. :ref:`Compiling {Project} Source Code <compile>`
 
 .. _install:
 
 Install Go
 ==========
 
-{Singularity} is written in Go, and may require a newer version of Go than is
+{Project} is written in Go, and may require a newer version of Go than is
 available in the repositories of your distribution. We recommend installing the
 latest version of Go from the [official binaries](https://golang.org/dl/).
 
-{Singularity} aims to maintain support for the two most recent stable versions
+{Project} aims to maintain support for the two most recent stable versions
 of Go. This corresponds to the Go Release Maintenance Policy and Security
 Policy, ensuring critical bug fixes and security patches are available for all
 supported language versions.
 
 If you are building rpm or debian packages using the packaging supplied
 in the ``dist`` directory, and the operating system distribution of Go
-is below the minimum required by {Singularity}, the packages can make
+is below the minimum required by {Project}, the packages can make
 use of the native Go to compile a newer version of Go whose source
 tarball is included with the package source.  That capability is
 supplied so packages can be built on systems with no access to the
@@ -128,10 +128,10 @@ Set the Environment variable ``PATH`` to point to Go:
 
 .. _download:
 
-Download {Singularity} from a release
+Download {Project} from a release
 =====================================
 
-You can download {Singularity} from one of the releases. To see a full
+You can download {Project} from one of the releases. To see a full
 list, visit `the GitHub release page
 <https://github.com/apptainer/apptainer/releases>`_. After deciding on a
 release to install, you can run the following commands to proceed with
@@ -146,11 +146,11 @@ the installation.
 
 .. _compile:
 
-Compile the {Singularity} source code
+Compile the {Project} source code
 =====================================
 
-Now you are ready to build {Singularity}. Dependencies will be
-automatically downloaded. You can build {Singularity} using the
+Now you are ready to build {Project}. Dependencies will be
+automatically downloaded. You can build {Project} using the
 following commands:
 
 .. code::
@@ -159,19 +159,19 @@ following commands:
        make -C builddir && \
        sudo make -C builddir install
 
-{Singularity} must be installed as root to function properly.
+{Project} must be installed as root to function properly.
 
 *****************************************
- Overview of the {Singularity} Interface
+ Overview of the {Project} Interface
 *****************************************
 
-{Singularity}’s :ref:`command line interface <cli>` allows you to build
+{Project}’s :ref:`command line interface <cli>` allows you to build
 and interact with containers transparently. You can run programs inside
 a container as if they were running on your host system. You can easily
 redirect IO, use pipes, pass arguments, and access files, sockets, and
 ports on the host system from within a container.
 
-The ``help`` command gives an overview of {Singularity} options and
+The ``help`` command gives an overview of {Project} options and
 subcommands as follows:
 
 .. code::
@@ -185,10 +185,10 @@ subcommands as follows:
      singularity [global options...]
 
    Description:
-     {Singularity} containers provide an application virtualization layer enabling
+     {Project} containers provide an application virtualization layer enabling
      mobility of compute via both application and environment portability. With
-     {Singularity} one is capable of building a root file system that runs on any
-     other Linux system where {Singularity} is installed.
+     {Project} one is capable of building a root file system that runs on any
+     other Linux system where {Project} is installed.
 
    Options:
      -d, --debug     print debugging information (highest verbosity)
@@ -199,7 +199,7 @@ subcommands as follows:
      -v, --verbose   print additional information
 
    Available Commands:
-     build       Build a {Singularity} image
+     build       Build a {Project} image
      cache       Manage the local cache
      capability  Manage Linux capabilities for users and groups
      exec        Run a command within a container
@@ -220,7 +220,7 @@ subcommands as follows:
      sign        Attach a cryptographic signature to an image
      test        Run the user-defined tests within a container
      verify      Verify cryptographic signatures attached to an image
-     version     Show the version for {Singularity}
+     version     Show the version for {Project}
 
    Examples:
      $ singularity help <command> [<subcommand>]
@@ -266,26 +266,26 @@ command.
 
    For additional help or support, please visit https://www.sylabs.io/docs/
 
-{Singularity} uses positional syntax (i.e. the order of commands and
+{Project} uses positional syntax (i.e. the order of commands and
 options matters). Global options affecting the behavior of all commands
 follow the main ``singularity`` command. Then sub commands are followed
 by their options and arguments.
 
 For example, to pass the ``--debug`` option to the main ``singularity``
-command and run {Singularity} with debugging messages on:
+command and run {Project} with debugging messages on:
 
 .. code::
 
    $ singularity --debug run library://lolcow
 
 To pass the ``--containall`` option to the ``run`` command and run a
-{Singularity} image in an isolated manner:
+{Project} image in an isolated manner:
 
 .. code::
 
    $ singularity run --containall library://lolcow
 
-{Singularity} has the concept of command groups. For
+{Project} has the concept of command groups. For
 instance, to list Linux capabilities for a particular user, you would
 use the ``list`` command in the ``capability`` command group like so:
 
@@ -347,7 +347,7 @@ commands to download pre-built images from an external resource like the
 `Container Library <https://cloud.sylabs.io/library>`_ or `Docker Hub
 <https://hub.docker.com/>`_.
 
-When called on a native {Singularity} image like those provided on the
+When called on a native {Project} image like those provided on the
 Container Library, ``pull`` simply downloads the image file to your
 system.
 
@@ -358,7 +358,7 @@ system.
 You can also use ``pull`` with the ``docker://`` uri to reference Docker
 images served from a registry. In this case ``pull`` does not just
 download an image file. Docker images are stored in layers, so ``pull``
-must also combine those layers into a usable {Singularity} file.
+must also combine those layers into a usable {Project} file.
 
 .. code::
 
@@ -381,12 +381,12 @@ your container like so:
    $ singularity build lolcow.sif docker://sylabsio/lolcow
 
 Unlike ``pull``, ``build`` will convert your image to the latest
-{Singularity} image format after downloading it. ``build`` is like a
+{Project} image format after downloading it. ``build`` is like a
 “Swiss Army knife” for container creation. In addition to downloading
 images, you can use ``build`` to create images from other images or from
 scratch using a :ref:`definition file <definition-files>`. You can also
 use ``build`` to convert an image between the container formats
-supported by {Singularity}. To see a comparison of {Singularity}
+supported by {Project}. To see a comparison of {Project}
 definition file with Dockerfile, please see: :ref:`this section
 <sec:deffile-vs-dockerfile>`.
 
@@ -418,21 +418,21 @@ interact with it as though it were a small virtual machine.
 
    $ singularity shell lolcow_latest.sif
 
-   {Singularity} lolcow_latest.sif:~>
+   {Project} lolcow_latest.sif:~>
 
 The change in prompt indicates that you have entered the container
 (though you should not rely on that to determine whether you are in
 container or not).
 
-Once inside of a {Singularity} container, you are the same user as you
+Once inside of a {Project} container, you are the same user as you
 are on the host system.
 
 .. code::
 
-   {Singularity} lolcow_latest.sif:~> whoami
+   {Project} lolcow_latest.sif:~> whoami
    david
 
-   {Singularity} lolcow_latest.sif:~> id
+   {Project} lolcow_latest.sif:~> id
    uid=1000(david) gid=1000(david) groups=1000(david),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),116(lpadmin),126(sambashare)
 
 ``shell`` also works with the ``library://``, ``docker://``, and
@@ -485,7 +485,7 @@ command and disappears.
 Running a container
 ===================
 
-{Singularity} containers contain :ref:`runscripts <runscript>`. These
+{Project} containers contain :ref:`runscripts <runscript>`. These
 are user defined scripts that define the actions a container should
 perform when someone runs it. The runscript can be triggered with the
 `run
@@ -546,7 +546,7 @@ to run ``echo`` command in this shell:
 
    hello
 
-Because {Singularity} runscripts are evaluated shell scripts
+Because {Project} runscripts are evaluated shell scripts
 arguments can behave slightly differently than in Docker/OCI
 runtimes, if they contain shell code that may be evaluated. To
 replicate Docker/OCI behaviour you may need additional escaping or
@@ -581,7 +581,7 @@ Files on the host are reachable from within the container.
    Hello from inside the container
 
 This example works because ``hostfile.txt`` exists in the user’s home
-directory. By default {Singularity} bind mounts ``/home/$USER``,
+directory. By default {Project} bind mounts ``/home/$USER``,
 ``/tmp``, and ``$PWD`` into your container at runtime.
 
 You can specify additional directories to bind mount into your container
@@ -596,7 +596,7 @@ container.
    $ singularity exec --bind /data:/mnt lolcow_latest.sif cat /mnt/cow_advice.txt
    Drink milk (and never eat hamburgers).
 
-Pipes and redirects also work with {Singularity} commands just like they
+Pipes and redirects also work with {Project} commands just like they
 do with normal Linux commands.
 
 .. code::
@@ -619,7 +619,7 @@ do with normal Linux commands.
 
 .. _sec:buildimagesfromscratch:
 
-{Singularity} produces immutable images in the
+{Project} produces immutable images in the
 Singularity Image File (SIF) format. This ensures reproducible and
 verifiable images and allows for many extra benefits such as the ability
 to sign and verify your containers.
@@ -627,7 +627,7 @@ to sign and verify your containers.
 However, during testing and debugging you may want an image format that
 is writable. This way you can ``shell`` into the image and install
 software and dependencies until you are satisfied that your container
-will fulfill your needs. For these scenarios, {Singularity} also
+will fulfill your needs. For these scenarios, {Project} also
 supports the ``sandbox`` format (which is really just a directory).
 
 Sandbox Directories
@@ -641,11 +641,11 @@ To build into a ``sandbox`` (container in a directory) use the ``build
    $ sudo singularity build --sandbox ubuntu/ library://ubuntu
 
 This command creates a directory called ``ubuntu/`` with an entire
-Ubuntu Operating System and some {Singularity} metadata in your current
+Ubuntu Operating System and some {Project} metadata in your current
 working directory.
 
 You can use commands like ``shell``, ``exec`` , and ``run`` with this
-directory just as you would with a {Singularity} image. If you pass the
+directory just as you would with a {Project} image. If you pass the
 ``--writable`` option when you use your container you can also write
 files within the sandbox directory (provided you have the permissions to
 do so).
@@ -674,11 +674,11 @@ Doing so may break reproducibility if you have altered your sandbox
 outside of the context of a definition file, so you are advised to
 exercise care.
 
-{Singularity} Definition Files
+{Project} Definition Files
 ==============================
 
 For a reproducible, verifiable and production-quality container you
-should build a SIF file using a {Singularity} definition file. This also
+should build a SIF file using a {Project} definition file. This also
 makes it easy to add files, environment variables, and install custom
 software, and still start from your base of choice (e.g., the Container
 Library).
@@ -716,7 +716,7 @@ named lolcow.def), you would call build like so:
 
    $ sudo singularity build lolcow.sif lolcow.def
 
-In this example, the header tells {Singularity} to use a base Ubuntu
+In this example, the header tells {Project} to use a base Ubuntu
 16.04 image from the Container Library.
 
 -  The ``%post`` section executes within the container at build time
@@ -740,18 +740,18 @@ as Ubuntu, Debian, CentOS, Arch, and BusyBox. You can also use an
 existing container on your host system as a base.
 
 This quickstart document just scratches the surface of all of the things
-you can do with {Singularity}!
+you can do with {Project}!
 
 If you need additional help or support, see https://apptainer.org/help.
 
 .. _installation-request:
 
-{Singularity} on a shared resource
+{Project} on a shared resource
 ----------------------------------
 
 Perhaps you are a user who wants a few talking points and background to
 share with your administrator. Or maybe you are an administrator who
-needs to decide whether to install {Singularity}.
+needs to decide whether to install {Project}.
 
 This document, and the accompanying administrator documentation provides
 answers to many common questions.
@@ -763,11 +763,11 @@ similar to this:
 
    Dear shared resource administrator,
 
-   We are interested in having {Singularity} (https://apptainer.org)
-   installed on our shared resource. {Singularity} containers will allow us to
+   We are interested in having {Project} (https://apptainer.org)
+   installed on our shared resource. {Project} containers will allow us to
    build encapsulated environments, meaning that our work is reproducible and
    we are empowered to choose all dependencies including libraries, operating
-   system, and custom software. {Singularity} is already in use on many of the
+   system, and custom software. {Project} is already in use on many of the
    top HPC centers around the world. Examples include:
 
        Texas Advanced Computing Center
@@ -787,7 +787,7 @@ similar to this:
    Importantly, it has a vibrant team of developers, scientists, and HPC
    administrators that invest heavily in the security and development of the
    software, and are quick to respond to the needs of the community. To help
-   learn more about {Singularity}, I thought these items might be of interest:
+   learn more about {Project}, I thought these items might be of interest:
 
        - Security: A discussion of security concerns is discussed at
        {admindocs}/admin_quickstart.html

@@ -11,7 +11,7 @@ encrypting the root file system.
  Overview
 **********
 
-{Singularity} provides a feature to build and run encrypted
+{Project} provides a feature to build and run encrypted
 containers to allow users to encrypt the file system
 image within a SIF. This encryption can be performed using either a
 passphrase or asymmetrically via an RSA key pair in Privacy Enhanced
@@ -112,7 +112,7 @@ like so.
 PEM File Encryption
 ===================
 
-{Singularity} currently supports RSA encryption using a public/private
+{Project} currently supports RSA encryption using a public/private
 key-pair. Keys are supplied in PEM format. The public key is used to
 encrypt containers that can be decrypted on a host that has access to
 the secret private key.

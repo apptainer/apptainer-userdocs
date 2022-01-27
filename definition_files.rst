@@ -6,7 +6,7 @@
 
 .. _sec:deffiles:
 
-A {Singularity} Definition File (or "def file" for short) is like a set
+A {Project} Definition File (or "def file" for short) is like a set
 of blueprints explaining how to build a custom container. It includes
 specifics about the base OS to build or the base container to start
 from, software to install, environment variables to set at runtime,
@@ -16,7 +16,7 @@ files to add from the host system, and container metadata.
  Overview
 **********
 
-A {Singularity} Definition file is divided into two parts:
+A {Project} Definition file is divided into two parts:
 
 #. **Header**: The Header describes the core operating system to build
    within the container. Here you will configure the base operating
@@ -33,10 +33,10 @@ A {Singularity} Definition file is divided into two parts:
    accept ``/bin/sh`` options. Similarly, sections that produce scripts
    to be executed at runtime can accept options intended for ``/bin/sh``
 
-For more in-depth and practical examples of def files, see the `Singularity
+For more in-depth and practical examples of def files, see the `{Project}
 examples repository <https://github.com/apptainer/apptainer/tree/master/examples>`_
 
-For a comparison between Dockerfile and {Singularity} definition file,
+For a comparison between Dockerfile and {Project} definition file,
 please see: :ref:`this section <sec:deffile-vs-dockerfile>`.
 
 ********
@@ -44,7 +44,7 @@ please see: :ref:`this section <sec:deffile-vs-dockerfile>`.
 ********
 
 The header should be written at the top of the def file. It tells
-{Singularity} about the base operating system that it should use to
+{Project} about the base operating system that it should use to
 build the container. It is composed of several keywords.
 
 The only keyword that is required for every type of build is
@@ -315,7 +315,7 @@ configuration process.
 =====
 
 In some circumstances, it may be redundant to build different containers
-for each app with nearly equivalent dependencies. {Singularity} supports
+for each app with nearly equivalent dependencies. {Project} supports
 installing apps within internal modules based on the concept of the
 `Scientific Filesystem (SCIF) <https://sci-f.github.io/>`_. More
 information on defining and using SCIF Apps :ref:`here <apps>`.
@@ -485,7 +485,7 @@ Note that variables added to the ``$SINGULARITY_ENVIRONMENT`` file in
 ``%environment`` section.
 
 See :ref:`Environment and Metadata <environment-and-metadata>` for more
-information about the {Singularity} container environment.
+information about the {Project} container environment.
 
 .. _startscript:
 
@@ -547,7 +547,7 @@ passed to the container at runtime are printed as a single string
 which ensures that all of the arguments are properly parsed by the
 executed command. The ``exec`` preceding the final ``echo`` command
 replaces the current entry in the process table (which originally was
-the call to {Singularity}). Thus the runscript shell process ceases to
+the call to {Project}). Thus the runscript shell process ceases to
 exist, and only the process running within the container remains.
 
 Running the container built using this def file will yield the
@@ -699,17 +699,17 @@ which to run easily. Each entry point can carry out a different task
 with its own environment, metadata etc., without the need for a
 collection of different containers.
 
-{Singularity} implements SCIF, and you can read more about how to use it
+{Project} implements SCIF, and you can read more about how to use it
 below.
 
-SCIF is not specific to {Singularity}. You can learn more about it at
+SCIF is not specific to {Project}. You can learn more about it at
 the project's site: https://sci-f.github.io/ which includes extended
 tutorials, the specification, and other information.
 
 SCIF %app* sections
 ===================
 
-SCIF apps within a {Singularity} container are created using ``%app*``
+SCIF apps within a {Project} container are created using ``%app*``
 sections in a definition file. These ``%app*`` sections, which will
 impact the way the container runs a specific ``--app`` can exist
 alongside any of the primary sections (i.e. ``%post``,``%runscript``,

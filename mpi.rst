@@ -1,7 +1,7 @@
 .. _mpi:
 
 ####################################
- {Singularity} and MPI applications
+ {Project} and MPI applications
 ####################################
 
 .. _sec-mpi:
@@ -12,11 +12,11 @@ communication across compute nodes of a single system or across compute
 platforms. There are two main open-source implementations of MPI at the
 moment - `OpenMPI <https://www.open-mpi.org/>`_ and `MPICH
 <https://www.mpich.org/>`_, both of which are supported by
-{Singularity}. The goal of this page is to demonstrate the development
-and running of MPI programs using {Singularity} containers.
+{Project}. The goal of this page is to demonstrate the development
+and running of MPI programs using {Project} containers.
 
 There are several ways of carrying this out, the most popular way of
-executing MPI applications installed in a {Singularity} container is to
+executing MPI applications installed in a {Project} container is to
 rely on the MPI implementation available on the host. This is called the
 *Host MPI* or the *Hybrid* model since both the MPI implementations
 provided by system administrators (on the host) and in the containers
@@ -39,20 +39,20 @@ host into the container.
 **************
 
 The basic idea behind the *Hybrid Approach* is when you execute a
-{Singularity} container with MPI code, you will call ``mpiexec`` or a
+{Project} container with MPI code, you will call ``mpiexec`` or a
 similar launcher on the ``singularity`` command itself. The MPI process
 outside of the container will then work in tandem with MPI inside the
 container and the containerized MPI code to instantiate the job.
 
-The Open MPI/{Singularity} workflow in detail:
+The Open MPI/{Project} workflow in detail:
 
 #. The MPI launcher (e.g., ``mpirun``, ``mpiexec``) is called by the
    resource manager or the user directly from a shell.
 #. Open MPI then calls the process management daemon (ORTED).
-#. The ORTED process launches the {Singularity} container requested by
+#. The ORTED process launches the {Project} container requested by
    the launcher command.
-#. {Singularity} instantiates the container and namespace environment.
-#. {Singularity} then launches the MPI application within the container.
+#. {Project} instantiates the container and namespace environment.
+#. {Project} then launches the MPI application within the container.
 #. The MPI application launches and loads the Open MPI libraries.
 #. The Open MPI libraries connect back to the ORTED process via the
    Process Management Interface (PMI).
@@ -80,7 +80,7 @@ installed on the host from source.
 Test Application
 ================
 
-To illustrate how {Singularity} can be used to execute MPI applications,
+To illustrate how {Project} can be used to execute MPI applications,
 we will assume for a moment that the application is ``mpitest.c``, a
 simple Hello World:
 
@@ -248,9 +248,9 @@ If the host MPI is Open MPI, the definition file looks like:
 Running an MPI Application
 ==========================
 
-The standard way to execute MPI applications with hybrid {Singularity}
+The standard way to execute MPI applications with hybrid {Project}
 containers is to run the native ``mpirun`` command from the host, which
-will start {Singularity} containers and ultimately MPI ranks within the
+will start {Project} containers and ultimately MPI ranks within the
 containers.
 
 Assuming your container with MPI and your application is already built,
@@ -262,7 +262,7 @@ container has been built based on the hybrid model:
    $ mpirun -n <NUMBER_OF_RANKS> singularity exec <PATH/TO/MY/IMAGE> </PATH/TO/BINARY/WITHIN/CONTAINER>
 
 Practically, this command will first start a process instantiating
-``mpirun`` and then {Singularity} containers on compute nodes. Finally,
+``mpirun`` and then {Project} containers on compute nodes. Finally,
 when the containers start, the MPI binary is executed:
 
 .. code::
@@ -286,7 +286,7 @@ Approach* is to start the MPI application by calling the MPI launcher
 (e.g., `mpirun`) from the host. The main difference between the hybrid
 and bind approach is the fact that with the bind approach, the container
 usually does not include any MPI implementation. This means that
-{Singularity} needs to mount/bind the MPI available on the host into the
+{Project} needs to mount/bind the MPI available on the host into the
 container.
 
 Technically this requires two steps:
@@ -309,7 +309,7 @@ The drawbacks are:
    -  The user must ensure that the host MPI is compatible with the MPI
       used to compile and install the application in the container.
 
-The creation of a {Singularity} container for the bind model is based on
+The creation of a {Project} container for the bind model is based on
 the following steps:
 
 #. Compile your application on a system with the target MPI
@@ -400,7 +400,7 @@ to run the container in bind mode are:
 If your target system is setup with a batch system such as SLURM, a
 standard way to execute MPI applications is through a batch script. The
 following example illustrates the context of a batch script for Slurm
-that aims at starting a {Singularity} container on each node allocated
+that aims at starting a {Project} container on each node allocated
 to the execution of the job. It can easily be adapted for all major
 batch systems available.
 
@@ -432,7 +432,7 @@ A user can then submit a job by executing the following SLURM command:
 
 On many systems it is common to use an alternative launcher to start MPI
 applications, e.g. Slurm's ``srun`` rather than the ``mpirun`` provided
-by the MPI installation. This approach is supported with {Singularity}
+by the MPI installation. This approach is supported with {Project}
 as long as the container MPI version supports the same process
 management interface (e.g. PMI2 / PMIx) and version as is used by the
 launcher.
@@ -449,7 +449,7 @@ that MPI implementations are built to support them. You may need to
 install or bind Infiniband/Omnipath libraries into your containers when
 using these interconnects.
 
-By default {Singularity} exposes every device in ``/dev`` to the
+By default {Project} exposes every device in ``/dev`` to the
 container. If you run a container using the ``--contain`` or
 ``--containall`` flags a minimal ``/dev`` is used instead. You may need
 to bind in additional ``/dev/`` entries manually to support the
@@ -486,7 +486,7 @@ interconnect libraries may not be available or configured properly with
 the MPI stack in the container.
 
 Please check the following things carefully before asking questions in
-the {Singularity} community:
+the {Project} community:
 
    -  For the hybrid mode, is the MPI version on the host compatible
       with the version in the container? Newer MPI versions can
@@ -504,8 +504,8 @@ the {Singularity} community:
       container? Is the MPI stack in the container configured correctly
       to use them?
 
-We recommend using the {Singularity} Google Group or Slack Channel to
-ask for MPI advice from the {Singularity} community. HPC cluster
+We recommend using the {Project} Google Group or Slack Channel to
+ask for MPI advice from the {Project} community. HPC cluster
 configurations vary greatly and most MPI problems are related to MPI /
-interconnect configuration, and not caused by issues in {Singularity}
+interconnect configuration, and not caused by issues in {Project}
 itself.

@@ -10,8 +10,8 @@
 it to download and assemble existing containers from external resources
 like the `Container Library <https://cloud.sylabs.io/library>`_ and
 `Docker Hub <https://hub.docker.com/>`_. You can use it to convert
-containers between the formats supported by {Singularity}. And you can
-use it in conjunction with a :ref:`{Singularity} definition
+containers between the formats supported by {Project}. And you can
+use it in conjunction with a :ref:`{Project} definition
 <definition-files>` file to create a container from scratch and
 customized it to fit your needs.
 
@@ -30,7 +30,7 @@ container. It can be one of the following:
 -  URI beginning with **shub://** to build from Singularity Hub
 -  path to a **existing container** on your local machine
 -  path to a **directory** to build from a sandbox
--  path to a :ref:`{Singularity} definition file <definition-files>`
+-  path to a :ref:`{Project} definition file <definition-files>`
 
 ``build`` can produce containers in two different formats that can be
 specified as follows.
@@ -66,7 +66,7 @@ container in a writable format use the ``--sandbox`` option.
 ***************************************************
 
 You can use ``build`` to download layers from Docker Hub and assemble
-them into {Singularity} containers.
+them into {Project} containers.
 
 .. code::
 
@@ -113,17 +113,17 @@ one format to another. For example if you had a sandbox container called
 
 Use care when converting a sandbox directory to the default SIF format.
 If changes were made to the writable container before conversion, there
-is no record of those changes in the {Singularity} definition file
+is no record of those changes in the {Project} definition file
 rendering your container non-reproducible. It is a best practice to
-build your immutable production containers directly from a {Singularity}
+build your immutable production containers directly from a {Project}
 definition file instead.
 
 *********************************************************
- Building containers from {Singularity} definition files
+ Building containers from {Project} definition files
 *********************************************************
 
-Of course, {Singularity} definition files can be used as the target when
-building a container. For detailed information on writing {Singularity}
+Of course, {Project} definition files can be used as the target when
+building a container. For detailed information on writing {Project}
 definition files, please see the :doc:`Container Definition docs
 <definition_files>`. Let’s say you already have the following container
 definition file called ``lolcow.def``, and you want to use it to build a
@@ -167,7 +167,7 @@ machine requires root privileges.
  Building encrypted containers
 *******************************
 
-With {Singularity} it is possible to build and run
+With {Project} it is possible to build and run
 encrypted containers. The containers are decrypted at runtime entirely
 in kernel space, meaning that no intermediate decrypted data is ever
 present on disk or in memory. See :ref:`encrypted containers
@@ -180,7 +180,7 @@ present on disk or in memory. See :ref:`encrypted containers
 ``--encrypt``
 =============
 
-Specifies that {Singularity} should use a secret saved in either the
+Specifies that {Project} should use a secret saved in either the
 ``SINGULARITY_ENCRYPTION_PASSPHRASE`` or
 ``SINGULARITY_ENCRYPTION_PEM_PATH`` environment variable to build an
 encrypted container. See :ref:`encrypted containers <encryption>` for
@@ -196,12 +196,12 @@ Gives users a way to build containers completely unprivileged. See
 ===========
 
 The ``--force`` option will delete and overwrite an existing
-{Singularity} image without presenting the normal interactive prompt.
+{Project} image without presenting the normal interactive prompt.
 
 ``--json``
 ==========
 
-The ``--json`` option will force {Singularity} to interpret a given
+The ``--json`` option will force {Project} to interpret a given
 definition file as a json.
 
 ``--library``
@@ -249,7 +249,7 @@ definition file sections. Acceptable arguments include ``all``, ``none``
 or any combination of the following: ``setup``, ``post``, ``files``,
 ``environment``, ``test``, ``labels``.
 
-Under normal build conditions, the {Singularity} definition file is
+Under normal build conditions, the {Project} definition file is
 saved into a container’s meta-data so that there is a record showing how
 the container was built. Using the ``--section`` option may render this
 meta-data useless, so use care if you value reproducibility.
@@ -265,7 +265,7 @@ By default if you build into an existing sandbox container, the
 ``build`` command will prompt you to decide whether or not to overwrite
 the container. Instead of this behavior you can use the ``--update``
 option to build _into_ an existing container. This will cause
-{Singularity} to skip the header and build any sections that are in the
+{Project} to skip the header and build any sections that are in the
 definition file into the existing container.
 
 The ``--update`` option is only valid when used with sandbox containers.
@@ -280,7 +280,7 @@ of ``post`` and ``test`` sections.
 .. note::
 
     This option can't be set via the environment variable `SINGULARITY_NV`.
-    Singularity will attempt to bind binaries listed in SINGULARITY_CONFDIR/nvliblist.conf,
+    {Project} will attempt to bind binaries listed in SINGULARITY_CONFDIR/nvliblist.conf,
     if the mount destination doesn't exist inside the container, they are ignored.
 
 ``--rocm``
@@ -293,7 +293,7 @@ your build environment. Libraries are mounted during the execution of
 .. note::
 
     This option can't be set via the environment variable `SINGULARITY_ROCM`.
-    Singularity will attempt to bind binaries listed in `SINGULARITY_CONFDIR/rocmliblist.conf`,
+    {Project} will attempt to bind binaries listed in `SINGULARITY_CONFDIR/rocmliblist.conf`,
     if the mount destination doesn't exist inside the container, they are ignored.
 
 ``--bind``

@@ -1,15 +1,15 @@
 ##########################
- {Singularity} User Guide
+ {Project} User Guide
 ##########################
 
-Welcome to the {Singularity} User Guide!
+Welcome to the {Project} User Guide!
 
-This guide aims to give an introduction to {Singularity}, brief
+This guide aims to give an introduction to {Project}, brief
 installation instructions, and cover topics relevant to users building
 and running containers.
 
 For a detailed guide to installation and configuration, please see the
-separate Admin Guide for this version of {Singularity} at
+separate Admin Guide for this version of {Project} at
 {admindocs}.
 
 ******************************************
@@ -19,9 +19,9 @@ separate Admin Guide for this version of {Singularity} at
 .. toctree::
    :maxdepth: 2
 
-   Introduction to {Singularity} <introduction>
+   Introduction to {Project} <introduction>
    Quick Start <quick_start>
-   Security in {Singularity} <security>
+   Security in {Project} <security>
 
 *********************
  Building Containers
@@ -44,7 +44,7 @@ non-root user.
  Container Signing & Encryption
 ********************************
 
-{Singularity} allows containers to be signed using a PGP key. The
+{Project} allows containers to be signed using a PGP key. The
 signature travels with the container image, allowing you to verify that
 the image is unmodified at any time. Encryption of containers using
 LUKS2 is also supported. Encrypted containers can be run without
@@ -72,7 +72,7 @@ decrypting them to disk first.
 ****************
 
 Once you've understood the basics, explore all the options which
-{Singularity} provides for accessing data, running persistent services
+{Project} provides for accessing data, running persistent services
 in containers, manipulating the container environment, and applying
 networking and security configuration.
 
@@ -92,9 +92,9 @@ networking and security configuration.
  Compatibility
 ***************
 
-{Singularity} has unique benefits and supports easy access to GPUs and
+{Project} has unique benefits and supports easy access to GPUs and
 other hardware. It also strives for compatibility with Docker/OCI
-container formats. Understand the differences between {Singularity} and
+container formats. Understand the differences between {Project} and
 Docker, as well as how to use containerized MPI and GPU applications.
 
 .. toctree::
@@ -102,14 +102,14 @@ Docker, as well as how to use containerized MPI and GPU applications.
 
    Support for Docker / OCI Containers <singularity_and_docker>
    OCI Runtime Support <oci_runtime>
-   Singularity and MPI applications <mpi>
+   {Project} and MPI applications <mpi>
    GPU Support <gpu>
 
 **************
  Get Involved
 **************
 
-We'd love you to get involved in the {Singularity} community! Whether
+We'd love you to get involved in the {Project} community! Whether
 through contributing feature and fixes, helping to answer questions from
 other users, or simply testing new releases.
 

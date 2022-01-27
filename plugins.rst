@@ -8,12 +8,12 @@
  Overview
 **********
 
-A {Singularity} plugin is a package that can be dynamically loaded by
-the {Singularity} runtime, augmenting {Singularity} with experimental,
+A {Project} plugin is a package that can be dynamically loaded by
+the {Project} runtime, augmenting {Project} with experimental,
 non-standard and/or vendor-specific functionality. Currently, plugins
-are able to add commands and flags to {Singularity}. In the future,
+are able to add commands and flags to {Project}. In the future,
 plugins will also be able to interface with more complex subsystems of
-the {Singularity} runtime.
+the {Project} runtime.
 
 ***************
  Using Plugins
@@ -30,7 +30,7 @@ Plugins are packaged and distributed as binaries encoded with the
 versatile Singularity Image Format (SIF). However, plugin authors may
 also distribute the source code of their plugins. A plugin can be
 compiled from its source code with the ``compile`` command. A sample
-plugin ``test-plugin`` is included with the {Singularity} source code.
+plugin ``test-plugin`` is included with the {Project} source code.
 
 .. code::
 
@@ -46,20 +46,20 @@ the plugin's source code.
 
 .. note::
 
-   Currently, **all** plugins must be compiled from the {Singularity}
+   Currently, **all** plugins must be compiled from the {Project}
    source code tree.
 
-   Also, the plugins mechanism for the Go language that {Singularity} is
+   Also, the plugins mechanism for the Go language that {Project} is
    written in is quite restrictive - it requires extremely close version
    matching of packages used in a plugin to the ones used in the program
-   the plugin is built for. Additionally {Singularity} is using build
+   the plugin is built for. Additionally {Project} is using build
    time config to get the source tree location for ``singularity plugin
    compile`` so that you don't need to export environment variables etc,
    and there isn't mismatch between package path information that Go
    uses. This means that at present you must:
 
    -  Build plugins using the exact same version of the source code, in
-      the same location, as was used to build the {Singularity}
+      the same location, as was used to build the {Project}
       executable.
 
    -  Use the exact same version of Go that was used to build the
@@ -73,7 +73,7 @@ plugin, use the ``inspect`` command.
 
    $ singularity plugin inspect examples/plugins/test-plugin/test-plugin.sif
    Name: sylabs.io/test-plugin
-   Description: This is a short test plugin for {Singularity}
+   Description: This is a short test plugin for {Project}
    Author: Michael Bauer
    Version: 0.0.1
 
@@ -117,7 +117,7 @@ operation requires root privilege.
  Writing a Plugin
 ******************
 
-Developers interested in writing {Singularity} plugins can get started
+Developers interested in writing {Project} plugins can get started
 by reading the `Go documentation
 <https://godoc.org/github.com/sylabs/singularity/pkg/plugin>`_ for the
 plugin package. Furthermore, reading through the `source code

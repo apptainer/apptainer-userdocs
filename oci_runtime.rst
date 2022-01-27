@@ -17,13 +17,13 @@ OCI is an acronym for the `Open Containers Initiative
 <https://www.opencontainers.org/>`_ - an independent organization whose
 mandate is to develop open standards relating to containerization. To
 date, standardization efforts have focused on container formats and
-runtimes. {Singularity}'s compliance with respect to the OCI Image
+runtimes. {Project}'s compliance with respect to the OCI Image
 Specification is considered in detail :ref:`elsewhere
-<sec:oci_overview>`. It is {Singularity}'s compliance with the OCI
+<sec:oci_overview>`. It is {Project}'s compliance with the OCI
 Runtime Specification that is of concern here.
 
 Briefly, compliance with respect to the OCI Runtime Specification is
-addressed in {Singularity} through the introduction of the ``oci``
+addressed in {Project} through the introduction of the ``oci``
 command group.
 
 .. note::
@@ -754,7 +754,7 @@ additional properties - for example:
       of the OCI runtime specification that the bundle is compliant with
 
    -  ``process`` - an optional property that specifies the container
-      process. When invoked via {Singularity}, sub-properties such as
+      process. When invoked via {Project}, sub-properties such as
       ``args`` are populated by making use of the contents of the
       ``.singularity.d`` directory, e.g. via ``$ sudo cat
       /var/tmp/busybox/config.json | jq [.process.args]``:
@@ -769,7 +769,7 @@ additional properties - for example:
 
    where ``run`` equates to the :ref:`familiar runscript
    <sec:inspect_container_metadata>` for this container. If image
-   creation is bootstrapped via a Docker or OCI agent, {Singularity}
+   creation is bootstrapped via a Docker or OCI agent, {Project}
    will make use of ``ENTRYPOINT`` or ``CMD`` (from the OCI image) to
    populate ``args``; for additional discussion, please refer to
    :ref:`Directing Execution <sec:def_files_execution>` in the section

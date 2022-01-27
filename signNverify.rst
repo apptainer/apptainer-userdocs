@@ -6,9 +6,9 @@
 
 .. _sec:signnverify:
 
-{Singularity} has the ability to create and manage PGP keys
+{Project} has the ability to create and manage PGP keys
 and use them to sign and verify containers. This provides a trusted
-method for {Singularity} users to share containers. It ensures a
+method for {Project} users to share containers. It ensures a
 bit-for-bit reproduction of the original container as the author
 intended it.
 
@@ -72,7 +72,7 @@ Generating and managing PGP keys
 To sign your own containers you first need to generate one or more keys.
 
 If you attempt to sign a container before you have generated any keys,
-{Singularity} will guide you through the interactive process of creating
+{Project} will guide you through the interactive process of creating
 a new key. Or you can use the ``newpair`` subcommand in the ``key``
 command group like so:.
 
@@ -153,7 +153,7 @@ signing).
 Searching for keys
 ==================
 
-{Singularity} allows you to search the keystore for public keys. You can
+{Project} allows you to search the keystore for public keys. You can
 search for names, emails, and fingerprints (key IDs). When searching for
 a fingerprint, you need to use ``0x`` before the fingerprint, check the
 example:

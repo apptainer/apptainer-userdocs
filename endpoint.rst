@@ -7,12 +7,12 @@
 **********
 
 The ``remote`` command group allows users to manage the service
-endpoints {Singularity} will interact with for many common command
+endpoints {Project} will interact with for many common command
 flows. This includes managing credentials for image storage services
 and key servers used to locate public keys for SIF
 image verification. Currently, there are three main types of remote
 endpoints managed by this command group: the public Sylabs Cloud (or
-local {Singularity} Enterprise installation), OCI registries and
+local {Project} Enterprise installation), OCI registries and
 keyservers.
 
 *********************
@@ -24,7 +24,7 @@ Sylabs introduced the online `Sylabs Cloud
 <https://cloud.sylabs.io/keystore?sign=true>`_, and `Share
 <https://cloud.sylabs.io/library>`_ their container images with others.
 
-A fresh, default installation of {Singularity} is configured to connect
+A fresh, default installation of {Project} is configured to connect
 to the public `cloud.sylabs.io <https://cloud.sylabs.io>`__ services. If
 you only want to use the public services you just need to obtain an
 authentication token, and then ``singularity remote login``:
@@ -62,7 +62,7 @@ proxy environment variables to be set, or if a firewall is blocking
 access to ``*.sylabs.io``. Talk to your system administrator.
 
 You can interact with the public Sylabs Cloud using various
-{Singularity} commands:
+{Project} commands:
 
 `pull
 <cli/singularity_pull.html>`_,
@@ -180,7 +180,7 @@ To ``add`` a remote endpoint (for the current user only):
 
    $ singularity remote add <remote_name> <remote_uri>
 
-For example, if you have an installation of {Singularity} enterprise
+For example, if you have an installation of {Project} enterprise
 hosted at enterprise.example.com:
 
 .. code::
@@ -212,7 +212,7 @@ system) an administrative user should run:
 
    Global remote configurations can only be modified by the root user
    and are stored in the ``etc/singularity/remote.yaml`` file, at the
-   {Singularity} installation location.
+   {Project} installation location.
 
 Conversely, to ``remove`` an endpoint:
 
@@ -321,20 +321,20 @@ If you do not want to switch remote with ``remote use`` you can:
  Keyserver Configurations
 **************************
 
-By default, {Singularity} will use the keyserver correlated to the
+By default, {Project} will use the keyserver correlated to the
 active cloud service endpoint. This behavior can be changed or
 supplemented via the ``add-keyserver`` and ``remove-keyserver``
 commands. These commands allow an administrator to create a global list
 of key servers used to verify container signatures by default, where
 ``order 1`` is the first in the list. Other operations performed by
-{Singularity} that reach out to a keyserver will only use the first
+{Project} that reach out to a keyserver will only use the first
 entry, or ``order 1``, keyserver.
 
 When we list our default remotes, we can see that the default keyserver
 is ``https://keys.sylabs.io`` and the asterisk next to its order
 indicates that it is the keyserver associated to the current remote
 endpoint. We can also see the ``INSECURE`` column indicating that
-{Singularity} will use TLS when communicating with the keyserver.
+{Project} will use TLS when communicating with the keyserver.
 
 .. code::
 
@@ -401,7 +401,7 @@ Since we specified ``--order 1``, the ``https://pgp.example.com``
 keyserver was placed as the first entry in the list and the default
 keyserver was moved to second in the list. With the keyserver
 configuration above, all image default image verification performed by
-{Singularity} will first reach out to ``https://pgp.example.com`` and
+{Project} will first reach out to ``https://pgp.example.com`` and
 then to ``https://keys.sylabs.io`` when searching for public keys.
 
 If a keyserver requires authentication before usage, users can login
@@ -451,16 +451,16 @@ Now we can see that ``https://pgp.example.com`` is logged in:
  Managing OCI Registries
 *************************
 
-It is common for users of {Singularity} to use OCI registries as sources
+It is common for users of {Project} to use OCI registries as sources
 for their container images. Some registries require credentials to
 access certain images or the registry itself. Previously, the only
-methods in {Singularity} to supply credentials to registries were to
+methods in {Project} to supply credentials to registries were to
 supply credentials for each command or set environment variables for a
 single registry. See :ref:`Authentication via Interactive Login
 <sec:authentication_via_docker_login>` and :ref:`Authentication via
 Environment Variables <sec:authentication_via_environment_variables>`
 
-{Singularity} 3.7 introduces the ability for users to supply credentials
+{Project} 3.7 introduces the ability for users to supply credentials
 on a per registry basis with the ``remote`` command group.
 
 Users can login to an oci registry with the ``remote login`` command by
@@ -494,9 +494,9 @@ specifying a ``docker://`` prefix to the registry hostname:
    docker://docker.io  NO
 
 Now we can see that ``docker://docker.io`` shows up under
-``Authenticated Logins`` and {Singularity} will automatically supply the
+``Authenticated Logins`` and {Project} will automatically supply the
 configured credentials when interacting with DockerHub. We can also see
-the ``INSECURE`` column indicating that {Singularity} will use TLS when
+the ``INSECURE`` column indicating that {Project} will use TLS when
 communicating with the registry.
 
 We can login to multiple OCI registries at the same time:
@@ -529,7 +529,7 @@ We can login to multiple OCI registries at the same time:
    docker://docker.io             NO
    docker://registry.example.com  NO
 
-{Singularity} will supply the correct credentials for the registry based
+{Project} will supply the correct credentials for the registry based
 off of the hostname when using the following commands with a
 ``docker://`` or ``oras://`` URI:
 
