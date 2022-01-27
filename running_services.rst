@@ -57,7 +57,7 @@ image from the `container library <https://cloud.sylabs.io/library/>`_:
 
 .. code::
 
-   $ singularity pull library://alpine
+   $ apptainer pull library://alpine
 
 The above command will save the alpine image from the Container Library
 as ``alpine_latest.sif``.
@@ -68,7 +68,7 @@ To start an instance, you should follow this procedure :
 
    [command]                      [image]              [name of instance]
 
-   $ singularity instance start   alpine_latest.sif     instance1
+   $ apptainer instance start   alpine_latest.sif     instance1
 
 This command causes {Singularity} to create an isolated environment for
 the container services to live inside. One can confirm that an instance
@@ -76,7 +76,7 @@ is running by using the ``instance list`` command like so:
 
 .. code::
 
-   $ singularity instance list
+   $ apptainer instance list
 
    INSTANCE NAME    PID      IP              IMAGE
    instance1        22084                    /home/dave/instances/alpine_latest.sif
@@ -96,15 +96,15 @@ repeated.
 
 .. code::
 
-   $ singularity instance start alpine_latest.sif instance2
+   $ apptainer instance start alpine_latest.sif instance2
 
-   $ singularity instance start alpine_latest.sif instance3
+   $ apptainer instance start alpine_latest.sif instance3
 
 And again to confirm that the instances are running as we expected:
 
 .. code::
 
-   $ singularity instance list
+   $ apptainer instance list
 
    INSTANCE NAME    PID      IP              IMAGE
    instance1        22084                    /home/dave/instances/alpine_latest.sif
@@ -115,29 +115,29 @@ You can also filter the instance list by supplying a pattern:
 
 .. code::
 
-   $ singularity instance list '*2'
+   $ apptainer instance list '*2'
 
    INSTANCE NAME    PID      IP              IMAGE
    instance2        22443                    /home/dave/instances/alpine_latest.s
 
-You can use the ``singularity run/exec`` commands on instances:
+You can use the ``apptainer run/exec`` commands on instances:
 
 .. code::
 
-   $ singularity run instance://instance1
+   $ apptainer run instance://instance1
 
-   $ singularity exec instance://instance2 cat /etc/os-release
+   $ apptainer exec instance://instance2 cat /etc/os-release
 
 When using ``run`` with an instance URI, the ``runscript`` will be
 executed inside of the instance. Similarly with ``exec``, it will
 execute the given command in the instance.
 
 If you want to poke around inside of your instance, you can do a normal
-``singularity shell`` command, but give it the instance URI:
+``apptainer shell`` command, but give it the instance URI:
 
 .. code::
 
-   $ singularity shell instance://instance3
+   $ apptainer shell instance://instance3
 
    Singularity>
 
@@ -146,7 +146,7 @@ When you are finished with your instance you can clean it up with the
 
 .. code::
 
-   $ singularity instance stop instance1
+   $ apptainer instance stop instance1
 
 If you have multiple instances running and you want to stop all of them,
 you can do so with a wildcard or the --all flag. The following three
@@ -154,11 +154,11 @@ commands are all identical.
 
 .. code::
 
-   $ singularity instance stop \*
+   $ apptainer instance stop \*
 
-   $ singularity instance stop --all
+   $ apptainer instance stop --all
 
-   $ singularity instance stop -a
+   $ apptainer instance stop -a
 
 .. note::
 
@@ -192,9 +192,9 @@ following commands as root.
 
 .. code::
 
-   $ sudo singularity build nginx.sif nginx.def
+   $ sudo apptainer build nginx.sif nginx.def
 
-   $ sudo singularity instance start --writable-tmpfs nginx.sif web
+   $ sudo apptainer instance start --writable-tmpfs nginx.sif web
 
 .. note::
 
@@ -251,7 +251,7 @@ the final image directly from Container Library, simply run:
 
 .. code::
 
-   $ singularity pull url-to-pdf.sif library://sylabs/doc-examples/url-to-pdf:latest
+   $ apptainer pull url-to-pdf.sif library://sylabs/doc-examples/url-to-pdf:latest
 
 Building the image
 ==================
@@ -355,7 +355,7 @@ The container can be built like so:
 
 .. code::
 
-   $ sudo singularity build url-to-pdf.sif url-to-pdf.def
+   $ sudo apptainer build url-to-pdf.sif url-to-pdf.def
 
 Running the Service
 ===================
@@ -364,7 +364,7 @@ We can now start an instance and run the service:
 
 .. code::
 
-   $ sudo singularity instance start url-to-pdf.sif pdf
+   $ sudo apptainer instance start url-to-pdf.sif pdf
 
 .. note::
 
@@ -394,7 +394,7 @@ If you shell into the instance, you can see the running processes:
 
 .. code::
 
-   $ sudo singularity shell instance://pdf
+   $ sudo apptainer shell instance://pdf
    {Singularity}: Invoking an interactive shell within container...
 
    {Singularity} final.sif:/home/ysub> ps auxf
@@ -463,7 +463,7 @@ requests to the server:
 
    %apprun pdf_client
        if [ -z "${1:-}" ]; then
-           echo "Usage: singularity run --app pdf <instance://name> <URL> [output file]"
+           echo "Usage: apptainer run --app pdf <instance://name> <URL> [output file]"
            exit 1
        fi
        curl -o "${SINGULARITY_APPDATA}/output/${2:-output.pdf}" "${URL}:${PORT}/api/render?url=${1}"
@@ -511,7 +511,7 @@ The full def file will look like this:
 
    %apprun pdf_client
        if [ -z "${1:-}" ]; then
-           echo "Usage: singularity run --app pdf <instance://name> <URL> [output file]"
+           echo "Usage: apptainer run --app pdf <instance://name> <URL> [output file]"
            exit 1
        fi
        curl -o "${SINGULARITY_APPDATA}/output/${2:-output.pdf}" "${URL}:${PORT}/api/render?url=${1}"
@@ -521,7 +521,7 @@ the old container:
 
 .. code::
 
-   $ sudo singularity build --force url-to-pdf.sif url-to-pdf.def
+   $ sudo apptainer build --force url-to-pdf.sif url-to-pdf.def
 
 Now that we have an output directory in the container, we need to expose
 it to the host using a bind mount. Once we’ve rebuilt the container,
@@ -536,13 +536,13 @@ the instance:
 
 .. code::
 
-   $ singularity instance start --bind /tmp/out/:/output url-to-pdf.sif pdf
+   $ apptainer instance start --bind /tmp/out/:/output url-to-pdf.sif pdf
 
 To request a pdf simply do:
 
 .. code::
 
-   $ singularity run --app pdf_client instance://pdf http://sylabs.io/docs sylabs.pdf
+   $ apptainer run --app pdf_client instance://pdf http://sylabs.io/docs sylabs.pdf
 
 To confirm that it worked:
 
@@ -556,7 +556,7 @@ running instances.
 
 .. code::
 
-   $ singularity instance stop --all
+   $ apptainer instance stop --all
 
 .. note::
 
@@ -568,7 +568,7 @@ running instances.
 
    .. code::
 
-      $ singularity instance start --bind output/dir/outside/:/output/ nginx.sif  web
+      $ apptainer instance start --bind output/dir/outside/:/output/ nginx.sif  web
 
 ********************************
  System integration / PID files
@@ -580,12 +580,12 @@ performed by an init process, or another supervisor daemon installed on
 your host. Many init and supervisor daemons support managing processes
 via pid files.
 
-You can specify a `--pid-file` option to `singularity instance start` to
+You can specify a `--pid-file` option to `apptainer instance start` to
 write the PID for an instance to the specified file, e.g.
 
 .. code::
 
-   $ singularity instance start --pid-file /home/dave/alpine.pid alpine_latest.sif instanceA
+   $ apptainer instance start --pid-file /home/dave/alpine.pid alpine_latest.sif instanceA
 
    $ cat /home/dave/alpine.pid
    23727
@@ -606,8 +606,8 @@ systemd.
    User=www-data
    Group=www-data
    PIDFile=/run/web-instance.pid
-   ExecStart=/usr/local/bin/singularity instance start --pid-file /run/web-instance.pid /data/containers/web.sif web-instance
-   ExecStop=/usr/local/bin/singularity instance stop web-instance
+   ExecStart=/usr/local/bin/apptainer instance start --pid-file /run/web-instance.pid /data/containers/web.sif web-instance
+   ExecStop=/usr/local/bin/apptainer instance stop web-instance
 
    [Install]
    WantedBy=multi-user.target

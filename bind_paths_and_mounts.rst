@@ -43,7 +43,7 @@ Disabling System Binds
 
 The ``--no-mount`` flag allows specific
 system mounts to be disabled, even if they are set in the
-``singularity.conf`` configuration file by the administrator.
+``apptainer.conf`` configuration file by the administrator.
 
 For example, if {Singularity} has been configured with ``mount hostfs =
 yes`` then every filesystem on the host will be bind mounted to the
@@ -53,13 +53,13 @@ running, you can disable the ``hostfs`` binds:
 
 .. code:: console
 
-   $ singularity run --no-mount hostfs mycontainer.sif
+   $ apptainer run --no-mount hostfs mycontainer.sif
 
 Multiple mounts can be disabled by specifying them separated by commas:
 
 .. code:: console
 
-   $ singularity run --no-mount tmp,sys,dev mycontainer.sif
+   $ apptainer run --no-mount tmp,sys,dev mycontainer.sif
 
 .. _user-defined-bind-paths:
 
@@ -101,14 +101,14 @@ already exist in the container):
    $ ls /data
    bar  foo
 
-   $ singularity exec --bind /data:/mnt my_container.sif ls /mnt
+   $ apptainer exec --bind /data:/mnt my_container.sif ls /mnt
    bar  foo
 
 You can bind multiple directories in a single command with this syntax:
 
 .. code::
 
-   $ singularity shell --bind /opt,/data:/mnt my_container.sif
+   $ apptainer shell --bind /opt,/data:/mnt my_container.sif
 
 This will bind ``/opt`` on the host to ``/opt`` in the container and
 ``/data`` on the host to ``/mnt`` in the container.
@@ -120,7 +120,7 @@ this would be:
 
    $ export SINGULARITY_BIND="/opt,/data:/mnt"
 
-   $ singularity shell my_container.sif
+   $ apptainer shell my_container.sif
 
 Using the environment variable ``$SINGULARITY_BIND``, you can bind paths
 even when you are running your container as an executable file with a
@@ -145,7 +145,7 @@ To mount ``data`` on the host to ``/mnt`` inside the container:
 
 .. code::
 
-   $ singularity exec \
+   $ apptainer exec \
        --mount type=bind,src=/data,dst=/mnt \
        my_container.sif ls /mnt
    bar  foo
@@ -155,7 +155,7 @@ option:
 
 .. code::
 
-   $ singularity exec \
+   $ apptainer exec \
        --mount type=bind,source=/data,dest=/mnt,ro \
        my_container.sif touch /mnt/test
    touch: cannot touch '/mnt/test': Permission denied
@@ -165,7 +165,7 @@ You can bind multiple directories in a single command with multiple
 
 .. code::
 
-   $ singularity shell --mount type=bind,src=/opt,dst=/opt \
+   $ apptainer shell --mount type=bind,src=/opt,dst=/opt \
                        --mount type=bind,src=/data,dst=/data \
                        my_container.sif
 
@@ -180,12 +180,12 @@ wrapping each field in double quotes if necessary characters.
 .. code::
 
    # Mount a path containing ':' (not possible with --bind)
-   $ singularity run \
+   $ apptainer run \
        --mount type=bind,src=/my:path,dst=/mnt \
        mycontainer.sif
 
    # Mount a path containing a ','
-   $ singularity run \
+   $ apptainer run \
        --mount type=bind,"src=/comma,dir",dst=/mnt \
        mycontainer.sif
 
@@ -226,7 +226,7 @@ host ``$HOME`` directory with the ``--no-home`` flag.
 
 .. code::
 
-   $ singularity shell --no-home my_container.sif
+   $ apptainer shell --no-home my_container.sif
 
 .. note::
 
@@ -245,7 +245,7 @@ host ``$HOME`` directory with the ``--no-home`` flag.
 
 .. code::
 
-   $ singularity shell --containall my_container.sif
+   $ apptainer shell --containall my_container.sif
 
 *************
  FUSE mounts
@@ -328,10 +328,10 @@ type:
 
 .. code::
 
-   $ singularity run --fusemount "host:sshfs server:/ /server" docker://ubuntu
-   Singularity> cat /etc/hostname
+   $ apptainer run --fusemount "host:sshfs server:/ /server" docker://ubuntu
+   Apptainer> cat /etc/hostname
    localhost.localdomain
-   Singularity> cat /server/etc/hostname
+   Apptainer> cat /server/etc/hostname
    server
 
 FUSE mount with a container executable
@@ -342,10 +342,10 @@ added to your container, you can use the ``container`` mount type:
 
 .. code::
 
-   $ singularity run --fusemount "container:sshfs server:/ /server" sshfs.sif
-   Singularity> cat /etc/hostname
+   $ apptainer run --fusemount "container:sshfs server:/ /server" sshfs.sif
+   Apptainer> cat /etc/hostname
    localhost.localdomain
-   Singularity> cat /server/etc/hostname
+   Apptainer> cat /server/etc/hostname
    server
 
 **************
@@ -411,13 +411,13 @@ wish to distribute in an image file that allows read/write:
 
    # Run {Singularity}, mounting my input data to '/input-data' in
    # the container.
-   $ singularity run -B inputs.img:/input-data:image-src=/ mycontainer.sif
-   Singularity> ls /input-data
+   $ apptainer run -B inputs.img:/input-data:image-src=/ mycontainer.sif
+   Apptainer> ls /input-data
    1           3           5           7           9
    2           4           6           8           lost+found
 
    # Or with --mount instead of -B
-   $ singularity run \
+   $ apptainer run \
        --mount type=bind,src=inputs.img,dst=/input-data,image-src=/ \
        mycontainer.sif
 
@@ -439,12 +439,12 @@ then the squashfs format is appropriate:
 
    # Run {Singularity}, mounting my input data to '/input-data' in
    # the container.
-   $ singularity run -B inputs.squashfs:/input-data:image-src=/ mycontainer.sif
-   Singularity> ls /input-data/
+   $ apptainer run -B inputs.squashfs:/input-data:image-src=/ mycontainer.sif
+   Apptainer> ls /input-data/
    1  2  3  4  5  6  7  8  9
 
    # Or with --mount instead of -B
-   $ singularity run \
+   $ apptainer run \
        --mount type=bind,src=src-inputs.squashfs,dst=/input-data,image-src=/ \
        mycontainer.sif
 
@@ -453,24 +453,24 @@ SIF Image Files
 
 Advanced users may wish to create a standalone SIF image, which contains
 an ``ext3`` or ``squashfs`` data partition holding files, by using the
-``singularity sif`` commands similarly to the :ref:`persistent overlays
+``apptainer sif`` commands similarly to the :ref:`persistent overlays
 instructions <overlay-sif>`:
 
 .. code:: console
 
    # Create a new empty SIF file
-   $ singularity sif new inputs.sif
+   $ apptainer sif new inputs.sif
 
    # Add the squashfs data image from above to the SIF
-   $ singularity sif add --datatype 4 --partarch 2 --partfs 1 --parttype 3 inputs.sif inputs.squashfs
+   $ apptainer sif add --datatype 4 --partarch 2 --partfs 1 --parttype 3 inputs.sif inputs.squashfs
 
    # Run {Singularity}, binding data from the SIF file
-   $ singularity run -B inputs.sif:/input-data:image-src=/ mycontainer.sif
-   Singularity> ls /input-data
+   $ apptainer run -B inputs.sif:/input-data:image-src=/ mycontainer.sif
+   Apptainer> ls /input-data
    1  2  3  4  5  6  7  8  9
 
    # Or with --mount instead of -B
-   $ singularity run \
+   $ apptainer run \
        --mount type=bind,src=inputs.sif,dst=/input-data,image-src=/ \
        mycontainer.sif
 

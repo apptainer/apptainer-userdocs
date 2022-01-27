@@ -62,7 +62,7 @@ below with their respective functionality.
    also PID, IPC, and environment. Default is set to false.
 
 #. **SINGULARITY_CONTAINLIBS**: Used to specify a string of file names
-   (comma separated string) to bind to the ``/.singularity.d/libs``
+   (comma separated string) to bind to the ``/.apptainer.d/libs``
    directory.
 
 ``D``
@@ -436,7 +436,7 @@ a base. ``registry`` is optional and defaults to ``index.docker.io``.
 correct namespace to use for some official containers (ubuntu for
 example). ``tag`` is also optional and will default to ``latest``
 
-See :ref:`{Singularity} and Docker <singularity-and-docker>` for more
+See :ref:`{Singularity} and Docker <apptainer-and-docker>` for more
 detailed info on using Docker registries.
 
 .. code:: singularity
@@ -512,7 +512,7 @@ Notes
 When bootstrapping from a Singularity Hub image, all previous definition
 files that led to the creation of the current image will be stored in a
 directory within the container called
-``/.singularity.d/bootstrap_history``. {Singularity} will also alert you
+``/.apptainer.d/bootstrap_history``. {Singularity} will also alert you
 if environment variables have been changed between the base image and
 the new image during bootstrap.
 
@@ -610,7 +610,7 @@ Notes
 When building from a local container, all previous definition files that
 led to the creation of the current container will be stored in a
 directory within the container called
-``/.singularity.d/bootstrap_history``. {Singularity} will also alert you
+``/.apptainer.d/bootstrap_history``. {Singularity} will also alert you
 if environment variables have been changed between the base image and
 the new image during bootstrap.
 
@@ -908,7 +908,7 @@ currently residing in docker's daemon internal storage:
    REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
    alpine              latest              965ea09ff2eb        7 weeks ago         5.55MB
 
-   $ singularity run docker-daemon:alpine:latest
+   $ apptainer run docker-daemon:alpine:latest
    INFO:    Converting OCI blobs to SIF format
    INFO:    Starting build...
    Getting image source signatures
@@ -918,7 +918,7 @@ currently residing in docker's daemon internal storage:
    Storing signatures
    2019/12/11 14:53:24  info unpack layer: sha256:eb7c47c7f0fd0054242f35366d166e6b041dfb0b89e5f93a82ad3a3206222502
    INFO:    Creating SIF file...
-   Singularity>
+   Apptainer>
 
 while ``docker-archive`` permits you to do the same thing starting from
 a docker image stored in a ``docker-save`` formatted tar file:
@@ -927,7 +927,7 @@ a docker image stored in a ``docker-save`` formatted tar file:
 
    $ docker save -o alpine.tar alpine:latest
 
-   $ singularity run docker-archive:$(pwd)/alpine.tar
+   $ apptainer run docker-archive:$(pwd)/alpine.tar
    INFO:    Converting OCI blobs to SIF format
    INFO:    Starting build...
    Getting image source signatures
@@ -937,7 +937,7 @@ a docker image stored in a ``docker-save`` formatted tar file:
    Storing signatures
    2019/12/11 15:25:09  info unpack layer: sha256:eb7c47c7f0fd0054242f35366d166e6b041dfb0b89e5f93a82ad3a3206222502
    INFO:    Creating SIF file...
-   Singularity>
+   Apptainer>
 
 Keywords
 --------
@@ -1002,10 +1002,10 @@ The resulting container provides a shell, and is 696KiB in size:
    $ ls -lah scratch.sif
    -rwxr-xr-x. 1 dave dave 696K May 28 13:29 scratch.sif
 
-   $ singularity run scratch.sif
+   $ apptainer run scratch.sif
    WARNING: passwd file doesn't exist in container, not updating
    WARNING: group file doesn't exist in container, not updating
-   Singularity> echo "Hello from a 696KiB container"
+   Apptainer> echo "Hello from a 696KiB container"
    Hello from a 696KiB container
 
 Keywords

@@ -23,7 +23,7 @@ The ``list`` command prints the currently installed plugins.
 
 .. code::
 
-   $ singularity plugin list
+   $ apptainer plugin list
    There are no plugins installed.
 
 Plugins are packaged and distributed as binaries encoded with the
@@ -34,7 +34,7 @@ plugin ``test-plugin`` is included with the {Singularity} source code.
 
 .. code::
 
-   $ singularity plugin compile examples/plugins/test-plugin/
+   $ apptainer plugin compile examples/plugins/test-plugin/
 
 Upon successful compilation, a SIF file will appear in the directory of
 the plugin's source code.
@@ -53,7 +53,7 @@ the plugin's source code.
    written in is quite restrictive - it requires extremely close version
    matching of packages used in a plugin to the ones used in the program
    the plugin is built for. Additionally {Singularity} is using build
-   time config to get the source tree location for ``singularity plugin
+   time config to get the source tree location for ``apptainer plugin
    compile`` so that you don't need to export environment variables etc,
    and there isn't mismatch between package path information that Go
    uses. This means that at present you must:
@@ -71,7 +71,7 @@ plugin, use the ``inspect`` command.
 
 .. code::
 
-   $ singularity plugin inspect examples/plugins/test-plugin/test-plugin.sif
+   $ apptainer plugin inspect examples/plugins/test-plugin/test-plugin.sif
    Name: sylabs.io/test-plugin
    Description: This is a short test plugin for {Singularity}
    Author: Michael Bauer
@@ -82,8 +82,8 @@ requires root privilege.
 
 .. code::
 
-   $ sudo singularity plugin install examples/plugins/test-plugin/test-plugin.sif
-   $ singularity plugin list
+   $ sudo apptainer plugin install examples/plugins/test-plugin/test-plugin.sif
+   $ apptainer plugin list
    ENABLED  NAME
        yes  sylabs.io/test-plugin
 
@@ -94,12 +94,12 @@ privilege.
 
 .. code::
 
-   $ sudo singularity plugin disable sylabs.io/test-plugin
-   $ singularity plugin list
+   $ sudo apptainer plugin disable sylabs.io/test-plugin
+   $ apptainer plugin list
    ENABLED  NAME
         no  sylabs.io/test-plugin
-   $ sudo singularity plugin enable sylabs.io/test-plugin
-   $ singularity plugin list
+   $ sudo apptainer plugin enable sylabs.io/test-plugin
+   $ apptainer plugin list
    ENABLED  NAME
        yes  sylabs.io/test-plugin
 
@@ -108,9 +108,9 @@ operation requires root privilege.
 
 .. code::
 
-   $ sudo singularity plugin uninstall sylabs.io/test-plugin
+   $ sudo apptainer plugin uninstall sylabs.io/test-plugin
    Uninstalled plugin "sylabs.io/test-plugin".
-   $ singularity plugin list
+   $ apptainer plugin list
    There are no plugins installed.
 
 ******************

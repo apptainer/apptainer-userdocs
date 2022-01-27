@@ -53,7 +53,7 @@ exists locally. (Recall:
 
 .. code::
 
-   $ singularity pull docker://busybox
+   $ apptainer pull docker://busybox
    INFO:    Starting build...
    Getting image source signatures
    Copying blob sha256:fc1a6b909f82ce4b72204198d49de3aaf757b3ab2bb823cb6e47c416b97c5985
@@ -76,7 +76,7 @@ container, this SIF file can be mounted as follows:
 
 .. code::
 
-   $ sudo singularity oci mount ./busybox_latest.sif /var/tmp/busybox
+   $ sudo apptainer oci mount ./busybox_latest.sif /var/tmp/busybox
 
 By issuing the ``mount`` command, the root filesystem encapsulated in
 the SIF file ``busybox_latest.sif`` is mounted on ``/var/tmp/busybox``
@@ -153,7 +153,7 @@ jq``:
          "gid": 0
        },
        "args": [
-         "/.singularity.d/actions/run"
+         "/.apptainer.d/actions/run"
        ],
        "env": [
          "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
@@ -735,15 +735,15 @@ filesystem, as required by the standard; this filesystem has contents:
 .. code::
 
    $ sudo ls /var/tmp/busybox/rootfs
-   bin  dev  environment  etc  home  proc  root  singularity  sys  tmp  usr  var
+   bin  dev  environment  etc  home  proc  root  apptainer  sys  tmp  usr  var
 
 .. note::
 
-   ``environment`` and ``singularity`` above are symbolic links to the
-   ``.singularity.d`` directory.
+   ``environment`` and ``apptainer`` above are symbolic links to the
+   ``.apptainer.d`` directory.
 
 ..
-   TODO Is the ``.singularity.d`` ignored in this case? Relates to the other quote I lifted ...
+   TODO Is the ``.apptainer.d`` ignored in this case? Relates to the other quote I lifted ...
 
    "The definition of a bundle is only concerned with how a container, and its configuration data, are stored on a local filesystem so that it can be consumed by a compliant runtime."
 
@@ -756,14 +756,14 @@ additional properties - for example:
    -  ``process`` - an optional property that specifies the container
       process. When invoked via {Singularity}, sub-properties such as
       ``args`` are populated by making use of the contents of the
-      ``.singularity.d`` directory, e.g. via ``$ sudo cat
+      ``.apptainer.d`` directory, e.g. via ``$ sudo cat
       /var/tmp/busybox/config.json | jq [.process.args]``:
 
    .. code:: json
 
       [
         [
-          "/.singularity.d/actions/run"
+          "/.apptainer.d/actions/run"
         ]
       ]
 
@@ -800,16 +800,16 @@ as follows:
 
 .. code::
 
-   $ sudo singularity oci create -b /var/tmp/busybox busybox1
+   $ sudo apptainer oci create -b /var/tmp/busybox busybox1
 
 .. note::
 
    Data for the ``config.json`` file exists within the SIF file as a
    descriptor for images pulled or built from Docker/OCI registries. For
    images sourced elsewhere, a default ``config.json`` file is created
-   when the ``singularity oci mount ...`` command is issued.
+   when the ``apptainer oci mount ...`` command is issued.
 
-   Upon invocation, ``singularity oci mount ...`` also mounts the root
+   Upon invocation, ``apptainer oci mount ...`` also mounts the root
    filesystem stored in the SIF file on ``/bundle/rootfs``, and
    establishes an overlay filesystem on the mount point
    ``/bundle/overlay``.
@@ -828,7 +828,7 @@ bootstrap process. The instance is named ``busybox1`` in this example.
    invocation requests.
 
 The ``state`` of the container instance can be determined via ``$ sudo
-singularity oci state busybox1``:
+apptainer oci state busybox1``:
 
 .. code:: json
 
@@ -839,8 +839,8 @@ singularity oci state busybox1``:
    "pid": 6578,
    "bundle": "/var/tmp/busybox",
    "createdAt": 1554389921452964253,
-   "attachSocket": "/var/run/singularity/instances/root/busybox1/attach.sock",
-   "controlSocket": "/var/run/singularity/instances/root/busybox1/control.sock"
+   "attachSocket": "/var/run/apptainer/instances/root/busybox1/attach.sock",
+   "controlSocket": "/var/run/apptainer/instances/root/busybox1/control.sock"
    }
 
 Container state, as conveyed via these properties, is in compliance with
@@ -864,10 +864,10 @@ in deployments where auditing requirements exist.
    ------------------------------------------
 
 ..
-   $ sudo singularity oci start busybox
+   $ sudo apptainer oci start busybox
 
 ..
-   ~$ sudo singularity oci state busybox
+   ~$ sudo apptainer oci state busybox
 
 ..
    TODO Review CC's responses again ... see GDocs note on March 20, 2019
@@ -893,7 +893,7 @@ be issued:
 
 .. code::
 
-   $ sudo singularity oci umount /var/tmp/busybox
+   $ sudo apptainer oci umount /var/tmp/busybox
 
 .. note::
 
@@ -926,25 +926,25 @@ be issued:
    CC's suggested workflow:
 
 ..
-   singularity build /tmp/test.sif docker://busybox
+   apptainer build /tmp/test.sif docker://busybox
 
 ..
-   sudo singularity oci mount /tmp/test.sif /var/tmp/busy
+   sudo apptainer oci mount /tmp/test.sif /var/tmp/busy
 
 ..
-   sudo singularity oci create -b /var/tmp/busy testing > /dev/null 2>&1
+   sudo apptainer oci create -b /var/tmp/busy testing > /dev/null 2>&1
 
 ..
-   sudo singularity oci start testing
+   sudo apptainer oci start testing
 
 ..
-   sudo singularity oci exec testing /bin/sh
+   sudo apptainer oci exec testing /bin/sh
 
 ..
-   sudo singularity oci kill testing
+   sudo apptainer oci kill testing
 
 ..
-   sudo singularity oci delete testing
+   sudo apptainer oci delete testing
 
 ..
-   sudo singularity oci umount /var/tmp/busy
+   sudo apptainer oci umount /var/tmp/busy

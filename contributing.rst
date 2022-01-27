@@ -43,7 +43,7 @@ find us at `apptainer
 For general bugs/issues, you can open an issue `at the GitHub repo
 <https://github.com/apptainer/apptainer/issues/new>`_. However, if you
 find a security related issue/problem, please email the Singularity Security Team directly at
-singularity-security@hpcng.org. More information about the Singularity security policies
+security@apptainer.org. More information about the Apptainer security policies
 and procedures can be found `here
 <https://apptainer.org/security-policy/>`__
 
@@ -111,8 +111,8 @@ username.)
 
 .. code::
 
-   $ git clone https://github.com/your-username/singularity.git && \
-       cd singularity/
+   $ git clone https://github.com/your-username/apptainer.git && \
+       cd apptainer/
 
 Step 2. Checkout a new branch
 =============================
@@ -203,7 +203,7 @@ you need to update a branch, you will need to follow the next steps:
 
 .. code::
 
-   $ git remote add upstream https://github.com/hpcng/singularity.git && # to add a new remote named "upstream" \
+   $ git remote add upstream https://github.com/apptainer/apptainer.git && # to add a new remote named "upstream" \
        git checkout master && # or another branch to be updated \
        git pull upstream master && \
        git push origin master && # to update your fork \
