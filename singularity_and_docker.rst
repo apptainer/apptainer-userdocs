@@ -6,15 +6,15 @@
 
 The Open Containers Initiative (OCI) container format, which grew out of
 Docker, is the dominant standard for cloud-focused containerized
-deployments of software. Although {Singularity}'s own container format
+deployments of software. Although {Project}'s own container format
 has many unique advantages, it's likely you will need to work with
 Docker/OCI containers at some point.
 
-{Singularity} aims for maximum compatibility with Docker, within the
+{Project} aims for maximum compatibility with Docker, within the
 constraints on a runtime that is well suited for use on shared systems
 and especially in HPC environments.
 
-Using {Singularity} you can:
+Using {Project} you can:
 
 -  Pull, run, and build from most containers on Docker Hub, without
    changes.
@@ -25,7 +25,7 @@ Using {Singularity} you can:
 
 This section will highlight these workflows, and discuss the limitations
 and best practices to keep in mind when creating containers targeting
-both Docker and {Singularity}.
+both Docker and {Project}.
 
 ****************************
  Containers From Docker Hub
@@ -38,7 +38,7 @@ or build from containers that are hosted there.
 Public Containers
 =================
 
-It's easy to run a public Docker Hub container with {Singularity}. Just
+It's easy to run a public Docker Hub container with {Project}. Just
 put ``docker://`` in front of the container repository and tag. To run
 the container that's called ``sylabsio/lolcow:latest``:
 
@@ -65,10 +65,10 @@ the container that's called ``sylabsio/lolcow:latest``:
                    ||----w |
                    ||     ||
 
-Note that {Singularity} retrieves blobs and configuration data from
+Note that {Project} retrieves blobs and configuration data from
 Docker Hub, extracts the layers that make up the Docker container, and
 creates a SIF file from them. This SIF file is kept in your
-{Singularity} :ref:`cache directory <sec:cache>`, so if you run the same
+{Project} :ref:`cache directory <sec:cache>`, so if you run the same
 Docker container again the downloads and conversion aren't required.
 
 To obtain the Docker container as a SIF file in a specific location,
@@ -101,7 +101,7 @@ Docker Hub Limits
 
 Docker Hub introduced limits on anonymous access to its API in November
 2020. Every time you use a ``docker://`` URI to run, pull etc. a
-container {Singularity} will make requests to Docker Hub in order to
+container {Project} will make requests to Docker Hub in order to
 check whether the container has been modified there. On shared systems,
 and when running containers in parallel, this can quickly exhaust the
 Docker Hub API limits.
@@ -118,9 +118,9 @@ Authentication / Private Containers
 
 To make use of the API limits under a Docker Hub account, or to access
 private containers, you'll need to authenticate to Docker Hub. There are
-a number of ways to do this with {Singularity}.
+a number of ways to do this with {Project}.
 
-Singularity CLI Remote Command
+{Project} CLI Remote Command
 ------------------------------
 
 The ``singularity remote login`` command supports logging into Docker
@@ -154,13 +154,13 @@ Docker CLI Authentication
 
 If you have the ``docker`` CLI installed on your machine, you can
 ``docker login`` to your account. This stores authentication information
-in ``~/.docker/config.json``. The process that {Singularity} uses to
+in ``~/.docker/config.json``. The process that {Project} uses to
 retrieve Docker / OCI containers will attempt to use this information to
 login.
 
 .. note::
 
-   {Singularity} can only read credentials stored directly in
+   {Project} can only read credentials stored directly in
    ``~/.docker/config.json``. It cannot read credentials from external
    Docker credential helpers.
 
@@ -179,12 +179,12 @@ credentials, use the ``--docker-login`` flag:
 Environment Variables
 ---------------------
 
-When calling {Singularity} in a CI/CD workflow, or other non-interactive
+When calling {Project} in a CI/CD workflow, or other non-interactive
 scenario, it may be useful to specify Docker Hub login credentials using
 environment variables. These are often the default way of passing
 secrets into jobs within CI pipelines.
 
-Singularity accepts a username, and password / token, as
+{Project} accepts a username, and password / token, as
 ``SINGULARITY_DOCKER_USERNAME`` and ``SINGULARITY_DOCKER_PASSWORD``
 respectively. These environment variables will override any stored
 credentials.
@@ -199,7 +199,7 @@ credentials.
  Containers From Other Registries
 **********************************
 
-You can use ``docker://`` URIs with {Singularity} to pull and run
+You can use ``docker://`` URIs with {Project} to pull and run
 containers from OCI registries other than Docker Hub. To do this, you'll
 need to include the hostname or IP address of the registry in your
 ``docker://`` URI. Authentication with other registries is carried out
@@ -233,10 +233,10 @@ just include the ``quay.io`` hostname in your ``docker://`` URI:
 
 To pull containers from private repositories you will need to generate a
 CLI token in the Quay web interface, then use it to login with
-{Singularity}. Use the same methods as described for Docker Hub above:
+{Project}. Use the same methods as described for Docker Hub above:
 
 -  Run ``singularity remote login --username myuser docker://quay.io``
-   to store your credentials for {Singularity}.
+   to store your credentials for {Project}.
 -  Use ``docker login quay.io`` if ``docker`` is on your machine.
 -  Use the ``--docker-login`` flag for a one-time interactive login.
 -  Set the ``SINGULARITY_DOCKER_USERNAME`` and
@@ -247,7 +247,7 @@ NVIDIA NGC
 
 The NVIDIA NGC catalog at https://ngc.nvidia.com contains various GPU
 software, packaged in containers. Many of these containers are
-specifically documented by NVIDIA as supported by {Singularity}, with
+specifically documented by NVIDIA as supported by {Project}, with
 instructions available.
 
 Previously, an account and API token was required to pull NGC
@@ -269,7 +269,7 @@ Docker Hub), with the username ``$oauthtoken`` and the password set to
 your NGC API key.
 
 -  Run ``singularity remote login --username \$oauthtoken
-   docker://nvcr.io`` to store your credentials for {Singularity}.
+   docker://nvcr.io`` to store your credentials for {Project}.
 -  Use ``docker login nvcr.io`` if ``docker`` is on your machine.
 -  Use the ``--docker-login`` flag for a one-time interactive login.
 -  Set the ``SINGULARITY_DOCKER_USERNAME="\$oauthtoken"`` and
@@ -301,7 +301,7 @@ Use one of the following authentication methods (detailed above for
 Docker Hub), with your username and personal access token:
 
 -  Run ``singularity remote login --username myuser docker://ghcr.io``
-   to store your credentials for {Singularity}.
+   to store your credentials for {Project}.
 -  Use ``docker login ghcr.io`` if ``docker`` is on your machine.
 -  Use the ``--docker-login`` flag for a one-time interactive login.
 -  Set the ``SINGULARITY_DOCKER_USERNAME`` and
@@ -318,7 +318,7 @@ in order to obtain a username and password.
 
 .. warning::
 
-   The ECR Docker credential helper cannot be used, as {Singularity}
+   The ECR Docker credential helper cannot be used, as {Project}
    does not currently support external credential helpers used with
    Docker, only reading credentials stored directly in the
    ``.docker/config.json`` file.
@@ -336,7 +336,7 @@ Then login using one of the following methods:
 
 -  Run ``singularity remote login --username AWS
    docker://<accountid>.dkr.ecr.<region>.amazonaws.com`` to store your
-   credentials for {Singularity}.
+   credentials for {Project}.
 
 -  Use ``docker login --username AWS
    <accountid>.dkr.ecr.<region>.amazonaws.com`` if ``docker`` is on your
@@ -362,14 +362,14 @@ for more information on these options.
 
 Generally, for identities, using ``az acr login`` from the Azure CLI
 will add credentials to ``.docker/config.json`` which can be read by
-{Singularity}.
+{Project}.
 
 Service Principle accounts will have an explicit username and password,
 and you should authenticate using one of the following methods:
 
 -  Run ``singularity remote login --username myuser
    docker://myregistry.azurecr.io`` to store your credentials for
-   {Singularity}.
+   {Project}.
 
 -  Use ``docker login --username myuser myregistry.azurecr.io`` if
    ``docker`` is on your machine.
@@ -392,11 +392,11 @@ methods.
 
 If you wish to use an existing Docker or OCI container as the basis for
 a new container, you will need to specify it as the *bootstrap* source
-in a {Singularity} definition file.
+in a {Project} definition file.
 
 Just as you can run or pull containers from different registries using a
 ``docker://`` URI, you can use different headers in a definition file to
-instruct {Singularity} where to find the container you want to use as
+instruct {Project} where to find the container you want to use as
 the starting point for your build.
 
 Registries In Definition Files
@@ -420,7 +420,7 @@ tag:
    From: ubuntu:20.04
 
 If you ``singularity build`` a definition file with these lines,
-{Singularity} will fetch the ``ubuntu:20.04`` container image from
+{Project} will fetch the ``ubuntu:20.04`` container image from
 Docker Hub, and extract it as the basis for your new container.
 
 Other Registries
@@ -446,7 +446,7 @@ Authentication During a Build
 
 If you are building from an image in a private registry you will need to
 ensure that the credentials needed to access the image are available to
-{Singularity}.
+{Project}.
 
 A build might be run as the ``root`` user, e.g. via ``sudo``, or under
 your own account with ``--fakeroot``.
@@ -457,7 +457,7 @@ stored credentials or environment variables must be available to the
 
 -  Use the ``--docker-login`` flag for a one-time interactive login.
    I.E. run ``sudo singularity build --docker-login myimage.sif
-   Singularity``.
+   {Project}``.
 
 -  Set the ``SINGULARITY_DOCKER_USERNAME`` and
    ``SINGULARITY_DOCKER_PASSWORD`` environment variables. Pass the
@@ -479,7 +479,7 @@ Archives & Docker Daemon
 
 As well as being hosted in a registry, Docker / OCI containers might be
 found inside a running Docker daemon, or saved as an archive.
-{Singularity} can build from these locations by using specialized
+{Project} can build from these locations by using specialized
 bootstrap agents.
 
 Containers Cached by the Docker Daemon
@@ -532,7 +532,7 @@ registry, the ``docker-daemon`` bootstrap agent will not try to pull a
 
    In the example above, the build was performed without ``sudo``. This
    is possible only when the user is part of the ``docker`` group on the
-   host, since {Singularity} must contact the Docker daemon through its
+   host, since {Project} must contact the Docker daemon through its
    socket. If you are not part of the ``docker`` group you will need to
    use ``sudo`` for the build to complete successfully.
 
@@ -549,7 +549,7 @@ Containers in Docker Archive Files
 
 Docker allows containers to be exported into single file tar archives.
 These cannot be run directly, but are intended to be imported into
-Docker to run at a later date, or another location. {Singularity} can
+Docker to run at a later date, or another location. {Project} can
 build from (or run) these archive files, by extracting them as part of
 the build process.
 
@@ -622,8 +622,8 @@ filename in the ``From:`` line:
  Differences and Limitations vs Docker
 ***************************************
 
-Though Docker / OCI container compatibility is a goal of {Singularity},
-there are some differences and limitations due to the way {Singularity}
+Though Docker / OCI container compatibility is a goal of {Project},
+there are some differences and limitations due to the way {Project}
 was designed to work well on shared systems and HPC clusters. If you are
 having difficulty running a specific Docker container, check through the
 list of differences below. There are workarounds for many of the issues
@@ -632,7 +632,7 @@ that you are most likely to face.
 Read-only by Default
 ====================
 
-{Singularity}'s container image format (SIF) is generally read-only.
+{Project}'s container image format (SIF) is generally read-only.
 This permits containers to be run in parallel from a shared location on
 a network filesystem, support in-built signing and verification, and
 offer encryption. A container's filesystem is mounted directly from the
@@ -642,7 +642,7 @@ When a container is run using Docker its layers are extracted, and the
 resulting container filesystem can be written to and modified by
 default. If a Docker container expects to write files, you will need to
 follow one of the following methods to allow it to run under
-{Singularity}.
+{Project}.
 
 -  A directory from the host can be passed into the container with the
    ``--bind`` or ``--mount`` flags. It needs to be mounted inside the
@@ -670,7 +670,7 @@ use, and the filesystem support, some type of locking in order that the
 parallel runs do not interfere.
 
 A writable overlay file in a SIF partition cannot be used in parallel.
-{Singularity} will refuse to run concurrently using the same SIF
+{Project} will refuse to run concurrently using the same SIF
 writable overlay partition.
 
 Dockerfile ``USER``
@@ -680,17 +680,17 @@ The ``Dockerfile`` used to build a Docker container may contain a
 ``USER`` statement. This tells the container runtime that it should run
 the container under the specified user account.
 
-Because {Singularity} is designed to provide easy and safe access to
+Because {Project} is designed to provide easy and safe access to
 data on the host system, work under batch schedulers, etc., it does not
 permit changing the user account the container is run as.
 
 Any ``USER`` statement in a ``Dockerfile`` will be ignored by
-{Singularity} when the container is run. In practice, this often does
+{Project} when the container is run. In practice, this often does
 not affect the execution of the software in the container. Software that
 is written in a way that requires execution under a specific user
-account will generally require modification for use with {Singularity}.
+account will generally require modification for use with {Project}.
 
-{Singularity}'s ``--fakeroot`` mode will start a container as a fake
+{Project}'s ``--fakeroot`` mode will start a container as a fake
 ``root`` user, mapped to the user's real account outside of the
 container. Inside the container it is possible to change to another user
 account, which is mapped to a configured range of sub-uids / gids
@@ -701,7 +701,7 @@ if your adminstrator has configured the system for ``--fakeroot``.
 Default Mounts / $HOME
 ======================
 
-A default installation of {Singularity} will mount the user's home
+A default installation of {Project} will mount the user's home
 directory, ``/tmp`` directory, and the current working directory, into
 each container that is run. Administrators may also configure e.g. HPC
 project directories to automatically bind mount. Docker does not mount
@@ -715,7 +715,7 @@ installed packages for Python into your home directory (``pip install
 can cause conflicts and unexpected behavior.
 
 If you experience issues, use the ``--contain`` option to stop
-{Singularity} automatically binding directories into the container. You
+{Project} automatically binding directories into the container. You
 may need to use ``--bind`` or ``--mount`` to then add back e.g. an HPC
 project directory that you need access to.
 
@@ -743,7 +743,7 @@ project directory that you need access to.
 Environment Propagation
 =======================
 
-{Singularity} propagates most environment variables set on the host into
+{Project} propagates most environment variables set on the host into
 the container, by default. Docker does not propagate any host
 environment variables into the container. Environment variables may
 change the behaviour of software.
@@ -768,21 +768,21 @@ are set in the container:
    FORCE_VAR=123
 
 Any environment variables set via an ``ENV`` line in a ``Dockerfile``
-will be available when the container is run with {Singularity}.
+will be available when the container is run with {Project}.
 
 Namespace & Device Isolation
 ============================
 
-Because {Singularity} favors an integration over isolation approach it
+Because {Project} favors an integration over isolation approach it
 does not, by default, use all the methods through which a container can
 be isolated from the host system. This makes it much easier to run a
-{Singularity} container like any other program, while the unique
+{Project} container like any other program, while the unique
 security model ensures safety. You can access the host's network, GPUs,
 and other devices directly. Processes in the container are not numbered
 separately from host processes. Hostnames are not changed, etc.
 
 Most containers are not impacted by the differences in isolation. If you
-require more isolation, than {Singularity} provides by default, you can
+require more isolation, than {Project} provides by default, you can
 enable some of the extra namespaces that Docker uses, with flags:
 
 -  ``--ipc / -i`` creates a separate IPC (inter process communication)
@@ -811,7 +811,7 @@ directory, rather than binding in the entire host ``/dev`` tree.
 Init Shim Process
 =================
 
-When a {Singularity} container is run using the ``--pid / p`` option, or
+When a {Project} container is run using the ``--pid / p`` option, or
 started as an instance (which implies ``--pid``), a shim init process is
 executed that will run the container payload itself.
 
@@ -819,7 +819,7 @@ The shim process helps to ensure signals are propagated correctly from
 the terminal, or batch schedulers etc. when containers are not designed
 for interactive use. Because Docker does not provide an init process by
 default, some containers have been designed to run their own init
-process, which cannot operate under the control of {Singularity}'s shim.
+process, which cannot operate under the control of {Project}'s shim.
 
 For example, a container using the ``tini`` init process will produce
 warnings when started as an instance, or if run with ``--pid``. To work
@@ -840,7 +840,7 @@ around this, use the ``--no-init`` flag to disable the shim:
  Docker-like ``--compat`` Flag
 *******************************
 
-If Docker-like behavior is important, {Singularity} can be started with
+If Docker-like behavior is important, {Project} can be started with
 the ``--compat`` flag. This flag is a convenient short-hand alternative
 to using all of:
 
@@ -865,7 +865,7 @@ A container run with ``--compat`` has:
 -  No shim init process.
 
 These options will allow most, but not all, Docker / OCI containers to
-execute correctly under {Singularity}. The user namespace and network
+execute correctly under {Project}. The user namespace and network
 namespace are not used, as these negate benefits of SIF and direct
 access to high performance cluster networks.
 
@@ -878,10 +878,10 @@ on the ``CMD`` and/or ``ENTRYPOINT`` set in the ``Dockerfile`` that was
 used to build it, along with any arguments on the command line. The
 ``CMD`` and ``ENTRYPOINT`` can also be overridden by flags.
 
-A {Singularity} container has the concept of a *runscript*, which is a
+A {Project} container has the concept of a *runscript*, which is a
 single shell script defining what happens when you ``singularity run``
 the container. Because there is no internal concept of ``CMD`` and
-``ENTRYPOINT``, {Singularity} must create a runscript from the ``CMD``
+``ENTRYPOINT``, {Project} must create a runscript from the ``CMD``
 and ``ENTRYPOINT`` when converting a Docker container. The behavior of
 this script mirrors Docker as closely as possible.
 
@@ -939,7 +939,7 @@ inside a container.
 Argument Handling
 =================
 
-Because {Singularity} runscripts are evaluated shell scripts
+Because {Project} runscripts are evaluated shell scripts
 arguments can behave slightly differently than in Docker/OCI
 runtimes, if they contain shell code that may be evaluated. To
 replicate Docker/OCI behavior you may need additional escaping or
@@ -963,19 +963,19 @@ runtimes as there is no evaluated runscript.
 .. _sec:best_practices:
 
 *********************************************************
- Best Practices for Docker & {Singularity} Compatibility
+ Best Practices for Docker & {Project} Compatibility
 *********************************************************
 
-As detailed previously, {Singularity} can make use of most Docker and
+As detailed previously, {Project} can make use of most Docker and
 OCI images without issues, or via simple workarounds. In general,
 however, there are some best practices that should be applied when
 creating Docker / OCI containers that will also be run using
-{Singularity}.
+{Project}.
 
    #. **Don't require execution by a specific user**
 
    Avoid using the ``USER`` instruction in your Docker file, as it is
-   ignored by Singularity. Install and configure software inside the
+   ignored by {Project}. Install and configure software inside the
    container so that it can be run by any user.
 
    2. **Don't install software under /root or in another user's home
@@ -988,7 +988,7 @@ creating Docker / OCI containers that will also be run using
    user the software may be inaccessible.
 
    Software inside another user's home directory, e.g. ``/home/myapp``,
-   may be obscured by {Singularity}'s automatic mounts onto ``/home``.
+   may be obscured by {Project}'s automatic mounts onto ``/home``.
 
    Install software into system-wide locations in the container, such as
    under ``/usr`` or ``/opt`` to avoid these issues.
@@ -996,7 +996,7 @@ creating Docker / OCI containers that will also be run using
    3. **Support a read-only filesystem**
 
    Because of the immutable nature of the SIF format, a container run
-   with {Singularity} is read-only by default.
+   with {Project} is read-only by default.
 
    Try to ensure your container will run with a read-only filesystem. If
    this is not possible, document exactly where the container needs to
@@ -1008,7 +1008,7 @@ creating Docker / OCI containers that will also be run using
 
    4. **Be careful writing to /tmp**
 
-   {Singularity} mounts the *host* ``/tmp`` into the container, by
+   {Project} mounts the *host* ``/tmp`` into the container, by
    default. This means you must be be careful when writing sensitive
    information to ``/tmp``, and should ensure your container cleans up
    files it writes there.
@@ -1019,7 +1019,7 @@ creating Docker / OCI containers that will also be run using
    search path in the container (``ld.so.conf`` / ``ld.so.conf.d``), you
    should ensure the library cache is updated during the build.
 
-   Because Singularity runs containers read-only by default, the cache
+   Because {Project} runs containers read-only by default, the cache
    and any missing library symlinks may not be able to be updated /
    created at execution time.
 
@@ -1052,7 +1052,7 @@ Container Doesn't Start
 =======================
 
 If a Docker container fails to start, the most common cause is that it
-needs to write files, while {Singularity} runs read-only by default.
+needs to write files, while {Project} runs read-only by default.
 
 Try running with the ``--writable-tmpfs`` option, or the ``--compat``
 flag (which enables additional compatibility fixes).
@@ -1067,7 +1067,7 @@ Unexpected Container Behaviour
 ==============================
 
 If a Docker container runs, but exhibits unexpected behavior, the most
-likely cause is the different level of isolation that Singularity
+likely cause is the different level of isolation that {Project}
 provides vs Docker.
 
 Try running the container with the ``--contain`` option, or the
@@ -1083,25 +1083,25 @@ The community Slack channels and mailing list are excellent places to
 ask for help with running a specific Docker container. Other users may
 have already had success running the same container or software. Please
 don't report issues with specific Docker containers on GitHub, unless
-you believe they are due to a bug in {Singularity}.
+you believe they are due to a bug in {Project}.
 
 .. _sec:deffile-vs-dockerfile:
 
 **********************************************
- {Singularity} Definition file vs. Dockerfile
+ {Project} Definition file vs. Dockerfile
 **********************************************
 
-An alternative to running Docker containers with {Singularity} is to
+An alternative to running Docker containers with {Project} is to
 re-write the ``Dockerfile`` as a definition file, and build a native SIF
 image.
 
 The table below gives a quick reference comparing Dockerfile and
-{Singularity} definition files. For more detail please see
+{Project} definition files. For more detail please see
 :ref:`definition-files`.
 
 
 ================ =========================== ================ =============================
-{Singularity} Definition file                Dockerfile
+{Project} Definition file                Dockerfile
 -------------------------------------------- ----------------------------------------------
 Section          Description                 Section          Description
 ================ =========================== ================ =============================

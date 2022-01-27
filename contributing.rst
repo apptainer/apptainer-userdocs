@@ -4,7 +4,7 @@
  Contributing
 ##############
 
-{Singularity} is an open source project, meaning we have the challenge
+{Project} is an open source project, meaning we have the challenge
 of limited resources. We are grateful for any support that you can
 offer. Helping other users, raising issues, helping write documentation,
 or contributing code are all ways to help!
@@ -14,18 +14,18 @@ or contributing code are all ways to help!
 ********************
 
 This is a huge endeavor, and your help would be greatly appreciated!
-Post to online communities about {Singularity}, and request that your
+Post to online communities about {Project}, and request that your
 distribution vendor, service provider, and system administrators include
-{Singularity} for you!
+{Project} for you!
 
-{Singularity} Google Group
+{Project} Google Group
 ==========================
 
-If you have been using {Singularity} and having good luck with it, join
+If you have been using {Project} and having good luck with it, join
 our `Google Group <https://groups.google.com/g/singularity-ce>`_ and
 help out other users!
 
-{Singularity} on Slack
+{Project} on Slack
 ======================
 
 Many of our users come to Slack for quick help with an issue. You can
@@ -42,8 +42,8 @@ find us at `apptainer
 
 For general bugs/issues, you can open an issue `at the GitHub repo
 <https://github.com/apptainer/apptainer/issues/new>`_. However, if you
-find a security related issue/problem, please email the Singularity Security Team directly at
-singularity-security@hpcng.org. More information about the Singularity security policies
+find a security related issue/problem, please email the {Project} Security Team directly at
+security@apptainer.org. More information about the {Project} security policies
 and procedures can be found `here
 <https://apptainer.org/security-policy/>`__
 
@@ -103,8 +103,8 @@ document, which also includes a `code of conduct
 Step 1. Fork the repo
 =====================
 
-To contribute to {Singularity}, you should obtain a GitHub account and
-fork the `{Singularity} <https://github.com/apptainer/apptainer>`_
+To contribute to {Project}, you should obtain a GitHub account and
+fork the `{Project} <https://github.com/apptainer/apptainer>`_
 repository. Once forked, clone your fork of the repo to your computer.
 (Obviously, you should replace ``your-username`` with your GitHub
 username.)
@@ -186,8 +186,8 @@ Once you have pushed your branch, then you can go to your fork (in the
 web GUI on GitHub) and `submit a Pull Request
 <https://help.github.com/articles/creating-a-pull-request/>`_.
 Regardless of the name of your branch, your PR should be submitted to
-the Singularity ``master`` branch. Submitting your PR will open a
-conversation thread for the maintainers of {Singularity} to discuss your
+the {Project} ``master`` branch. Submitting your PR will open a
+conversation thread for the maintainers of {Project} to discuss your
 contribution. At this time, the continuous integration that is linked
 with the code base will also be executed. If there is an issue, or if
 the maintainers suggest changes, you can continue to push commits to
@@ -196,7 +196,7 @@ your branch and they will update the Pull Request.
 Step 6. Keep your branch in sync
 ================================
 
-Cloning the repo will create an exact copy of the {Singularity}
+Cloning the repo will create an exact copy of the {Project}
 repository at that moment. As you work, your branch may become out of
 date as others merge changes into the upstream master. In the event that
 you need to update a branch, you will need to follow the next steps:

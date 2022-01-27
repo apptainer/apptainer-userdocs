@@ -86,7 +86,7 @@ the host network.
 
 .. warning::
 
-   For unprivileged installation of {Singularity} or if ``allow setuid =
+   For unprivileged installation of {Project} or if ``allow setuid =
    no`` is set in ``singularity.conf`` users won't be able to use a
    ``fakeroot`` network.
 
@@ -99,9 +99,9 @@ mappings in ``/etc/subgid``, so your username needs to be listed in
 those files with a valid mapping (see the admin-guide for details), if
 you can't edit the files ask an administrator.
 
-{Singularity} provides a ``singularity config fakeroot`` command 
+{Project} provides a ``singularity config fakeroot`` command 
 to allow configuration of the ``/etc/subuid`` and
-``/etc/subgid`` mappings from the {Singularity} command line. You must
+``/etc/subgid`` mappings from the {Project} command line. You must
 be a root user or run with ``sudo`` to use ``config fakeroot``, as the
 mapping files are security sensitive. See the admin-guide for more
 details.
@@ -129,7 +129,7 @@ Build
 With fakeroot an unprivileged user can now build an image from a
 definition file with few restrictions. Some bootstrap methods that
 require creation of block devices (like ``/dev/null``) may not always
-work correctly with **"fake root"**, {Singularity} uses seccomp filters
+work correctly with **"fake root"**, {Project} uses seccomp filters
 to give programs the illusion that block device creation succeeded. This
 appears to work with ``yum`` bootstraps and *may* work with other
 bootstrap methods, although ``debootstrap`` is known to not work.

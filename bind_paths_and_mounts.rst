@@ -8,7 +8,7 @@
 
 Unless `disabled by the system administrator
 <{admindocs}/configfiles.html#bind-mount-management>`_,
-{Singularity} allows you to map directories on your host system to
+{Project} allows you to map directories on your host system to
 directories within your container using bind mounts. This allows you to
 read and write data on the host system with ease.
 
@@ -16,10 +16,10 @@ read and write data on the host system with ease.
  Overview
 **********
 
-When {Singularity} ‘swaps’ the host operating system for the one inside
+When {Project} ‘swaps’ the host operating system for the one inside
 your container, the host file systems becomes inaccessible. However, you
 may want to read and write files on the host system from within the
-container. To enable this functionality, {Singularity} will bind
+container. To enable this functionality, {Project} will bind
 directories back into the container via two primary methods:
 system-defined bind paths and user-defined bind paths.
 
@@ -30,7 +30,7 @@ system-defined bind paths and user-defined bind paths.
 The system administrator has the ability to define what bind paths will
 be included automatically inside each container. Some bind paths are
 automatically derived (e.g. a user’s home directory) and some are
-statically defined (e.g. bind paths in the {Singularity} configuration
+statically defined (e.g. bind paths in the {Project} configuration
 file). In the default configuration, the system default bind points are
 ``$HOME`` , ``/sys:/sys`` , ``/proc:/proc``, ``/tmp:/tmp``,
 ``/var/tmp:/var/tmp``, ``/etc/resolv.conf:/etc/resolv.conf``,
@@ -45,7 +45,7 @@ The ``--no-mount`` flag allows specific
 system mounts to be disabled, even if they are set in the
 ``singularity.conf`` configuration file by the administrator.
 
-For example, if {Singularity} has been configured with ``mount hostfs =
+For example, if {Project} has been configured with ``mount hostfs =
 yes`` then every filesystem on the host will be bind mounted to the
 container by default. If, e.g. a ``/project`` filesystem on your host
 conflicts with a ``/project`` directory in the container you are
@@ -71,7 +71,7 @@ Unless the system administrator has `disabled user control of binds
 <{admindocs}/configfiles.html#bind-mount-management>`_,
 you will be able to request your own bind paths within your container.
 
-The {Singularity} action commands (``run``, ``exec``, ``shell``, and
+The {Project} action commands (``run``, ``exec``, ``shell``, and
 ``instance start``) will accept the ``--bind/-B`` command-line option to
 specify bind paths, and will also honor the ``$SINGULARITY_BIND`` (or
 ``$SINGULARITY_BINDPATH``) environment variable. The argument for this
@@ -83,7 +83,7 @@ specified as ``ro`` (read-only) or ``rw`` (read/write, which is the
 default). The ``--bind/-B`` option can be specified multiple times, or a
 comma-delimited string of bind path specifications can be used.
 
-{Singularity} also has a ``--mount`` flag, which provides a
+{Project} also has a ``--mount`` flag, which provides a
 longer-form method of specifying binds in ``--mount
 type=bind,src=<source>,dst=<destination>[,<option>]...`` format. This is
 compatible with the ``--mount`` syntax for binds in Docker and other OCI
@@ -124,7 +124,7 @@ this would be:
 
 Using the environment variable ``$SINGULARITY_BIND``, you can bind paths
 even when you are running your container as an executable file with a
-runscript. If you bind many directories into your {Singularity}
+runscript. If you bind many directories into your {Project}
 containers and they don’t change, you could even benefit by setting this
 variable in your ``.bashrc`` file.
 
@@ -135,7 +135,7 @@ The ``--mount`` flag takes a mount specification in the format
 ``type=bind,src=<source>,dst=<dest>``. Additional options can be
 specified, comma delimited.
 
-{Singularity} only supports the ``bind`` type for ``--mount``, and will
+{Project} only supports the ``bind`` type for ``--mount``, and will
 infer ``type=bind`` if it is not provided.
 
 ``src`` or ``source`` can be used interchangeably. ``dst``,
@@ -198,12 +198,12 @@ Using ``--bind`` or ``-mount`` with the ``--writable`` flag
 
 To mount a bind path inside the container, a *bind point* must be
 defined within the container. The bind point is a directory within the
-container that {Singularity} can use as a destination to bind a
+container that {Project} can use as a destination to bind a
 directory on the host system.
 
-{Singularity} will do its best to bind mount
+{Project} will do its best to bind mount
 requested paths into a container regardless of whether the appropriate
-bind point exists within the container. {Singularity} can often carry
+bind point exists within the container. {Project} can often carry
 out this operation even in the absence of the "overlay fs" feature.
 
 However, binding paths to non-existent points within the container can
@@ -220,7 +220,7 @@ Using ``--no-home`` and ``--containall`` flags
 ``--no-home``
 -------------
 
-When shelling into your container image, {Singularity} allows you to
+When shelling into your container image, {Project} allows you to
 mount your current working directory (``CWD``) without mounting your
 host ``$HOME`` directory with the ``--no-home`` flag.
 
@@ -264,7 +264,7 @@ mount a remote computer's filesystem to your local host, over ssh:
    # Now mounted to my local machine:
    $ ythel:/home/dave on /home/dave/other_host type fuse.sshfs (rw,nosuid,nodev,relatime,user_id=1000,group_id=1000)
 
-{Singularity} has a ``--fusemount`` option, which allows
+{Project} has a ``--fusemount`` option, which allows
 you to directly expose FUSE filesystems inside a container. The FUSE
 command / driver that mounts a particular type of filesystem can be
 located on the host, or in the container.
@@ -273,8 +273,8 @@ Requirements
 ============
 
 The FUSE command *must* be based on libfuse3 3.3.0 or greater to work
-correctly with {Singularity}. Older versions do not support the way in
-which the {Singularity} runtime passes a pre-mounted file descriptor
+correctly with {Project}. Older versions do not support the way in
+which the {Project} runtime passes a pre-mounted file descriptor
 into the container.
 
 If you are using an older distribution that provides FUSE commands such
@@ -282,13 +282,13 @@ as ``sshfs`` based on FUSE 2 then you can install FUSE 3 versions of the
 commands you need inside your container. EL7 distributions can install a
 compatible version of FUSE 3 from the EPEL repository. EL8 distributions
 ship FUSE 3.2.1 as a base package. Unfortunately this is an older version
-which does not fully support the way in which {Singularity} prepares FUSE
+which does not fully support the way in which {Project} prepares FUSE
 mounts.
 
 FUSE mount definitions
 ======================
 
-A fusemount definition for {Singularity} consists of 3 parts:
+A fusemount definition for {Project} consists of 3 parts:
 
 .. code::
 
@@ -329,9 +329,9 @@ type:
 .. code::
 
    $ singularity run --fusemount "host:sshfs server:/ /server" docker://ubuntu
-   Singularity> cat /etc/hostname
+   {Project}> cat /etc/hostname
    localhost.localdomain
-   Singularity> cat /server/etc/hostname
+   {Project}> cat /server/etc/hostname
    server
 
 FUSE mount with a container executable
@@ -343,16 +343,16 @@ added to your container, you can use the ``container`` mount type:
 .. code::
 
    $ singularity run --fusemount "container:sshfs server:/ /server" sshfs.sif
-   Singularity> cat /etc/hostname
+   {Project}> cat /etc/hostname
    localhost.localdomain
-   Singularity> cat /server/etc/hostname
+   {Project}> cat /server/etc/hostname
    server
 
 **************
  Image Mounts
 **************
 
-In {Singularity} you can mount a directory contained in an
+In {Project} you can mount a directory contained in an
 image file into a container. This may be useful if you want to
 distribute directories containing a large number of data files as a
 single image file.
@@ -409,10 +409,10 @@ wish to distribute in an image file that allows read/write:
    Copying files into the device: done
    Writing superblocks and filesystem accounting information: done
 
-   # Run {Singularity}, mounting my input data to '/input-data' in
+   # Run {Project}, mounting my input data to '/input-data' in
    # the container.
    $ singularity run -B inputs.img:/input-data:image-src=/ mycontainer.sif
-   Singularity> ls /input-data
+   {Project}> ls /input-data
    1           3           5           7           9
    2           4           6           8           lost+found
 
@@ -437,10 +437,10 @@ then the squashfs format is appropriate:
    Creating 4.0 filesystem on inputs.squashfs, block size 131072.
    ...
 
-   # Run {Singularity}, mounting my input data to '/input-data' in
+   # Run {Project}, mounting my input data to '/input-data' in
    # the container.
    $ singularity run -B inputs.squashfs:/input-data:image-src=/ mycontainer.sif
-   Singularity> ls /input-data/
+   {Project}> ls /input-data/
    1  2  3  4  5  6  7  8  9
 
    # Or with --mount instead of -B
@@ -464,9 +464,9 @@ instructions <overlay-sif>`:
    # Add the squashfs data image from above to the SIF
    $ singularity sif add --datatype 4 --partarch 2 --partfs 1 --parttype 3 inputs.sif inputs.squashfs
 
-   # Run {Singularity}, binding data from the SIF file
+   # Run {Project}, binding data from the SIF file
    $ singularity run -B inputs.sif:/input-data:image-src=/ mycontainer.sif
-   Singularity> ls /input-data
+   {Project}> ls /input-data
    1  2  3  4  5  6  7  8  9
 
    # Or with --mount instead of -B
@@ -474,6 +474,6 @@ instructions <overlay-sif>`:
        --mount type=bind,src=inputs.sif,dst=/input-data,image-src=/ \
        mycontainer.sif
 
-If your bind source is a SIF then {Singularity} will bind from the first
+If your bind source is a SIF then {Project} will bind from the first
 data partition in the SIF, or you may specify an alternative descriptor
 by ID with the additional option ``id=n``, where n is the descriptor ID.

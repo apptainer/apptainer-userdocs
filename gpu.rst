@@ -4,7 +4,7 @@
  GPU Support (NVIDIA CUDA & AMD ROCm)
 ######################################
 
-{Singularity} natively supports running application containers that use
+{Project} natively supports running application containers that use
 NVIDIA's CUDA GPU compute framework, or AMD's ROCm solution. This allows
 easy access to users of GPU-enabled machine learning frameworks such as
 tensorflow, regardless of the host operating system. As long as the host
@@ -15,7 +15,7 @@ older RHEL 7 host.
 Applications that support OpenCL for compute acceleration can also be
 used easily, with an additional bind option.
 
-{Singularity} experimental support is provided to use
+{Project} experimental support is provided to use
 Nvidia's ``nvidia-container-cli`` tooling for GPU container setup. This
 functionality, accessible via the new ``--nvccli`` flag, improves
 compatibility with OCI runtimes and exposes additional container
@@ -64,7 +64,7 @@ distributions may provide NVIDIA drivers and CUDA libraries, but they
 are often outdated which can lead to problems running applications
 compiled for the latest versions of CUDA.
 
-{Singularity} will find the NVIDIA/CUDA libraries on your host using the
+{Project} will find the NVIDIA/CUDA libraries on your host using the
 list of libraries in the configuration file
 ``etc/singularity/nvbliblist``, and resolving paths through the
 ``ldconfig`` cache. At time of release this list is appropriate for the
@@ -111,14 +111,14 @@ Then run the container with GPU support:
    You are running this container as user with ID 1000 and group 1000,
    which should map to the ID and group for your user on the Docker host. Great!
 
-   Singularity>
+   {Project}>
 
 You can verify the GPU is available within the container by using the
 tensorflow ``list_local_devices()`` function:
 
 .. code::
 
-   Singularity> python
+   {Project}> python
    Python 2.7.15+ (default, Jul  9 2019, 16:51:35)
    [GCC 7.4.0] on linux2
    Type "help", "copyright", "credits" or "license" for more information.
@@ -140,7 +140,7 @@ tensorflow ``list_local_devices()`` function:
 Multiple GPUs
 =============
 
-By default, {Singularity} makes all host devices available in the
+By default, {Project} makes all host devices available in the
 container. When the ``--contain`` option is used a minimal ``/dev`` tree
 is created in the container, but the ``--nv`` option will ensure that
 all nvidia devices on the host are present in the container.
@@ -151,7 +151,7 @@ whether some or all host GPUs are visible inside a container. The
 ``nvidia-container-runtime`` explicitly binds the devices into the
 container dependent on the value of ``NVIDIA_VISIBLE_DEVICES``.
 
-To control which GPUs are used in a {Singularity} container that is run
+To control which GPUs are used in a {Project} container that is run
 with ``--nv`` you can set ``SINGULARITYENV_CUDA_VISIBLE_DEVICES`` before
 running the container, or ``CUDA_VISIBLE_DEVICES`` inside the container.
 This variable will limit the GPU devices that CUDA programs see.
@@ -173,7 +173,7 @@ Troubleshooting
 
 If the host installation of the NVIDIA / CUDA driver and libraries is
 working and up-to-date there are rarely issues running CUDA programs
-inside of {Singularity} containers. The most common issue seen is:
+inside of {Project} containers. The most common issue seen is:
 
 CUDA_ERROR_UNKNOWN when everything seems to be correctly configured
 -------------------------------------------------------------------
@@ -182,7 +182,7 @@ CUDA depends on multiple kernel modules being loaded. Not all of the
 modules are loaded at system startup. Some portions of the NVIDA driver
 stack are initialized when first needed. This is done using a setuid
 root binary, so initializing can be triggered by any user on the host.
-In {Singularity} containers, privilege escalation is blocked, so the
+In {Project} containers, privilege escalation is blocked, so the
 setuid root binary cannot initialize the driver stack fully.
 
 If you experience ``CUDA_ERROR_UNKNOWN`` in a container, initialize the
@@ -195,15 +195,15 @@ avoid driver unload.
 *******************************************
 
 The ``--nvccli`` option instructs
-{Singularity} to perform GPU container setup using the
+{Project} to perform GPU container setup using the
 ``nvidia-container-cli`` utility. This utility must be installed
-separately from {Singularity}. It is available in the repositories of
+separately from {Project}. It is available in the repositories of
 some distributions, and at:
 https://nvidia.github.io/libnvidia-container/
 
 .. warning::
 
-   This feature is considered experimental in {Singularity} as of now. It
+   This feature is considered experimental in {Project} as of now. It
    cannot not replace the legacy NVIDIA support in all situations, and
    should be tested carefully before use in production workflows.
 
@@ -227,7 +227,7 @@ Requirements & Limitations
    ``nvidia-container-cli`` is found on the search ``$PATH``.
 
 -  For security reasons, ``--nvccli`` cannot be used with
-   privileged mode in a set-uid install of {Singularity}.
+   privileged mode in a set-uid install of {Project}.
    Use the traditional binding method with ``--nv`` only or use
    ``--nvccli`` with the the ``--user`` (or ``-u``) option to run unprivileged.
    The option also cannot be used with ``--fakeroot``.
@@ -271,14 +271,14 @@ Then run the container with ``nvidia-container-cli`` GPU support:
    You are running this container as user with ID 1000 and group 1000,
    which should map to the ID and group for your user on the Docker host. Great!
 
-   Singularity>
+   {Project}>
 
 You can verify the GPU is available within the container by using the
 tensorflow ``list_local_devices()`` function:
 
 .. code::
 
-   Singularity> python
+   {Project}> python
    Python 2.7.15+ (default, Jul  9 2019, 16:51:35)
    [GCC 7.4.0] on linux2
    Type "help", "copyright", "credits" or "license" for more information.
@@ -299,7 +299,7 @@ tensorflow ``list_local_devices()`` function:
 GPU Selection
 =============
 
-When running with ``--nvccli``, by default {Singularity} will expose all
+When running with ``--nvccli``, by default {Project} will expose all
 GPUs on the host inside the container. This mirrors the functionality of
 the standard GPU support for the most common use-case.
 
@@ -352,7 +352,7 @@ devices, you can specify MIG identifiers / UUIDs.
 
    $ export NVIDIA_VISIBLE_DEVICES=MIG-GPU-5c89852c-d268-c3f3-1b07-005d5ae1dc3f/7/0
 
-{Singularity} does not configure MIG partitions. It is expected that
+{Project} does not configure MIG partitions. It is expected that
 these would be statically configured by the system administrator, or
 setup dynamically by a job scheduler / workflow system according to the
 requirements of the job.
@@ -360,14 +360,14 @@ requirements of the job.
 Other GPU Options
 =================
 
-In ``--nvccli`` mode, {Singularity} understands the following additional
+In ``--nvccli`` mode, {Project} understands the following additional
 environment variables. Note that these environment variables are read
-from the environment where ``singularity`` is run. {Singularity} does
+from the environment where ``singularity`` is run. {Project} does
 not currently read these settings from the container environment.
 
 -  ``NVIDIA_DRIVER_CAPABILITIES`` controls which libraries and utilities
    are mounted in the container, to support different requirements. The
-   default value under {Singularity} is ``compute,utility``, which will
+   default value under {Project} is ``compute,utility``, which will
    provide CUDA functionality and basic utilities such as
    ``nvidia-smi``. Other options include ``graphics`` for OpenGL/Vulkan
    support, ``video`` for the codecs SDK, and ``display`` to use X11
@@ -378,7 +378,7 @@ not currently read these settings from the container environment.
    container. Constraints can be set on ``cuda``, ``driver``, ``arch``,
    and ``brand`` values. Docker/OCI images may set these variables
    inside the container, to indicate runtime requirements. However,
-   these container variables are not yet interpreted by {Singularity}.
+   these container variables are not yet interpreted by {Project}.
 
 -  ``NVIDIA_DISABLE_REQUIRE`` will disable the enforcement of any
    ``NVIDIA_REQUIRE_*`` requirements that are set.
@@ -392,7 +392,7 @@ https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/user-guide.htm
  AMD GPUs & ROCm
 *****************
 
-{Singularity} has a ``--rocm`` flag to support GPU compute with the
+{Project} has a ``--rocm`` flag to support GPU compute with the
 ROCm framework using AMD Radeon GPU cards.
 
 Commands that ``run``, or otherwise execute containers (``shell``,
@@ -430,7 +430,7 @@ you must ensure that:
 These requirements can be satisfied by following the requirements on the
 `ROCm web site <https://rocm.github.io/ROCmInstall.html>`__
 
-At time of release, {Singularity} was tested successfully on Debian 10
+At time of release, {Project} was tested successfully on Debian 10
 with ROCm 2.8/2.9 and the upstream kernel driver, and Ubuntu 18.04 with
 ROCm 2.9 and the DKMS driver.
 
@@ -468,7 +468,7 @@ tensorflow ``list_local_devices()`` function:
 
 .. code::
 
-   Singularity> ipython
+   {Project}> ipython
    Python 3.5.2 (default, Jul 10 2019, 11:58:48)
    Type 'copyright', 'credits' or 'license' for more information
    IPython 7.8.0 -- An enhanced Interactive Python. Type '?' for help.

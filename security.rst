@@ -1,22 +1,22 @@
 .. _security:
 
 ###########################
- Security in {Singularity}
+ Security in {Project}
 ###########################
 
 *****************
  Security Policy
 *****************
 
-If you suspect you have found a vulnerability in {Singularity} we want
+If you suspect you have found a vulnerability in {Project} we want
 to work with you so that it can be investigated, fixed, and disclosed in
 a responsible manner. Please follow the steps in our published `Security
 Policy <https://apptainer.org/security-policy/>`__, which begins with
 contacting us privately via security@apptainer.org
 
-We disclose vulnerabilities found in {Singularity} through public
+We disclose vulnerabilities found in {Project} through public
 CVE reports, and notifications on our community channels. We encourage
-all users to monitor new releases of {Singularity} for security
+all users to monitor new releases of {Project} for security
 information. Security patches are applied to the latest open-source
 release.
 
@@ -24,7 +24,7 @@ release.
  Background
 ************
 
-{Singularity} grew out of the need to implement a container platform
+{Project} grew out of the need to implement a container platform
 that was suitable for use on shared systems, such as HPC clusters. In
 these environments multiple people access a shared resource. User
 accounts, groups, and standard file permissions limit their access to
@@ -41,10 +41,10 @@ coordinating a daemon with other schedulers is difficult and, since the
 daemon is privileged, users can ask it to carry out actions that they
 wouldn't normally have permission to do.
 
-When a user runs a container with {Singularity}, it is started as a
+When a user runs a container with {Project}, it is started as a
 normal process running under the user's account. Standard file
 permissions and other security controls based on user accounts, groups,
-and processes apply. In a default installation {Singularity} uses a
+and processes apply. In a default installation {Project} uses a
 setuid starter binary to perform only the specific tasks needed to setup
 the container.
 
@@ -59,7 +59,7 @@ support for 'unprivileged user namespace creation'. This means a normal
 user can create a user namespace, in which most setup operations needed
 to run a container can be run, unprivileged.
 
-{Singularity} supports running containers without setuid, using user
+{Project} supports running containers without setuid, using user
 namespaces. It can be compiled with the ``--without-setuid`` option, or
 ``allow setuid = no`` can be set in ``singularity.conf`` to enable this.
 In this mode *all* operations run as the user who starts the
@@ -80,7 +80,7 @@ In this mode *all* operations run as the user who starts the
    and verification of the image's original signature cannot be
    performed.
 
--  Encryption is not supported. {Singularity} leverages kernel LUKS2
+-  Encryption is not supported. {Project} leverages kernel LUKS2
    mounts to run encrypted containers without decrypting their content
    to disk.
 
@@ -90,7 +90,7 @@ In this mode *all* operations run as the user who starts the
    reluctant to enable unprivileged user namespace creation.
 
 Because of the points above, the default mode of operation of
-{Singularity} uses a setuid binary. We aim to reduce the
+{Project} uses a setuid binary. We aim to reduce the
 circumstances that require this as new functionality is developed and
 reaches commonly deployed Linux distributions.
 
@@ -100,7 +100,7 @@ reaches commonly deployed Linux distributions.
 
 While other runtimes have aimed to safely sandbox containers executing
 as the ``root`` user, so that they cannot affect the host system,
-{Singularity} has adopted an alternative security model:
+{Project} has adopted an alternative security model:
 
 -  Containers should be run as an unprivileged user.
 
@@ -115,7 +115,7 @@ as the ``root`` user, so that they cannot affect the host system,
    The process ID space, network etc. are not isolated in separate
    namespaces by default.
 
-To accomplish this, {Singularity} uses a number of Linux kernel
+To accomplish this, {Project} uses a number of Linux kernel
 features. The container file system is mounted using the ``nosuid``
 option, and processes are started with the ``PR_NO_NEW_PRIVS`` flag set.
 This means that even if you run ``sudo`` inside your container, you
@@ -123,14 +123,14 @@ won't be able to change to another user, or gain root privileges by
 other means.
 
 If you do require the additional isolation of the network, devices, PIDs
-etc. provided by other runtimes, {Singularity} can make use of
+etc. provided by other runtimes, {Project} can make use of
 additional namespaces and functionality such as seccomp and cgroups.
 
 ********************************
  Singularity Image Format (SIF)
 ********************************
 
-{Singularity} uses SIF as its default container format. A SIF container
+{Project} uses SIF as its default container format. A SIF container
 is a single file, which makes it easy to manage and distribute. Inside
 the SIF file, the container filesystem is held in a SquashFS object. By
 default, we mount the container filesystem directly using SquashFS. On a
@@ -151,12 +151,12 @@ easier to share and obtain public keys for container verification.
 
 A container may be signed once, by a trusted individual who approves its
 use. It could also be signed with multiple keys to signify it has passed
-each step in a CI/CD QA & Security process. {Singularity} can be
+each step in a CI/CD QA & Security process. {Project} can be
 configured with an execution control list (ECL), which requires the
 presence of one or more valid signatures, to limit execution to approved
 containers.
 
-In {Singularity} 3.4 and above, the root filesystem of a container
+In {Project} 3.4 and above, the root filesystem of a container
 (stored in the squashFS partition of SIF) can be encrypted. As a result,
 everything inside the container becomes inaccessible without the correct
 key or passphrase. The content of the container is private, even if the
@@ -172,7 +172,7 @@ decrypted to disk in order to run it.
  Configuration & Runtime Options
 *********************************
 
-System administrators who manage {Singularity} can use configuration
+System administrators who manage {Project} can use configuration
 files to set security restrictions, grant or revoke a user’s
 capabilities, manage resources and authorize containers etc.
 
@@ -184,6 +184,6 @@ Configuration files and their parameters are documented for
 administrators documented `here
 <{admindocs}/configfiles.html>`__.
 
-When running a container as root, Singularity can apply hardening rules
+When running a container as root, {Project} can apply hardening rules
 using cgroups, seccomp, apparmor. See :ref:`details of these options
 here <security-options>`.

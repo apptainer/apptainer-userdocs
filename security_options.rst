@@ -6,10 +6,10 @@
 
 .. _sec:security_options:
 
-{Singularity} implements security related options in the
+{Project} implements security related options in the
 container runtime. This document describes the methods users
 have for specifying the security scope and context when running
-{Singularity} containers.
+{Project} containers.
 
 ********************
  Linux Capabilities
@@ -29,7 +29,7 @@ have for specifying the security scope and context when running
    a user special privileges within a container. For that and similar
    use cases, the :ref:`fakeroot feature <fakeroot>` is a better option.
 
-{Singularity} provides full support for granting and revoking Linux
+{Project} provides full support for granting and revoking Linux
 capabilities on a user or group basis. For example, let us suppose that
 an admin has decided to grant a user (named ``pinger``) capabilities to
 open raw sockets so that they can use ``ping`` in a container where the
@@ -53,7 +53,7 @@ also request the capability when executing a container with the
    rtt min/avg/max/mdev = 73.178/73.178/73.178/0.000 ms
 
 If the admin decides that it is no longer necessary to allow the user
-``pinger`` to open raw sockets within {Singularity} containers, they can
+``pinger`` to open raw sockets within {Project} containers, they can
 revoke the appropriate Linux capability and ``pinger`` will not be able
 to add that capability to their containers anymore:
 
@@ -66,7 +66,7 @@ to add that capability to their containers anymore:
 Another scenario which is atypical of shared resource environments, but
 useful in cloud-native architectures is dropping capabilities when
 spawning containers as the root user to help minimize attack surfaces.
-With a default installation of {Singularity}, containers created by the
+With a default installation of {Project}, containers created by the
 root user will maintain all capabilities. This behavior is configurable
 if desired. Check out the `capability configuration
 <{admindocs}/configfiles.html#capability.json>`_
@@ -106,7 +106,7 @@ this keyword.
  Building encrypted containers
 *******************************
 
-Beginning in {Singularity} 3.4.0 it is possible to build and run
+Beginning in {Project} 3.4.0 it is possible to build and run
 encrypted containers. The containers are decrypted at runtime entirely
 in kernel space, meaning that no intermediate decrypted data is ever
 present on disk. See :ref:`encrypted containers <encryption>` for more
@@ -116,7 +116,7 @@ details.
  Security related action options
 *********************************
 
-{Singularity} has many security related flags that can be passed to the
+{Project} has many security related flags that can be passed to the
 action commands; ``shell``, ``exec``, and ``run`` allowing fine grained
 control of security.
 
@@ -137,9 +137,9 @@ binary. The most well-known SetUID binaries are owned by root and allow
 a user to execute a command with elevated privileges. But other SetUID
 binaries may allow a user to execute a command as a service account.
 
-By default SetUID is disallowed within {Singularity} containers as a
+By default SetUID is disallowed within {Project} containers as a
 security precaution. But the root user can override this precaution and
-allow SetUID binaries to behave as expected within a {Singularity}
+allow SetUID binaries to behave as expected within a {Project}
 container with the ``--allow-setuid`` option like so:
 
 .. code::
@@ -190,7 +190,7 @@ container.
 ==============
 
 The ``--security`` flag allows the root user to leverage security
-modules such as SELinux, AppArmor, and seccomp within your {Singularity}
+modules such as SELinux, AppArmor, and seccomp within your {Project}
 container. You can also change the UID and GID of the user within the
 container at runtime.
 
@@ -207,11 +207,11 @@ For instance:
 To use seccomp to blacklist a command follow this procedure. (It is
 actually preferable from a security standpoint to whitelist commands but
 this will suffice for a simple example.) Note that this example was run
-on Ubuntu and that {Singularity} was installed with the
+on Ubuntu and that {Project} was installed with the
 ``libseccomp-dev`` and ``pkg-config`` packages as dependencies.
 
 First write a configuration file. An example configuration file is
-installed with {Singularity}, normally at
+installed with {Project}, normally at
 ``/usr/local/etc/singularity/seccomp-profiles/default.json``. For this
 example, we will use a much simpler configuration file to blacklist the
 ``mkdir`` command.
@@ -250,7 +250,7 @@ the container like so:
 
    $ sudo singularity shell --security seccomp:/home/david/no_mkdir.json my_container.sif
 
-   Singularity> mkdir /tmp/foo
+   {Project}> mkdir /tmp/foo
    Bad system call (core dumped)
 
 Note that attempting to use the blacklisted ``mkdir`` command resulted

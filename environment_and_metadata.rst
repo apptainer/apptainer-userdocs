@@ -16,9 +16,9 @@ When running containers you may need to set or override environment
 variables.
 
 The :ref:`metadata <sec:metadata>` of a container is information that
-describes the container. {Singularity} automatically records important
+describes the container. {Project} automatically records important
 information such as the definition file used to build a container. Other
-details such as the version of {Singularity} used are present as
+details such as the version of {Project} used are present as
 :ref:`labels <sec:labels>` on a container. You can also specify your own
 to be recorded against your container.
 
@@ -26,7 +26,7 @@ to be recorded against your container.
  Environment Overview
 **********************
 
-When you run a program in a container with {Singularity}, the
+When you run a program in a container with {Project}, the
 environment variables that the program sees are a combination of:
 
    -  The environment variables set in the base image (e.g. Docker
@@ -44,7 +44,7 @@ environment variables that the program sees are a combination of:
 
    -  The ``PATH`` variable can be manipulated to add entries.
 
-   -  Runtime variables ``SINGULARITY_xxx`` set by {Singularity} to
+   -  Runtime variables ``SINGULARITY_xxx`` set by {Project} to
       provide information about the container.
 
 The environment variables from the base image or definition file used to
@@ -65,7 +65,7 @@ environment section <build-environment>`.
  Environment from a base image
 *******************************
 
-When you build a container with {Singularity} you might *bootstrap* from
+When you build a container with {Project} you might *bootstrap* from
 a library or Docker image, or using Linux distribution bootstrap tools
 such as ``debootstrap``, ``yum`` etc.
 
@@ -119,7 +119,7 @@ The ``%runscript`` is set to echo the value.
 
 .. warning::
 
-   {Singularity} uses an embedded shell interpreter to evaluate and
+   {Project} uses an embedded shell interpreter to evaluate and
    setup container environments, therefore all commands executed from
    the ``%environment`` section have an execution timeout of **1 minute**.
    While it is possible to source a script from there, it
@@ -194,8 +194,8 @@ environment variables for correct operation of most software.
    LANG=C
    LD_LIBRARY_PATH=/.singularity.d/libs
    PATH=/startpath:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-   PROMPT_COMMAND=PS1="Singularity> "; unset PROMPT_COMMAND
-   PS1=Singularity>
+   PROMPT_COMMAND=PS1="{Project}> "; unset PROMPT_COMMAND
+   PS1={Project}>
    PWD=/home/dave/doc-tesrts
    SINGULARITY_COMMAND=exec
    SINGULARITY_CONTAINER=/home/dave/doc-tesrts/env.sif
@@ -213,12 +213,12 @@ environment variables for correct operation of most software.
    consider using ``--cleanenv``.
 
 ********************************************
- Environment from the {Singularity} runtime
+ Environment from the {Project} runtime
 ********************************************
 
 It can be useful for a program to know when it is running in a
-{Singularity} container, and some basic information about the container
-environment. {Singularity} will automatically set a number of
+{Project} container, and some basic information about the container
+environment. {Project} will automatically set a number of
 environment variables in a container that can be inspected by any
 program running in the container.
 
@@ -248,7 +248,7 @@ workflow.
 ``--env`` option
 ================
 
-*New in {Singularity} 3.6*
+*New in {Project} 3.6*
 
 The ``--env`` option on the ``run/exec/shell`` commands allows you to
 specify environment variables as ``NAME=VALUE`` pairs:
@@ -306,7 +306,7 @@ it finds ``myprog``.
 
 To ensure containers work correctly, when a host ``PATH`` might contain
 a lot of host-specific locations that are not present in the container,
-{Singularity} will ensure ``PATH`` in the container is set to a default.
+{Project} will ensure ``PATH`` in the container is set to a default.
 
 .. code::
 
@@ -357,12 +357,12 @@ Alternatively you could use the ``--env`` option to set a
 Escaping and evaluation of environment variables
 ================================================
 
-{Singularity} uses an embedded shell interpreter to process the
+{Project} uses an embedded shell interpreter to process the
 container startup scripts and environment. When this processing is
 performed, a single step of shell evaluation happens in the container
-context. The shell from which you are running {Singularity} may also
+context. The shell from which you are running {Project} may also
 evaluate variables on your command line before passing them to
-{Singularity}.
+{Project}.
 
 .. warning::
 
@@ -376,7 +376,7 @@ Using host variables
 To set a container environment variable to the value of a variable on
 the host, use double quotes around the variable, so that it is
 processed by the host shell before the value is passed to
-{Singularity}. For example:
+{Project}. For example:
 
 .. code::
 
@@ -429,7 +429,7 @@ This will result in ``LD_PRELOAD`` having the value
 ``/foo/bar/$LIB/baz.so`` inside the container.
 
 The host shell consumes the double ``\\``, and then environment
-processing within {Singularity} will consume the third ``\`` that
+processing within {Project} will consume the third ``\`` that
 escapes the literal ``$``.
 
 You can also use single quotes on the command line, to avoid one
@@ -443,17 +443,17 @@ level of escaping:
 Environment Variable Precedence
 ===============================
 
-When a container is run with {Singularity}, the container
+When a container is run with {Project}, the container
 environment is constructed in the following order:
 
    -  Clear the environment, keeping just ``HOME`` and
       ``SINGULARITY_APPNAME``.
    -  Set Docker/OCI defined environment variables, where a Docker or
       OCI image was used as the base for the container build.
-   -  If ``PATH`` is not defined set the {Singularity} default ``PATH``
+   -  If ``PATH`` is not defined set the {Project} default ``PATH``
       *or*
    -  If ``PATH`` is defined, add any missing path parts from
-      {Singularity} defaults
+      {Project} defaults
    -  Set environment variables defined explicitly in the
       ``%environment`` section of the definition file. These can
       override any previously set values, and may reference host
@@ -473,14 +473,14 @@ environment is constructed in the following order:
 
 .. warning::
 
-   While {Singularity} will process additional scripts found under
+   While {Project} will process additional scripts found under
    ``/.singularity.d/env`` inside the container, it is strongly
    recommended to avoid manipulating the container environment by
    directly adding or modifying scripts in this directory. Please use
    the ``%environment`` section of the definition file, and the
    ``$SINGULARITY_ENVIRONMENT`` file from ``%post`` if required.
 
-   A future version of {Singularity} may move container scripts,
+   A future version of {Project} may move container scripts,
    environment, and metadata outside of the container's root
    filesystem. This will permit further reproducibility and
    compatibility improvements, but will preclude environment
@@ -503,7 +503,7 @@ new files.
    A detailed description of what the ``umask`` is, and how it works can
    be found at `Wikipedia <https://en.wikipedia.org/wiki/Umask>`__.
 
-{Singularity} sets the ``umask`` in the container to match
+{Project} sets the ``umask`` in the container to match
 the value outside, unless:
 
    -  The ``--fakeroot`` option is used, in which case a ``0022`` umask
@@ -520,12 +520,12 @@ the value outside, unless:
  Container Metadata
 ********************
 
-Each {Singularity} container has metadata describing the container, how
+Each {Project} container has metadata describing the container, how
 it was built, etc. This metadata includes the definition file used to
 build the container and labels, which are specific pieces of information
 set automatically or explicitly when the container is built.
 
-{Singularity} container default labels are represented using the
+{Project} container default labels are represented using the
 `rc1 Label Schema <http://label-schema.org/rc1/>`_.
 
 .. _sec:labels:
@@ -540,7 +540,7 @@ container sets in its ``Dockerfile``, or a SIF container that sets
 labels in its definition file as described below.
 
 Inherited labels can only be overwritten during a build when the build
-is performed using the ``--force`` option. {Singularity} will warn that
+is performed using the ``--force`` option. {Project} will warn that
 it is not modifying an existing label when ``--force`` is not used:
 
 .. code::
@@ -552,7 +552,7 @@ it is not modifying an existing label when ``--force`` is not used:
 
 .. note::
 
-   {Singularity} 3.0 through 3.8 did not inherit labels from Docker/OCI
+   {Project} 3.0 through 3.8 did not inherit labels from Docker/OCI
    images during a build.
 
 Custom Labels
@@ -577,7 +577,7 @@ when you are writing the definition file, but can be obtained in the
 ``%post`` section of your definition file while the container is
 building.
 
-{Singularity} allows this, through adding labels to the
+{Project} allows this, through adding labels to the
 file defined by the ``SINGULARITY_LABELS`` environment variable in the
 ``%post`` section:
 
@@ -625,7 +625,7 @@ options will display any labels set on the container
    org.label-schema.usage.singularity.version: 3.7.0-rc.1
 
 We can easily see when the container was built, the source of the base
-image, and the exact version of {Singularity} that was used to build it.
+image, and the exact version of {Project} that was used to build it.
 
 The custom label ``OWNER`` that we set in our definition file is also
 visible.
@@ -838,7 +838,7 @@ environment files that are used when a container is executed.
 
 *You should not manually modify* files under ``/.singularity.d``, from
 your definition file during builds, or directly within your container
-image. {Singularity} replaces older action scripts
+image. {Project} replaces older action scripts
 dynamically, at runtime, to support new features. In the longer term,
 metadata will be moved outside of the container, and stored only in the
 SIF file metadata descriptor.
@@ -865,12 +865,12 @@ SIF file metadata descriptor.
    ├── libs
    ├── runscript
    ├── runscript.help
-   ├── Singularity
+   ├── {Project}
    └── startscript
 
 -  **actions**: This directory contains helper scripts to allow the
    container to carry out the action commands. (e.g. ``exec`` , ``run``
-   or ``shell``). In later versions of {Singularity}, these files may be
+   or ``shell``). In later versions of {Project}, these files may be
    dynamically written at runtime, *and should not be modified* in the
    container.
 
@@ -880,7 +880,7 @@ SIF file metadata descriptor.
    ``/.singularity.d/env/90-environment.sh``. Whenever possible, avoid
    modifying or creating environment files manually to prevent potential
    issues building & running containers with future versions of
-   {Singularity}. Additional
+   {Project}. Additional
    facilities such as ``--env`` and ``--env-file`` are available to
    allow manipulation of the container environment at runtime.
 
@@ -899,9 +899,9 @@ SIF file metadata descriptor.
 -  **runscript.help**: Contains the description that was added in the
    ``%help`` section.
 
--  **{Singularity}**: This is the definition file that was used to
+-  **{Project}**: This is the definition file that was used to
    generate the container. If more than 1 definition file was used to
-   generate the container additional {Singularity} files will appear in
+   generate the container additional {Project} files will appear in
    numeric order in a sub-directory called ``bootstrap_history``.
 
 -  **startscript**: The commands in this file will be executed when the

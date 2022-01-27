@@ -22,10 +22,10 @@ processes.
    https://www.kernel.org/doc/Documentation/cgroup-v2.txt
 
 ***************************************
- Running {Singularity} Inside a Cgroup
+ Running {Project} Inside a Cgroup
 ***************************************
 
-Because {Singularity} starts a container as a simple process, rather
+Because {Project} starts a container as a simple process, rather
 than using a daemon, you can limit resource usage by running the
 ``singularity`` command inside an existing cgroup. This is convenient
 where, for example, a job scheduler uses cgroups to control job limits.
@@ -36,7 +36,7 @@ systemd-run
 ===========
 
 As well as schedulers you can use tools such as ``systemd-run`` to
-create a cgroup, and run {Singularity} inside of it. This is convenient
+create a cgroup, and run {Project} inside of it. This is convenient
 on modern cgroups v2 systems, where the creation of cgroups can be
 delegated to users through systemd. Without this delegation ``root``
 privileges are required to create a cgroup.
@@ -72,10 +72,10 @@ link below, which details the properties you can set using
 https://www.freedesktop.org/software/systemd/man/systemd.resource-control.html
 
 **************************************
- Using Singularity to Create a Cgroup
+ Using {Project} to Create a Cgroup
 **************************************
 
-{Singularity} allows you to directly apply resource limitations to
+{Project} allows you to directly apply resource limitations to
 systems configured for both cgroups v1 and the v2 unified hierarchy.
 Resource limits are specified using a TOML file that represents the
 `resources` section of the OCI runtime-spec:
@@ -91,7 +91,7 @@ eBPF programs that implement the requested access controls.
 
 .. note::
 
-   {Singularity} does not currently support applying native cgroups v2
+   {Project} does not currently support applying native cgroups v2
    ``unified`` resource limit specifications. Use the cgroups v1 limits,
    which will be translated to v2 format when applied on a cgroups v2
    system.
@@ -281,12 +281,12 @@ or write to ``/dev/null``:
 Other limits
 ------------
 
-{Singularity} can apply all resource limits that are valid in the OCI
+{Project} can apply all resource limits that are valid in the OCI
 runtime-spec ``resources`` section, **except** native ``unified``
 cgroups v2 constraints. Use the cgroups v1 limits, which will be
 translated to v2 format when applied on a cgroups v1 system.
 
 See
 https://github.com/opencontainers/runtime-spec/blob/master/config-linux.md#control-groups
-for information about the available limits. Note that {Singularity} uses
+for information about the available limits. Note that {Project} uses
 TOML format for the configuration file, rather than JSON.

@@ -10,10 +10,10 @@
 .. _singularity-environment-variables:
 
 ***************************************
- {Singularity}'s environment variables
+ {Project}'s environment variables
 ***************************************
 
-{Singularity} comes with some environment variables you can set or
+{Project} comes with some environment variables you can set or
 modify depending on your needs. You can see them listed alphabetically
 below with their respective functionality.
 
@@ -68,7 +68,7 @@ below with their respective functionality.
 ``D``
 =====
 
-#. **SINGULARITY_DEFFILE**: Shows the {Singularity} recipe that was used
+#. **SINGULARITY_DEFFILE**: Shows the {Project} recipe that was used
    to generate the image.
 
 #. **SINGULARITY_DESC**: Contains a description of the capabilities.
@@ -309,8 +309,8 @@ below with their respective functionality.
 
 #. **SINGULARITY_USERNS** and **SINGULARITY_UNSHARE_USERNS**: To specify
    that the container will run in a new user namespace, allowing
-   {Singularity} to run completely unprivileged on recent kernels. This
-   may not support every feature of {Singularity}. (Sandbox image only).
+   {Project} to run completely unprivileged on recent kernels. This
+   may not support every feature of {Project}. (Sandbox image only).
    Default is set to false.
 
 ``W``
@@ -320,7 +320,7 @@ below with their respective functionality.
    ``/tmp``, ``/var/tmp`` and ``$HOME`` (if ``-c`` or ``--contain`` was
    also used)
 
-#. **SINGULARITY_WRITABLE**: By default, all {Singularity} containers
+#. **SINGULARITY_WRITABLE**: By default, all {Project} containers
    are available as read only, this option makes the file system
    accessible as read/write. Default set to false.
 
@@ -403,7 +403,7 @@ Overview
 Docker images are comprised of layers that are assembled at runtime to
 create an image. You can use Docker layers to create a base image, and
 then add your own custom software. For example, you might use Docker’s
-Ubuntu image layers to create an Ubuntu {Singularity} container. You
+Ubuntu image layers to create an Ubuntu {Project} container. You
 could do the same with CentOS, Debian, Arch, Suse, Alpine, BusyBox, etc.
 
 Or maybe you want a container that already has software installed. For
@@ -414,7 +414,7 @@ software on top of that.
 
 Or perhaps you have already invested in Docker and created your own
 Docker containers. If so, you can seamlessly convert them to
-{Singularity} with the ``docker`` bootstrap module.
+{Project} with the ``docker`` bootstrap module.
 
 Keywords
 --------
@@ -436,7 +436,7 @@ a base. ``registry`` is optional and defaults to ``index.docker.io``.
 correct namespace to use for some official containers (ubuntu for
 example). ``tag`` is also optional and will default to ``latest``
 
-See :ref:`{Singularity} and Docker <singularity-and-docker>` for more
+See :ref:`{Project} and Docker <singularity-and-docker>` for more
 detailed info on using Docker registries.
 
 .. code:: singularity
@@ -512,7 +512,7 @@ Notes
 When bootstrapping from a Singularity Hub image, all previous definition
 files that led to the creation of the current image will be stored in a
 directory within the container called
-``/.singularity.d/bootstrap_history``. {Singularity} will also alert you
+``/.singularity.d/bootstrap_history``. {Project} will also alert you
 if environment variables have been changed between the base image and
 the new image during bootstrap.
 
@@ -561,7 +561,7 @@ you want to use.
 .. _sec:build-localimage:
 
 This module allows you to build a container from an existing
-{Singularity} container on your host system. The name is somewhat
+{Project} container on your host system. The name is somewhat
 misleading because your container can be in either image or directory
 format.
 
@@ -610,7 +610,7 @@ Notes
 When building from a local container, all previous definition files that
 led to the creation of the current container will be stored in a
 directory within the container called
-``/.singularity.d/bootstrap_history``. {Singularity} will also alert you
+``/.singularity.d/bootstrap_history``. {Project} will also alert you
 if environment variables have been changed between the base image and
 the new image during bootstrap.
 
@@ -796,7 +796,7 @@ need to perform a significant amount of configuration to get a usable
 OS. Please refer to this `README.md
 <https://github.com/singularityware/singularity/blob/master/examples/arch/README.md>`_
 and the `Arch Linux example
-<https://github.com/singularityware/singularity/blob/master/examples/arch/Singularity>`_
+<https://github.com/singularityware/singularity/blob/master/examples/arch/{Project}>`_
 for more info.
 
 .. _build-busybox:
@@ -850,7 +850,7 @@ URI.
 .. note::
 
    ``zypper`` version 1.11.20 or greater is required on the host system,
-   as {Singularity} requires the ``--releasever`` flag.
+   as {Project} requires the ``--releasever`` flag.
 
 Overview
 --------
@@ -892,7 +892,7 @@ install when using the zypper build module is ``zypper`` itself.
 =========================================================
 
 If you are using docker locally there are two options for creating
-{Singularity} images without the need for a repository. You can either
+{Project} images without the need for a repository. You can either
 build a SIF from a ``docker-save`` tar file or you can convert any
 docker image present in docker's daemon internal storage.
 
@@ -918,7 +918,7 @@ currently residing in docker's daemon internal storage:
    Storing signatures
    2019/12/11 14:53:24  info unpack layer: sha256:eb7c47c7f0fd0054242f35366d166e6b041dfb0b89e5f93a82ad3a3206222502
    INFO:    Creating SIF file...
-   Singularity>
+   {Project}>
 
 while ``docker-archive`` permits you to do the same thing starting from
 a docker image stored in a ``docker-save`` formatted tar file:
@@ -937,12 +937,12 @@ a docker image stored in a ``docker-save`` formatted tar file:
    Storing signatures
    2019/12/11 15:25:09  info unpack layer: sha256:eb7c47c7f0fd0054242f35366d166e6b041dfb0b89e5f93a82ad3a3206222502
    INFO:    Creating SIF file...
-   Singularity>
+   {Project}>
 
 Keywords
 --------
 
-The ``docker-daemon`` bootstrap agent can be used in a {Singularity}
+The ``docker-daemon`` bootstrap agent can be used in a {Project}
 definition file as follows:
 
 .. code:: singularity
@@ -1005,7 +1005,7 @@ The resulting container provides a shell, and is 696KiB in size:
    $ singularity run scratch.sif
    WARNING: passwd file doesn't exist in container, not updating
    WARNING: group file doesn't exist in container, not updating
-   Singularity> echo "Hello from a 696KiB container"
+   {Project}> echo "Hello from a 696KiB container"
    Hello from a 696KiB container
 
 Keywords
