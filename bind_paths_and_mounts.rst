@@ -73,8 +73,8 @@ you will be able to request your own bind paths within your container.
 
 The {Project} action commands (``run``, ``exec``, ``shell``, and
 ``instance start``) will accept the ``--bind/-B`` command-line option to
-specify bind paths, and will also honor the ``$SINGULARITY_BIND`` (or
-``$SINGULARITY_BINDPATH``) environment variable. The argument for this
+specify bind paths, and will also honor the ``$APPTAINER_BIND`` (or
+``$APPTAINER_BINDPATH``) environment variable. The argument for this
 option is a comma-delimited string of bind path specifications in the
 format ``src[:dest[:opts]]``, where ``src`` and ``dest`` are paths
 outside and inside of the container respectively. If ``dest`` is not
@@ -118,11 +118,11 @@ this would be:
 
 .. code::
 
-   $ export SINGULARITY_BIND="/opt,/data:/mnt"
+   $ export APPTAINER_BIND="/opt,/data:/mnt"
 
    $ singularity shell my_container.sif
 
-Using the environment variable ``$SINGULARITY_BIND``, you can bind paths
+Using the environment variable ``$APPTAINER_BIND``, you can bind paths
 even when you are running your container as an executable file with a
 runscript. If you bind many directories into your {Project}
 containers and they don’t change, you could even benefit by setting this
@@ -190,7 +190,7 @@ wrapping each field in double quotes if necessary characters.
        mycontainer.sif
 
 Mount specifications are also read from then environment variable
-``$SINGULARITY_MOUNT``. Multiple bind mounts set via this environment
+``$APPTAINER_MOUNT``. Multiple bind mounts set via this environment
 variable should be separated by newlines (``\n``).
 
 Using ``--bind`` or ``-mount`` with the ``--writable`` flag
