@@ -186,7 +186,7 @@ below with their respective functionality.
    is set to our Cloud Library.
 
 ``M``
-^^^^^
+=====
 
 #. **SINGULARITY_MOUNT**: To specify host to container mounts, using the
    syntax understood by the ``--mount`` flag. Multiple mounts should be

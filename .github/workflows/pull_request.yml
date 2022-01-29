@@ -34,7 +34,11 @@ jobs:
 
       - name: Install Sphinx
         run: |
-          pip install --user --upgrade --upgrade-strategy eager sphinx sphinx-rtd-theme restructuredtext_lint pygments
+          pip install --user --upgrade --upgrade-strategy eager sphinx sphinx-rtd-theme restructuredtext_lint rstcheck pygments
+
+      - name: Lint rst
+        run: |
+          rstcheck --ignore-language c,c++ --report warning *.rst
 
       - name: Build web documentation
         run: |
