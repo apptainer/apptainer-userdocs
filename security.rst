@@ -60,7 +60,7 @@ user can create a user namespace, in which most setup operations needed
 to run a container can be run, unprivileged.
 
 {Project} supports running containers without setuid, using user
-namespaces. It can be compiled with the ``--without-setuid`` option, or
+namespaces. It can be compiled with the ``--without-suid`` option, or
 ``allow setuid = no`` can be set in ``singularity.conf`` to enable this.
 In this mode *all* operations run as the user who starts the
 ``singularity`` program. However, there are some disadvantages:
