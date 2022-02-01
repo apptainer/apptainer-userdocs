@@ -182,7 +182,7 @@ to one another during the build process.
 
    %setup
        touch /file1
-       touch ${SINGULARITY_ROOTFS}/file2
+       touch ${APPTAINER_ROOTFS}/file2
 
    %files
        /file1
@@ -195,7 +195,7 @@ to one another during the build process.
    %post
        apt-get update && apt-get install -y netcat
        NOW=`date`
-       echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
+       echo "export NOW=\"${NOW}\"" >> $APPTAINER_ENVIRONMENT
 
    %runscript
        echo "Container was created $NOW"
@@ -232,7 +232,7 @@ build process for logical understanding.
 During the build process, commands in the ``%setup`` section are first
 executed on the host system outside of the container after the base OS
 has been installed. You can reference the container file system with the
-``$SINGULARITY_ROOTFS`` environment variable in the ``%setup`` section.
+``$APPTAINER_ROOTFS`` environment variable in the ``%setup`` section.
 
 .. note::
 
@@ -247,7 +247,7 @@ Consider the example from the definition file above:
 
    %setup
        touch /file1
-       touch ${SINGULARITY_ROOTFS}/file2
+       touch ${APPTAINER_ROOTFS}/file2
 
 Here, ``file1`` is created at the root of the file system **on the
 host**. We'll use ``file1`` to demonstrate the usage of the ``%files``
@@ -334,7 +334,7 @@ Consider the example from the definition file above:
    %post
        apt-get update && apt-get install -y netcat
        NOW=`date`
-       echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
+       echo "export NOW=\"${NOW}\"" >> $APPTAINER_ENVIRONMENT
 
 This ``%post`` scriptlet uses the Ubuntu package manager ``apt`` to
 update the container and install the program ``netcat`` (that will be
@@ -343,13 +343,13 @@ used in the ``%startscript`` section below).
 The script is also setting an environment variable at build time. Note
 that the value of this variable cannot be anticipated, and therefore
 cannot be set during the ``%environment`` section. For situations like
-this, the ``$SINGULARITY_ENVIRONMENT`` variable is provided. Redirecting
+this, the ``$APPTAINER_ENVIRONMENT`` variable is provided. Redirecting
 text to this variable will cause it to be written to a file called
 ``/.singularity.d/env/91-environment.sh`` that will be sourced at
 runtime.
 
 Variables set in the ``%post`` section through
-``$SINGULARITY_ENVIRONMENT`` take precedence over those added via
+``$APPTAINER_ENVIRONMENT`` take precedence over those added via
 ``%environment``.
 
 %test
@@ -480,7 +480,7 @@ The value of ``FOO`` in the container will take the value of ``FOO``
 on the host, or ``default`` if ``FOO`` is not set on the host or
 ``--cleanenv`` / ``--containall`` have been specified.
 
-Note that variables added to the ``$SINGULARITY_ENVIRONMENT`` file in
+Note that variables added to the ``$APPTAINER_ENVIRONMENT`` file in
 ``%post`` will take precedence over variables set in the
 ``%environment`` section.
 

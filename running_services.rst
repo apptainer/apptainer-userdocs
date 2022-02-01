@@ -466,7 +466,7 @@ requests to the server:
            echo "Usage: singularity run --app pdf <instance://name> <URL> [output file]"
            exit 1
        fi
-       curl -o "${SINGULARITY_APPDATA}/output/${2:-output.pdf}" "${URL}:${PORT}/api/render?url=${1}"
+       curl -o "${APPTAINER_APPDATA}/output/${2:-output.pdf}" "${URL}:${PORT}/api/render?url=${1}"
 
 As you can see, the ``pdf_client`` app checks to make sure that the user
 provides at least one argument.
@@ -514,7 +514,7 @@ The full def file will look like this:
            echo "Usage: singularity run --app pdf <instance://name> <URL> [output file]"
            exit 1
        fi
-       curl -o "${SINGULARITY_APPDATA}/output/${2:-output.pdf}" "${URL}:${PORT}/api/render?url=${1}"
+       curl -o "${APPTAINER_APPDATA}/output/${2:-output.pdf}" "${URL}:${PORT}/api/render?url=${1}"
 
 Create the container as before. The ``--force`` option will overwrite
 the old container:

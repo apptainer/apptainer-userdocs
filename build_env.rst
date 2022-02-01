@@ -24,17 +24,17 @@ other topics related to the build environment.
 {Project} will cache SIF container images generated from remote
 sources, and any OCI/docker layers used to create them. The cache is
 created at ``$HOME/.singularity/cache`` by default. The location of the
-cache can be changed by setting the ``SINGULARITY_CACHEDIR`` environment
+cache can be changed by setting the ``APPTAINER_CACHEDIR`` environment
 variable.
 
 When you run builds as root, using ``sudo``, images will be cached in
 root’s home at ``/root`` and not your user’s home. Use the ``-E`` option
-to sudo to pass through the ``SINGULARITY_CACHEDIR`` environment
+to sudo to pass through the ``APPTAINER_CACHEDIR`` environment
 variable, if you set it.
 
 .. code::
 
-   $ export SINGULARITY_CACHEDIR=/tmp/user/temporary-cache
+   $ export APPTAINER_CACHEDIR=/tmp/user/temporary-cache
 
    # Running a build under your user account
    $ singularity build --fakeroot myimage.sif mydef.def
@@ -42,12 +42,12 @@ variable, if you set it.
    # Running a build with sudo, must use -E to pass env var
    $ sudo -E singularity build myimage.sif mydef.def
 
-If you change the value of ``SINGULARITY_CACHEDIR`` be sure to choose a
+If you change the value of ``APPTAINER_CACHEDIR`` be sure to choose a
 location that is:
 
    -  Unique to you. Permissions are set on the cache so that private
       images cached for one user are not exposed to another. This means
-      that ``SINGULARITY_CACHEDIR`` cannot be shared.
+      that ``APPTAINER_CACHEDIR`` cannot be shared.
 
    -  Located on a filesystem with sufficient space for the number and
       size of container images anticipated.
@@ -57,7 +57,7 @@ location that is:
 .. warning::
 
    If you are not certain that your ``$HOME`` or
-   ``SINGULARITY_CACHEDIR`` filesystems support atomic rename, do not
+   ``APPTAINER_CACHEDIR`` filesystems support atomic rename, do not
    run {Project} in parallel using remote container URLs. Instead
    use ``singularity pull`` to create a local SIF image, and then run
    this SIF image in a parallel step. An alternative is to use the
@@ -226,16 +226,16 @@ on filesystems that do not fully support ``--fakeroot``.
 The location for temporary directories defaults to ``/tmp``.
 {Project} will also respect the environment variable ``TMPDIR``, and
 both of these locations can be overridden by setting the environment
-variable ``SINGULARITY_TMPDIR``.
+variable ``APPTAINER_TMPDIR``.
 
 The temporary directory used during a build must be on a filesystem that
 has enough space to hold the entire container image, uncompressed,
 including any temporary files that are created and later removed during
-the build. You may need to set ``SINGULARITY_TMPDIR`` when building a
+the build. You may need to set ``APPTAINER_TMPDIR`` when building a
 large container on a system which has a small ``/tmp`` filesystem.
 
 Remember to use ``-E`` option to pass the value of
-``SINGULARITY_TMPDIR`` to root's environment when executing the
+``APPTAINER_TMPDIR`` to root's environment when executing the
 ``build`` command with ``sudo``.
 
 .. warning::
@@ -247,7 +247,7 @@ Remember to use ``-E`` option to pass the value of
    ``tmpfs`` also uses default mount options that can interfere with
    some container builds.
 
-   Set ``SINGULARITY_TMPDIR`` to a disk location, or disable the
+   Set ``APPTAINER_TMPDIR`` to a disk location, or disable the
    ``tmpfs`` ``/tmp`` mount on your system if you experience problems.
 
 **********************
@@ -267,7 +267,7 @@ present on disk or in memory. See :ref:`encrypted containers
 #. If a flag is represented by both a CLI option and an environment
    variable, and both are set, the CLI option will always take
    precedence. This is true for all environment variables except for
-   ``SINGULARITY_BIND`` and ``SINGULARITY_BINDPATH`` which is combined
+   ``APPTAINER_BIND`` and ``APPTAINER_BINDPATH`` which is combined
    with the ``--bind`` option, argument pair if both are present.
 
 #. Environment variables overwrite default values in the CLI code
@@ -283,40 +283,40 @@ environment variables at runtime.
 Docker
 ------
 
-**SINGULARITY_DOCKER_LOGIN** Used for the interactive login for Docker
+**APPTAINER_DOCKER_LOGIN** Used for the interactive login for Docker
 Hub.
 
-**SINGULARITY_DOCKER_USERNAME** Your Docker username.
+**APPTAINER_DOCKER_USERNAME** Your Docker username.
 
-**SINGULARITY_DOCKER_PASSWORD** Your Docker password.
+**APPTAINER_DOCKER_PASSWORD** Your Docker password.
 
 **RUNSCRIPT_COMMAND** Is not obtained from the environment, but is a
 hard coded default (“/bin/bash”). This is the fallback command used in
 the case that the docker image does not have a CMD or ENTRYPOINT.
 **TAG** Is the default tag, ``latest``.
 
-**SINGULARITY_NOHTTPS** This is relevant if you want to use a registry
+**APPTAINER_NOHTTPS** This is relevant if you want to use a registry
 that doesn’t have https, and it speaks for itself. If you export the
-variable ``SINGULARITY_NOHTTPS`` you can force the software to not use
+variable ``APPTAINER_NOHTTPS`` you can force the software to not use
 https when interacting with a Docker registry. This use case is
 typically for use of a local registry.
 
 Library
 -------
 
-**SINGULARITY_LIBRARY** Used to specify the library to pull from.
+**APPTAINER_LIBRARY** Used to specify the library to pull from.
 Default is set to our Cloud Library.
 
-**SINGULARITY_REMOTE** Used to build an image remotely (This does not
+**APPTAINER_REMOTE** Used to build an image remotely (This does not
 require root). The default is set to false.
 
 Encryption
 ----------
 
-**SINGULARITY_ENCRYPTION_PASSPHRASE** Used to pass a plaintext
+**APPTAINER_ENCRYPTION_PASSPHRASE** Used to pass a plaintext
 passphrase to encrypt a container file system (with the ``--encrypt``
 flag). The default is empty.
 
-**SINGULARITY_ENCRYPTION_PEM_PATH** Used to specify the location of a
+**APPTAINER_ENCRYPTION_PEM_PATH** Used to specify the location of a
 public key to use for container encryption (with the ``--encrypt``
 flag). The default is empty.

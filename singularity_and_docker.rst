@@ -185,14 +185,14 @@ environment variables. These are often the default way of passing
 secrets into jobs within CI pipelines.
 
 {Project} accepts a username, and password / token, as
-``SINGULARITY_DOCKER_USERNAME`` and ``SINGULARITY_DOCKER_PASSWORD``
+``APPTAINER_DOCKER_USERNAME`` and ``APPTAINER_DOCKER_PASSWORD``
 respectively. These environment variables will override any stored
 credentials.
 
 .. code::
 
-   $ export SINGULARITY_DOCKER_USERNAME=myuser
-   $ export SINGULARITY_DOCKER_PASSWORD=mytoken
+   $ export APPTAINER_DOCKER_USERNAME=myuser
+   $ export APPTAINER_DOCKER_PASSWORD=mytoken
    $ singularity pull docker://sylabsio/private
 
 **********************************
@@ -239,8 +239,8 @@ CLI token in the Quay web interface, then use it to login with
    to store your credentials for {Project}.
 -  Use ``docker login quay.io`` if ``docker`` is on your machine.
 -  Use the ``--docker-login`` flag for a one-time interactive login.
--  Set the ``SINGULARITY_DOCKER_USERNAME`` and
-   ``SINGULARITY_DOCKER_PASSWORD`` environment variables.
+-  Set the ``APPTAINER_DOCKER_USERNAME`` and
+   ``APPTAINER_DOCKER_PASSWORD`` environment variables.
 
 NVIDIA NGC
 ==========
@@ -272,8 +272,8 @@ your NGC API key.
    docker://nvcr.io`` to store your credentials for {Project}.
 -  Use ``docker login nvcr.io`` if ``docker`` is on your machine.
 -  Use the ``--docker-login`` flag for a one-time interactive login.
--  Set the ``SINGULARITY_DOCKER_USERNAME="\$oauthtoken"`` and
-   ``SINGULARITY_DOCKER_PASSWORD`` environment variables.
+-  Set the ``APPTAINER_DOCKER_USERNAME="\$oauthtoken"`` and
+   ``APPTAINER_DOCKER_PASSWORD`` environment variables.
 
 See also:
 https://docs.nvidia.com/ngc/ngc-private-registry-user-guide/index.html
@@ -304,8 +304,8 @@ Docker Hub), with your username and personal access token:
    to store your credentials for {Project}.
 -  Use ``docker login ghcr.io`` if ``docker`` is on your machine.
 -  Use the ``--docker-login`` flag for a one-time interactive login.
--  Set the ``SINGULARITY_DOCKER_USERNAME`` and
-   ``SINGULARITY_DOCKER_PASSWORD`` environment variables.
+-  Set the ``APPTAINER_DOCKER_USERNAME`` and
+   ``APPTAINER_DOCKER_PASSWORD`` environment variables.
 
 AWS ECR
 =======
@@ -344,8 +344,8 @@ Then login using one of the following methods:
 
 -  Use the ``--docker-login`` flag for a one-time interactive login.
 
--  Set the ``SINGULARITY_DOCKER_USERNAME=AWS`` and
-   ``SINGULARITY_DOCKER_PASSWORD`` environment variables.
+-  Set the ``APPTAINER_DOCKER_USERNAME=AWS`` and
+   ``APPTAINER_DOCKER_PASSWORD`` environment variables.
 
 You should now be able to pull containers from your ECR URI at
 ``docker://<accountid>.dkr.ecr.<region>.amazonaws.com``.
@@ -376,8 +376,8 @@ and you should authenticate using one of the following methods:
 
 -  Use the ``--docker-login`` flag for a one-time interactive login.
 
--  Set the ``SINGULARITY_DOCKER_USERNAME`` and
-   ``SINGULARITY_DOCKER_PASSWORD`` environment variables.
+-  Set the ``APPTAINER_DOCKER_USERNAME`` and
+   ``APPTAINER_DOCKER_PASSWORD`` environment variables.
 
 The recent repository-scoped access token preview may be more
 convenient. See the `preview documentation
@@ -459,8 +459,8 @@ stored credentials or environment variables must be available to the
    I.E. run ``sudo singularity build --docker-login myimage.sif
    {Project}``.
 
--  Set the ``SINGULARITY_DOCKER_USERNAME`` and
-   ``SINGULARITY_DOCKER_PASSWORD`` environment variables. Pass the
+-  Set the ``APPTAINER_DOCKER_USERNAME`` and
+   ``APPTAINER_DOCKER_PASSWORD`` environment variables. Pass the
    environment variables through sudo to the ``root`` build process by
    running ``sudo -E singularity build ...``.
 
@@ -750,7 +750,7 @@ change the behaviour of software.
 
 To disable automatic propagation of environment variables, the
 ``--cleanenv / -e`` flag can be specified. When ``--cleanenv`` is used,
-only variables on the host that are prefixed with ``SINGULARITYENV_``
+only variables on the host that are prefixed with ``APPTAINERENV_``
 are set in the container:
 
 .. code::
@@ -758,7 +758,7 @@ are set in the container:
    # Set a host variable
    $ export HOST_VAR=123
    # Set a singularity container environment variable
-   $ export "SINGULARITYENV_FORCE_VAR="123"
+   $ export "APPTAINERENV_FORCE_VAR="123"
 
    $ singularity run library://alpine env | grep VAR
    FORCE_VAR=123

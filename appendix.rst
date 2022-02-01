@@ -7,7 +7,7 @@
 ..
    TODO oci & oci-archive along with http & https
 
-.. _singularity-environment-variables:
+.. _apptainer-environment-variables:
 
 ***************************************
  {Project}'s environment variables
@@ -20,116 +20,116 @@ below with their respective functionality.
 ``A``
 =====
 
-#. **SINGULARITY_ADD_CAPS**: To specify a list (comma separated string)
+#. **APPTAINER_ADD_CAPS**: To specify a list (comma separated string)
    of capabilities to be added. Default is an empty string.
 
-#. **SINGULARITY_ALL**: List all the users and groups capabilities.
+#. **APPTAINER_ALL**: List all the users and groups capabilities.
 
-#. **SINGULARITY_ALLOW_SETUID**: To specify that setuid binaries should
+#. **APPTAINER_ALLOW_SETUID**: To specify that setuid binaries should
    or not be allowed in the container. (root only) Default is set to
    false.
 
-#. **SINGULARITY_APP** and **SINGULARITY_APPNAME**: Sets the name of an
+#. **APPTAINER_APP** and **APPTAINER_APPNAME**: Sets the name of an
    application to be run inside a container.
 
-#. **SINGULARITY_APPLY_CGROUPS**: Used to apply cgroups from an input
+#. **APPTAINER_APPLY_CGROUPS**: Used to apply cgroups from an input
    file for container processes. (it requires root privileges)
 
 ``B``
 =====
 
-#. **SINGULARITY_BINDPATH** and **SINGULARITY_BIND**: Comma separated
+#. **APPTAINER_BINDPATH** and **APPTAINER_BIND**: Comma separated
    string ``source:<dest>`` list of paths to bind between the host and
    the container.
 
-#. **SINGULARITY_BOOT**: Set to false by default, considers if executing
+#. **APPTAINER_BOOT**: Set to false by default, considers if executing
    ``/sbin/init`` when container boots (root only).
 
 ``C``
 =====
 
-#. **SINGULARITY_CACHEDIR**: Specifies the directory for image downloads
+#. **APPTAINER_CACHEDIR**: Specifies the directory for image downloads
    to be cached in. See :ref:`sec:cache`.
 
-#. **SINGULARITY_CLEANENV**: Specifies if the environment should be
+#. **APPTAINER_CLEANENV**: Specifies if the environment should be
    cleaned or not before running the container. Default is set to false.
 
-#. **SINGULARITY_CONTAIN**: To use minimal ``/dev`` and empty other
+#. **APPTAINER_CONTAIN**: To use minimal ``/dev`` and empty other
    directories (e.g. ``/tmp`` and ``$HOME``) instead of sharing
    filesystems from your host. Default is set to false.
 
-#. **SINGULARITY_CONTAINALL**: To contain not only file systems, but
+#. **APPTAINER_CONTAINALL**: To contain not only file systems, but
    also PID, IPC, and environment. Default is set to false.
 
-#. **SINGULARITY_CONTAINLIBS**: Used to specify a string of file names
+#. **APPTAINER_CONTAINLIBS**: Used to specify a string of file names
    (comma separated string) to bind to the ``/.singularity.d/libs``
    directory.
 
 ``D``
 =====
 
-#. **SINGULARITY_DEFFILE**: Shows the {Project} recipe that was used
+#. **APPTAINER_DEFFILE**: Shows the {Project} recipe that was used
    to generate the image.
 
-#. **SINGULARITY_DESC**: Contains a description of the capabilities.
+#. **APPTAINER_DESC**: Contains a description of the capabilities.
 
-#. **SINGULARITY_DISABLE_CACHE**: To disable all caching of docker/oci,
+#. **APPTAINER_DISABLE_CACHE**: To disable all caching of docker/oci,
    library, oras, etc. downloads and built SIFs. Default is set to
    false.
 
-#. **SINGULARITY_DNS**: A list of the DNS server addresses separated by
+#. **APPTAINER_DNS**: A list of the DNS server addresses separated by
    commas to be added in ``resolv.conf``.
 
-#. **SINGULARITY_DOCKER_LOGIN**: To specify the interactive prompt for
+#. **APPTAINER_DOCKER_LOGIN**: To specify the interactive prompt for
    docker authentication.
 
-#. **SINGULARITY_DOCKER_USERNAME**: To specify a username for docker
+#. **APPTAINER_DOCKER_USERNAME**: To specify a username for docker
    authentication.
 
-#. **SINGULARITY_DOCKER_PASSWORD**: To specify the password for docker
+#. **APPTAINER_DOCKER_PASSWORD**: To specify the password for docker
    authentication.
 
-#. **SINGULARITY_DOWNLOAD_CONCURRENCY**: To specify how many concurrent streams
+#. **APPTAINER_DOWNLOAD_CONCURRENCY**: To specify how many concurrent streams
    when downloading (pulling) an image from cloud library.
 
-#. **SINGULARITY_DOWNLOAD_PART_SIZE**: To specify the size of each part (bytes)
+#. **APPTAINER_DOWNLOAD_PART_SIZE**: To specify the size of each part (bytes)
    when concurrent downloads are enabled.
 
-#. **SINGULARITY_DOWNLOAD_BUFFER_SIZE**: To specify the transfer buffer size
+#. **APPTAINER_DOWNLOAD_BUFFER_SIZE**: To specify the transfer buffer size
    (bytes) when concurrent downloads are enabled.
 
-#. **SINGULARITY_DROP_CAPS**: To specify a list (comma separated string)
+#. **APPTAINER_DROP_CAPS**: To specify a list (comma separated string)
    of capabilities to be dropped. Default is an empty string.
 
 ``E``
 =====
 
-#. **SINGULARITY_ENVIRONMENT**: Contains all the environment variables
+#. **APPTAINER_ENVIRONMENT**: Contains all the environment variables
    that have been exported in your container.
 
-#. **SINGULARITY_ENCRYPTION_PASSPHRASE**: Used to specify the plaintext
+#. **APPTAINER_ENCRYPTION_PASSPHRASE**: Used to specify the plaintext
    passphrase to encrypt the container.
 
-#. **SINGULARITY_ENCRYPTION_PEM_PATH**: Used to specify the path of the
+#. **APPTAINER_ENCRYPTION_PEM_PATH**: Used to specify the path of the
    file containing public or private key to encrypt the container in PEM
    format.
 
-#. **SINGULARITYENV_\***: Allows you to transpose variables into the
+#. **APPTAINERENV_\***: Allows you to transpose variables into the
    container at runtime. You can see more in detail how to use this
    variable in our :ref:`environment and metadata section
    <environment-and-metadata>`.
 
-#. **SINGULARITYENV_APPEND_PATH**: Used to append directories to the end
+#. **APPTAINERENV_APPEND_PATH**: Used to append directories to the end
    of the ``$PATH`` environment variable. You can see more in detail on
    how to use this variable in our :ref:`environment and metadata
    section <environment-and-metadata>`.
 
-#. **SINGULARITYENV_PATH**: A specified path to override the ``$PATH``
+#. **APPTAINERENV_PATH**: A specified path to override the ``$PATH``
    environment variable within the container. You can see more in detail
    on how to use this variable in our :ref:`environment and metadata
    section <environment-and-metadata>`.
 
-#. **SINGULARITYENV_PREPEND_PATH**: Used to prepend directories to the
+#. **APPTAINERENV_PREPEND_PATH**: Used to prepend directories to the
    beginning of `$PATH`` environment variable. You can see more in
    detail on how to use this variable in our :ref:`environment and
    metadata section <environment-and-metadata>`.
@@ -137,177 +137,177 @@ below with their respective functionality.
 ``F``
 =====
 
-#. **SINGULARITY_FAKEROOT**: Set to false by default, considers running
+#. **APPTAINER_FAKEROOT**: Set to false by default, considers running
    the container in a new user namespace as uid 0 (experimental).
-#. **SINGULARITY_FORCE**: Forces to kill the instance.
+#. **APPTAINER_FORCE**: Forces to kill the instance.
 
 ``G``
 =====
 
-#. **SINGULARITY_GROUP**: Used to specify a string of capabilities for
+#. **APPTAINER_GROUP**: Used to specify a string of capabilities for
    the given group.
 
 ``H``
 =====
 
-#. **SINGULARITY_HELPFILE**: Specifies the runscript helpfile, if it
+#. **APPTAINER_HELPFILE**: Specifies the runscript helpfile, if it
    exists.
 
-#. **SINGULARITY_HOME** : A home directory specification, it could be a
+#. **APPTAINER_HOME** : A home directory specification, it could be a
    source or destination path. The source path is the home directory
    outside the container and the destination overrides the home
    directory within the container.
 
-#. **SINGULARITY_HOSTNAME**: The container's hostname.
+#. **APPTAINER_HOSTNAME**: The container's hostname.
 
 ``I``
 =====
 
-#. **SINGULARITY_IMAGE**: Filename of the container.
+#. **APPTAINER_IMAGE**: Filename of the container.
 
 ``J``
 =====
 
-#. **SINGULARITY_JSON**: Specifies the structured json of the def file,
+#. **APPTAINER_JSON**: Specifies the structured json of the def file,
    every node as each section in the def file.
 
 ``K``
 =====
 
-#. **SINGULARITY_KEEP_PRIVS**: To let root user keep privileges in the
+#. **APPTAINER_KEEP_PRIVS**: To let root user keep privileges in the
    container. Default is set to false.
 
 ``L``
 =====
 
-#. **SINGULARITY_LABELS**: Specifies the labels associated with the
+#. **APPTAINER_LABELS**: Specifies the labels associated with the
    image.
-#. **SINGULARITY_LIBRARY**: Specifies the library to pull from. Default
+#. **APPTAINER_LIBRARY**: Specifies the library to pull from. Default
    is set to our Cloud Library.
 
 ``M``
 =====
 
-#. **SINGULARITY_MOUNT**: To specify host to container mounts, using the
+#. **APPTAINER_MOUNT**: To specify host to container mounts, using the
    syntax understood by the ``--mount`` flag. Multiple mounts should be
    separated by newline characters.
 
 ``N``
 =====
 
-#. **SINGULARITY_NAME**: Specifies a custom image name.
+#. **APPTAINER_NAME**: Specifies a custom image name.
 
-#. **SINGULARITY_NETWORK**: Used to specify a desired network. If more
+#. **APPTAINER_NETWORK**: Used to specify a desired network. If more
    than one parameters is used, addresses should be separated by commas,
    where each network will bring up a dedicated interface inside the
    container.
 
-#. **SINGULARITY_NETWORK_ARGS**: To specify the network arguments to
+#. **APPTAINER_NETWORK_ARGS**: To specify the network arguments to
    pass to CNI plugins.
 
-#. **SINGULARITY_NOCLEANUP**: To not clean up the bundle after a failed
+#. **APPTAINER_NOCLEANUP**: To not clean up the bundle after a failed
    build, this can be helpful for debugging. Default is set to false.
 
-#. **SINGULARITY_NOHTTPS**: Sets to either false or true to avoid using
+#. **APPTAINER_NOHTTPS**: Sets to either false or true to avoid using
    HTTPS for communicating with the local docker registry. Default is
    set to false.
 
-#. **SINGULARITY_NO_HOME**: Considers not mounting users home directory
+#. **APPTAINER_NO_HOME**: Considers not mounting users home directory
    if home is not the current working directory. Default is set to
    false.
 
-#. **SINGULARITY_NO_INIT** and **SINGULARITY_NOSHIMINIT**: Considers not
+#. **APPTAINER_NO_INIT** and **APPTAINER_NOSHIMINIT**: Considers not
    starting the ``shim`` process with ``--pid``.
 
-#. **SINGULARITY_NO_NV**: Flag to disable Nvidia support. Opposite of
-   ``SINGULARITY_NV``.
+#. **APPTAINER_NO_NV**: Flag to disable Nvidia support. Opposite of
+   ``APPTAINER_NV``.
 
-#. **SINGULARITY_NO_PRIVS**: To drop all the privileges from root user
+#. **APPTAINER_NO_PRIVS**: To drop all the privileges from root user
    in the container. Default is set to false.
 
-#. **SINGULARITY_NV**: To enable Nvidia GPU support. Default is
+#. **APPTAINER_NV**: To enable Nvidia GPU support. Default is
    set to false.
 
-#. **SINGULARITY_NVCCLI**: To use nvidia-container-cli for container GPU setup
+#. **APPTAINER_NVCCLI**: To use nvidia-container-cli for container GPU setup
    (experimental, only unprivileged).
 
 ``O``
 =====
 
-#. **SINGULARITY_OVERLAY** and **SINGULARITY_OVERLAYIMAGE**: To indicate
+#. **APPTAINER_OVERLAY** and **APPTAINER_OVERLAYIMAGE**: To indicate
    the use of an overlay file system image for persistent data storage
    or as read-only layer of container.
 
 ``P``
 =====
 
-#. **SINGULARITY_PWD** and **SINGULARITY_TARGET_PWD**: The initial
+#. **APPTAINER_PWD** and **APPTAINER_TARGET_PWD**: The initial
    working directory for payload process inside the container.
 
 ``R``
 =====
 
-#. **SINGULARITY_ROOTFS**: To reference the system file location.
+#. **APPTAINER_ROOTFS**: To reference the system file location.
 
-#. **SINGULARITY_RUNSCRIPT**: Specifies the runscript of the image.
+#. **APPTAINER_RUNSCRIPT**: Specifies the runscript of the image.
 
 ``S``
 =====
 
-#. **SINGULARITY_SANDBOX**: To specify that the format of the image
+#. **APPTAINER_SANDBOX**: To specify that the format of the image
    should be a sandbox. Default is set to false.
 
-#. **SINGULARITY_SCRATCH** and **SINGULARITY_SCRATCHDIR**: Used to
+#. **APPTAINER_SCRATCH** and **APPTAINER_SCRATCHDIR**: Used to
    include a scratch directory within the container that is linked to a
    temporary directory. (use -W to force location)
 
-#. **SINGULARITY_SECTION**: To specify a comma separated string of all
+#. **APPTAINER_SECTION**: To specify a comma separated string of all
    the sections to be run from the deffile (setup, post, files,
    environment, test, labels, none)
 
-#. **SINGULARITY_SECURITY**: Used to enable security features. (SELinux,
+#. **APPTAINER_SECURITY**: Used to enable security features. (SELinux,
    Apparmor, Seccomp)
 
-#. **SINGULARITY_SECRET**: Lists all the private keys instead of the
+#. **APPTAINER_SECRET**: Lists all the private keys instead of the
    default which display the public ones.
 
-#. **SINGULARITY_SHELL**: The path to the program to be used as an
+#. **APPTAINER_SHELL**: The path to the program to be used as an
    interactive shell.
 
-#. **SINGULARITY_SIGNAL**: Specifies a signal sent to the instance.
+#. **APPTAINER_SIGNAL**: Specifies a signal sent to the instance.
 
 ``T``
 =====
 
-#. **SINGULARITY_TEST**: Specifies the test script for the image.
-#. **SINGULARITY_TMPDIR**: Used with the ``build`` command, to consider
+#. **APPTAINER_TEST**: Specifies the test script for the image.
+#. **APPTAINER_TMPDIR**: Used with the ``build`` command, to consider
    a temporary location for the build. See :ref:`sec:temporaryfolders`.
 
 ``U``
 =====
 
-#. **SINGULARITY_UNSHARE_PID**: To specify that the container will run
+#. **APPTAINER_UNSHARE_PID**: To specify that the container will run
    in a new PID namespace. Default is set to false.
 
-#. **SINGULARITY_UNSHARE_IPC**: To specify that the container will run
+#. **APPTAINER_UNSHARE_IPC**: To specify that the container will run
    in a new IPC namespace. Default is set to false.
 
-#. **SINGULARITY_UNSHARE_NET**: To specify that the container will run
+#. **APPTAINER_UNSHARE_NET**: To specify that the container will run
    in a new network namespace (sets up a bridge network interface by
    default). Default is set to false.
 
-#. **SINGULARITY_UNSHARE_UTS**: To specify that the container will run
+#. **APPTAINER_UNSHARE_UTS**: To specify that the container will run
    in a new UTS namespace. Default is set to false.
 
-#. **SINGULARITY_UPDATE**: To run the definition over an existing
+#. **APPTAINER_UPDATE**: To run the definition over an existing
    container (skips the header). Default is set to false.
 
-#. **SINGULARITY_URL**: Specifies the key server ``URL``.
+#. **APPTAINER_URL**: Specifies the key server ``URL``.
 
-#. **SINGULARITY_USER**: Used to specify a string of capabilities for
+#. **APPTAINER_USER**: Used to specify a string of capabilities for
    the given user.
 
-#. **SINGULARITY_USERNS** and **SINGULARITY_UNSHARE_USERNS**: To specify
+#. **APPTAINER_USERNS** and **APPTAINER_UNSHARE_USERNS**: To specify
    that the container will run in a new user namespace, allowing
    {Project} to run completely unprivileged on recent kernels. This
    may not support every feature of {Project}. (Sandbox image only).
@@ -316,15 +316,15 @@ below with their respective functionality.
 ``W``
 =====
 
-#. **SINGULARITY_WORKDIR**: The working directory to be used for
+#. **APPTAINER_WORKDIR**: The working directory to be used for
    ``/tmp``, ``/var/tmp`` and ``$HOME`` (if ``-c`` or ``--contain`` was
    also used)
 
-#. **SINGULARITY_WRITABLE**: By default, all {Project} containers
+#. **APPTAINER_WRITABLE**: By default, all {Project} containers
    are available as read only, this option makes the file system
    accessible as read/write. Default set to false.
 
-#. **SINGULARITY_WRITABLE_TMPFS**: Makes the file system accessible as
+#. **APPTAINER_WRITABLE_TMPFS**: Makes the file system accessible as
    read-write with non-persistent data (with overlay support only).
    Default is set to false.
 
@@ -357,14 +357,14 @@ existing base container adding customizations in ``%post``,
 Keywords
 --------
 
-.. code:: singularity
+.. code:: apptainer
 
    Bootstrap: library
 
 The Bootstrap keyword is always mandatory. It describes the bootstrap
 module to use.
 
-.. code:: singularity
+.. code:: apptainer
 
    From: <entity>/<collection>/<container>:<tag>
 
@@ -374,14 +374,14 @@ a base. ``entity`` is optional and defaults to ``library``.
 correct namespace to use for some official containers (``alpine`` for
 example). ``tag`` is also optional and will default to ``latest``.
 
-.. code:: singularity
+.. code:: apptainer
 
    Library: http://custom/library
 
 The Library keyword is optional. It will default to
 ``https://library.sylabs.io``.
 
-.. code:: singularity
+.. code:: apptainer
 
    Fingerprints: 22045C8C0B1004D058DE4BEDA20C27EE7FF7BA84
 
@@ -419,14 +419,14 @@ Docker containers. If so, you can seamlessly convert them to
 Keywords
 --------
 
-.. code:: singularity
+.. code:: apptainer
 
    Bootstrap: docker
 
 The Bootstrap keyword is always mandatory. It describes the bootstrap
 module to use.
 
-.. code:: singularity
+.. code:: apptainer
 
    From: <registry>/<namespace>/<container>:<tag>@<digest>
 
@@ -439,14 +439,14 @@ example). ``tag`` is also optional and will default to ``latest``
 See :ref:`{Project} and Docker <singularity-and-docker>` for more
 detailed info on using Docker registries.
 
-.. code:: singularity
+.. code:: apptainer
 
    Registry: http://custom_registry
 
 The Registry keyword is optional. It will default to
 ``index.docker.io``.
 
-.. code:: singularity
+.. code:: apptainer
 
    Namespace: namespace
 
@@ -490,14 +490,14 @@ container adding customizations in ``%post`` , ``%environment``,
 Keywords
 --------
 
-.. code:: singularity
+.. code:: apptainer
 
    Bootstrap: shub
 
 The Bootstrap keyword is always mandatory. It describes the bootstrap
 module to use.
 
-.. code:: singularity
+.. code:: apptainer
 
    From: shub://<registry>/<username>/<container-name>:<tag>@digest
 
@@ -538,14 +538,14 @@ containers by adding customizations in ``%post`` , ``%environment``,
 Keywords
 --------
 
-.. code:: singularity
+.. code:: apptainer
 
    Bootstrap: oras
 
 The Bootstrap keyword is always mandatory. It describes the bootstrap
 module to use.
 
-.. code:: singularity
+.. code:: apptainer
 
    From: oras://registry/namespace/image:tag
 
@@ -580,21 +580,21 @@ container and then customize the new container in ``%post``,
 Keywords
 --------
 
-.. code:: singularity
+.. code:: apptainer
 
    Bootstrap: localimage
 
 The Bootstrap keyword is always mandatory. It describes the bootstrap
 module to use.
 
-.. code:: singularity
+.. code:: apptainer
 
    From: /path/to/container/file/or/directory
 
 The ``From`` keyword is mandatory. It specifies the local container to
 use as a base.
 
-.. code:: singularity
+.. code:: apptainer
 
    Fingerprints: 22045C8C0B1004D058DE4BEDA20C27EE7FF7BA84
 
@@ -633,14 +633,14 @@ You must also specify the URI for the mirror you would like to use.
 Keywords
 --------
 
-.. code:: singularity
+.. code:: apptainer
 
    Bootstrap: yum
 
 The Bootstrap keyword is always mandatory. It describes the bootstrap
 module to use.
 
-.. code:: singularity
+.. code:: apptainer
 
    OSVersion: 7
 
@@ -648,7 +648,7 @@ The OSVersion keyword is optional. It specifies the OS version you would
 like to use. It is only required if you have specified a %{OSVERSION}
 variable in the ``MirrorURL`` keyword.
 
-.. code:: singularity
+.. code:: apptainer
 
    MirrorURL: http://mirror.centos.org/centos-%{OSVERSION}/%{OSVERSION}/os/$basearch/
 
@@ -656,7 +656,7 @@ The MirrorURL keyword is mandatory. It specifies the URI to use as a
 mirror to download the OS. If you define the ``OSVersion`` keyword, then
 you can use it in the URI as in the example above.
 
-.. code:: singularity
+.. code:: apptainer
 
    Include: yum
 
@@ -707,14 +707,14 @@ you would like to use.
 Keywords
 --------
 
-.. code:: singularity
+.. code:: apptainer
 
    Bootstrap: debootstrap
 
 The Bootstrap keyword is always mandatory. It describes the bootstrap
 module to use.
 
-.. code:: singularity
+.. code:: apptainer
 
    OSVersion: xenial
 
@@ -724,14 +724,14 @@ would like to use. For Ubuntu you can use code words like ``trusty``
 use values like ``stable``, ``oldstable``, ``testing``, and ``unstable``
 or code words like ``wheezy`` (7), ``jesse`` (8), and ``stretch`` (9).
 
-   .. code:: singularity
+   .. code:: apptainer
 
       MirrorURL:  http://us.archive.ubuntu.com/ubuntu/
 
 The MirrorURL keyword is mandatory. It specifies a URI to use as a
 mirror when downloading the OS.
 
-.. code:: singularity
+.. code:: apptainer
 
    Include: somepackage
 
@@ -776,7 +776,7 @@ container. Arch Linux uses the aptly named ``pacman`` package manager
 Keywords
 --------
 
-.. code:: singularity
+.. code:: apptainer
 
    Bootstrap: arch
 
@@ -817,14 +817,14 @@ must also specify a URI for the mirror you would like to use.
 Keywords
 --------
 
-.. code:: singularity
+.. code:: apptainer
 
    Bootstrap: busybox
 
 The Bootstrap keyword is always mandatory. It describes the bootstrap
 module to use.
 
-.. code:: singularity
+.. code:: apptainer
 
    MirrorURL: https://www.busybox.net/downloads/binaries/1.26.1-defconfig-multiarch/busybox-x86_64
 
@@ -861,14 +861,14 @@ You must also specify a URI for the mirror you would like to use.
 Keywords
 --------
 
-.. code:: singularity
+.. code:: apptainer
 
    Bootstrap: zypper
 
 The Bootstrap keyword is always mandatory. It describes the bootstrap
 module to use.
 
-.. code:: singularity
+.. code:: apptainer
 
    OSVersion: 42.2
 
@@ -876,7 +876,7 @@ The OSVersion keyword is optional. It specifies the OS version you would
 like to use. It is only required if you have specified a %{OSVERSION}
 variable in the ``MirrorURL`` keyword.
 
-.. code:: singularity
+.. code:: apptainer
 
    Include: somepackage
 
@@ -945,7 +945,7 @@ Keywords
 The ``docker-daemon`` bootstrap agent can be used in a {Project}
 definition file as follows:
 
-.. code:: singularity
+.. code:: apptainer
 
    From: docker-daemon:<image>:<tag>
 
@@ -953,7 +953,7 @@ where both ``<image>`` and ``<tag>`` are mandatory fields that must be
 written explicitly. The ``docker-archive`` bootstrap agent requires
 instead the path to the tar file containing the image:
 
-.. code:: singularity
+.. code:: apptainer
 
    From: docker-archive:<path-to-tar-file>
 
@@ -978,7 +978,7 @@ Overview
 A minimal container providing a shell can be created by copying the
 ``busybox`` static binary into an empty scratch container:
 
-.. code:: singularity
+.. code:: apptainer
 
    Bootstrap: scratch
 
@@ -1002,7 +1002,7 @@ The resulting container provides a shell, and is 696KiB in size:
    $ ls -lah scratch.sif
    -rwxr-xr-x. 1 dave dave 696K May 28 13:29 scratch.sif
 
-   $ singularity run scratch.sif
+   $ apptainer run scratch.sif
    WARNING: passwd file doesn't exist in container, not updating
    WARNING: group file doesn't exist in container, not updating
    {Project}> echo "Hello from a 696KiB container"
@@ -1010,7 +1010,7 @@ The resulting container provides a shell, and is 696KiB in size:
 
 Keywords
 
-.. code:: singularity
+.. code:: apptainer
 
    Bootstrap: scratch
 
