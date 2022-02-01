@@ -45,14 +45,18 @@ master_doc = 'index'
 # General information about the project.
 project = u'Apptainer User Guide'
 author = u'Apptainer Project Contributors'
-copyright = u'2021-2022, Apptainer a Series of LF Projects LLC \xA9 2017-2022, Sylabs Inc'
+# Instead of setting copyright here, it is done in _templates/footer.html
+#  for sphinx.
+# epub, however, requires a non-empty copyright setting, even though it
+#  isn't actually used.
+copyright = u'epub placeholder'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.
 #
 # The short X.Y version.
-version = '3.8'
+version = 'main'
 # We have not had separate docs per release version for some time, so set
 # release = version here.
 release = version
@@ -187,7 +191,7 @@ html_show_sourcelink = True
 #html_show_sphinx = True
 
 # If true, "(C) Copyright ..." is shown in the HTML footer. Default is True.
-#html_show_copyright = True
+html_show_copyright = False
 
 # If true, an OpenSearch description file will be output, and all pages will
 # contain a <link> tag referring to it.  The value of this option must be the
