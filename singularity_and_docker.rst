@@ -767,8 +767,11 @@ are set in the container:
    $ singularity run --cleanenv library://alpine env | grep VAR
    FORCE_VAR=123
 
-Any environment variables set via an ``ENV`` line in a ``Dockerfile``
-will be available when the container is run with {Project}.
+Any environment variables set via an ``ENV`` line in a ``Dockerfile`` will be
+available when the container is run with {Project}. However, because they
+are set as :ref:`default values <environment-default-values>` in the
+{Project} container, they will be overridden by host variables unless ``-e /
+--cleanenv`` or the related ``--containall / --compat`` flags are used.
 
 Namespace & Device Isolation
 ============================
