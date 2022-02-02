@@ -8,7 +8,7 @@ PAPER         =
 BUILDDIR      = _build
 
 # This is a custom target that represents the CLI docs generated from Singularity
-CLIDOCS = cli/singularity.rst
+#CLIDOCS = cli/singularity.rst
 
 # User-friendly check for sphinx-build
 ifeq ($(shell which $(SPHINXBUILD) >/dev/null 2>&1; echo $$?), 1)

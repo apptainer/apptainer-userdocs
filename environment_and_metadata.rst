@@ -40,11 +40,11 @@ environment variables that the program sees are a combination of:
 
    -  Any variables you set specifically for the container at runtime,
       using the ``--env``, ``--env-file`` options, or by setting
-      ``APPTAINERENV_`` variables outside of the container.
+      ``{ENVPREFIX}ENV_`` variables outside of the container.
 
    -  The ``PATH`` variable can be manipulated to add entries.
 
-   -  Runtime variables ``APPTAINER_xxx`` set by {Project} to
+   -  Runtime variables ``{ENVPREFIX}_xxx`` set by {Project} to
       provide information about the container.
 
 The environment variables from the base image or definition file used to
@@ -161,13 +161,13 @@ Build time variables in ``%post``
 In some circumstances the value that needs to be assigned to an
 environment variable may only be known after e.g. software
 installation, in ``%post``. For situations like this, the
-``$APPTAINER_ENVIRONMENT`` variable is provided. Redirecting text to
+``${ENVPREFIX}_ENVIRONMENT`` variable is provided. Redirecting text to
 this variable will cause it to be written to a file called
 ``/.singularity.d/env/91-environment.sh`` that will be sourced at
 runtime.
 
 Variables set in the ``%post`` section through
-``$APPTAINER_ENVIRONMENT`` take precedence over those added via
+``${ENVPREFIX}_ENVIRONMENT`` take precedence over those added via
 ``%environment``.
 
 
@@ -181,7 +181,7 @@ Except that:
 
    -  An environment variable set on the host will be overridden by a variable
       of the same name that has been set either inside the container image, or
-      via ``APPTAINERENV_`` environment variables, or the ``--env`` and
+      via ``{ENVPREFIX}ENV_`` environment variables, or the ``--env`` and
       ``--env-file`` flags.
 
    -  You can use the :ref:`default values <environment-default-values>` method
@@ -213,10 +213,10 @@ environment variables for correct operation of most software.
    PROMPT_COMMAND=PS1="{Project}> "; unset PROMPT_COMMAND
    PS1={Project}>
    PWD=/home/dave/doc-tesrts
-   APPTAINER_COMMAND=exec
-   APPTAINER_CONTAINER=/home/dave/doc-tesrts/env.sif
-   APPTAINER_ENVIRONMENT=/.singularity.d/env/91-environment.sh
-   APPTAINER_NAME=env.sif
+   {ENVPREFIX}_COMMAND=exec
+   {ENVPREFIX}_CONTAINER=/home/dave/doc-tesrts/env.sif
+   {ENVPREFIX}_ENVIRONMENT=/.singularity.d/env/91-environment.sh
+   {ENVPREFIX}_NAME=env.sif
    TERM=xterm-256color
 
 .. note::
@@ -246,18 +246,18 @@ environment. {Project} will automatically set a number of
 environment variables in a container that can be inspected by any
 program running in the container.
 
-   -  ``APPTAINER_COMMAND`` - how the container was started, e.g.
+   -  ``{ENVPREFIX}_COMMAND`` - how the container was started, e.g.
       ``exec`` / ``run`` / ``shell``.
 
-   -  ``APPTAINER_CONTAINER`` - the full path to the container image.
+   -  ``{ENVPREFIX}_CONTAINER`` - the full path to the container image.
 
-   -  ``APPTAINER_ENVIRONMENT`` - path inside the container to the
+   -  ``{ENVPREFIX}_ENVIRONMENT`` - path inside the container to the
       shell script holding the container image environment settings.
 
-   -  ``APPTAINER_NAME`` - name of the container image, e.g.
+   -  ``{ENVPREFIX}_NAME`` - name of the container image, e.g.
       ``myfile.sif`` or ``docker://ubuntu``.
 
-   -  ``APPTAINER_BIND`` - a list of bind paths that the user
+   -  ``{ENVPREFIX}_BIND`` - a list of bind paths that the user
       requested, via flags or environment variables, when running the
       container.
 
@@ -303,11 +303,11 @@ environment variables as ``NAME=VALUE`` pairs, e.g.:
    $ singularity run --env-file myenvs env.sif
    Hello from a file
 
-``APPTAINERENV_`` prefix
+``{ENVPREFIX}ENV_`` prefix
 ==========================
 
 If you export an environment variable on your host called
-``APPTAINERENV_xxx`` *before* you run a container, then it will set
+``{ENVPREFIX}ENV_xxx`` *before* you run a container, then it will set
 the environment variable ``xxx`` inside the container:
 
 .. code::
@@ -315,7 +315,7 @@ the environment variable ``xxx`` inside the container:
    $ singularity run env.sif
    Hello
 
-   $ export APPTAINERENV_MYVAR="Overridden"
+   $ export {ENVPREFIX}ENV_MYVAR="Overridden"
    $ singularity run env.sif
    Overridden
 
@@ -349,10 +349,10 @@ setting ``PATH`` in the container definition ``%environment`` block.
 
 If your container depends on things that are bind mounted into it, or
 you have another need to modify the ``PATH`` variable when starting a
-container, you can do so with ``APPTAINERENV_APPEND_PATH`` or
-``APPTAINERENV_PREPEND_PATH``.
+container, you can do so with ``{ENVPREFIX}ENV_APPEND_PATH`` or
+``{ENVPREFIX}ENV_PREPEND_PATH``.
 
-If you set a variable on your host called ``APPTAINERENV_APPEND_PATH``
+If you set a variable on your host called ``{ENVPREFIX}ENV_APPEND_PATH``
 then its value will be appended (added to the end) of the ``PATH``
 variable in the container.
 
@@ -361,7 +361,7 @@ variable in the container.
    $ singularity exec env.sif sh -c 'echo $PATH'
    /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-   $ export APPTAINERENV_APPEND_PATH="/endpath"
+   $ export {ENVPREFIX}ENV_APPEND_PATH="/endpath"
    $ singularity exec env.sif sh -c 'echo $PATH'
    /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/endpath
 
@@ -369,7 +369,7 @@ Alternatively you could use the ``--env`` option to set a
 ``APPEND_PATH`` variable, e.g. ``--env APPEND_PATH=/endpath``.
 
 If you set a variable on your host called
-``APPTAINERENV_PREPEND_PATH`` then its value will be prepended (added
+``{ENVPREFIX}ENV_PREPEND_PATH`` then its value will be prepended (added
 to the start) of the ``PATH`` variable in the container.
 
 .. code::
@@ -377,7 +377,7 @@ to the start) of the ``PATH`` variable in the container.
    $ singularity exec env.sif sh -c 'echo $PATH'
    /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-   $ export APPTAINERENV_PREPEND_PATH="/startpath"
+   $ export {ENVPREFIX}ENV_PREPEND_PATH="/startpath"
    $ singularity exec env.sif sh -c 'echo $PATH'
    /startpath:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
@@ -477,7 +477,7 @@ When a container is run with {Project}, the container
 environment is constructed in the following order:
 
    -  Clear the environment, keeping just ``HOME`` and
-      ``APPTAINER_APPNAME``.
+      ``{ENVPREFIX}_APPNAME``.
    -  Set Docker/OCI defined environment variables, where a Docker or
       OCI image was used as the base for the container build.
    -  If ``PATH`` is not defined set the {Project} default ``PATH``
@@ -490,11 +490,11 @@ environment is constructed in the following order:
       variables.
    -  Set environment variables that were defined in the ``%post``
       section of the build, by addition to the
-      ``$APPTAINER_ENVIRONMENT`` file.
+      ``${ENVPREFIX}_ENVIRONMENT`` file.
    -  Set SCIF (``--app``) environment variables
    -  Set base environment essential vars (``PS1`` and
       ``LD_LIBRARY_PATH``)
-   -  Inject ``APPTAINERENV_`` / ``--env`` / ``--env-file`` variables
+   -  Inject ``{ENVPREFIX}ENV_`` / ``--env`` / ``--env-file`` variables
       so they can override or modify any previous values.
    -  Apply special ``APPEND_PATH`` / ``PREPEND_PATH`` handling.
    -  Restore environment variables from the host, if they have not
@@ -508,7 +508,7 @@ environment is constructed in the following order:
    recommended to avoid manipulating the container environment by
    directly adding or modifying scripts in this directory. Please use
    the ``%environment`` section of the definition file, and the
-   ``$APPTAINER_ENVIRONMENT`` file from ``%post`` if required.
+   ``${ENVPREFIX}_ENVIRONMENT`` file from ``%post`` if required.
 
    A future version of {Project} may move container scripts,
    environment, and metadata outside of the container's root
@@ -608,7 +608,7 @@ when you are writing the definition file, but can be obtained in the
 building.
 
 {Project} allows this, through adding labels to the
-file defined by the ``APPTAINER_LABELS`` environment variable in the
+file defined by the ``{ENVPREFIX}_LABELS`` environment variable in the
 ``%post`` section:
 
 .. code:: singularity
@@ -623,7 +623,7 @@ file defined by the ``APPTAINER_LABELS`` environment variable in the
    # We can now also set labels to a value at build time
    %post
      VAL="$(myprog --version)"
-     echo "my.label $VAL" >> "$APPTAINER_LABELS"
+     echo "my.label $VAL" >> "${ENVPREFIX}_LABELS"
 
 Labels must be added to the file one per line, in a ``NAME VALUE``
 format, where the name and value are separated by a space.
@@ -705,7 +705,7 @@ And the output would look like:
        touch .condarc
 
    %post
-       echo 'export RANDOM=123456' >>$APPTAINER_ENVIRONMENT
+       echo 'export RANDOM=123456' >>${ENVPREFIX}_ENVIRONMENT
        #Installing all dependencies
        apt-get update && apt-get -y upgrade
        apt-get -y install \
@@ -750,27 +750,27 @@ And the output would look like:
    OCI_CMD="bash"
    # ENTRYPOINT only - run entrypoint plus args
    if [ -z "$OCI_CMD" ] && [ -n "$OCI_ENTRYPOINT" ]; then
-   APPTAINER_OCI_RUN="${OCI_ENTRYPOINT} $@"
+   {ENVPREFIX}_OCI_RUN="${OCI_ENTRYPOINT} $@"
    fi
 
    # CMD only - run CMD or override with args
    if [ -n "$OCI_CMD" ] && [ -z "$OCI_ENTRYPOINT" ]; then
    if [ $# -gt 0 ]; then
-       APPTAINER_OCI_RUN="$@"
+       {ENVPREFIX}_OCI_RUN="$@"
    else
-       APPTAINER_OCI_RUN="${OCI_CMD}"
+       {ENVPREFIX}_OCI_RUN="${OCI_CMD}"
    fi
    fi
 
    # ENTRYPOINT and CMD - run ENTRYPOINT with CMD as default args
    # override with user provided args
    if [ $# -gt 0 ]; then
-       APPTAINER_OCI_RUN="${OCI_ENTRYPOINT} $@"
+       {ENVPREFIX}_OCI_RUN="${OCI_ENTRYPOINT} $@"
    else
-       APPTAINER_OCI_RUN="${OCI_ENTRYPOINT} ${OCI_CMD}"
+       {ENVPREFIX}_OCI_RUN="${OCI_ENTRYPOINT} ${OCI_CMD}"
    fi
 
-   exec $APPTAINER_OCI_RUN
+   exec ${ENVPREFIX}_OCI_RUN
 
 ``-t`` / ``--test``
 -------------------
