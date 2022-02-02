@@ -17,7 +17,7 @@ variable_replacements = {
     "{version}": "main",
     "{adminversion}": "main",
     "{Project}": "Apptainer",
-    "{Command}": "apptainer",
+    "{command}": "apptainer",
 }
 
 

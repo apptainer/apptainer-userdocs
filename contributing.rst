@@ -111,8 +111,8 @@ username.)
 
 .. code::
 
-   $ git clone https://github.com/your-username/apptainer.git && \
-       cd apptainer/
+   $ git clone https://github.com/your-username/{command}.git && \
+       cd {command}/
 
 Step 2. Checkout a new branch
 =============================

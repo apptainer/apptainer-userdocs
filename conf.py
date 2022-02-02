@@ -120,8 +120,8 @@ html_theme_options = {
 
 html_context = {
     'display_github': True,
-    'github_user': 'hpcng',
-    'github_repo': 'singularity-userdocs',
+    'github_user': 'apptainer',
+    'github_repo': 'apptainer-userdocs',
     'github_version': 'master',
     'conf_py_path': '/',
 }
@@ -202,7 +202,7 @@ html_show_copyright = False
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'singularity-' + version + '-user-guide'
+htmlhelp_basename = 'apptainer-' + version + '-user-guide'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -222,7 +222,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('index', 'singularity-' + version + '-user-guide.tex', project, author, 'manual'),
+  ('index', 'apptainer-' + version + '-user-guide.tex', project, author, 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -251,7 +251,7 @@ latex_logo = 'logo.png'
 
 # The title of the document. It defaults to the html_title option
 # but can be set independently for epub creation.
-epub_title = 'Singularity ' + version + ' User Guide'
+epub_title = 'Apptainer ' + version + ' User Guide'
 
 # The author of the document. This is put in the Dublin Core metadata.
 # It defaults to the author option.
@@ -266,7 +266,7 @@ epub_publisher = author
 epub_copyright = copyright
 
 # The basename for the epub file. It defaults to the project name.
-epub_basename = 'singularity-' + version + '-user-guide'
+epub_basename = 'apptainer-' + version + '-user-guide'
 
 # The HTML theme for the epub output.
 # Since the default themes are not optimized for small screen space,
@@ -276,7 +276,7 @@ epub_theme = 'epub'
 
 # The unique identifier of the text. This can be a ISBN number
 # or the project homepage.
-epub_identifier = 'https://github.com/hpcng/singularity-userdocs'
+epub_identifier = 'https://github.com/apptainer/apptainer-userdocs'
 
 # The publication scheme for the epub_identifier. This is put in the Dublin Core metadata.
 # For published books the scheme is 'ISBN'. If you use the project homepage, 'URL' seems reasonable.

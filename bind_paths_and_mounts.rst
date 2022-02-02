@@ -43,7 +43,7 @@ Disabling System Binds
 
 The ``--no-mount`` flag allows specific
 system mounts to be disabled, even if they are set in the
-``apptainer.conf`` configuration file by the administrator.
+``{command}.conf`` configuration file by the administrator.
 
 For example, if {Project} has been configured with ``mount hostfs =
 yes`` then every filesystem on the host will be bind mounted to the
@@ -53,13 +53,13 @@ running, you can disable the ``hostfs`` binds:
 
 .. code:: console
 
-   $ {Command} run --no-mount hostfs mycontainer.sif
+   $ {command} run --no-mount hostfs mycontainer.sif
 
 Multiple mounts can be disabled by specifying them separated by commas:
 
 .. code:: console
 
-   $ {Command} run --no-mount tmp,sys,dev mycontainer.sif
+   $ {command} run --no-mount tmp,sys,dev mycontainer.sif
 
 .. _user-defined-bind-paths:
 
@@ -101,14 +101,14 @@ already exist in the container):
    $ ls /data
    bar  foo
 
-   $ {Command} exec --bind /data:/mnt my_container.sif ls /mnt
+   $ {command} exec --bind /data:/mnt my_container.sif ls /mnt
    bar  foo
 
 You can bind multiple directories in a single command with this syntax:
 
 .. code::
 
-   $ {Command} shell --bind /opt,/data:/mnt my_container.sif
+   $ {command} shell --bind /opt,/data:/mnt my_container.sif
 
 This will bind ``/opt`` on the host to ``/opt`` in the container and
 ``/data`` on the host to ``/mnt`` in the container.
@@ -120,7 +120,7 @@ this would be:
 
    $ export APPTAINER_BIND="/opt,/data:/mnt"
 
-   $ {Command} shell my_container.sif
+   $ {command} shell my_container.sif
 
 Using the environment variable ``$APPTAINER_BIND``, you can bind paths
 even when you are running your container as an executable file with a
@@ -145,7 +145,7 @@ To mount ``data`` on the host to ``/mnt`` inside the container:
 
 .. code::
 
-   $ {Command} exec \
+   $ {command} exec \
        --mount type=bind,src=/data,dst=/mnt \
        my_container.sif ls /mnt
    bar  foo
@@ -155,7 +155,7 @@ option:
 
 .. code::
 
-   $ {Command} exec \
+   $ {command} exec \
        --mount type=bind,source=/data,dest=/mnt,ro \
        my_container.sif touch /mnt/test
    touch: cannot touch '/mnt/test': Permission denied
@@ -165,7 +165,7 @@ You can bind multiple directories in a single command with multiple
 
 .. code::
 
-   $ {Command} shell --mount type=bind,src=/opt,dst=/opt \
+   $ {command} shell --mount type=bind,src=/opt,dst=/opt \
                        --mount type=bind,src=/data,dst=/data \
                        my_container.sif
 
@@ -180,12 +180,12 @@ wrapping each field in double quotes if necessary characters.
 .. code::
 
    # Mount a path containing ':' (not possible with --bind)
-   $ {Command} run \
+   $ {command} run \
        --mount type=bind,src=/my:path,dst=/mnt \
        mycontainer.sif
 
    # Mount a path containing a ','
-   $ {Command} run \
+   $ {command} run \
        --mount type=bind,"src=/comma,dir",dst=/mnt \
        mycontainer.sif
 
@@ -226,7 +226,7 @@ host ``$HOME`` directory with the ``--no-home`` flag.
 
 .. code::
 
-   $ {Command} shell --no-home my_container.sif
+   $ {command} shell --no-home my_container.sif
 
 .. note::
 
@@ -245,7 +245,7 @@ host ``$HOME`` directory with the ``--no-home`` flag.
 
 .. code::
 
-   $ {Command} shell --containall my_container.sif
+   $ {command} shell --containall my_container.sif
 
 *************
  FUSE mounts
@@ -328,7 +328,7 @@ type:
 
 .. code::
 
-   $ singularity run --fusemount "host:sshfs server:/ /server" docker://ubuntu
+   $ {command} run --fusemount "host:sshfs server:/ /server" docker://ubuntu
    {Project}> cat /etc/hostname
    localhost.localdomain
    {Project}> cat /server/etc/hostname
@@ -342,7 +342,7 @@ added to your container, you can use the ``container`` mount type:
 
 .. code::
 
-   $ singularity run --fusemount "container:sshfs server:/ /server" sshfs.sif
+   $ {command} run --fusemount "container:sshfs server:/ /server" sshfs.sif
    {Project}> cat /etc/hostname
    localhost.localdomain
    {Project}> cat /server/etc/hostname
@@ -411,13 +411,13 @@ wish to distribute in an image file that allows read/write:
 
    # Run {Project}, mounting my input data to '/input-data' in
    # the container.
-   $ singularity run -B inputs.img:/input-data:image-src=/ mycontainer.sif
+   $ {command} run -B inputs.img:/input-data:image-src=/ mycontainer.sif
    {Project}> ls /input-data
    1           3           5           7           9
    2           4           6           8           lost+found
 
    # Or with --mount instead of -B
-   $ {Command} run \
+   $ {command} run \
        --mount type=bind,src=inputs.img,dst=/input-data,image-src=/ \
        mycontainer.sif
 
@@ -439,12 +439,12 @@ then the squashfs format is appropriate:
 
    # Run {Project}, mounting my input data to '/input-data' in
    # the container.
-   $ singularity run -B inputs.squashfs:/input-data:image-src=/ mycontainer.sif
+   $ {command} run -B inputs.squashfs:/input-data:image-src=/ mycontainer.sif
    {Project}> ls /input-data/
    1  2  3  4  5  6  7  8  9
 
    # Or with --mount instead of -B
-   $ {Command} run \
+   $ {command} run \
        --mount type=bind,src=src-inputs.squashfs,dst=/input-data,image-src=/ \
        mycontainer.sif
 
@@ -459,18 +459,18 @@ instructions <overlay-sif>`:
 .. code:: console
 
    # Create a new empty SIF file
-   $ {Command} sif new inputs.sif
+   $ {command} sif new inputs.sif
 
    # Add the squashfs data image from above to the SIF
-   $ {Command} sif add --datatype 4 --partarch 2 --partfs 1 --parttype 3 inputs.sif inputs.squashfs
+   $ {command} sif add --datatype 4 --partarch 2 --partfs 1 --parttype 3 inputs.sif inputs.squashfs
 
    # Run {Project}, binding data from the SIF file
-   $ singularity run -B inputs.sif:/input-data:image-src=/ mycontainer.sif
+   $ {command} run -B inputs.sif:/input-data:image-src=/ mycontainer.sif
    {Project}> ls /input-data
    1  2  3  4  5  6  7  8  9
 
    # Or with --mount instead of -B
-   $ {Command} run \
+   $ {command} run \
        --mount type=bind,src=inputs.sif,dst=/input-data,image-src=/ \
        mycontainer.sif
 
