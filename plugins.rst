@@ -23,7 +23,7 @@ The ``list`` command prints the currently installed plugins.
 
 .. code::
 
-   $ singularity plugin list
+   $ {Command} plugin list
    There are no plugins installed.
 
 Plugins are packaged and distributed as binaries encoded with the
@@ -34,7 +34,7 @@ plugin ``test-plugin`` is included with the {Project} source code.
 
 .. code::
 
-   $ singularity plugin compile examples/plugins/test-plugin/
+   $ {Command} plugin compile examples/plugins/test-plugin/
 
 Upon successful compilation, a SIF file will appear in the directory of
 the plugin's source code.
@@ -71,7 +71,7 @@ plugin, use the ``inspect`` command.
 
 .. code::
 
-   $ singularity plugin inspect examples/plugins/test-plugin/test-plugin.sif
+   $ {Command} plugin inspect examples/plugins/test-plugin/test-plugin.sif
    Name: sylabs.io/test-plugin
    Description: This is a short test plugin for {Project}
    Author: Michael Bauer
@@ -82,8 +82,8 @@ requires root privilege.
 
 .. code::
 
-   $ sudo singularity plugin install examples/plugins/test-plugin/test-plugin.sif
-   $ singularity plugin list
+   $ sudo {Command} plugin install examples/plugins/test-plugin/test-plugin.sif
+   $ {Command} plugin list
    ENABLED  NAME
        yes  sylabs.io/test-plugin
 
@@ -94,12 +94,12 @@ privilege.
 
 .. code::
 
-   $ sudo singularity plugin disable sylabs.io/test-plugin
-   $ singularity plugin list
+   $ sudo {Command} plugin disable sylabs.io/test-plugin
+   $ {Command} plugin list
    ENABLED  NAME
         no  sylabs.io/test-plugin
-   $ sudo singularity plugin enable sylabs.io/test-plugin
-   $ singularity plugin list
+   $ sudo {Command} plugin enable sylabs.io/test-plugin
+   $ {Command} plugin list
    ENABLED  NAME
        yes  sylabs.io/test-plugin
 
@@ -108,9 +108,9 @@ operation requires root privilege.
 
 .. code::
 
-   $ sudo singularity plugin uninstall sylabs.io/test-plugin
+   $ sudo {Command} plugin uninstall sylabs.io/test-plugin
    Uninstalled plugin "sylabs.io/test-plugin".
-   $ singularity plugin list
+   $ {Command} plugin list
    There are no plugins installed.
 
 ******************

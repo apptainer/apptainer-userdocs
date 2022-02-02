@@ -53,7 +53,7 @@ exists locally. (Recall:
 
 .. code::
 
-   $ singularity pull docker://busybox
+   $ {Command} pull docker://busybox
    INFO:    Starting build...
    Getting image source signatures
    Copying blob sha256:fc1a6b909f82ce4b72204198d49de3aaf757b3ab2bb823cb6e47c416b97c5985
@@ -76,7 +76,7 @@ container, this SIF file can be mounted as follows:
 
 .. code::
 
-   $ sudo singularity oci mount ./busybox_latest.sif /var/tmp/busybox
+   $ sudo {Command} oci mount ./busybox_latest.sif /var/tmp/busybox
 
 By issuing the ``mount`` command, the root filesystem encapsulated in
 the SIF file ``busybox_latest.sif`` is mounted on ``/var/tmp/busybox``
@@ -735,11 +735,11 @@ filesystem, as required by the standard; this filesystem has contents:
 .. code::
 
    $ sudo ls /var/tmp/busybox/rootfs
-   bin  dev  environment  etc  home  proc  root  singularity  sys  tmp  usr  var
+   bin  dev  environment  etc  home  proc  root  {Command}  sys  tmp  usr  var
 
 .. note::
 
-   ``environment`` and ``singularity`` above are symbolic links to the
+   ``environment`` and ``{Command}`` above are symbolic links to the
    ``.singularity.d`` directory.
 
 ..
@@ -763,7 +763,7 @@ additional properties - for example:
 
       [
         [
-          "/.singularity.d/actions/run"
+          "/.apptainer.d/actions/run"
         ]
       ]
 
@@ -800,16 +800,16 @@ as follows:
 
 .. code::
 
-   $ sudo singularity oci create -b /var/tmp/busybox busybox1
+   $ sudo {Command} oci create -b /var/tmp/busybox busybox1
 
 .. note::
 
    Data for the ``config.json`` file exists within the SIF file as a
    descriptor for images pulled or built from Docker/OCI registries. For
    images sourced elsewhere, a default ``config.json`` file is created
-   when the ``singularity oci mount ...`` command is issued.
+   when the ``{Command} oci mount ...`` command is issued.
 
-   Upon invocation, ``singularity oci mount ...`` also mounts the root
+   Upon invocation, ``{Command} oci mount ...`` also mounts the root
    filesystem stored in the SIF file on ``/bundle/rootfs``, and
    establishes an overlay filesystem on the mount point
    ``/bundle/overlay``.
@@ -828,7 +828,7 @@ bootstrap process. The instance is named ``busybox1`` in this example.
    invocation requests.
 
 The ``state`` of the container instance can be determined via ``$ sudo
-singularity oci state busybox1``:
+{Command} oci state busybox1``:
 
 .. code:: json
 
@@ -839,8 +839,8 @@ singularity oci state busybox1``:
    "pid": 6578,
    "bundle": "/var/tmp/busybox",
    "createdAt": 1554389921452964253,
-   "attachSocket": "/var/run/singularity/instances/root/busybox1/attach.sock",
-   "controlSocket": "/var/run/singularity/instances/root/busybox1/control.sock"
+   "attachSocket": "/var/run/{Command}/instances/root/busybox1/attach.sock",
+   "controlSocket": "/var/run/{Command}/instances/root/busybox1/control.sock"
    }
 
 Container state, as conveyed via these properties, is in compliance with
@@ -864,10 +864,10 @@ in deployments where auditing requirements exist.
    ------------------------------------------
 
 ..
-   $ sudo singularity oci start busybox
+   $ sudo {Command} oci start busybox
 
 ..
-   ~$ sudo singularity oci state busybox
+   ~$ sudo {Command} oci state busybox
 
 ..
    TODO Review CC's responses again ... see GDocs note on March 20, 2019
@@ -893,7 +893,7 @@ be issued:
 
 .. code::
 
-   $ sudo singularity oci umount /var/tmp/busybox
+   $ sudo {Command} oci umount /var/tmp/busybox
 
 .. note::
 
@@ -926,25 +926,25 @@ be issued:
    CC's suggested workflow:
 
 ..
-   singularity build /tmp/test.sif docker://busybox
+   {Command} build /tmp/test.sif docker://busybox
 
 ..
-   sudo singularity oci mount /tmp/test.sif /var/tmp/busy
+   sudo {Command} oci mount /tmp/test.sif /var/tmp/busy
 
 ..
-   sudo singularity oci create -b /var/tmp/busy testing > /dev/null 2>&1
+   sudo {Command} oci create -b /var/tmp/busy testing > /dev/null 2>&1
 
 ..
-   sudo singularity oci start testing
+   sudo {Command} oci start testing
 
 ..
-   sudo singularity oci exec testing /bin/sh
+   sudo {Command} oci exec testing /bin/sh
 
 ..
-   sudo singularity oci kill testing
+   sudo {Command} oci kill testing
 
 ..
-   sudo singularity oci delete testing
+   sudo {Command} oci delete testing
 
 ..
-   sudo singularity oci umount /var/tmp/busy
+   sudo {Command} oci umount /var/tmp/busy

@@ -37,7 +37,7 @@ or a PEM file containing an asymmetric RSA public key. Of these two
 methods the PEM file is more secure and is therefore recommended for
 production use.
 
-An ``-e|--encrypt`` flag to ``singularity build`` is used to indicate
+An ``-e|--encrypt`` flag to ``{Command} build`` is used to indicate
 that the container needs to be encrypted.
 
 A passphrase or a key-file used to perform the encryption is supplied at
@@ -80,7 +80,7 @@ Encrypting with a passphrase interactively
 
 .. code::
 
-   $ sudo singularity build --passphrase encrypted.sif encrypted.def
+   $ sudo {Command} build --passphrase encrypted.sif encrypted.def
    Enter encryption passphrase: <secret>
    INFO:    Starting build...
 
@@ -106,7 +106,7 @@ like so.
 
    $ export APPTAINER_ENCRYPTION_PASSPHRASE=$(cat secret.txt)
 
-   $ sudo -E singularity build --encrypt encrypted.sif encrypted.def
+   $ sudo -E {Command} build --encrypt encrypted.sif encrypted.def
    Starting build...
 
 PEM File Encryption
@@ -145,7 +145,7 @@ Encrypting with a command line option
 
 .. code::
 
-   $ sudo singularity build --pem-path=rsa_pub.pem encrypted.sif encrypted.def
+   $ sudo {Command} build --pem-path=rsa_pub.pem encrypted.sif encrypted.def
    Starting build...
 
 Encrypting with an environment variable
@@ -179,7 +179,7 @@ Running with a passphrase interactively
 
 .. code::
 
-   $ singularity run --passphrase encrypted.sif
+   $ {Command} run --passphrase encrypted.sif
    Enter passphrase for encrypted container: <secret>
 
 Running with a passphrase in an environment variable
@@ -199,7 +199,7 @@ like so.
 
    $ export APPTAINER_ENCRYPTION_PASSPHRASE=$(cat secret.txt)
 
-   $ singularity run encrypted.sif
+   $ {Command} run encrypted.sif
 
 Running a container encrypted with a PEM file
 =============================================
@@ -212,7 +212,7 @@ Running using a command line option
 
 .. code::
 
-   $ singularity run --pem-path=rsa_pri.pem encrypted.sif
+   $ {Command} run --pem-path=rsa_pri.pem encrypted.sif
 
 Running using an environment variable
 -------------------------------------

@@ -43,7 +43,7 @@ Disabling System Binds
 
 The ``--no-mount`` flag allows specific
 system mounts to be disabled, even if they are set in the
-``singularity.conf`` configuration file by the administrator.
+``apptainer.conf`` configuration file by the administrator.
 
 For example, if {Project} has been configured with ``mount hostfs =
 yes`` then every filesystem on the host will be bind mounted to the
@@ -53,13 +53,13 @@ running, you can disable the ``hostfs`` binds:
 
 .. code:: console
 
-   $ singularity run --no-mount hostfs mycontainer.sif
+   $ {Command} run --no-mount hostfs mycontainer.sif
 
 Multiple mounts can be disabled by specifying them separated by commas:
 
 .. code:: console
 
-   $ singularity run --no-mount tmp,sys,dev mycontainer.sif
+   $ {Command} run --no-mount tmp,sys,dev mycontainer.sif
 
 .. _user-defined-bind-paths:
 
@@ -101,14 +101,14 @@ already exist in the container):
    $ ls /data
    bar  foo
 
-   $ singularity exec --bind /data:/mnt my_container.sif ls /mnt
+   $ {Command} exec --bind /data:/mnt my_container.sif ls /mnt
    bar  foo
 
 You can bind multiple directories in a single command with this syntax:
 
 .. code::
 
-   $ singularity shell --bind /opt,/data:/mnt my_container.sif
+   $ {Command} shell --bind /opt,/data:/mnt my_container.sif
 
 This will bind ``/opt`` on the host to ``/opt`` in the container and
 ``/data`` on the host to ``/mnt`` in the container.
@@ -120,7 +120,7 @@ this would be:
 
    $ export APPTAINER_BIND="/opt,/data:/mnt"
 
-   $ singularity shell my_container.sif
+   $ {Command} shell my_container.sif
 
 Using the environment variable ``$APPTAINER_BIND``, you can bind paths
 even when you are running your container as an executable file with a
@@ -145,7 +145,7 @@ To mount ``data`` on the host to ``/mnt`` inside the container:
 
 .. code::
 
-   $ singularity exec \
+   $ {Command} exec \
        --mount type=bind,src=/data,dst=/mnt \
        my_container.sif ls /mnt
    bar  foo
@@ -155,7 +155,7 @@ option:
 
 .. code::
 
-   $ singularity exec \
+   $ {Command} exec \
        --mount type=bind,source=/data,dest=/mnt,ro \
        my_container.sif touch /mnt/test
    touch: cannot touch '/mnt/test': Permission denied
@@ -165,7 +165,7 @@ You can bind multiple directories in a single command with multiple
 
 .. code::
 
-   $ singularity shell --mount type=bind,src=/opt,dst=/opt \
+   $ {Command} shell --mount type=bind,src=/opt,dst=/opt \
                        --mount type=bind,src=/data,dst=/data \
                        my_container.sif
 
@@ -180,12 +180,12 @@ wrapping each field in double quotes if necessary characters.
 .. code::
 
    # Mount a path containing ':' (not possible with --bind)
-   $ singularity run \
+   $ {Command} run \
        --mount type=bind,src=/my:path,dst=/mnt \
        mycontainer.sif
 
    # Mount a path containing a ','
-   $ singularity run \
+   $ {Command} run \
        --mount type=bind,"src=/comma,dir",dst=/mnt \
        mycontainer.sif
 
@@ -226,7 +226,7 @@ host ``$HOME`` directory with the ``--no-home`` flag.
 
 .. code::
 
-   $ singularity shell --no-home my_container.sif
+   $ {Command} shell --no-home my_container.sif
 
 .. note::
 
@@ -245,7 +245,7 @@ host ``$HOME`` directory with the ``--no-home`` flag.
 
 .. code::
 
-   $ singularity shell --containall my_container.sif
+   $ {Command} shell --containall my_container.sif
 
 *************
  FUSE mounts
@@ -417,7 +417,7 @@ wish to distribute in an image file that allows read/write:
    2           4           6           8           lost+found
 
    # Or with --mount instead of -B
-   $ singularity run \
+   $ {Command} run \
        --mount type=bind,src=inputs.img,dst=/input-data,image-src=/ \
        mycontainer.sif
 
@@ -444,7 +444,7 @@ then the squashfs format is appropriate:
    1  2  3  4  5  6  7  8  9
 
    # Or with --mount instead of -B
-   $ singularity run \
+   $ {Command} run \
        --mount type=bind,src=src-inputs.squashfs,dst=/input-data,image-src=/ \
        mycontainer.sif
 
@@ -453,16 +453,16 @@ SIF Image Files
 
 Advanced users may wish to create a standalone SIF image, which contains
 an ``ext3`` or ``squashfs`` data partition holding files, by using the
-``singularity sif`` commands similarly to the :ref:`persistent overlays
+``apptainer sif`` commands similarly to the :ref:`persistent overlays
 instructions <overlay-sif>`:
 
 .. code:: console
 
    # Create a new empty SIF file
-   $ singularity sif new inputs.sif
+   $ {Command} sif new inputs.sif
 
    # Add the squashfs data image from above to the SIF
-   $ singularity sif add --datatype 4 --partarch 2 --partfs 1 --parttype 3 inputs.sif inputs.squashfs
+   $ {Command} sif add --datatype 4 --partarch 2 --partfs 1 --parttype 3 inputs.sif inputs.squashfs
 
    # Run {Project}, binding data from the SIF file
    $ singularity run -B inputs.sif:/input-data:image-src=/ mycontainer.sif
@@ -470,7 +470,7 @@ instructions <overlay-sif>`:
    1  2  3  4  5  6  7  8  9
 
    # Or with --mount instead of -B
-   $ singularity run \
+   $ {Command} run \
        --mount type=bind,src=inputs.sif,dst=/input-data,image-src=/ \
        mycontainer.sif
 

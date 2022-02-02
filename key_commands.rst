@@ -41,7 +41,7 @@ are stored by the moment before importing a new key).
 
 .. code:: singularity
 
-   $ singularity key list --secret
+   $ {Command} key list --secret
 
 .. note::
 
@@ -78,7 +78,7 @@ you will just need to run the following command to import your key:
 
 .. code:: singularity
 
-   $ singularity key import $HOME/pinkie-pie.asc
+   $ {Command} key import $HOME/pinkie-pie.asc
 
 .. note::
 
@@ -97,7 +97,7 @@ your local keystore.
    Key with fingerprint 8C10B902F438E4D504C3ACF689FCFFAED5F34A77 successfully added to the keyring
 
 After this you can see if that key was correctly added to your local
-keystore by running ``singularity key list -s`` command:
+keystore by running ``{Command} key list -s`` command:
 
 .. code:: singularity
 
@@ -145,7 +145,7 @@ For example to export a public key in binary format you can run:
 
 .. code:: singularity
 
-   $ singularity key export 8C10B902F438E4D504C3ACF689FCFFAED5F34A77 $HOME/mykey.asc
+   $ {Command} key export 8C10B902F438E4D504C3ACF689FCFFAED5F34A77 $HOME/mykey.asc
 
 This will export a public binary key named ``mykey.asc`` and will save
 it under the home folder. If you would like to export the same public
@@ -154,7 +154,7 @@ following command:
 
 .. code:: singularity
 
-   $ singularity key export --armor 8C10B902F438E4D504C3ACF689FCFFAED5F34A77 $HOME/mykey.asc
+   $ {Command} key export --armor 8C10B902F438E4D504C3ACF689FCFFAED5F34A77 $HOME/mykey.asc
 
 And in the case in which you may need to export a secret key on
 ``ASCII`` armored format, you would need to specify from where to find
@@ -162,13 +162,13 @@ the key, since the fingerprint is the same.
 
 .. code:: singularity
 
-   $ singularity key export --armor --secret 8C10B902F438E4D504C3ACF689FCFFAED5F34A77 $HOME/mykey.asc
+   $ {Command} key export --armor --secret 8C10B902F438E4D504C3ACF689FCFFAED5F34A77 $HOME/mykey.asc
 
 and on binary format instead:
 
 .. code:: singularity
 
-   $ singularity key export --secret 8C10B902F438E4D504C3ACF689FCFFAED5F34A77 $HOME/mykey.asc
+   $ {Command} key export --secret 8C10B902F438E4D504C3ACF689FCFFAED5F34A77 $HOME/mykey.asc
 
 .. note::
 
@@ -187,7 +187,7 @@ keystore, you can do so by running the following command:
 
 .. code:: singularity
 
-   $ singularity key remove 8C10B902F438E4D504C3ACF689FCFFAED5F34A77
+   $ {Command} key remove 8C10B902F438E4D504C3ACF689FCFFAED5F34A77
 
 .. note::
 

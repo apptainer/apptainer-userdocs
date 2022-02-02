@@ -44,7 +44,7 @@ the container that's called ``sylabsio/lolcow:latest``:
 
 .. code::
 
-   $ singularity run docker://sylabsio/lolcow:latest
+   $ {Command} run docker://sylabsio/lolcow:latest
    INFO:    Converting OCI blobs to SIF format
    INFO:    Starting build...
    Getting image source signatures
@@ -72,11 +72,11 @@ creates a SIF file from them. This SIF file is kept in your
 Docker container again the downloads and conversion aren't required.
 
 To obtain the Docker container as a SIF file in a specific location,
-which you can move, share, and keep for later, ``singularity pull`` it:
+which you can move, share, and keep for later, ``{Command} pull`` it:
 
 .. code::
 
-   $ singularity pull docker://sylabsio/lolcow
+   $ {Command} pull docker://sylabsio/lolcow
    INFO:    Using cached SIF image
 
    $ ls -l lolcow_latest.sif
@@ -88,9 +88,9 @@ from the cache.
 
 .. note::
 
-   ``singularity pull`` of a Docker container actually runs a
-   ``singularity build`` behind the scenes, since we are translating
-   from OCI to SIF. If you ``singularity pull`` a Docker container
+   ``{Command} pull`` of a Docker container actually runs a
+   ``{Command} build`` behind the scenes, since we are translating
+   from OCI to SIF. If you ``{Command} pull`` a Docker container
    twice, the output file isn't identical because metadata such as dates
    from the conversion will vary. This differs from pulling a SIF
    container (e.g. from a ``library://`` URI), which always give you an
@@ -106,9 +106,9 @@ check whether the container has been modified there. On shared systems,
 and when running containers in parallel, this can quickly exhaust the
 Docker Hub API limits.
 
-We recommend that you ``singularity pull`` a Docker image to a local
+We recommend that you ``{Command} pull`` a Docker image to a local
 SIF, and then always run from the SIF file, rather than using
-``singularity run docker://...`` repeatedly.
+``{Command} run docker://...`` repeatedly.
 
 Alternatively, if you have signed up for a Docker Hub account, make sure
 that you authenticate before using ``docker://`` container URIs.
@@ -123,30 +123,30 @@ a number of ways to do this with {Project}.
 {Project} CLI Remote Command
 ------------------------------
 
-The ``singularity remote login`` command supports logging into Docker
+The ``{Command} remote login`` command supports logging into Docker
 Hub and other OCI registries. For Docker Hub, the registry hostname is
 ``docker.io``, so you will need to login as below, specifying your
 username:
 
 .. code::
 
-   $ singularity remote login --username myuser docker://docker.io
+   $ {Command} remote login --username myuser docker://docker.io
    Password / Token:
-   INFO:    Token stored in /home/myuser/.singularity/remote.yaml
+   INFO:    Token stored in /home/myuser/.{Command}/remote.yaml
 
 The Password / Token you enter must be a Docker Hub CLI access token,
 which you should generate in the 'Security' section of your account
 profile page on Docker Hub.
 
 To check which Docker / OCI registries you are currently logged in to,
-use ``singularity remote list``.
+use ``{Command} remote list``.
 
 To logout of a registry, so that your credentials are forgotten, use
-``singularity remote logout``:
+``{Command} remote logout``:
 
 .. code::
 
-   $ singularity remote logout docker://docker.io
+   $ {Command} remote logout docker://docker.io
    INFO:    Logout succeeded
 
 Docker CLI Authentication
@@ -172,7 +172,7 @@ credentials, use the ``--docker-login`` flag:
 
 .. code::
 
-   $ singularity pull --docker-login docker://sylabsio/private
+   $ {Command} pull --docker-login docker://sylabsio/private
    Enter Docker Username: myuser
    Enter Docker Password:
 
@@ -220,12 +220,12 @@ just include the ``quay.io`` hostname in your ``docker://`` URI:
 
 .. code::
 
-   $ singularity pull docker://quay.io/bitnami/python:3.7
+   $ {Command} pull docker://quay.io/bitnami/python:3.7
    INFO:    Converting OCI blobs to SIF format
    INFO:    Starting build...
    ...
 
-   $ singularity run python_3.7.sif
+   $ {Command} run python_3.7.sif
    Python 3.7.12 (default, Sep 24 2021, 11:48:27)
    [GCC 8.3.0] on linux
    Type "help", "copyright", "credits" or "license" for more information.
@@ -256,7 +256,7 @@ login:
 
 .. code::
 
-   $ singularity pull docker://nvcr.io/nvidia/pytorch:21.09-py3
+   $ {Command} pull docker://nvcr.io/nvidia/pytorch:21.09-py3
    INFO:    Converting OCI blobs to SIF format
    INFO:    Starting build...
 
@@ -287,7 +287,7 @@ public container from GitHub Container Registry using a ``ghcr.io`` URI:
 
 .. code::
 
-   $ singularity pull docker://ghcr.io/containerd/alpine:latest
+   $ {Command} pull docker://ghcr.io/containerd/alpine:latest
    INFO:    Converting OCI blobs to SIF format
    INFO:    Starting build...
 
@@ -334,7 +334,7 @@ username used in conjunction with this password is always ``AWS``.
 
 Then login using one of the following methods:
 
--  Run ``singularity remote login --username AWS
+-  Run ``{Command} remote login --username AWS
    docker://<accountid>.dkr.ecr.<region>.amazonaws.com`` to store your
    credentials for {Project}.
 
@@ -367,7 +367,7 @@ will add credentials to ``.docker/config.json`` which can be read by
 Service Principle accounts will have an explicit username and password,
 and you should authenticate using one of the following methods:
 
--  Run ``singularity remote login --username myuser
+-  Run ``{Command} remote login --username myuser
    docker://myregistry.azurecr.io`` to store your credentials for
    {Project}.
 
@@ -462,9 +462,9 @@ stored credentials or environment variables must be available to the
 -  Set the ``APPTAINER_DOCKER_USERNAME`` and
    ``APPTAINER_DOCKER_PASSWORD`` environment variables. Pass the
    environment variables through sudo to the ``root`` build process by
-   running ``sudo -E singularity build ...``.
+   running ``sudo -E {Command} build ...``.
 
--  Run ``sudo singularity remote login ...`` to store your credentials
+-  Run ``sudo {Command} remote login ...`` to store your credentials
    for the ``root`` user on your system. This is separate from storing
    the credentials under your own account.
 
@@ -502,7 +502,7 @@ name:
 
 .. code::
 
-   $ singularity build lolcow_from_docker_cache.sif docker-daemon://sylabsio/lolcow:latest
+   $ {Command} build lolcow_from_docker_cache.sif docker-daemon://sylabsio/lolcow:latest
    INFO:    Starting build...
    Getting image source signatures
    Copying blob sha256:a2022691bf950a72f9d2d84d557183cb9eee07c065a76485f1695784855c5193
@@ -581,14 +581,14 @@ the layers and metadata that make up a Docker container:
    -rw-r--r--  0 0      0   118356480 Aug 16 11:22 af7e389ea6636873dbc5adc17826e8401d96d3d384135b2f9fe990865af202ab/layer.tar
    -rw-r--r--  0 0      0         266 Dec 31  1969 manifest.json
 
-We can convert this tar file into a singularity container using the
+We can convert this tar file into a {Command} container using the
 ``docker-archive`` bootstrap agent. Because the agent accesses a file,
 rather than an object hosted by a service, it uses ``:<filename>``, not
 ``://<location>``. To build a tar archive directly to a SIF container:
 
 .. code::
 
-   $ singularity build lolcow_tar.sif docker-archive:lolcow.tar
+   $ {Command} build lolcow_tar.sif docker-archive:lolcow.tar
    INFO:    Starting build...
    Getting image source signatures
    Copying blob sha256:2f0514a4c044af1ff4f47a46e14b6d46143044522fcd7a9901124209d16d6171
@@ -723,7 +723,7 @@ project directory that you need access to.
 
    # Without --contain, python in the container finds packages
    # in your $HOME directory.
-   $ singularity exec docker://python:3.9 pip list
+   $ {Command} exec docker://python:3.9 pip list
    Package    Version
    ---------- -------
    pip        21.2.4
@@ -733,7 +733,7 @@ project directory that you need access to.
 
    # With --contain, python in the container only finds packages
    # installed in the container.
-   $ singularity exec --contain docker://python:3.9 pip list
+   $ {Command} exec --contain docker://python:3.9 pip list
    Package    Version
    ---------- -------
    pip        21.2.4
@@ -760,11 +760,11 @@ are set in the container:
    # Set a singularity container environment variable
    $ export "APPTAINERENV_FORCE_VAR="123"
 
-   $ singularity run library://alpine env | grep VAR
+   $ {Command} run library://alpine env | grep VAR
    FORCE_VAR=123
    HOST_VAR=ABC
 
-   $ singularity run --cleanenv library://alpine env | grep VAR
+   $ {Command} run --cleanenv library://alpine env | grep VAR
    FORCE_VAR=123
 
 Any environment variables set via an ``ENV`` line in a ``Dockerfile``
@@ -827,12 +827,12 @@ around this, use the ``--no-init`` flag to disable the shim:
 
 .. code::
 
-   $ singularity run --pid tini_example.sif
+   $ {Command} run --pid tini_example.sif
    [WARN  tini (2690)] Tini is not running as PID 1 .
    Zombie processes will not be re-parented to Tini, so zombie reaping won't work.
    To fix the problem, run Tini as PID 1.
 
-   $ singularity run --pid --no-init tini_example.sif
+   $ {Command} run --pid --no-init tini_example.sif
    ...
    # NO WARNINGS
 
@@ -893,11 +893,11 @@ is run, with any arguments appended:
    # ENTRYPOINT="date"
 
    # Runs 'date'
-   $ singularity run mycontainer.sif
+   $ {Command} run mycontainer.sif
    Wed 06 Oct 2021 02:42:54 PM CDT
 
    # Runs 'date --utc`
-   $ singularity run mycontainer.sif --utc
+   $ {Command} run mycontainer.sif --utc
    Wed 06 Oct 2021 07:44:27 PM UTC
 
 If the Docker container only has a ``CMD`` - the ``CMD`` is run, or is
@@ -908,11 +908,11 @@ If the Docker container only has a ``CMD`` - the ``CMD`` is run, or is
    # CMD="date"
 
    # Runs 'date'
-   $ singularity run mycontainer.sif
+   $ {Command} run mycontainer.sif
    Wed 06 Oct 2021 02:45:39 PM CDT
 
    # Runs 'echo hello'
-   $ singularity run mycontainer.sif echo hello
+   $ {Command} run mycontainer.sif echo hello
    hello
 
 If the Docker container has a ``CMD`` *and* ``ENTRYPOINT``, then we run
@@ -925,15 +925,15 @@ with any user supplied arguments:
    # CMD="--utc"
 
    # Runs 'date --utc'
-   $ singularity run mycontainer.sif
+   $ {Command} run mycontainer.sif
    Wed 06 Oct 2021 07:48:43 PM UTC
 
    # Runs 'date -R'
-   $ singularity run mycontainer.sif -R
+   $ {Command} run mycontainer.sif -R
    Wed, 06 Oct 2021 14:49:07 -0500
 
 There is no flag to override an ``ENTRYPOINT`` set for a Docker
-container. Instead, use ``singularity exec`` to run an arbitrary program
+container. Instead, use ``{Command} exec`` to run an arbitrary program
 inside a container.
 
 Argument Handling
@@ -950,10 +950,10 @@ quoting of arguments.
    $ docker run -it --rm alpine echo "\$HOSTNAME"
    $HOSTNAME
 
-   $ singularity run docker://alpine echo "\$HOSTNAME"
+   $ {Command} run docker://alpine echo "\$HOSTNAME"
    p700
 
-   $ singularity run docker://alpine echo "\\\$HOSTNAME"
+   $ {Command} run docker://alpine echo "\\\$HOSTNAME"
    $HOSTNAME
 
 If you are running a binary inside a ``docker://`` container directly,
@@ -1036,10 +1036,10 @@ Registry Authentication Issues
 ==============================
 
 If you experience problems pulling containers from a private registry,
-check your credentials carefully. You can ``singularity pull`` with the
+check your credentials carefully. You can ``{Command} pull`` with the
 ``--docker-login`` flag to perform an interactive login. This may be
 useful if you are unsure whether you have stored credentials properly
-via ``singularity remote login`` or ``docker login``.
+via ``{Command} remote login`` or ``docker login``.
 
 OCI registries expect different values for username and password fields.
 Some require a token to be generated and used instead of your account
@@ -1144,7 +1144,7 @@ Section          Description                 Section          Description
 
 ``%runscript```  | Commands that will
                  | be run when you           ``ENTRYPOINT``   | Commands / arguments
-                 | ``singularity run``       ``CMD``          | that will run in the
+                 | ``{Command} run``       ``CMD``          | that will run in the
                  | the container image.                       | container image.
 
 ``%startscript`` | Commands that will

@@ -23,7 +23,7 @@ other topics related to the build environment.
 
 {Project} will cache SIF container images generated from remote
 sources, and any OCI/docker layers used to create them. The cache is
-created at ``$HOME/.singularity/cache`` by default. The location of the
+created a   t ``$HOME/.singularity/cache`` by default. The location of the
 cache can be changed by setting the ``APPTAINER_CACHEDIR`` environment
 variable.
 
@@ -37,10 +37,10 @@ variable, if you set it.
    $ export APPTAINER_CACHEDIR=/tmp/user/temporary-cache
 
    # Running a build under your user account
-   $ singularity build --fakeroot myimage.sif mydef.def
+   $ {Command} build --fakeroot myimage.sif mydef.def
 
    # Running a build with sudo, must use -E to pass env var
-   $ sudo -E singularity build myimage.sif mydef.def
+   $ sudo -E {Command} build myimage.sif mydef.def
 
 If you change the value of ``APPTAINER_CACHEDIR`` be sure to choose a
 location that is:
@@ -82,7 +82,7 @@ future runs.
 
 You should not add any additional files, or modify files in the cache,
 as this may cause checksum / integrity errors when you run or build
-containers. If you experience problems use ``singularity cache clean``
+containers. If you experience problems use ``{Command} cache clean``
 to reset the cache to a clean, empty state.
 
 BoltDB Corruption Errors
@@ -119,19 +119,19 @@ your cache, without manually inspecting the cache directories.
 Listing Cache
 =============
 
-To view a summary of cache usage, use ``singularity cache list``:
+To view a summary of cache usage, use ``{Command} cache list``:
 
 .. code::
 
-   $ singularity cache list
+   $ {Command} cache list
    There are 4 container file(s) using 59.45 MB and 23 oci blob file(s) using 379.10 MB of space
    Total space used: 438.55 MB
 
-To view detailed information, use ``singularity cache list -v``:
+To view detailed information, use ``{Command} cache list -v``:
 
 .. code::
 
-   $ singularity cache list -v
+   $ {Command} cache list -v
    NAME                     DATE CREATED           SIZE             TYPE
    0ed5a98249068fe0592edb   2020-05-27 12:57:22    192.21 MB        blob
    1d9cd1b99a7eca56d8f2be   2020-05-28 15:19:07    0.35 kB          blob
@@ -181,12 +181,12 @@ Cleaning the Cache
 To reclaim space used by the {Project} cache, use ``singularity
 cache clean``.
 
-By default ``singularity cache clean`` will remove all cache entries,
+By default ``{Command} cache clean`` will remove all cache entries,
 after asking you to confirm:
 
 .. code::
 
-   $ singularity cache clean
+   $ {Command} cache clean
    This will delete everything in your cache (containers from all sources and OCI blobs).
    Hint: You can see exactly what would be deleted by canceling and using the --dry-run option.
    Do you want to continue? [N/y] n
@@ -201,14 +201,14 @@ option. E.g. to clean cache entries older than 30 days:
 
 .. code::
 
-   $ singularity cache clean --days 30
+   $ {Command} cache clean --days 30
 
 To remove only a specific kind of cache entry, e.g. only library images,
 use the ``type`` / ``-T`` option:
 
 .. code::
 
-   $ singularity cache clean --type library
+   $ {Command} cache clean --type library
 
 .. _sec:temporaryfolders:
 

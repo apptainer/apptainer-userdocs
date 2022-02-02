@@ -124,7 +124,7 @@ If the bootstrap image is in the SIF format, then verification will be
 performed at build time. This verification checks whether the image has
 been signed. If it has been signed the integrity of the image is
 checked, and the signatures matched to public keys if available. This
-process is equivalent to running ``singularity verify`` on the bootstrap
+process is equivalent to running ``{Command} verify`` on the bootstrap
 image.
 
 By default a failed verification, e.g. against an unsigned image, or one
@@ -383,14 +383,14 @@ build option:
 
 .. code::
 
-   $ sudo singularity build --notest my_container.sif my_container.def
+   $ sudo {Command} build --notest my_container.sif my_container.def
 
 Running the test command on a container built with this def file yields
 the following:
 
 .. code::
 
-   $ singularity test my_container.sif
+   $ {Command} test my_container.sif
    Container base is Ubuntu as expected.
 
 One common use of the ``%test`` section is to run a quick check that the
@@ -405,7 +405,7 @@ without any options, you might test it can be run with:
        samtools
 
 If ``samtools`` is not successfully installed in the container then the
-``singularity test`` will exit with an error such as ``samtools: command
+``{Command} test`` will exit with an error such as ``samtools: command
 not found``.
 
 Some programs return an error code when run without mandatory options.
@@ -463,7 +463,7 @@ variables are set appropriately at runtime with the following command:
 
 .. code::
 
-   $ singularity exec my_container.sif env | grep -E 'LISTEN_PORT|LC_ALL'
+   $ {Command} exec my_container.sif env | grep -E 'LISTEN_PORT|LC_ALL'
    LISTEN_PORT=12345
    LC_ALL=C
 
@@ -510,13 +510,13 @@ section above). The script can be invoked like so:
 
 .. code::
 
-   $ singularity instance start my_container.sif instance1
+   $ {Command} instance start my_container.sif instance1
    INFO:    instance started successfully
 
    $ lsof | grep LISTEN
    nc        19061               vagrant    3u     IPv4             107409      0t0        TCP *:12345 (LISTEN)
 
-   $ singularity instance stop instance1
+   $ {Command} instance stop instance1
    Stopping instance1 instance of /home/vagrant/my_container.sif (PID=19035)
 
 .. _runscript:
@@ -526,7 +526,7 @@ section above). The script can be invoked like so:
 
 The contents of the ``%runscript`` section are written to a file within
 the container that is executed when the container image is run (either
-via the ``singularity run`` command or by executing the container
+via the ``{Command} run`` command or by executing the container
 directly as a command). When the container is invoked, arguments
 following the container name are passed to the runscript. This means
 that you can (and should) process arguments within your runscript.
@@ -594,7 +594,7 @@ the following command:
 
 .. code::
 
-   $ singularity inspect my_container.sif
+   $ {Command} inspect my_container.sif
 
    {
      "Author": "d@sylabs.io",
@@ -603,10 +603,10 @@ the following command:
      "org.label-schema.build-date": "Thursday_6_December_2018_20:1:56_UTC",
      "org.label-schema.schema-version": "1.0",
      "org.label-schema.usage": "/.singularity.d/runscript.help",
-     "org.label-schema.usage.singularity.deffile.bootstrap": "library",
-     "org.label-schema.usage.singularity.deffile.from": "ubuntu:18.04",
-     "org.label-schema.usage.singularity.runscript.help": "/.singularity.d/runscript.help",
-     "org.label-schema.usage.singularity.version": "3.0.1"
+     "org.label-schema.usage.{Command}.deffile.bootstrap": "library",
+     "org.label-schema.usage.{Command}.deffile.from": "ubuntu:18.04",
+     "org.label-schema.usage.{Command}.runscript.help": "/.singularity.d/runscript.help",
+     "org.label-schema.usage.{Command}.version": "3.0.1"
    }
 
 Some labels that are captured automatically from the build process. You
@@ -632,7 +632,7 @@ After building the help can be displayed like so:
 
 .. code::
 
-   $ singularity run-help my_container.sif
+   $ {Command} run-help my_container.sif
        This is a demo container used to illustrate a def file that uses all
        supported sections.
 
@@ -779,7 +779,7 @@ To run a specific app within the container:
 
 .. code::
 
-   % singularity run --app foo my_container.sif
+   % {Command} run --app foo my_container.sif
    RUNNING FOO
 
 The same environment variable, ``$SOFTWARE`` is defined for both apps in
@@ -789,10 +789,10 @@ variable changes depending on the app we specify:
 
 .. code::
 
-   $ singularity exec --app foo my_container.sif env | grep SOFTWARE
+   $ {Command} exec --app foo my_container.sif env | grep SOFTWARE
    SOFTWARE=foo
 
-   $ singularity exec --app bar my_container.sif env | grep SOFTWARE
+   $ {Command} exec --app bar my_container.sif env | grep SOFTWARE
    SOFTWARE=bar
 
 **********************************
