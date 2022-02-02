@@ -133,14 +133,14 @@ Download {Project} from a release
 
 You can download {Project} from one of the releases. To see a full
 list, visit `the GitHub release page
-<https://github.com/apptainer/apptainer/releases>`_. After deciding on a
+<https://github.com/{orgrepo}/releases>`_. After deciding on a
 release to install, you can run the following commands to proceed with
 the installation.
 
 .. code::
 
    $ export VERSION={InstallationVersion} && # adjust this as necessary \
-       wget https://github.com/apptainer/apptainer/releases/download/v${VERSION}/singularity-${VERSION}.tar.gz && \
+       wget https://github.com/{orgrepo}/releases/download/v${VERSION}/singularity-${VERSION}.tar.gz && \
        tar -xzf singularity-${VERSION}.tar.gz && \
        cd singularity-${VERSION}
 
@@ -228,7 +228,7 @@ subcommands as follows:
      $ singularity help instance start
 
 
-   For additional help or support, please visit https://www.sylabs.io/docs/
+   For additional help or support, please visit https://www.apptainer.org/docs/
 
 Information about subcommand can also be viewed with the ``help``
 command.
@@ -264,7 +264,7 @@ command.
      $ singularity verify container.sif
 
 
-   For additional help or support, please visit https://www.sylabs.io/docs/
+   For additional help or support, please visit https://www.apptainer.org/docs/
 
 {Project} uses positional syntax (i.e. the order of commands and
 options matters). Global options affecting the behavior of all commands

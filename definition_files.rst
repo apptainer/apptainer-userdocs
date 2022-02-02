@@ -34,7 +34,7 @@ A {Project} Definition file is divided into two parts:
    to be executed at runtime can accept options intended for ``/bin/sh``
 
 For more in-depth and practical examples of def files, see the `{Project}
-examples repository <https://github.com/apptainer/apptainer/tree/master/examples>`_
+examples repository <https://github.com/{orgrepo}/tree/master/examples>`_
 
 For a comparison between Dockerfile and {Project} definition file,
 please see: :ref:`this section <sec:deffile-vs-dockerfile>`.
