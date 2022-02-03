@@ -20,116 +20,116 @@ below with their respective functionality.
 ``A``
 =====
 
-#. **APPTAINER_ADD_CAPS**: To specify a list (comma separated string)
+#. **{ENVPREFIX}_ADD_CAPS**: To specify a list (comma separated string)
    of capabilities to be added. Default is an empty string.
 
-#. **APPTAINER_ALL**: List all the users and groups capabilities.
+#. **{ENVPREFIX}_ALL**: List all the users and groups capabilities.
 
-#. **APPTAINER_ALLOW_SETUID**: To specify that setuid binaries should
+#. **{ENVPREFIX}_ALLOW_SETUID**: To specify that setuid binaries should
    or not be allowed in the container. (root only) Default is set to
    false.
 
-#. **APPTAINER_APP** and **APPTAINER_APPNAME**: Sets the name of an
+#. **{ENVPREFIX}_APP** and **{ENVPREFIX}_APPNAME**: Sets the name of an
    application to be run inside a container.
 
-#. **APPTAINER_APPLY_CGROUPS**: Used to apply cgroups from an input
+#. **{ENVPREFIX}_APPLY_CGROUPS**: Used to apply cgroups from an input
    file for container processes. (it requires root privileges)
 
 ``B``
 =====
 
-#. **APPTAINER_BINDPATH** and **APPTAINER_BIND**: Comma separated
+#. **{ENVPREFIX}_BINDPATH** and **{ENVPREFIX}_BIND**: Comma separated
    string ``source:<dest>`` list of paths to bind between the host and
    the container.
 
-#. **APPTAINER_BOOT**: Set to false by default, considers if executing
+#. **{ENVPREFIX}_BOOT**: Set to false by default, considers if executing
    ``/sbin/init`` when container boots (root only).
 
 ``C``
 =====
 
-#. **APPTAINER_CACHEDIR**: Specifies the directory for image downloads
+#. **{ENVPREFIX}_CACHEDIR**: Specifies the directory for image downloads
    to be cached in. See :ref:`sec:cache`.
 
-#. **APPTAINER_CLEANENV**: Specifies if the environment should be
+#. **{ENVPREFIX}_CLEANENV**: Specifies if the environment should be
    cleaned or not before running the container. Default is set to false.
 
-#. **APPTAINER_CONTAIN**: To use minimal ``/dev`` and empty other
+#. **{ENVPREFIX}_CONTAIN**: To use minimal ``/dev`` and empty other
    directories (e.g. ``/tmp`` and ``$HOME``) instead of sharing
    filesystems from your host. Default is set to false.
 
-#. **APPTAINER_CONTAINALL**: To contain not only file systems, but
+#. **{ENVPREFIX}_CONTAINALL**: To contain not only file systems, but
    also PID, IPC, and environment. Default is set to false.
 
-#. **APPTAINER_CONTAINLIBS**: Used to specify a string of file names
+#. **{ENVPREFIX}_CONTAINLIBS**: Used to specify a string of file names
    (comma separated string) to bind to the ``/.singularity.d/libs``
    directory.
 
 ``D``
 =====
 
-#. **APPTAINER_DEFFILE**: Shows the {Project} recipe that was used
+#. **{ENVPREFIX}_DEFFILE**: Shows the {Project} recipe that was used
    to generate the image.
 
-#. **APPTAINER_DESC**: Contains a description of the capabilities.
+#. **{ENVPREFIX}_DESC**: Contains a description of the capabilities.
 
-#. **APPTAINER_DISABLE_CACHE**: To disable all caching of docker/oci,
+#. **{ENVPREFIX}_DISABLE_CACHE**: To disable all caching of docker/oci,
    library, oras, etc. downloads and built SIFs. Default is set to
    false.
 
-#. **APPTAINER_DNS**: A list of the DNS server addresses separated by
+#. **{ENVPREFIX}_DNS**: A list of the DNS server addresses separated by
    commas to be added in ``resolv.conf``.
 
-#. **APPTAINER_DOCKER_LOGIN**: To specify the interactive prompt for
+#. **{ENVPREFIX}_DOCKER_LOGIN**: To specify the interactive prompt for
    docker authentication.
 
-#. **APPTAINER_DOCKER_USERNAME**: To specify a username for docker
+#. **{ENVPREFIX}_DOCKER_USERNAME**: To specify a username for docker
    authentication.
 
-#. **APPTAINER_DOCKER_PASSWORD**: To specify the password for docker
+#. **{ENVPREFIX}_DOCKER_PASSWORD**: To specify the password for docker
    authentication.
 
-#. **APPTAINER_DOWNLOAD_CONCURRENCY**: To specify how many concurrent streams
+#. **{ENVPREFIX}_DOWNLOAD_CONCURRENCY**: To specify how many concurrent streams
    when downloading (pulling) an image from cloud library.
 
-#. **APPTAINER_DOWNLOAD_PART_SIZE**: To specify the size of each part (bytes)
+#. **{ENVPREFIX}_DOWNLOAD_PART_SIZE**: To specify the size of each part (bytes)
    when concurrent downloads are enabled.
 
-#. **APPTAINER_DOWNLOAD_BUFFER_SIZE**: To specify the transfer buffer size
+#. **{ENVPREFIX}_DOWNLOAD_BUFFER_SIZE**: To specify the transfer buffer size
    (bytes) when concurrent downloads are enabled.
 
-#. **APPTAINER_DROP_CAPS**: To specify a list (comma separated string)
+#. **{ENVPREFIX}_DROP_CAPS**: To specify a list (comma separated string)
    of capabilities to be dropped. Default is an empty string.
 
 ``E``
 =====
 
-#. **APPTAINER_ENVIRONMENT**: Contains all the environment variables
+#. **{ENVPREFIX}_ENVIRONMENT**: Contains all the environment variables
    that have been exported in your container.
 
-#. **APPTAINER_ENCRYPTION_PASSPHRASE**: Used to specify the plaintext
+#. **{ENVPREFIX}_ENCRYPTION_PASSPHRASE**: Used to specify the plaintext
    passphrase to encrypt the container.
 
-#. **APPTAINER_ENCRYPTION_PEM_PATH**: Used to specify the path of the
+#. **{ENVPREFIX}_ENCRYPTION_PEM_PATH**: Used to specify the path of the
    file containing public or private key to encrypt the container in PEM
    format.
 
-#. **APPTAINERENV_\***: Allows you to transpose variables into the
+#. **{ENVPREFIX}ENV_\***: Allows you to transpose variables into the
    container at runtime. You can see more in detail how to use this
    variable in our :ref:`environment and metadata section
    <environment-and-metadata>`.
 
-#. **APPTAINERENV_APPEND_PATH**: Used to append directories to the end
+#. **{ENVPREFIX}ENV_APPEND_PATH**: Used to append directories to the end
    of the ``$PATH`` environment variable. You can see more in detail on
    how to use this variable in our :ref:`environment and metadata
    section <environment-and-metadata>`.
 
-#. **APPTAINERENV_PATH**: A specified path to override the ``$PATH``
+#. **{ENVPREFIX}ENV_PATH**: A specified path to override the ``$PATH``
    environment variable within the container. You can see more in detail
    on how to use this variable in our :ref:`environment and metadata
    section <environment-and-metadata>`.
 
-#. **APPTAINERENV_PREPEND_PATH**: Used to prepend directories to the
+#. **{ENVPREFIX}ENV_PREPEND_PATH**: Used to prepend directories to the
    beginning of `$PATH`` environment variable. You can see more in
    detail on how to use this variable in our :ref:`environment and
    metadata section <environment-and-metadata>`.
@@ -137,177 +137,177 @@ below with their respective functionality.
 ``F``
 =====
 
-#. **APPTAINER_FAKEROOT**: Set to false by default, considers running
+#. **{ENVPREFIX}_FAKEROOT**: Set to false by default, considers running
    the container in a new user namespace as uid 0 (experimental).
-#. **APPTAINER_FORCE**: Forces to kill the instance.
+#. **{ENVPREFIX}_FORCE**: Forces to kill the instance.
 
 ``G``
 =====
 
-#. **APPTAINER_GROUP**: Used to specify a string of capabilities for
+#. **{ENVPREFIX}_GROUP**: Used to specify a string of capabilities for
    the given group.
 
 ``H``
 =====
 
-#. **APPTAINER_HELPFILE**: Specifies the runscript helpfile, if it
+#. **{ENVPREFIX}_HELPFILE**: Specifies the runscript helpfile, if it
    exists.
 
-#. **APPTAINER_HOME** : A home directory specification, it could be a
+#. **{ENVPREFIX}_HOME** : A home directory specification, it could be a
    source or destination path. The source path is the home directory
    outside the container and the destination overrides the home
    directory within the container.
 
-#. **APPTAINER_HOSTNAME**: The container's hostname.
+#. **{ENVPREFIX}_HOSTNAME**: The container's hostname.
 
 ``I``
 =====
 
-#. **APPTAINER_IMAGE**: Filename of the container.
+#. **{ENVPREFIX}_IMAGE**: Filename of the container.
 
 ``J``
 =====
 
-#. **APPTAINER_JSON**: Specifies the structured json of the def file,
+#. **{ENVPREFIX}_JSON**: Specifies the structured json of the def file,
    every node as each section in the def file.
 
 ``K``
 =====
 
-#. **APPTAINER_KEEP_PRIVS**: To let root user keep privileges in the
+#. **{ENVPREFIX}_KEEP_PRIVS**: To let root user keep privileges in the
    container. Default is set to false.
 
 ``L``
 =====
 
-#. **APPTAINER_LABELS**: Specifies the labels associated with the
+#. **{ENVPREFIX}_LABELS**: Specifies the labels associated with the
    image.
-#. **APPTAINER_LIBRARY**: Specifies the library to pull from. Default
+#. **{ENVPREFIX}_LIBRARY**: Specifies the library to pull from. Default
    is set to our Cloud Library.
 
 ``M``
 =====
 
-#. **APPTAINER_MOUNT**: To specify host to container mounts, using the
+#. **{ENVPREFIX}_MOUNT**: To specify host to container mounts, using the
    syntax understood by the ``--mount`` flag. Multiple mounts should be
    separated by newline characters.
 
 ``N``
 =====
 
-#. **APPTAINER_NAME**: Specifies a custom image name.
+#. **{ENVPREFIX}_NAME**: Specifies a custom image name.
 
-#. **APPTAINER_NETWORK**: Used to specify a desired network. If more
+#. **{ENVPREFIX}_NETWORK**: Used to specify a desired network. If more
    than one parameters is used, addresses should be separated by commas,
    where each network will bring up a dedicated interface inside the
    container.
 
-#. **APPTAINER_NETWORK_ARGS**: To specify the network arguments to
+#. **{ENVPREFIX}_NETWORK_ARGS**: To specify the network arguments to
    pass to CNI plugins.
 
-#. **APPTAINER_NOCLEANUP**: To not clean up the bundle after a failed
+#. **{ENVPREFIX}_NOCLEANUP**: To not clean up the bundle after a failed
    build, this can be helpful for debugging. Default is set to false.
 
-#. **APPTAINER_NOHTTPS**: Sets to either false or true to avoid using
+#. **{ENVPREFIX}_NOHTTPS**: Sets to either false or true to avoid using
    HTTPS for communicating with the local docker registry. Default is
    set to false.
 
-#. **APPTAINER_NO_HOME**: Considers not mounting users home directory
+#. **{ENVPREFIX}_NO_HOME**: Considers not mounting users home directory
    if home is not the current working directory. Default is set to
    false.
 
-#. **APPTAINER_NO_INIT** and **APPTAINER_NOSHIMINIT**: Considers not
+#. **{ENVPREFIX}_NO_INIT** and **{ENVPREFIX}_NOSHIMINIT**: Considers not
    starting the ``shim`` process with ``--pid``.
 
-#. **APPTAINER_NO_NV**: Flag to disable Nvidia support. Opposite of
-   ``APPTAINER_NV``.
+#. **{ENVPREFIX}_NO_NV**: Flag to disable Nvidia support. Opposite of
+   ``{ENVPREFIX}_NV``.
 
-#. **APPTAINER_NO_PRIVS**: To drop all the privileges from root user
+#. **{ENVPREFIX}_NO_PRIVS**: To drop all the privileges from root user
    in the container. Default is set to false.
 
-#. **APPTAINER_NV**: To enable Nvidia GPU support. Default is
+#. **{ENVPREFIX}_NV**: To enable Nvidia GPU support. Default is
    set to false.
 
-#. **APPTAINER_NVCCLI**: To use nvidia-container-cli for container GPU setup
+#. **{ENVPREFIX}_NVCCLI**: To use nvidia-container-cli for container GPU setup
    (experimental, only unprivileged).
 
 ``O``
 =====
 
-#. **APPTAINER_OVERLAY** and **APPTAINER_OVERLAYIMAGE**: To indicate
+#. **{ENVPREFIX}_OVERLAY** and **{ENVPREFIX}_OVERLAYIMAGE**: To indicate
    the use of an overlay file system image for persistent data storage
    or as read-only layer of container.
 
 ``P``
 =====
 
-#. **APPTAINER_PWD** and **APPTAINER_TARGET_PWD**: The initial
+#. **{ENVPREFIX}_PWD** and **{ENVPREFIX}_TARGET_PWD**: The initial
    working directory for payload process inside the container.
 
 ``R``
 =====
 
-#. **APPTAINER_ROOTFS**: To reference the system file location.
+#. **{ENVPREFIX}_ROOTFS**: To reference the system file location.
 
-#. **APPTAINER_RUNSCRIPT**: Specifies the runscript of the image.
+#. **{ENVPREFIX}_RUNSCRIPT**: Specifies the runscript of the image.
 
 ``S``
 =====
 
-#. **APPTAINER_SANDBOX**: To specify that the format of the image
+#. **{ENVPREFIX}_SANDBOX**: To specify that the format of the image
    should be a sandbox. Default is set to false.
 
-#. **APPTAINER_SCRATCH** and **APPTAINER_SCRATCHDIR**: Used to
+#. **{ENVPREFIX}_SCRATCH** and **{ENVPREFIX}_SCRATCHDIR**: Used to
    include a scratch directory within the container that is linked to a
    temporary directory. (use -W to force location)
 
-#. **APPTAINER_SECTION**: To specify a comma separated string of all
+#. **{ENVPREFIX}_SECTION**: To specify a comma separated string of all
    the sections to be run from the deffile (setup, post, files,
    environment, test, labels, none)
 
-#. **APPTAINER_SECURITY**: Used to enable security features. (SELinux,
+#. **{ENVPREFIX}_SECURITY**: Used to enable security features. (SELinux,
    Apparmor, Seccomp)
 
-#. **APPTAINER_SECRET**: Lists all the private keys instead of the
+#. **{ENVPREFIX}_SECRET**: Lists all the private keys instead of the
    default which display the public ones.
 
-#. **APPTAINER_SHELL**: The path to the program to be used as an
+#. **{ENVPREFIX}_SHELL**: The path to the program to be used as an
    interactive shell.
 
-#. **APPTAINER_SIGNAL**: Specifies a signal sent to the instance.
+#. **{ENVPREFIX}_SIGNAL**: Specifies a signal sent to the instance.
 
 ``T``
 =====
 
-#. **APPTAINER_TEST**: Specifies the test script for the image.
-#. **APPTAINER_TMPDIR**: Used with the ``build`` command, to consider
+#. **{ENVPREFIX}_TEST**: Specifies the test script for the image.
+#. **{ENVPREFIX}_TMPDIR**: Used with the ``build`` command, to consider
    a temporary location for the build. See :ref:`sec:temporaryfolders`.
 
 ``U``
 =====
 
-#. **APPTAINER_UNSHARE_PID**: To specify that the container will run
+#. **{ENVPREFIX}_UNSHARE_PID**: To specify that the container will run
    in a new PID namespace. Default is set to false.
 
-#. **APPTAINER_UNSHARE_IPC**: To specify that the container will run
+#. **{ENVPREFIX}_UNSHARE_IPC**: To specify that the container will run
    in a new IPC namespace. Default is set to false.
 
-#. **APPTAINER_UNSHARE_NET**: To specify that the container will run
+#. **{ENVPREFIX}_UNSHARE_NET**: To specify that the container will run
    in a new network namespace (sets up a bridge network interface by
    default). Default is set to false.
 
-#. **APPTAINER_UNSHARE_UTS**: To specify that the container will run
+#. **{ENVPREFIX}_UNSHARE_UTS**: To specify that the container will run
    in a new UTS namespace. Default is set to false.
 
-#. **APPTAINER_UPDATE**: To run the definition over an existing
+#. **{ENVPREFIX}_UPDATE**: To run the definition over an existing
    container (skips the header). Default is set to false.
 
-#. **APPTAINER_URL**: Specifies the key server ``URL``.
+#. **{ENVPREFIX}_URL**: Specifies the key server ``URL``.
 
-#. **APPTAINER_USER**: Used to specify a string of capabilities for
+#. **{ENVPREFIX}_USER**: Used to specify a string of capabilities for
    the given user.
 
-#. **APPTAINER_USERNS** and **APPTAINER_UNSHARE_USERNS**: To specify
+#. **{ENVPREFIX}_USERNS** and **{ENVPREFIX}_UNSHARE_USERNS**: To specify
    that the container will run in a new user namespace, allowing
    {Project} to run completely unprivileged on recent kernels. This
    may not support every feature of {Project}. (Sandbox image only).
@@ -316,15 +316,15 @@ below with their respective functionality.
 ``W``
 =====
 
-#. **APPTAINER_WORKDIR**: The working directory to be used for
+#. **{ENVPREFIX}_WORKDIR**: The working directory to be used for
    ``/tmp``, ``/var/tmp`` and ``$HOME`` (if ``-c`` or ``--contain`` was
    also used)
 
-#. **APPTAINER_WRITABLE**: By default, all {Project} containers
+#. **{ENVPREFIX}_WRITABLE**: By default, all {Project} containers
    are available as read only, this option makes the file system
    accessible as read/write. Default set to false.
 
-#. **APPTAINER_WRITABLE_TMPFS**: Makes the file system accessible as
+#. **{ENVPREFIX}_WRITABLE_TMPFS**: Makes the file system accessible as
    read-write with non-persistent data (with overlay support only).
    Default is set to false.
 

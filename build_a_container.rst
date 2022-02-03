@@ -181,8 +181,8 @@ present on disk or in memory. See :ref:`encrypted containers
 =============
 
 Specifies that {Project} should use a secret saved in either the
-``APPTAINER_ENCRYPTION_PASSPHRASE`` or
-``APPTAINER_ENCRYPTION_PEM_PATH`` environment variable to build an
+``{ENVPREFIX}_ENCRYPTION_PASSPHRASE`` or
+``{ENVPREFIX}_ENCRYPTION_PEM_PATH`` environment variable to build an
 encrypted container. See :ref:`encrypted containers <encryption>` for
 more details.
 
@@ -279,8 +279,8 @@ of ``post`` and ``test`` sections.
 
 .. note::
 
-    This option can't be set via the environment variable `APPTAINER_NV`.
-    {Project} will attempt to bind binaries listed in APPTAINER_CONFDIR/nvliblist.conf,
+    This option can't be set via the environment variable `{ENVPREFIX}_NV`.
+    {Project} will attempt to bind binaries listed in {ENVPREFIX}_CONFDIR/nvliblist.conf,
     if the mount destination doesn't exist inside the container, they are ignored.
 
 ``--rocm``
@@ -292,8 +292,8 @@ your build environment. Libraries are mounted during the execution of
 
 .. note::
 
-    This option can't be set via the environment variable `APPTAINER_ROCM`.
-    {Project} will attempt to bind binaries listed in `APPTAINER_CONFDIR/rocmliblist.conf`,
+    This option can't be set via the environment variable `{ENVPREFIX}_ROCM`.
+    {Project} will attempt to bind binaries listed in `{ENVPREFIX}_CONFDIR/rocmliblist.conf`,
     if the mount destination doesn't exist inside the container, they are ignored.
 
 ``--bind``
@@ -307,7 +307,7 @@ of ``post`` and ``test`` sections.
 
 .. note::
 
-    This option can't be set via the environment variables `APPTAINER_BIND` and `APPTAINER_BINDPATH`
+    This option can't be set via the environment variables `{ENVPREFIX}_BIND` and `{ENVPREFIX}_BINDPATH`
 
 **Beware that the mount points must exist in the built image** prior to executing ``post`` and ``test``.
 So if you want to bind ``--bind /example`` and it doesn't exist in the bootstrap image, you have to
@@ -316,7 +316,7 @@ workaround that by adding a ``setup`` section:
 .. code-block:: none
 
     %setup
-      mkdir $APPTAINER_ROOTFS/example
+      mkdir ${ENVPREFIX}_ROOTFS/example
 
 .. note::
 
