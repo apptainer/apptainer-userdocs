@@ -767,8 +767,27 @@ are set in the container:
    $ singularity run --cleanenv library://alpine env | grep VAR
    FORCE_VAR=123
 
-Any environment variables set via an ``ENV`` line in a ``Dockerfile``
-will be available when the container is run with {Project}.
+Any environment variables set via an ``ENV`` line in a ``Dockerfile`` will be
+available when the container is run with {Project}. You can override them
+with ``APPTAINERENV_`` vars, or the ``--env / --env-file`` flags, but they
+will not be overridden by host environment variables.
+
+For example, the ``docker://openjdk:latest`` container sets ``JAVA_HOME``:
+
+.. code::
+
+   # Set a host JAVA_HOME
+   export JAVA_HOME=/test
+
+   # Check JAVA_HOME in the docker container.
+   # This value comes from ENV in the Dockerfile.
+   $ singularity run docker://openjdk:latest echo \$JAVA_HOME
+   /usr/java/openjdk-17
+
+   # Override JAVA_HOME in the container
+   export APPTAINERENV_JAVA_HOME=/test
+   $ singularity run docker://openjdk:latest echo \$JAVA_HOME
+   /test
 
 Namespace & Device Isolation
 ============================
