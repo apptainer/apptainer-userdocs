@@ -185,14 +185,14 @@ environment variables. These are often the default way of passing
 secrets into jobs within CI pipelines.
 
 {Project} accepts a username, and password / token, as
-``APPTAINER_DOCKER_USERNAME`` and ``APPTAINER_DOCKER_PASSWORD``
+``{ENVPREFIX}_DOCKER_USERNAME`` and ``{ENVPREFIX}_DOCKER_PASSWORD``
 respectively. These environment variables will override any stored
 credentials.
 
 .. code::
 
-   $ export APPTAINER_DOCKER_USERNAME=myuser
-   $ export APPTAINER_DOCKER_PASSWORD=mytoken
+   $ export {ENVPREFIX}_DOCKER_USERNAME=myuser
+   $ export {ENVPREFIX}_DOCKER_PASSWORD=mytoken
    $ {command} pull docker://sylabsio/private
 
 **********************************
@@ -239,8 +239,8 @@ CLI token in the Quay web interface, then use it to login with
    to store your credentials for {Project}.
 -  Use ``docker login quay.io`` if ``docker`` is on your machine.
 -  Use the ``--docker-login`` flag for a one-time interactive login.
--  Set the ``APPTAINER_DOCKER_USERNAME`` and
-   ``APPTAINER_DOCKER_PASSWORD`` environment variables.
+-  Set the ``{ENVPREFIX}_DOCKER_USERNAME`` and
+   ``{ENVPREFIX}_DOCKER_PASSWORD`` environment variables.
 
 NVIDIA NGC
 ==========
@@ -272,8 +272,8 @@ your NGC API key.
    docker://nvcr.io`` to store your credentials for {Project}.
 -  Use ``docker login nvcr.io`` if ``docker`` is on your machine.
 -  Use the ``--docker-login`` flag for a one-time interactive login.
--  Set the ``APPTAINER_DOCKER_USERNAME="\$oauthtoken"`` and
-   ``APPTAINER_DOCKER_PASSWORD`` environment variables.
+-  Set the ``{ENVPREFIX}_DOCKER_USERNAME="\$oauthtoken"`` and
+   ``{ENVPREFIX}_DOCKER_PASSWORD`` environment variables.
 
 See also:
 https://docs.nvidia.com/ngc/ngc-private-registry-user-guide/index.html
@@ -304,8 +304,8 @@ Docker Hub), with your username and personal access token:
    to store your credentials for {Project}.
 -  Use ``docker login ghcr.io`` if ``docker`` is on your machine.
 -  Use the ``--docker-login`` flag for a one-time interactive login.
--  Set the ``APPTAINER_DOCKER_USERNAME`` and
-   ``APPTAINER_DOCKER_PASSWORD`` environment variables.
+-  Set the ``{ENVPREFIX}_DOCKER_USERNAME`` and
+   ``{ENVPREFIX}_DOCKER_PASSWORD`` environment variables.
 
 AWS ECR
 =======
@@ -344,8 +344,8 @@ Then login using one of the following methods:
 
 -  Use the ``--docker-login`` flag for a one-time interactive login.
 
--  Set the ``APPTAINER_DOCKER_USERNAME=AWS`` and
-   ``APPTAINER_DOCKER_PASSWORD`` environment variables.
+-  Set the ``{ENVPREFIX}_DOCKER_USERNAME=AWS`` and
+   ``{ENVPREFIX}_DOCKER_PASSWORD`` environment variables.
 
 You should now be able to pull containers from your ECR URI at
 ``docker://<accountid>.dkr.ecr.<region>.amazonaws.com``.
@@ -376,8 +376,8 @@ and you should authenticate using one of the following methods:
 
 -  Use the ``--docker-login`` flag for a one-time interactive login.
 
--  Set the ``APPTAINER_DOCKER_USERNAME`` and
-   ``APPTAINER_DOCKER_PASSWORD`` environment variables.
+-  Set the ``{ENVPREFIX}_DOCKER_USERNAME`` and
+   ``{ENVPREFIX}_DOCKER_PASSWORD`` environment variables.
 
 The recent repository-scoped access token preview may be more
 convenient. See the `preview documentation
@@ -459,8 +459,8 @@ stored credentials or environment variables must be available to the
    I.E. run ``sudo {command} build --docker-login myimage.sif
    {Project}``.
 
--  Set the ``APPTAINER_DOCKER_USERNAME`` and
-   ``APPTAINER_DOCKER_PASSWORD`` environment variables. Pass the
+-  Set the ``{ENVPREFIX}_DOCKER_USERNAME`` and
+   ``{ENVPREFIX}_DOCKER_PASSWORD`` environment variables. Pass the
    environment variables through sudo to the ``root`` build process by
    running ``sudo -E {command} build ...``.
 
@@ -750,7 +750,7 @@ change the behaviour of software.
 
 To disable automatic propagation of environment variables, the
 ``--cleanenv / -e`` flag can be specified. When ``--cleanenv`` is used,
-only variables on the host that are prefixed with ``APPTAINERENV_``
+only variables on the host that are prefixed with ``{ENVPREFIX}ENV_``
 are set in the container:
 
 .. code::
@@ -758,7 +758,7 @@ are set in the container:
    # Set a host variable
    $ export HOST_VAR=123
    # Set a {command} container environment variable
-   $ export "APPTAINERENV_FORCE_VAR="123"
+   $ export "{ENVPREFIX}ENV_FORCE_VAR="123"
 
    $ {command} run library://alpine env | grep VAR
    FORCE_VAR=123
@@ -769,7 +769,7 @@ are set in the container:
 
 Any environment variables set via an ``ENV`` line in a ``Dockerfile`` will be
 available when the container is run with {Project}. You can override them
-with ``APPTAINERENV_`` vars, or the ``--env / --env-file`` flags, but they
+with ``{ENVPREFIX}ENV_`` vars, or the ``--env / --env-file`` flags, but they
 will not be overridden by host environment variables.
 
 For example, the ``docker://openjdk:latest`` container sets ``JAVA_HOME``:
@@ -785,7 +785,7 @@ For example, the ``docker://openjdk:latest`` container sets ``JAVA_HOME``:
    /usr/java/openjdk-17
 
    # Override JAVA_HOME in the container
-   export APPTAINERENV_JAVA_HOME=/test
+   export {ENVPREFIX}ENV_JAVA_HOME=/test
    $ {command} run docker://openjdk:latest echo \$JAVA_HOME
    /test
 

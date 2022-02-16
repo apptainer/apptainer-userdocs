@@ -152,7 +152,7 @@ whether some or all host GPUs are visible inside a container. The
 container dependent on the value of ``NVIDIA_VISIBLE_DEVICES``.
 
 To control which GPUs are used in a {Project} container that is run
-with ``--nv`` you can set ``APPTAINERENV_CUDA_VISIBLE_DEVICES`` before
+with ``--nv`` you can set ``{ENVPREFIX}ENV_CUDA_VISIBLE_DEVICES`` before
 running the container, or ``CUDA_VISIBLE_DEVICES`` inside the container.
 This variable will limit the GPU devices that CUDA programs see.
 
@@ -161,11 +161,11 @@ the host, we could do:
 
 .. code::
 
-   $ APPTAINERENV_CUDA_VISIBLE_DEVICES=0 {command} run --nv tensorflow_latest-gpu.sif
+   $ {ENVPREFIX}ENV_CUDA_VISIBLE_DEVICES=0 {command} run --nv tensorflow_latest-gpu.sif
 
    # or
 
-   $ export APPTAINERENV_CUDA_VISIBLE_DEVICES=0
+   $ export {ENVPREFIX}ENV_CUDA_VISIBLE_DEVICES=0
    $ {command} run tensorflow_latest-gpu.sif
 
 Troubleshooting
@@ -303,7 +303,7 @@ When running with ``--nvccli``, by default {Project} will expose all
 GPUs on the host inside the container. This mirrors the functionality of
 the standard GPU support for the most common use-case.
 
-Setting the ``APPTAINER_CUDA_VISIBLE_DEVICES`` environment variable
+Setting the ``{ENVPREFIX}_CUDA_VISIBLE_DEVICES`` environment variable
 before running a container is still supported, to control which GPUs are
 used by CUDA programs that honor ``CUDA_VISIBLE_DEVICES``. However, more
 powerful GPU isolation is possible using the ``--contain`` (or ``-c``) flag and
@@ -320,7 +320,7 @@ on a system with 4 GPUs, run the following:
 
 Note that:
 
--  ``NVIDIA_VISIBLE_DEVICES`` is not prepended with ``APPTAINER_`` as
+-  ``NVIDIA_VISIBLE_DEVICES`` is not prepended with ``{ENVPREFIX}_`` as
    this variable controls container setup, and is not passed into the
    container.
 
