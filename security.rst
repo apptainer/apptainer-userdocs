@@ -62,6 +62,7 @@ to run a container can be run, unprivileged.
 {Project} supports running containers without setuid, using user
 namespaces. It can be compiled with the ``--without-setuid`` option, or
 ``allow setuid = no`` can be set in ``{command}.conf`` to enable this.
+
 In this mode *all* operations run as the user who starts the
 ``{command}`` program. However, there are some disadvantages:
 

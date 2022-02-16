@@ -18,6 +18,7 @@ variable_replacements = {
     "{adminversion}": "main",
     "{Project}": "Apptainer",
     "{command}": "apptainer",
+    "{ENVPREFIX}": "APPTAINER",
 }
 
 
