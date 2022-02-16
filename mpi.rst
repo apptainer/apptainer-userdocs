@@ -40,7 +40,7 @@ host into the container.
 
 The basic idea behind the *Hybrid Approach* is when you execute a
 {Project} container with MPI code, you will call ``mpiexec`` or a
-similar launcher on the ``singularity`` command itself. The MPI process
+similar launcher on the ``{command}`` command itself. The MPI process
 outside of the container will then work in tandem with MPI inside the
 container and the containerized MPI code to instantiate the job.
 
@@ -259,7 +259,7 @@ container has been built based on the hybrid model:
 
 .. code::
 
-   $ mpirun -n <NUMBER_OF_RANKS> singularity exec <PATH/TO/MY/IMAGE> </PATH/TO/BINARY/WITHIN/CONTAINER>
+   $ mpirun -n <NUMBER_OF_RANKS> {command} exec <PATH/TO/MY/IMAGE> </PATH/TO/BINARY/WITHIN/CONTAINER>
 
 Practically, this command will first start a process instantiating
 ``mpirun`` and then {Project} containers on compute nodes. Finally,
@@ -267,7 +267,7 @@ when the containers start, the MPI binary is executed:
 
 .. code::
 
-   $ mpirun -n 8 singularity run hybrid-mpich.sif /opt/mpitest
+   $ mpirun -n 8 {command} run hybrid-mpich.sif /opt/mpitest
    Hello, I am rank 3/8
    Hello, I am rank 4/8
    Hello, I am rank 6/8
@@ -374,7 +374,7 @@ definition file if you wish.
 .. code::
 
    $ export MPI_DIR="<PATH/TO/HOST/MPI/DIRECTORY>"
-   $ mpirun -n <NUMBER_OF_RANKS> singularity exec --bind "$MPI_DIR" <PATH/TO/MY/IMAGE> </PATH/TO/BINARY/WITHIN/CONTAINER>
+   $ mpirun -n <NUMBER_OF_RANKS> {command} exec --bind "$MPI_DIR" <PATH/TO/MY/IMAGE> </PATH/TO/BINARY/WITHIN/CONTAINER>
 
 On an example system we may be using an Open MPI installation at
 ``/cm/shared/apps/openmpi/gcc/64/4.0.5/``. This means that the commands
@@ -383,7 +383,7 @@ to run the container in bind mode are:
 .. code::
 
    $ export MPI_DIR="/cm/shared/apps/openmpi/gcc/64/4.0.5"
-   $ mpirun -n 8 singularity exec --bind "$MPI_DIR" bind.sif /opt/mpitest
+   $ mpirun -n 8 {command} exec --bind "$MPI_DIR" bind.sif /opt/mpitest
    Hello, I am rank 1/8
    Hello, I am rank 2/8
    Hello, I am rank 0/8
@@ -408,11 +408,11 @@ batch systems available.
 
    $ cat my_job.sh
    #!/bin/bash
-   #SBATCH --job-name singularity-mpi
+   #SBATCH --job-name {command}-mpi
    #SBATCH -N $NNODES # total number of nodes
    #SBATCH --time=00:05:00 # Max execution time
 
-   mpirun -n $NP singularity exec /var/nfsshare/gvallee/mpich.sif /opt/mpitest
+   mpirun -n $NP {command} exec /var/nfsshare/gvallee/mpich.sif /opt/mpitest
 
 In fact, the example describes a job that requests the number of nodes
 specified by the ``NNODES`` environment variable and a total number of
@@ -470,7 +470,7 @@ E.g. if we attempt to run the hybrid Open MPI container, but with
 .. code::
 
    $ module add mpich
-   $ mpirun -n 8 singularity run hybrid-openmpi.sif /opt/mpitest
+   $ mpirun -n 8 {command} run hybrid-openmpi.sif /opt/mpitest
    Hello, I am rank 0/1
    Hello, I am rank 0/1
    Hello, I am rank 0/1

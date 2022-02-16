@@ -27,7 +27,7 @@ Sylabs introduced the online `Sylabs Cloud
 A fresh, default installation of {Project} is configured to connect
 to the public `cloud.sylabs.io <https://cloud.sylabs.io>`__ services. If
 you only want to use the public services you just need to obtain an
-authentication token, and then ``singularity remote login``:
+authentication token, and then ``{command} remote login``:
 
    #. Go to: https://cloud.sylabs.io/
    #. Click "Sign In" and follow the sign in steps.
@@ -37,7 +37,7 @@ authentication token, and then ``singularity remote login``:
    #. Enter a name for your new access token, such as "test token"
    #. Click the "Create a New Access Token" button.
    #. Click "Copy token to Clipboard" from the "New API Token" page.
-   #. Run ``singularity remote login`` and paste the access token at the
+   #. Run ``{command} remote login`` and paste the access token at the
       prompt.
 
 Once your token is stored, you can check that you are able to connect to
@@ -45,7 +45,7 @@ the services with the ``status`` subcommand:
 
 .. code:: console
 
-   $ singularity remote status
+   $ {command} remote status
    INFO:    Checking status of default remote.
    SERVICE    STATUS  VERSION             URI
    Builder    OK      v1.1.14-0-gc7a68c1  https://build.sylabs.io
@@ -65,25 +65,25 @@ You can interact with the public Sylabs Cloud using various
 {Project} commands:
 
 `pull
-<cli/singularity_pull.html>`_,
+<cli/{command}_pull.html>`_,
 `push
-<cli/singularity_push.html>`_,
+<cli/{command}_push.html>`_,
 `build --remote
-<cli/singularity_build.html#options>`_,
+<cli/{command}_build.html#options>`_,
 `key
-<cli/singularity_key.html>`_,
+<cli/{command}_key.html>`_,
 `search
-<cli/singularity_search.html>`_,
+<cli/{command}_search.html>`_,
 `verify
-<cli/singularity_verify.html>`_,
+<cli/{command}_verify.html>`_,
 `exec
-<cli/singularity_exec.html>`_,
+<cli/{command}_exec.html>`_,
 `shell
-<cli/singularity_shell.html>`_,
+<cli/{command}_shell.html>`_,
 `run
-<cli/singularity_run.html>`_,
+<cli/{command}_run.html>`_,
 `instance
-<cli/singularity_instance.html>`_
+<cli/{command}_instance.html>`_
 
 .. note::
 
@@ -95,7 +95,7 @@ You can interact with the public Sylabs Cloud using various
 ***************************
 
 Users can setup and switch between multiple remote endpoints, which are
-stored in their ``~/.singularity/remote.yaml`` file. Alternatively,
+stored in their ``~/.{command}/remote.yaml`` file. Alternatively,
 remote endpoints can be set system-wide by an administrator.
 
 A remote endpoint may be the public Sylabs Cloud, a private installation
@@ -103,7 +103,7 @@ of Singularity Enterprise, or community-developed service that are API
 compatible.
 
 Generally, users and administrators should manage remote endpoints using
-the ``singularity remote`` command, and avoid editing ``remote.yaml``
+the ``{command} remote`` command, and avoid editing ``remote.yaml``
 configuration files directly.
 
 List and Login to Remotes
@@ -113,7 +113,7 @@ To ``list`` existing remote endpoints, run this:
 
 .. code::
 
-   $ singularity remote list
+   $ {command} remote list
 
    Cloud Services Endpoints
    ========================
@@ -136,14 +136,14 @@ was revoked:
 .. code:: console
 
    # Login to the default remote endpoint
-   $ singularity remote login
+   $ {command} remote login
 
    # Login to another remote endpoint
-   $ singularity remote login <remote_name>
+   $ {command} remote login <remote_name>
 
    # example...
-   $ singularity remote login SylabsCloud
-   singularity remote login SylabsCloud
+   $ {command} remote login SylabsCloud
+   {command} remote login SylabsCloud
    INFO:    Authenticating with remote: SylabsCloud
    Generate an API Key at https://cloud.sylabs.io/auth/tokens, and paste here:
    API Key:
@@ -156,7 +156,7 @@ existing token will not be replaced:
 
 .. code:: console
 
-   $ singularity remote login
+   $ {command} remote login
    An access token is already set for this remote. Replace it? [N/y]y
    Generate an access token at https://cloud.sylabs.io/auth/tokens, and paste it here.
    Token entered will be hidden for security.
@@ -178,14 +178,14 @@ To ``add`` a remote endpoint (for the current user only):
 
 .. code::
 
-   $ singularity remote add <remote_name> <remote_uri>
+   $ {command} remote add <remote_name> <remote_uri>
 
 For example, if you have an installation of {Project} enterprise
 hosted at enterprise.example.com:
 
 .. code::
 
-   $ singularity remote add myremote https://enterprise.example.com
+   $ {command} remote add myremote https://enterprise.example.com
 
    INFO:    Remote "myremote" added.
    INFO:    Authenticating with remote: myremote
@@ -200,32 +200,32 @@ system) an administrative user should run:
 
 .. code::
 
-   $ sudo singularity remote add --global <remote_name> <remote_uri>
+   $ sudo {command} remote add --global <remote_name> <remote_uri>
 
    # example..
 
-   $ sudo singularity remote add --global company-remote https://enterprise.example.com
+   $ sudo {command} remote add --global company-remote https://enterprise.example.com
    INFO:    Remote "company-remote" added.
    INFO:    Global option detected. Will not automatically log into remote.
 
 .. note::
 
    Global remote configurations can only be modified by the root user
-   and are stored in the ``etc/singularity/remote.yaml`` file, at the
+   and are stored in the ``etc/{command}/remote.yaml`` file, at the
    {Project} installation location.
 
 Conversely, to ``remove`` an endpoint:
 
 .. code::
 
-   $ singularity remote remove <remote_name>
+   $ {command} remote remove <remote_name>
 
 Use the ``--global`` option as the root user to remove a global
 endpoint:
 
 .. code::
 
-   $ sudo singularity remote remove --global <remote_name>
+   $ sudo {command} remote remove --global <remote_name>
 
 Set the Default Remote
 ======================
@@ -235,14 +235,14 @@ A remote endpoint can be set as the default to use with commands such as
 
 .. code::
 
-   $ singularity remote use <remote_name>
+   $ {command} remote use <remote_name>
 
 The default remote shows up with a ``YES`` under the ``ACTIVE`` column
 in the output of ``remote list``:
 
 .. code::
 
-   $ singularity remote list
+   $ {command} remote list
    Cloud Services Endpoints
    ========================
 
@@ -259,10 +259,10 @@ in the output of ``remote list``:
 
    * Active cloud services keyserver
 
-   $ singularity remote use myremote
+   $ {command} remote use myremote
    INFO:    Remote "myremote" now in use.
 
-   $ singularity remote list
+   $ {command} remote list
    Cloud Services Endpoints
    ========================
 
@@ -285,9 +285,9 @@ remote the only usable remote for the system by using the
 
 .. code::
 
-   $ sudo singularity remote use --exclusive company-remote
+   $ sudo {command} remote use --exclusive company-remote
    INFO:    Remote "company-remote" now in use.
-   $ singularity remote list
+   $ {command} remote list
    Cloud Services Endpoints
    ========================
 
@@ -308,7 +308,7 @@ This, in turn, prevents users from changing the remote they use:
 
 .. code::
 
-   $ singularity remote use myremote
+   $ {command} remote use myremote
    FATAL:   could not use myremote: remote company-remote has been set exclusive by the system administrator
 
 If you do not want to switch remote with ``remote use`` you can:
@@ -338,7 +338,7 @@ endpoint. We can also see the ``INSECURE`` column indicating that
 
 .. code::
 
-   $ singularity remote list
+   $ {command} remote list
    Cloud Services Endpoints
    ========================
 
@@ -357,8 +357,8 @@ We can add a key server to list of keyservers with:
 
 .. code::
 
-   $ sudo singularity remote add-keyserver https://pgp.example.com
-   $ singularity remote list
+   $ sudo {command} remote add-keyserver https://pgp.example.com
+   $ {command} remote list
    Cloud Services Endpoints
    ========================
 
@@ -380,8 +380,8 @@ that this key is placed, we can use the ``--order`` flag:
 
 .. code::
 
-   $ sudo singularity remote add-keyserver --order 1 https://pgp.example.com
-   $ singularity remote list
+   $ sudo {command} remote add-keyserver --order 1 https://pgp.example.com
+   $ {command} remote list
    Cloud Services Endpoints
    ========================
 
@@ -409,15 +409,15 @@ before using it:
 
 .. code::
 
-   $ singularity remote login --username ian https://pgp.example.com
+   $ {command} remote login --username ian https://pgp.example.com
    Password (or token when username is empty):
-   INFO:    Token stored in /home/ian/.singularity/remote.yaml
+   INFO:    Token stored in /home/ian/.{command}/remote.yaml
 
 Now we can see that ``https://pgp.example.com`` is logged in:
 
 .. code::
 
-   $ singularity remote list
+   $ {command} remote list
    Cloud Services Endpoints
    ========================
 
@@ -468,11 +468,11 @@ specifying a ``docker://`` prefix to the registry hostname:
 
 .. code::
 
-   $ singularity remote login --username ian docker://docker.io
+   $ {command} remote login --username ian docker://docker.io
    Password (or token when username is empty):
-   INFO:    Token stored in /home/ian/.singularity/remote.yaml
+   INFO:    Token stored in /home/ian/.{command}/remote.yaml
 
-   $ singularity remote list
+   $ {command} remote list
    Cloud Services Endpoints
    ========================
 
@@ -503,11 +503,11 @@ We can login to multiple OCI registries at the same time:
 
 .. code::
 
-   $ singularity remote login --username ian docker://registry.example.com
+   $ {command} remote login --username ian docker://registry.example.com
    Password (or token when username is empty):
-   INFO:    Token stored in /home/ian/.singularity/remote.yaml
+   INFO:    Token stored in /home/ian/.{command}/remote.yaml
 
-   $ singularity remote list
+   $ {command} remote list
    Cloud Services Endpoints
    ========================
 
@@ -534,20 +534,20 @@ off of the hostname when using the following commands with a
 ``docker://`` or ``oras://`` URI:
 
 `pull
-<cli/singularity_pull.html>`_,
+<cli/{command}_pull.html>`_,
 `push
-<cli/singularity_push.html>`_,
+<cli/{command}_push.html>`_,
 `build
-<cli/singularity_build.html>`_,
+<cli/{command}_build.html>`_,
 `exec
-<cli/singularity_exec.html>`_,
+<cli/{command}_exec.html>`_,
 `shell
-<cli/singularity_shell.html>`_,
+<cli/{command}_shell.html>`_,
 `run
-<cli/singularity_run.html>`_,
+<cli/{command}_run.html>`_,
 `instance
-<cli/singularity_instance.html>`_
-
+<cli/{command}_instance.html>`_
+1
 .. note::
 
    It is important for users to be aware that the login command will

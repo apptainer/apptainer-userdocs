@@ -44,7 +44,7 @@ also request the capability when executing a container with the
 
 .. code::
 
-   $ singularity exec --add-caps CAP_NET_RAW library://sylabs/tests/ubuntu_ping:v1.0 ping -c 1 8.8.8.8
+   $ {command} exec --add-caps CAP_NET_RAW library://sylabs/tests/ubuntu_ping:v1.0 ping -c 1 8.8.8.8
    PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
    64 bytes from 8.8.8.8: icmp_seq=1 ttl=52 time=73.1 ms
 
@@ -59,7 +59,7 @@ to add that capability to their containers anymore:
 
 .. code::
 
-   $ singularity exec --add-caps CAP_NET_RAW library://sylabs/tests/ubuntu_ping:v1.0 ping -c 1 8.8.8.8
+   $ {command} exec --add-caps CAP_NET_RAW library://sylabs/tests/ubuntu_ping:v1.0 ping -c 1 8.8.8.8
    WARNING: not authorized to add capability: CAP_NET_RAW
    ping: socket: Operation not permitted
 
@@ -80,7 +80,7 @@ above works without the need to grant capabilities:
 
 .. code::
 
-   # singularity exec library://sylabs/tests/ubuntu_ping:v1.0 ping -c 1 8.8.8.8
+   # {command} exec library://sylabs/tests/ubuntu_ping:v1.0 ping -c 1 8.8.8.8
    PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
    64 bytes from 8.8.8.8: icmp_seq=1 ttl=52 time=59.6 ms
 
@@ -92,7 +92,7 @@ Now we can manually drop the ``CAP_NET_RAW`` capability like so:
 
 .. code::
 
-   # singularity exec --drop-caps CAP_NET_RAW library://sylabs/tests/ubuntu_ping:v1.0 ping -c 1 8.8.8.8
+   # {command} exec --drop-caps CAP_NET_RAW library://sylabs/tests/ubuntu_ping:v1.0 ping -c 1 8.8.8.8
    ping: socket: Operation not permitted
 
 And now the container will not have the ability to create new sockets,
@@ -144,7 +144,7 @@ container with the ``--allow-setuid`` option like so:
 
 .. code::
 
-   $ sudo singularity shell --allow-setuid some_container.sif
+   $ sudo {command} shell --allow-setuid some_container.sif
 
 ``--keep-privs``
 ================
@@ -152,14 +152,14 @@ container with the ``--allow-setuid`` option like so:
 It is possible for an admin to set a different set of default
 capabilities or to reduce the default capabilities to zero for the root
 user by setting the ``root default capabilities`` parameter in the
-``singularity.conf`` file to ``file`` or ``no`` respectively. If this
-change is in effect, the root user can override the ``singularity.conf``
+``{command}.conf`` file to ``file`` or ``no`` respectively. If this
+change is in effect, the root user can override the ``{command}.conf``
 file and enter the container with full capabilities using the
 ``--keep-privs`` option.
 
 .. code::
 
-   $ sudo singularity exec --keep-privs library://centos ping -c 1 8.8.8.8
+   $ sudo {command} exec --keep-privs library://centos ping -c 1 8.8.8.8
    PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
    64 bytes from 8.8.8.8: icmp_seq=1 ttl=128 time=18.8 ms
 
@@ -179,7 +179,7 @@ inside the container:
 
 .. code::
 
-   $ sudo singularity exec --drop-caps CAP_NET_RAW library://centos ping -c 1 8.8.8.8
+   $ sudo {command} exec --drop-caps CAP_NET_RAW library://centos ping -c 1 8.8.8.8
    ping: socket: Operation not permitted
 
 The ``drop-caps`` option will also accept the case insensitive keyword
@@ -201,7 +201,7 @@ For instance:
    $ sudo whoami
    root
 
-   $ sudo singularity exec --security uid:1000 my_container.sif whoami
+   $ sudo {command} exec --security uid:1000 my_container.sif whoami
    david
 
 To use seccomp to blacklist a command follow this procedure. (It is
@@ -212,7 +212,7 @@ on Ubuntu and that {Project} was installed with the
 
 First write a configuration file. An example configuration file is
 installed with {Project}, normally at
-``/usr/local/etc/singularity/seccomp-profiles/default.json``. For this
+``/usr/local/etc/{command}/seccomp-profiles/default.json``. For this
 example, we will use a much simpler configuration file to blacklist the
 ``mkdir`` command.
 
@@ -248,7 +248,7 @@ the container like so:
 
 .. code::
 
-   $ sudo singularity shell --security seccomp:/home/david/no_mkdir.json my_container.sif
+   $ sudo {command} shell --security seccomp:/home/david/no_mkdir.json my_container.sif
 
    {Project}> mkdir /tmp/foo
    Bad system call (core dumped)
@@ -261,7 +261,7 @@ follows:
 
 .. code::
 
-   --security="seccomp:/usr/local/etc/singularity/seccomp-profiles/default.json"
+   --security="seccomp:/usr/local/etc/{command}/seccomp-profiles/default.json"
    --security="apparmor:/usr/bin/man"
    --security="selinux:context"
    --security="uid:1000"

@@ -66,7 +66,7 @@ compiled for the latest versions of CUDA.
 
 {Project} will find the NVIDIA/CUDA libraries on your host using the
 list of libraries in the configuration file
-``etc/singularity/nvbliblist``, and resolving paths through the
+``etc/{command}/nvbliblist``, and resolving paths through the
 ``ldconfig`` cache. At time of release this list is appropriate for the
 latest stable CUDA version. It can be modified by the administrator to
 add additional libraries if necessary. See the admin guide for more
@@ -90,7 +90,7 @@ to a SIF before you start working with it:
 
 .. code::
 
-   $ singularity pull docker://tensorflow/tensorflow:latest-gpu
+   $ {command} pull docker://tensorflow/tensorflow:latest-gpu
    ...
    INFO:    Creating SIF file...
    INFO:    Build complete: tensorflow_latest-gpu.sif
@@ -99,7 +99,7 @@ Then run the container with GPU support:
 
 .. code::
 
-   $ singularity run --nv tensorflow_latest-gpu.sif
+   $ {command} run --nv tensorflow_latest-gpu.sif
 
    ________                               _______________
    ___  __/__________________________________  ____/__  /________      __
@@ -161,12 +161,12 @@ the host, we could do:
 
 .. code::
 
-   $ APPTAINERENV_CUDA_VISIBLE_DEVICES=0 singularity run --nv tensorflow_latest-gpu.sif
+   $ APPTAINERENV_CUDA_VISIBLE_DEVICES=0 {command} run --nv tensorflow_latest-gpu.sif
 
    # or
 
    $ export APPTAINERENV_CUDA_VISIBLE_DEVICES=0
-   $ singularity run tensorflow_latest-gpu.sif
+   $ {command} run tensorflow_latest-gpu.sif
 
 Troubleshooting
 ===============
@@ -223,7 +223,7 @@ Requirements & Limitations
 ==========================
 
 -  ``nvidia-container-cli`` must be installed on your host. Its path must
-   be set in ``singularity.conf``. This value will be set at build time if
+   be set in ``{command}.conf``. This value will be set at build time if
    ``nvidia-container-cli`` is found on the search ``$PATH``.
 
 -  For security reasons, ``--nvccli`` cannot be used with
@@ -249,7 +249,7 @@ large container into a sandbox:
 
 .. code::
 
-   $ singularity build --sandbox tensorflow_latest-gpu docker://tensorflow/tensorflow:latest-gpu
+   $ {command} build --sandbox tensorflow_latest-gpu docker://tensorflow/tensorflow:latest-gpu
    INFO:    Starting build...
    ...
    INFO:    Creating sandbox directory...
@@ -259,7 +259,7 @@ Then run the container with ``nvidia-container-cli`` GPU support:
 
 .. code::
 
-   $ singularity run -uw --nv --nvccli tensorflow_latest-gpu
+   $ {command} run -uw --nv --nvccli tensorflow_latest-gpu
 
    ________                               _______________
    ___  __/__________________________________  ____/__  /________      __
@@ -316,7 +316,7 @@ on a system with 4 GPUs, run the following:
 .. code::
 
    $ export NVIDIA_VISIBLE_DEVICES=1,2
-   $ singularity run -uwc --nv --nvccli tensorflow_latest-gpu
+   $ {command} run -uwc --nv --nvccli tensorflow_latest-gpu
 
 Note that:
 
@@ -338,7 +338,7 @@ GPUs will be available in the container, and a warning will be shown:
 
 .. code::
 
-   $ singularity run -uwc --nv --nvccli tensorflow_latest-gpu
+   $ {command} run -uwc --nv --nvccli tensorflow_latest-gpu
    WARNING: When using nvidia-container-cli with --contain NVIDIA_VISIBLE_DEVICES
    must be set or no GPUs will be available in container.
 
@@ -362,7 +362,7 @@ Other GPU Options
 
 In ``--nvccli`` mode, {Project} understands the following additional
 environment variables. Note that these environment variables are read
-from the environment where ``singularity`` is run. {Project} does
+from the environment where ``{command}`` is run. {Project} does
 not currently read these settings from the container environment.
 
 -  ``NVIDIA_DRIVER_CAPABILITIES`` controls which libraries and utilities
@@ -452,7 +452,7 @@ to a SIF before you start working with it:
 
 .. code::
 
-   $ singularity pull docker://rocm/tensorflow:latest
+   $ {command} pull docker://rocm/tensorflow:latest
    ...
    INFO:    Creating SIF file...
    INFO:    Build complete: tensorflow_latest.sif
@@ -461,7 +461,7 @@ Then run the container with GPU support:
 
 .. code::
 
-   $ singularity run --rocm tensorflow_latest.sif
+   $ {command} run --rocm tensorflow_latest.sif
 
 You can verify the GPU is available within the container by using the
 tensorflow ``list_local_devices()`` function:
@@ -511,7 +511,7 @@ the Sylabs library:
 
 .. code::
 
-   $ singularity exec --rocm --bind /etc/OpenCL library://sylabs/examples/blender blender
+   $ {command} exec --rocm --bind /etc/OpenCL library://sylabs/examples/blender blender
 
 Note the *exec* used as the *runscript* for this container is setup for
 batch rendering (which can also use OpenCL).

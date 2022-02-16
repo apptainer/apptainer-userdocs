@@ -39,9 +39,9 @@ keystore.
 First we will check what's the status of the local keystore (which keys
 are stored by the moment before importing a new key).
 
-.. code:: singularity
+.. code:: {command}
 
-   $ singularity key list --secret
+   $ {command} key list --secret
 
 .. note::
 
@@ -50,9 +50,9 @@ are stored by the moment before importing a new key).
 
 The output will look as it follows:
 
-.. code:: singularity
+.. code:: {command}
 
-   Private key listing (/home/joana/.singularity/sypgp/pgp-secret):
+   Private key listing (/home/joana/.{command}/sypgp/pgp-secret):
 
    0) U: Johnny Cash (none) <cash@sylabs.io>
    C: 2019-04-11 22:22:28 +0200 CEST
@@ -76,9 +76,9 @@ location to the file, let's say you own a gpg key file named
 ``pinkie-pie.asc`` which is a secret GPG key you want to import. Then
 you will just need to run the following command to import your key:
 
-.. code:: singularity
+.. code:: {command}
 
-   $ singularity key import $HOME/pinkie-pie.asc
+   $ {command} key import $HOME/pinkie-pie.asc
 
 .. note::
 
@@ -89,7 +89,7 @@ Since you're importing a private (secret) key, you will need to specify
 the passphrase related to it and then a new passphrase to be added on
 your local keystore.
 
-.. code:: singularity
+.. code:: {command}
 
    Enter your old password :
    Enter a new password for this key :
@@ -97,11 +97,11 @@ your local keystore.
    Key with fingerprint 8C10B902F438E4D504C3ACF689FCFFAED5F34A77 successfully added to the keyring
 
 After this you can see if that key was correctly added to your local
-keystore by running ``singularity key list -s`` command:
+keystore by running ``{command} key list -s`` command:
 
-.. code:: singularity
+.. code:: {command}
 
-   Private key listing (/home/joana/.singularity/sypgp/pgp-secret):
+   Private key listing (/home/joana/.{command}/sypgp/pgp-secret):
 
      0) U: Johnny Cash (none) <cash@sylabs.io>
      C: 2019-04-11 22:22:28 +0200 CEST
@@ -143,32 +143,32 @@ import`` command.
 
 For example to export a public key in binary format you can run:
 
-.. code:: singularity
+.. code:: {command}
 
-   $ singularity key export 8C10B902F438E4D504C3ACF689FCFFAED5F34A77 $HOME/mykey.asc
+   $ {command} key export 8C10B902F438E4D504C3ACF689FCFFAED5F34A77 $HOME/mykey.asc
 
 This will export a public binary key named ``mykey.asc`` and will save
 it under the home folder. If you would like to export the same public
 key but in an ``ASCII`` armored format, you would need to run the
 following command:
 
-.. code:: singularity
+.. code:: {command}
 
-   $ singularity key export --armor 8C10B902F438E4D504C3ACF689FCFFAED5F34A77 $HOME/mykey.asc
+   $ {command} key export --armor 8C10B902F438E4D504C3ACF689FCFFAED5F34A77 $HOME/mykey.asc
 
 And in the case in which you may need to export a secret key on
 ``ASCII`` armored format, you would need to specify from where to find
 the key, since the fingerprint is the same.
 
-.. code:: singularity
+.. code:: {command}
 
-   $ singularity key export --armor --secret 8C10B902F438E4D504C3ACF689FCFFAED5F34A77 $HOME/mykey.asc
+   $ {command} key export --armor --secret 8C10B902F438E4D504C3ACF689FCFFAED5F34A77 $HOME/mykey.asc
 
 and on binary format instead:
 
-.. code:: singularity
+.. code:: {command}
 
-   $ singularity key export --secret 8C10B902F438E4D504C3ACF689FCFFAED5F34A77 $HOME/mykey.asc
+   $ {command} key export --secret 8C10B902F438E4D504C3ACF689FCFFAED5F34A77 $HOME/mykey.asc
 
 .. note::
 
@@ -185,9 +185,9 @@ and on binary format instead:
 In case you would want to remove a public key from your public local
 keystore, you can do so by running the following command:
 
-.. code:: singularity
+.. code:: {command}
 
-   $ singularity key remove 8C10B902F438E4D504C3ACF689FCFFAED5F34A77
+   $ {command} key remove 8C10B902F438E4D504C3ACF689FCFFAED5F34A77
 
 .. note::
 

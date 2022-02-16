@@ -27,9 +27,9 @@ processes.
 
 Because {Project} starts a container as a simple process, rather
 than using a daemon, you can limit resource usage by running the
-``singularity`` command inside an existing cgroup. This is convenient
+``{command}`` command inside an existing cgroup. This is convenient
 where, for example, a job scheduler uses cgroups to control job limits.
-By running ``singularity`` inside your batch script, your container will
+By running ``{command}`` inside your batch script, your container will
 respect the limits set by the scheduler on the job's cgroup.
 
 systemd-run
@@ -47,7 +47,7 @@ CPUs a container run is allowed to use:
 
 .. code::
 
-   $ systemd-run --user --scope -p AllowedCPUs=1,2 -- singularity run mycontainer.sif
+   $ systemd-run --user --scope -p AllowedCPUs=1,2 -- {command} run mycontainer.sif
 
 -  ``--user`` instructs systemd that we want to run as our own user
    account.
@@ -63,7 +63,7 @@ CPUs a container run is allowed to use:
 -  The double hyphen ``--`` separates options for ``systemd-run`` from
    the actual command we wish to execute. This is important so that
    ``systemd-run`` doesn't capture any flags we might need to pass to
-   ``singularity``.
+   ``{command}``.
 
 You can read more about how systemd can control resources uses at the
 link below, which details the properties you can set using
@@ -105,7 +105,7 @@ configuration to be applied:
 
 .. code::
 
-   $ sudo singularity shell --apply-cgroups /path/to/cgroups.toml my_container.sif
+   $ sudo {command} shell --apply-cgroups /path/to/cgroups.toml my_container.sif
 
 .. note::
 
@@ -127,21 +127,21 @@ Start your container, applying the toml file, e.g.:
 
 .. code::
 
-   $ sudo singularity run --apply-cgroups path/to/cgroups.toml library://alpine
+   $ sudo {command} run --apply-cgroups path/to/cgroups.toml library://alpine
 
 After that, you can verify that the container is only using 500MB of
 memory. This example assumes that there is only one running container.
 If you are running multiple containers you will find multiple cgroups
-trees under the ``singularity`` directory.
+trees under the ``{command}`` directory.
 
 .. code::
 
    # cgroups v1
-   $ cat /sys/fs/cgroup/memory/singularity/*/memory.limit_in_bytes
+   $ cat /sys/fs/cgroup/memory/{command}/*/memory.limit_in_bytes
      524288000
 
    # cgroups v2 - note translation of memory.limit_in_bytes -> memory.max
-   $ cat /sys/fs/cgroup/singularity/*/memory.max
+   $ cat /sys/fs/cgroup/{command}/*/memory.max
    524288000
 
 Limiting CPU

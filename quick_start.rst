@@ -140,9 +140,9 @@ the installation.
 .. code::
 
    $ export VERSION={InstallationVersion} && # adjust this as necessary \
-       wget https://github.com/apptainer/apptainer/releases/download/v${VERSION}/singularity-${VERSION}.tar.gz && \
-       tar -xzf singularity-${VERSION}.tar.gz && \
-       cd singularity-${VERSION}
+       wget https://github.com/apptainer/apptainer/releases/download/v${VERSION}/{command}-${VERSION}.tar.gz && \
+       tar -xzf {command}-${VERSION}.tar.gz && \
+       cd {command}-${VERSION}
 
 .. _compile:
 
@@ -176,13 +176,13 @@ subcommands as follows:
 
 .. code::
 
-   $ singularity help
+   $ {command} help
 
    Linux container platform optimized for High Performance Computing (HPC) and
    Enterprise Performance Computing (EPC)
 
    Usage:
-     singularity [global options...]
+     {command} [global options...]
 
    Description:
      {Project} containers provide an application virtualization layer enabling
@@ -192,7 +192,7 @@ subcommands as follows:
 
    Options:
      -d, --debug     print debugging information (highest verbosity)
-     -h, --help      help for singularity
+     -h, --help      help for {command}
          --nocolor   print without color output (default False)
      -q, --quiet     suppress normal output
      -s, --silent    only print errors
@@ -208,10 +208,10 @@ subcommands as follows:
      instance    Manage containers running as services
      key         Manage OpenPGP keys
      oci         Manage OCI containers
-     plugin      Manage singularity plugins
+     plugin      Manage {command} plugins
      pull        Pull an image from a URI
      push        Upload image to the provided library (default is "cloud.sylabs.io")
-     remote      Manage singularity remote endpoints
+     remote      Manage {command} remote endpoints
      run         Run the user-defined default command within a container
      run-help    Show the user-defined help for an image
      search      Search a Container Library for images
@@ -223,9 +223,9 @@ subcommands as follows:
      version     Show the version for {Project}
 
    Examples:
-     $ singularity help <command> [<subcommand>]
-     $ singularity help build
-     $ singularity help instance start
+     $ {command} help <command> [<subcommand>]
+     $ {command} help build
+     $ {command} help instance start
 
 
    For additional help or support, please visit https://www.sylabs.io/docs/
@@ -235,11 +235,11 @@ command.
 
 .. code::
 
-   $ singularity help verify
+   $ {command} help verify
    Verify cryptographic signatures attached to an image
 
    Usage:
-     singularity verify [verify options...] <image path>
+     {command} verify [verify options...] <image path>
 
    Description:
      The verify command allows a user to verify cryptographic signatures on SIF
@@ -261,29 +261,29 @@ command.
 
 
    Examples:
-     $ singularity verify container.sif
+     $ {command} verify container.sif
 
 
    For additional help or support, please visit https://www.sylabs.io/docs/
 
 {Project} uses positional syntax (i.e. the order of commands and
 options matters). Global options affecting the behavior of all commands
-follow the main ``singularity`` command. Then sub commands are followed
+follow the main ``{command}`` command. Then sub commands are followed
 by their options and arguments.
 
-For example, to pass the ``--debug`` option to the main ``singularity``
+For example, to pass the ``--debug`` option to the main ``{command}``
 command and run {Project} with debugging messages on:
 
 .. code::
 
-   $ singularity --debug run library://lolcow
+   $ {command} --debug run library://lolcow
 
 To pass the ``--containall`` option to the ``run`` command and run a
 {Project} image in an isolated manner:
 
 .. code::
 
-   $ singularity run --containall library://lolcow
+   $ {command} run --containall library://lolcow
 
 {Project} has the concept of command groups. For
 instance, to list Linux capabilities for a particular user, you would
@@ -291,7 +291,7 @@ use the ``list`` command in the ``capability`` command group like so:
 
 .. code::
 
-   $ singularity capability list dave
+   $ {command} capability list dave
 
 Container authors might also write help docs specific to a container or
 for an internal module called an ``app``. If those help docs exist for a
@@ -299,9 +299,9 @@ particular container, you can view them like so.
 
 .. code::
 
-   $ singularity inspect --helpfile container.sif  # See the container's help, if provided
+   $ {command} inspect --helpfile container.sif  # See the container's help, if provided
 
-   $ singularity inspect --helpfile --app=foo foo.sif  # See the help for foo, if provided
+   $ {command} inspect --helpfile --app=foo foo.sif  # See the help for foo, if provided
 
 ***************************
  Download pre-built images
@@ -313,7 +313,7 @@ containers of interest on the `Container Library
 
 .. code::
 
-   singularity search tensorflow
+   {command} search tensorflow
    Found 22 container images for amd64 matching "tensorflow":
 
        library://ajgreen/default/tensorflow2-gpu-py3-r-jupyter:latest
@@ -340,9 +340,9 @@ containers of interest on the `Container Library
        ...
 
 You can use the `pull
-<cli/singularity_pull.html>`_
+<cli/{command}_pull.html>`_
 and `build
-<cli/singularity_build.html>`_
+<cli/{command}_build.html>`_
 commands to download pre-built images from an external resource like the
 `Container Library <https://cloud.sylabs.io/library>`_ or `Docker Hub
 <https://hub.docker.com/>`_.
@@ -353,7 +353,7 @@ system.
 
 .. code::
 
-   $ singularity pull library://lolcow
+   $ {command} pull library://lolcow
 
 You can also use ``pull`` with the ``docker://`` uri to reference Docker
 images served from a registry. In this case ``pull`` does not just
@@ -362,7 +362,7 @@ must also combine those layers into a usable {Project} file.
 
 .. code::
 
-   $ singularity pull docker://sylabsio/lolcow
+   $ {command} pull docker://sylabsio/lolcow
 
 Pulling Docker images reduces reproducibility. If you were to pull a
 Docker image today and then wait six months and pull again, you are not
@@ -376,9 +376,9 @@ your container like so:
 
 .. code::
 
-   $ singularity build ubuntu.sif library://ubuntu
+   $ {command} build ubuntu.sif library://ubuntu
 
-   $ singularity build lolcow.sif docker://sylabsio/lolcow
+   $ {command} build lolcow.sif docker://sylabsio/lolcow
 
 Unlike ``pull``, ``build`` will convert your image to the latest
 {Project} image format after downloading it. ``build`` is like a
@@ -404,19 +404,19 @@ pulled from the Container Library:
 
 .. code::
 
-   $ singularity pull library://lolcow
+   $ {command} pull library://lolcow
 
 Shell
 =====
 
 The `shell
-<cli/singularity_shell.html>`_
+<cli/{command}_shell.html>`_
 command allows you to spawn a new shell within your container and
 interact with it as though it were a small virtual machine.
 
 .. code::
 
-   $ singularity shell lolcow_latest.sif
+   $ {command} shell lolcow_latest.sif
 
    {Project} lolcow_latest.sif:~>
 
@@ -441,20 +441,20 @@ when the shell is exited.
 
 .. code::
 
-   $ singularity shell library://lolcow
+   $ {command} shell library://lolcow
 
 Executing Commands
 ==================
 
 The `exec
-<cli/singularity_exec.html>`_
+<cli/{command}_exec.html>`_
 command allows you to execute a custom command within a container by
 specifying the image file. For instance, to execute the ``cowsay``
 program within the ``lolcow_latest.sif`` container:
 
 .. code::
 
-   $ singularity exec lolcow_latest.sif cowsay moo
+   $ {command} exec lolcow_latest.sif cowsay moo
     _____
    < moo >
     -----
@@ -470,7 +470,7 @@ command and disappears.
 
 .. code::
 
-   $ singularity exec library://lolcow cowsay "Fresh from the library!"
+   $ {command} exec library://lolcow cowsay "Fresh from the library!"
     _________________________
    < Fresh from the library! >
     -------------------------
@@ -489,13 +489,13 @@ Running a container
 are user defined scripts that define the actions a container should
 perform when someone runs it. The runscript can be triggered with the
 `run
-<cli/singularity_run.html>`_
+<cli/{command}_run.html>`_
 command, or simply by calling the container as though it were an
 executable.
 
 .. code::
 
-   $ singularity run lolcow_latest.sif
+   $ {command} run lolcow_latest.sif
    ______________________________
    < Mon Aug 16 13:01:55 CDT 2021 >
     ------------------------------
@@ -521,7 +521,7 @@ disappears.
 
 .. code::
 
-   $ singularity run library://lolcow
+   $ {command} run library://lolcow
    ______________________________
    < Mon Aug 16 13:12:33 CDT 2021 >
     ------------------------------
@@ -542,7 +542,7 @@ to run ``echo`` command in this shell:
 
 .. code::
 
-   $ singularity run library://alpine echo "hello"
+   $ {command} run library://alpine echo "hello"
 
    hello
 
@@ -557,10 +557,10 @@ quoting of arguments.
    $ docker run -it --rm alpine echo "\$HOSTNAME"
    $HOSTNAME
 
-   $ singularity run docker://alpine echo "\$HOSTNAME"
+   $ {command} run docker://alpine echo "\$HOSTNAME"
    p700
 
-   $ singularity run docker://alpine echo "\\\$HOSTNAME"
+   $ {command} run docker://alpine echo "\\\$HOSTNAME"
    $HOSTNAME
 
 The ``exec`` command replicates the Docker/OCI behavior as it calls
@@ -576,7 +576,7 @@ Files on the host are reachable from within the container.
 
    $ echo "Hello from inside the container" > $HOME/hostfile.txt
 
-   $ singularity exec lolcow_latest.sif cat $HOME/hostfile.txt
+   $ {command} exec lolcow_latest.sif cat $HOME/hostfile.txt
 
    Hello from inside the container
 
@@ -593,7 +593,7 @@ container.
 
    $ echo "Drink milk (and never eat hamburgers)." > /data/cow_advice.txt
 
-   $ singularity exec --bind /data:/mnt lolcow_latest.sif cat /mnt/cow_advice.txt
+   $ {command} exec --bind /data:/mnt lolcow_latest.sif cat /mnt/cow_advice.txt
    Drink milk (and never eat hamburgers).
 
 Pipes and redirects also work with {Project} commands just like they
@@ -601,7 +601,7 @@ do with normal Linux commands.
 
 .. code::
 
-   $ cat /data/cow_advice.txt | singularity exec lolcow_latest.sif cowsay
+   $ cat /data/cow_advice.txt | {command} exec lolcow_latest.sif cowsay
     ________________________________________
    < Drink milk (and never eat hamburgers). >
     ----------------------------------------
@@ -638,7 +638,7 @@ To build into a ``sandbox`` (container in a directory) use the ``build
 
 .. code::
 
-   $ sudo singularity build --sandbox ubuntu/ library://ubuntu
+   $ sudo {command} build --sandbox ubuntu/ library://ubuntu
 
 This command creates a directory called ``ubuntu/`` with an entire
 Ubuntu Operating System and some {Project} metadata in your current
@@ -652,9 +652,9 @@ do so).
 
 .. code::
 
-   $ sudo singularity exec --writable ubuntu touch /foo
+   $ sudo {command} exec --writable ubuntu touch /foo
 
-   $ singularity exec ubuntu/ ls /foo
+   $ {command} exec ubuntu/ ls /foo
    /foo
 
 Converting images from one format to another
@@ -668,7 +668,7 @@ image format (squashfs) you can do so:
 
 .. code::
 
-   $ singularity build new-sif sandbox
+   $ {command} build new-sif sandbox
 
 Doing so may break reproducibility if you have altered your sandbox
 outside of the context of a definition file, so you are advised to
@@ -690,7 +690,7 @@ setup, and copying files into the container from host system, etc.
 
 Here is an example of a definition file:
 
-.. code:: singularity
+.. code:: {command}
 
    BootStrap: library
    From: ubuntu:16.04
@@ -714,7 +714,7 @@ named lolcow.def), you would call build like so:
 
 .. code::
 
-   $ sudo singularity build lolcow.sif lolcow.def
+   $ sudo {command} build lolcow.sif lolcow.def
 
 In this example, the header tells {Project} to use a base Ubuntu
 16.04 image from the Container Library.

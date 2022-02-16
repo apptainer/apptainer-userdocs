@@ -16,7 +16,7 @@ intended it.
 
    To verify containers signed with Singularity versions older than
    3.6.0 the ``--legacy-insecure`` flag must be provided to the
-   ``singularity verify`` command.
+   ``{command} verify`` command.
 
 .. _verify_container_from_library:
 
@@ -38,7 +38,7 @@ follow these steps:
    #. Enter a name for your new access token, such as "test token"
    #. Click the "Create a New Access Token" button.
    #. Click "Copy token to Clipboard" from the "New API Token" page.
-   #. Run ``singularity remote login`` and paste the access token at the
+   #. Run ``{command} remote login`` and paste the access token at the
       prompt.
 
 Now you can verify containers that you pull from the library, ensuring
@@ -46,7 +46,7 @@ they are bit-for-bit reproductions of the original image.
 
 .. code::
 
-   $ singularity verify alpine_latest.sif
+   $ {command} verify alpine_latest.sif
 
    Container is signed by 1 key(s):
 
@@ -78,7 +78,7 @@ command group like so:.
 
 .. code::
 
-   $ singularity key newpair
+   $ {command} key newpair
 
    Enter your name (e.g., John Doe) : David Trudgian
    Enter your email address (e.g., john.doe@example.com) : david.trudgian@sylabs.io
@@ -91,8 +91,8 @@ command group like so:.
 
 Note that I chose ``Y`` when asked if I wanted to push my key to the
 keystore. This will push my public key to whichever keystore has been
-configured by the ``singularity remote`` command, so that it can be
-retrieved by other users running ``singularity verify``. If you do not
+configured by the ``{command} remote`` command, so that it can be
+retrieved by other users running ``{command} verify``. If you do not
 wish to push your public key, say ``n`` during the ``newpair`` process.
 
 The ``list`` subcommand will show you all of the keys you have created
@@ -100,9 +100,9 @@ or saved locally.`
 
 .. code::
 
-   $ singularity key list
+   $ {command} key list
 
-   Public key listing (/home/dave/.singularity/sypgp/pgp-public):
+   Public key listing (/home/dave/.{command}/sypgp/pgp-public):
 
    0) U: David Trudgian (demo) <david.trudgian@sylabs.io>
       C: 2019-11-15 09:54:54 -0600 CST
@@ -120,11 +120,11 @@ for the following:
 
 If you chose not to push your key to the keystore during the ``newpair``
 process, but later wish to, you can push it to a keystore configured
-using ``singularity remote`` like so:
+using ``{command} remote`` like so:
 
 .. code::
 
-   $ singularity key push E5F780B2C22F59DF748524B435C3844412EE233B
+   $ {command} key push E5F780B2C22F59DF748524B435C3844412EE233B
 
    public key `E5F780B2C22F59DF748524B435C3844412EE233B` pushed to server successfully
 
@@ -133,16 +133,16 @@ download it again like so.
 
 .. code::
 
-   $ singularity key search Trudgian
+   $ {command} key search Trudgian
 
    Showing 1 results
 
    KEY ID    BITS  NAME/EMAIL
    12EE233B  4096  David Trudgian (demo) <david.trudgian@sylabs.io>
 
-   $ singularity key pull 12EE233B
+   $ {command} key pull 12EE233B
 
-   1 key(s) added to keyring of trust /home/dave/.singularity/sypgp/pgp-public
+   1 key(s) added to keyring of trust /home/dave/.{command}/sypgp/pgp-public
 
 But note that this only restores the *public* key (used for verifying)
 to your local machine and does not restore the *private* key (used for
@@ -161,16 +161,16 @@ example:
 .. code::
 
    # search for key ID:
-   $ singularity key search 0x8883491F4268F173C6E5DC49EDECE4F3F38D871E
+   $ {command} key search 0x8883491F4268F173C6E5DC49EDECE4F3F38D871E
 
    # search for the sort ID:
-   $ singularity key search 0xF38D871E
+   $ {command} key search 0xF38D871E
 
    # search for user:
-   $ singularity key search Godlove
+   $ {command} key search Godlove
 
    # search for email:
-   $ singularity key search @gmail.com
+   $ {command} key search @gmail.com
 
 Signing and validating your own containers
 ==========================================
@@ -180,7 +180,7 @@ so:
 
 .. code::
 
-   $ singularity sign my_container.sif
+   $ {command} sign my_container.sif
 
    Signing image: my_container.sif
    Enter key passphrase :
@@ -191,7 +191,7 @@ without needing to contact the Keystore.
 
 .. code::
 
-   $ singularity verify my_container.sif
+   $ {command} verify my_container.sif
    Verifying image: my_container.sif
    [LOCAL]   Signing entity: David Trudgian (Demo keys) <david.trudgian@sylabs.io>
    [LOCAL]   Fingerprint: 65833F473098C6215E750B3BDFD69E5CEE85D448
@@ -210,9 +210,9 @@ command again.
 
 .. code::
 
-   $ singularity key remove E5F780B2C22F59DF748524B435C3844412EE233B
+   $ {command} key remove E5F780B2C22F59DF748524B435C3844412EE233B
 
-   $ singularity verify my_container.sif
+   $ {command} verify my_container.sif
    Verifying image: my_container.sif
    [REMOTE]   Signing entity: David Trudgian (Demo keys) <david.trudgian@sylabs.io>
    [REMOTE]   Fingerprint: 65833F473098C6215E750B3BDFD69E5CEE85D448
@@ -227,13 +227,13 @@ command again.
 Note that the ``[REMOTE]`` message shows the key used for verification
 was obtained from the keystore, and is not present on your local
 computer. You can retrieve it, so that you can verify even if you are
-offline with ``singularity key pull``
+offline with ``{command} key pull``
 
 .. code::
 
-   $ singularity key pull E5F780B2C22F59DF748524B435C3844412EE233B
+   $ {command} key pull E5F780B2C22F59DF748524B435C3844412EE233B
 
-   1 key(s) added to keyring of trust /home/dave/.singularity/sypgp/pgp-public
+   1 key(s) added to keyring of trust /home/dave/.{command}/sypgp/pgp-public
 
 Advanced Signing - SIF IDs and Groups
 =====================================
@@ -246,7 +246,7 @@ of objects. Each object has an ``ID``, and belongs to a ``GROUP``.
 
 .. code::
 
-   $ singularity sif list my_container.sif
+   $ {command} sif list my_container.sif
 
    Container id: e455d2ae-7f0b-4c79-b3ef-315a4913d76a
    Created on:   2019-11-15 10:11:58 -0600 CST
@@ -264,12 +264,12 @@ option to ``sign`` and ``verify``.
 
 .. code::
 
-   $ singularity sign --sif-id 1 my_container.sif
+   $ {command} sign --sif-id 1 my_container.sif
    Signing image: my_container.sif
    Enter key passphrase :
    Signature created and applied to my_container.sif
 
-   $ singularity verify --sif-id 1 my_container.sif
+   $ {command} verify --sif-id 1 my_container.sif
    Verifying image: my_container.sif
    [LOCAL]   Signing entity: David Trudgian (Demo keys) <david.trudgian@sylabs.io>
    [LOCAL]   Fingerprint: 65833F473098C6215E750B3BDFD69E5CEE85D448
@@ -286,7 +286,7 @@ knowledge.
 
 .. code::
 
-   $ singularity verify my_container.sif
+   $ {command} verify my_container.sif
    Verifying image: my_container.sif
    [LOCAL]   Signing entity: David Trudgian (Demo keys) <david.trudgian@sylabs.io>
    [LOCAL]   Fingerprint: 65833F473098C6215E750B3BDFD69E5CEE85D448
@@ -299,7 +299,7 @@ I can sign a group of objects with the ``--group-id`` option to
 
 .. code::
 
-   $ singularity sign --groupid 1 my_container.sif
+   $ {command} sign --groupid 1 my_container.sif
    Signing image: my_container.sif
    Enter key passphrase :
    Signature created and applied to my_container.sif
@@ -310,7 +310,7 @@ the same ``--group-id`` option.
 
 .. code::
 
-   $ singularity verify --group-id 1 my_container.sif
+   $ {command} verify --group-id 1 my_container.sif
    Verifying image: my_container.sif
    [LOCAL]   Signing entity: David Trudgian (Demo keys) <david.trudgian@sylabs.io>
    [LOCAL]   Fingerprint: 65833F473098C6215E750B3BDFD69E5CEE85D448
@@ -328,7 +328,7 @@ specifying ``--group-id`` can also verify the container:
 
 .. code::
 
-   $ singularity verify my_container.sif
+   $ {command} verify my_container.sif
    Verifying image: my_container.sif
    [LOCAL]   Signing entity: David Trudgian (Demo keys) <david.trudgian@sylabs.io>
    [LOCAL]   Fingerprint: 65833F473098C6215E750B3BDFD69E5CEE85D448

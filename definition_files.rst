@@ -66,7 +66,7 @@ bootstrap agent, the ``From`` keyword becomes valid. Observe the
 following example for building a Debian container from the Container
 Library:
 
-.. code:: singularity
+.. code:: {command}
 
    Bootstrap: library
    From: debian:7
@@ -74,7 +74,7 @@ Library:
 A def file that uses an official mirror to install CentOS 7 might look
 like this:
 
-.. code:: singularity
+.. code:: {command}
 
    Bootstrap: yum
    OSVersion: 7
@@ -124,7 +124,7 @@ If the bootstrap image is in the SIF format, then verification will be
 performed at build time. This verification checks whether the image has
 been signed. If it has been signed the integrity of the image is
 checked, and the signatures matched to public keys if available. This
-process is equivalent to running ``singularity verify`` on the bootstrap
+process is equivalent to running ``{command} verify`` on the bootstrap
 image.
 
 By default a failed verification, e.g. against an unsigned image, or one
@@ -134,7 +134,7 @@ build will continue.
 To enforce that the bootstrap image verifies correctly and has been
 signed by one or more keys, you can use the ``Fingerprints:`` header.
 
-.. code:: singularity
+.. code:: {command}
 
    Bootstrap: localimage
    From: test.sif
@@ -174,7 +174,7 @@ section (or any sections at all) within a def file. Furthermore,
 multiple sections of the same name can be included and will be appended
 to one another during the build process.
 
-.. code:: singularity
+.. code:: {command}
 
    Bootstrap: library
    From: ubuntu:18.04
@@ -243,7 +243,7 @@ has been installed. You can reference the container file system with the
 
 Consider the example from the definition file above:
 
-.. code:: singularity
+.. code:: {command}
 
    %setup
        touch /file1
@@ -266,7 +266,7 @@ system during the build, it's use is generally discouraged.
 The ``%files`` section allows you to copy files into the container with
 greater safety than using the ``%setup`` section. Its general form is:
 
-.. code:: singularity
+.. code:: {command}
 
    %files [from <stage>]
        <source> [<destination>]
@@ -283,7 +283,7 @@ while the ``<destination>`` is always a path into the current container. If the
 ``<source>``. To show how copying from your host system works, let's
 consider the example from the definition file above:
 
-.. code:: singularity
+.. code:: {command}
 
    %files
        /file1
@@ -297,7 +297,7 @@ container in ``/opt``.
 Files can also be copied from other stages by providing the source location in the
 previous stage and the destination in the current container.
 
-.. code:: singularity
+.. code:: {command}
 
    %files from stage_name
      /root/hello /bin/hello
@@ -329,7 +329,7 @@ write configuration files, create new directories, etc.
 
 Consider the example from the definition file above:
 
-.. code:: singularity
+.. code:: {command}
 
    %post
        apt-get update && apt-get install -y netcat
@@ -362,7 +362,7 @@ command.
 
 Consider the example from the def file above:
 
-.. code:: singularity
+.. code:: {command}
 
    %test
        grep -q NAME=\"Ubuntu\" /etc/os-release
@@ -383,14 +383,14 @@ build option:
 
 .. code::
 
-   $ sudo singularity build --notest my_container.sif my_container.def
+   $ sudo {command} build --notest my_container.sif my_container.def
 
 Running the test command on a container built with this def file yields
 the following:
 
 .. code::
 
-   $ singularity test my_container.sif
+   $ {command} test my_container.sif
    Container base is Ubuntu as expected.
 
 One common use of the ``%test`` section is to run a quick check that the
@@ -398,21 +398,21 @@ programs you intend to install in the container are present. If you
 installed the program ``samtools``, which shows a usage screen when run
 without any options, you might test it can be run with:
 
-.. code:: singularity
+.. code:: {command}
 
    %test
        # Run samtools - exits okay with usage screen if installed
        samtools
 
 If ``samtools`` is not successfully installed in the container then the
-``singularity test`` will exit with an error such as ``samtools: command
+``{command} test`` will exit with an error such as ``samtools: command
 not found``.
 
 Some programs return an error code when run without mandatory options.
 If you want to ignore this, and just check the program is present and
 can be called, you can run it as ``myprog || true`` in your test:
 
-.. code:: singularity
+.. code:: {command}
 
    %test
        # Run bwa - exits with error code if installed and run without
@@ -448,7 +448,7 @@ Specifically:
 You should use the same conventions that you would use in a ``.bashrc``
 or ``.profile`` file. Consider this example from the def file above:
 
-.. code:: singularity
+.. code:: {command}
 
    %environment
        export LISTEN_PORT=12345
@@ -463,7 +463,7 @@ variables are set appropriately at runtime with the following command:
 
 .. code::
 
-   $ singularity exec my_container.sif env | grep -E 'LISTEN_PORT|LC_ALL'
+   $ {command} exec my_container.sif env | grep -E 'LISTEN_PORT|LC_ALL'
    LISTEN_PORT=12345
    LC_ALL=C
 
@@ -471,7 +471,7 @@ To set a default value for a variable in the ``%environment`` section,
 but adopt the value of a host environment variable if it is set, use
 the following syntax:
 
-.. code:: singularity
+.. code:: {command}
 
     %environment
 	  FOO=${FOO:-'default'}
@@ -499,7 +499,7 @@ issued.
 
 Consider the example from the def file above.
 
-.. code:: singularity
+.. code:: {command}
 
    %startscript
        nc -lp $LISTEN_PORT
@@ -510,13 +510,13 @@ section above). The script can be invoked like so:
 
 .. code::
 
-   $ singularity instance start my_container.sif instance1
+   $ {command} instance start my_container.sif instance1
    INFO:    instance started successfully
 
    $ lsof | grep LISTEN
    nc        19061               vagrant    3u     IPv4             107409      0t0        TCP *:12345 (LISTEN)
 
-   $ singularity instance stop instance1
+   $ {command} instance stop instance1
    Stopping instance1 instance of /home/vagrant/my_container.sif (PID=19035)
 
 .. _runscript:
@@ -526,14 +526,14 @@ section above). The script can be invoked like so:
 
 The contents of the ``%runscript`` section are written to a file within
 the container that is executed when the container image is run (either
-via the ``singularity run`` command or by executing the container
+via the ``{command} run`` command or by executing the container
 directly as a command). When the container is invoked, arguments
 following the container name are passed to the runscript. This means
 that you can (and should) process arguments within your runscript.
 
 Consider the example from the def file above:
 
-.. code:: singularity
+.. code:: {command}
 
    %runscript
        echo "Container was created $NOW"
@@ -573,7 +573,7 @@ format is a name-value pair.
 
 Consider the example from the def file above:
 
-.. code:: singularity
+.. code:: {command}
 
    %labels
        Author d@sylabs.io
@@ -594,7 +594,7 @@ the following command:
 
 .. code::
 
-   $ singularity inspect my_container.sif
+   $ {command} inspect my_container.sif
 
    {
      "Author": "d@sylabs.io",
@@ -622,7 +622,7 @@ the ``run-help`` command.
 
 Consider the example from the def file above:
 
-.. code:: singularity
+.. code:: {command}
 
    %help
        This is a demo container used to illustrate a def file that uses all
@@ -632,7 +632,7 @@ After building the help can be displayed like so:
 
 .. code::
 
-   $ singularity run-help my_container.sif
+   $ {command} run-help my_container.sif
        This is a demo container used to illustrate a def file that uses all
        supported sections.
 
@@ -645,7 +645,7 @@ one environment can be used for compilation, then the resulting binary
 can be copied into a final environment. This allows a slimmer final
 image that does not require the entire development stack.
 
-.. code:: singularity
+.. code:: {command}
 
    Bootstrap: docker
    From: golang:1.12.3-alpine3.9
@@ -719,7 +719,7 @@ alongside any of the primary sections (i.e. ``%post``,``%runscript``,
 The following runscript demonstrates how to build 2 different apps into
 the same container using SCIF modules:
 
-.. code:: singularity
+.. code:: {command}
 
    Bootstrap: docker
    From: ubuntu
@@ -779,7 +779,7 @@ To run a specific app within the container:
 
 .. code::
 
-   % singularity run --app foo my_container.sif
+   % {command} run --app foo my_container.sif
    RUNNING FOO
 
 The same environment variable, ``$SOFTWARE`` is defined for both apps in
@@ -789,10 +789,10 @@ variable changes depending on the app we specify:
 
 .. code::
 
-   $ singularity exec --app foo my_container.sif env | grep SOFTWARE
+   $ {command} exec --app foo my_container.sif env | grep SOFTWARE
    SOFTWARE=foo
 
-   $ singularity exec --app bar my_container.sif env | grep SOFTWARE
+   $ {command} exec --app bar my_container.sif env | grep SOFTWARE
    SOFTWARE=bar
 
 **********************************

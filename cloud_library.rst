@@ -44,7 +44,7 @@ To generate a access token, do the following steps:
    #. Enter a name for your new access token, such as "test token"
    #. Click the "Create a New Access Token" button.
    #. Click "Copy token to Clipboard" from the "New API Token" page.
-   #. Run ``singularity remote login`` and paste the access token at the
+   #. Run ``{command} remote login`` and paste the access token at the
       prompt.
 
 Now that you have your token, you are ready to push your container!
@@ -55,12 +55,12 @@ Now that you have your token, you are ready to push your container!
  Pushing a Container
 *********************
 
-The ``singularity push`` command will push a container to the container
+The ``{command} push`` command will push a container to the container
 library with the given URL. Here's an example of a typical push command:
 
 .. code::
 
-   $ singularity push my-container.sif library://your-name/project-dir/my-container:latest
+   $ {command} push my-container.sif library://your-name/project-dir/my-container:latest
 
 The ``:latest`` is the container tag. Tags are used to have different
 version of the same container.
@@ -78,7 +78,7 @@ a version tag to that container, like so:
 
 .. code::
 
-   $ singularity push my-container.sif library://your-name/project-dir/my-container:1.0.1
+   $ {command} push my-container.sif library://your-name/project-dir/my-container:1.0.1
 
 You can download the container with that tag by replacing the
 ``:latest``, with the tagged container you want to download.
@@ -89,7 +89,7 @@ to setting the description via the web interface:
 
 .. code:: console
 
-   $ singularity push -D "My alpine 3.11 container" alpine_3.11.sif library://myuser/examples/alpine:3.11
+   $ {command} push -D "My alpine 3.11 container" alpine_3.11.sif library://myuser/examples/alpine:3.11
    2.7MiB / 2.7MiB [=========================================================================] 100 % 1.1 MiB/s 0s
 
    Library storage: using 13.24 MiB out of 11.00 GiB quota (0.1% used)
@@ -105,7 +105,7 @@ container in your web browser.
  Pulling a container
 *********************
 
-The ``singularity pull`` command will download a container from the
+The ``{command} pull`` command will download a container from the
 `Library <https://cloud.sylabs.io/library>`_ (``library://``), `Docker
 Hub <https://hub.docker.com/>`_ (``docker://``), and also `Shub
 <https://singularity-hub.org>`_ (``shub://``).
@@ -119,11 +119,11 @@ Here's a typical pull command:
 
 .. code::
 
-   $ singularity pull file-out.sif library://alpine:latest
+   $ {command} pull file-out.sif library://alpine:latest
 
    # or pull from docker:
 
-   $ singularity pull file-out.sif docker://alpine:latest
+   $ {command} pull file-out.sif docker://alpine:latest
 
 .. note::
 
@@ -135,7 +135,7 @@ URL:
 
 .. code::
 
-   $ singularity pull file-out.sif library://alpine:3.8
+   $ {command} pull file-out.sif library://alpine:3.8
 
 Of course, you can pull your own containers. Here's what that will look
 like:
@@ -148,11 +148,11 @@ etc...
 
 .. code::
 
-   $ singularity pull out-file.sif library://your-name/project-dir/my-container:latest
+   $ {command} pull out-file.sif library://your-name/project-dir/my-container:latest
 
    # or use a different tag:
 
-   $ singularity pull out-file.sif library://your-name/project-dir/my-container:1.0.1
+   $ {command} pull out-file.sif library://your-name/project-dir/my-container:1.0.1
 
 .. note::
 
@@ -181,7 +181,7 @@ To find interesting or useful containers in the library, you can open
 https://cloud.sylabs.io/library in your browser and search from there
 through the web GUI.
 
-Alternatively, from the CLI you can use ``singularity search <query>``.
+Alternatively, from the CLI you can use ``{command} search <query>``.
 This will search the library for container images matching ``<query>``.
 
 Using the CLI Search
@@ -191,7 +191,7 @@ Here is an example of searching the library for ``centos``:
 
 .. code:: console
 
-   singularity search centos
+   {command} search centos
    Found 72 container images for amd64 matching "centos":
 
        library://dcsouthwick/iotools/centos7:latest
@@ -217,7 +217,7 @@ Containers can have multiple tags, and these are shown separated by
 commas after the ``:`` in the URL. E.g.
 ``library://dtrudg/linux/centos:7,centos7,latest`` is a single container
 image with 3 tags, ``7``, ``centos7``, and ``latest``. You can
-``singularity pull`` the container image using any one of these tags.
+``{command} pull`` the container image using any one of these tags.
 
 Note that the results show ``amd64`` containers only. By default
 ``search`` returns only containers with an architecture matching your
@@ -226,7 +226,7 @@ current system. To e.g. search for ``arm64`` containers from an
 
 .. code:: console
 
-   singularity search --arch arm64 alpine
+   {command} search --arch arm64 alpine
    Found 5 container images for arm64 matching "alpine":
 
        library://dtrudg-sylabs-2/multiarch/alpine:latest
@@ -245,7 +245,7 @@ You can also limit results to only signed containers with the
 
 .. code:: console
 
-   singularity search --signed alpine
+   {command} search --signed alpine
    Found 45 container images for amd64 matching "alpine":
 
        library://deep/default/alpine:latest,1.0.1
@@ -274,7 +274,7 @@ Building from a definition file:
 
 This is our definition file. Let's call it ``ubuntu.def``:
 
-.. code:: singularity
+.. code:: {command}
 
    bootstrap: library
    from: ubuntu:18.04
@@ -287,7 +287,7 @@ Now, to build the container, use the ``--remote`` flag, and without
 
 .. code::
 
-   $ singularity build --remote ubuntu.sif ubuntu.def
+   $ {command} build --remote ubuntu.sif ubuntu.def
 
 .. note::
 

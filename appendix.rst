@@ -7,7 +7,7 @@
 ..
    TODO oci & oci-archive along with http & https
 
-.. _apptainer-environment-variables:
+.. _{command}-environment-variables:
 
 ***************************************
  {Project}'s environment variables
@@ -357,14 +357,14 @@ existing base container adding customizations in ``%post``,
 Keywords
 --------
 
-.. code:: apptainer
+.. code:: {command}
 
    Bootstrap: library
 
 The Bootstrap keyword is always mandatory. It describes the bootstrap
 module to use.
 
-.. code:: apptainer
+.. code:: {command}
 
    From: <entity>/<collection>/<container>:<tag>
 
@@ -374,14 +374,14 @@ a base. ``entity`` is optional and defaults to ``library``.
 correct namespace to use for some official containers (``alpine`` for
 example). ``tag`` is also optional and will default to ``latest``.
 
-.. code:: apptainer
+.. code:: {command}
 
    Library: http://custom/library
 
 The Library keyword is optional. It will default to
 ``https://library.sylabs.io``.
 
-.. code:: apptainer
+.. code:: {command}
 
    Fingerprints: 22045C8C0B1004D058DE4BEDA20C27EE7FF7BA84
 
@@ -419,14 +419,14 @@ Docker containers. If so, you can seamlessly convert them to
 Keywords
 --------
 
-.. code:: apptainer
+.. code:: {command}
 
    Bootstrap: docker
 
 The Bootstrap keyword is always mandatory. It describes the bootstrap
 module to use.
 
-.. code:: apptainer
+.. code:: {command}
 
    From: <registry>/<namespace>/<container>:<tag>@<digest>
 
@@ -436,17 +436,17 @@ a base. ``registry`` is optional and defaults to ``index.docker.io``.
 correct namespace to use for some official containers (ubuntu for
 example). ``tag`` is also optional and will default to ``latest``
 
-See :ref:`{Project} and Docker <singularity-and-docker>` for more
+See :ref:`{Project} and Docker <docker-and-oci>` for more
 detailed info on using Docker registries.
 
-.. code:: apptainer
+.. code:: {command}
 
    Registry: http://custom_registry
 
 The Registry keyword is optional. It will default to
 ``index.docker.io``.
 
-.. code:: apptainer
+.. code:: {command}
 
    Namespace: namespace
 
@@ -490,14 +490,14 @@ container adding customizations in ``%post`` , ``%environment``,
 Keywords
 --------
 
-.. code:: apptainer
+.. code:: {command}
 
    Bootstrap: shub
 
 The Bootstrap keyword is always mandatory. It describes the bootstrap
 module to use.
 
-.. code:: apptainer
+.. code:: {command}
 
    From: shub://<registry>/<username>/<container-name>:<tag>@digest
 
@@ -538,14 +538,14 @@ containers by adding customizations in ``%post`` , ``%environment``,
 Keywords
 --------
 
-.. code:: apptainer
+.. code:: {command}
 
    Bootstrap: oras
 
 The Bootstrap keyword is always mandatory. It describes the bootstrap
 module to use.
 
-.. code:: apptainer
+.. code:: {command}
 
    From: oras://registry/namespace/image:tag
 
@@ -580,21 +580,21 @@ container and then customize the new container in ``%post``,
 Keywords
 --------
 
-.. code:: apptainer
+.. code:: {command}
 
    Bootstrap: localimage
 
 The Bootstrap keyword is always mandatory. It describes the bootstrap
 module to use.
 
-.. code:: apptainer
+.. code:: {command}
 
    From: /path/to/container/file/or/directory
 
 The ``From`` keyword is mandatory. It specifies the local container to
 use as a base.
 
-.. code:: apptainer
+.. code:: {command}
 
    Fingerprints: 22045C8C0B1004D058DE4BEDA20C27EE7FF7BA84
 
@@ -633,14 +633,14 @@ You must also specify the URI for the mirror you would like to use.
 Keywords
 --------
 
-.. code:: apptainer
+.. code:: {command}
 
    Bootstrap: yum
 
 The Bootstrap keyword is always mandatory. It describes the bootstrap
 module to use.
 
-.. code:: apptainer
+.. code:: {command}
 
    OSVersion: 7
 
@@ -648,7 +648,7 @@ The OSVersion keyword is optional. It specifies the OS version you would
 like to use. It is only required if you have specified a %{OSVERSION}
 variable in the ``MirrorURL`` keyword.
 
-.. code:: apptainer
+.. code:: {command}
 
    MirrorURL: http://mirror.centos.org/centos-%{OSVERSION}/%{OSVERSION}/os/$basearch/
 
@@ -656,7 +656,7 @@ The MirrorURL keyword is mandatory. It specifies the URI to use as a
 mirror to download the OS. If you define the ``OSVersion`` keyword, then
 you can use it in the URI as in the example above.
 
-.. code:: apptainer
+.. code:: {command}
 
    Include: yum
 
@@ -707,14 +707,14 @@ you would like to use.
 Keywords
 --------
 
-.. code:: apptainer
+.. code:: {command}
 
    Bootstrap: debootstrap
 
 The Bootstrap keyword is always mandatory. It describes the bootstrap
 module to use.
 
-.. code:: apptainer
+.. code:: {command}
 
    OSVersion: xenial
 
@@ -724,14 +724,14 @@ would like to use. For Ubuntu you can use code words like ``trusty``
 use values like ``stable``, ``oldstable``, ``testing``, and ``unstable``
 or code words like ``wheezy`` (7), ``jesse`` (8), and ``stretch`` (9).
 
-   .. code:: apptainer
+   .. code:: {command}
 
       MirrorURL:  http://us.archive.ubuntu.com/ubuntu/
 
 The MirrorURL keyword is mandatory. It specifies a URI to use as a
 mirror when downloading the OS.
 
-.. code:: apptainer
+.. code:: {command}
 
    Include: somepackage
 
@@ -776,7 +776,7 @@ container. Arch Linux uses the aptly named ``pacman`` package manager
 Keywords
 --------
 
-.. code:: apptainer
+.. code:: {command}
 
    Bootstrap: arch
 
@@ -817,14 +817,14 @@ must also specify a URI for the mirror you would like to use.
 Keywords
 --------
 
-.. code:: apptainer
+.. code:: {command}
 
    Bootstrap: busybox
 
 The Bootstrap keyword is always mandatory. It describes the bootstrap
 module to use.
 
-.. code:: apptainer
+.. code:: {command}
 
    MirrorURL: https://www.busybox.net/downloads/binaries/1.26.1-defconfig-multiarch/busybox-x86_64
 
@@ -861,14 +861,14 @@ You must also specify a URI for the mirror you would like to use.
 Keywords
 --------
 
-.. code:: apptainer
+.. code:: {command}
 
    Bootstrap: zypper
 
 The Bootstrap keyword is always mandatory. It describes the bootstrap
 module to use.
 
-.. code:: apptainer
+.. code:: {command}
 
    OSVersion: 42.2
 
@@ -876,7 +876,7 @@ The OSVersion keyword is optional. It specifies the OS version you would
 like to use. It is only required if you have specified a %{OSVERSION}
 variable in the ``MirrorURL`` keyword.
 
-.. code:: apptainer
+.. code:: {command}
 
    Include: somepackage
 
@@ -908,7 +908,7 @@ currently residing in docker's daemon internal storage:
    REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
    alpine              latest              965ea09ff2eb        7 weeks ago         5.55MB
 
-   $ singularity run docker-daemon:alpine:latest
+   $ {command} run docker-daemon:alpine:latest
    INFO:    Converting OCI blobs to SIF format
    INFO:    Starting build...
    Getting image source signatures
@@ -927,7 +927,7 @@ a docker image stored in a ``docker-save`` formatted tar file:
 
    $ docker save -o alpine.tar alpine:latest
 
-   $ singularity run docker-archive:$(pwd)/alpine.tar
+   $ {command} run docker-archive:$(pwd)/alpine.tar
    INFO:    Converting OCI blobs to SIF format
    INFO:    Starting build...
    Getting image source signatures
@@ -945,7 +945,7 @@ Keywords
 The ``docker-daemon`` bootstrap agent can be used in a {Project}
 definition file as follows:
 
-.. code:: apptainer
+.. code:: {command}
 
    From: docker-daemon:<image>:<tag>
 
@@ -953,7 +953,7 @@ where both ``<image>`` and ``<tag>`` are mandatory fields that must be
 written explicitly. The ``docker-archive`` bootstrap agent requires
 instead the path to the tar file containing the image:
 
-.. code:: apptainer
+.. code:: {command}
 
    From: docker-archive:<path-to-tar-file>
 
@@ -978,7 +978,7 @@ Overview
 A minimal container providing a shell can be created by copying the
 ``busybox`` static binary into an empty scratch container:
 
-.. code:: apptainer
+.. code:: {command}
 
    Bootstrap: scratch
 
@@ -1002,7 +1002,7 @@ The resulting container provides a shell, and is 696KiB in size:
    $ ls -lah scratch.sif
    -rwxr-xr-x. 1 dave dave 696K May 28 13:29 scratch.sif
 
-   $ apptainer run scratch.sif
+   $ {command} run scratch.sif
    WARNING: passwd file doesn't exist in container, not updating
    WARNING: group file doesn't exist in container, not updating
    {Project}> echo "Hello from a 696KiB container"
@@ -1010,7 +1010,7 @@ The resulting container provides a shell, and is 696KiB in size:
 
 Keywords
 
-.. code:: apptainer
+.. code:: {command}
 
    Bootstrap: scratch
 

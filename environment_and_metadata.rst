@@ -75,13 +75,13 @@ environment variables will be set. If you are using a ``library`` or
 ``Docker`` source then you may inherit environment variables from your
 base image.
 
-If I build a singularity container from the image
+If I build a {command} container from the image
 ``docker://python:3.7`` then when I run the container I can see that the
 ``PYTHON_VERSION`` variable is set in the container:
 
 .. code::
 
-   $ singularity exec python.sif env | grep PYTHON_VERSION
+   $ {command} exec python.sif env | grep PYTHON_VERSION
    PYTHON_VERSION=3.7.7
 
 This happens because the ``Dockerfile`` used to build that container has
@@ -99,7 +99,7 @@ Environment variables can be included in your container by adding them
 to your definition file. Use ``export`` in the ``%environment`` section
 of a definition file to set a container environment variable:
 
-.. code:: singularity
+.. code:: {command}
 
    Bootstrap: library
    From: default/alpine
@@ -115,7 +115,7 @@ The ``%runscript`` is set to echo the value.
 
 .. code::
 
-   $ singularity run env.sif
+   $ {command} run env.sif
    Hello
 
 .. warning::
@@ -173,10 +173,10 @@ the host:
 .. code::
 
    $ export APPTAINERENV_MYVAR="$MYVAR"
-   $ singularity run mycontainer.sif
+   $ {command} run mycontainer.sif
 
    # or
-   $ singularity run --env "MYVAR=$MYVAR"
+   $ {command} run --env "MYVAR=$MYVAR"
 
 If you *do not want* the host environment variables to pass into the
 container you can use the ``-e`` or ``--cleanenv`` option. This gives a
@@ -185,7 +185,7 @@ environment variables for correct operation of most software.
 
 .. code::
 
-   $ singularity exec --cleanenv env.sif env
+   $ {command} exec --cleanenv env.sif env
    HOME=/home/dave
    LANG=C
    LD_LIBRARY_PATH=/.singularity.d/libs
@@ -251,10 +251,10 @@ specify environment variables as ``NAME=VALUE`` pairs:
 
 .. code::
 
-   $ singularity run env.sif
+   $ {command} run env.sif
    Hello
 
-   $ singularity run --env MYVAR=Goodbye env.sif
+   $ {command} run --env MYVAR=Goodbye env.sif
    Goodbye
 
 Separate multiple variables with commas, e.g. ``--env
@@ -272,7 +272,7 @@ environment variables as ``NAME=VALUE`` pairs, e.g.:
    $ cat myenvs
    MYVAR="Hello from a file"
 
-   $ singularity run --env-file myenvs env.sif
+   $ {command} run --env-file myenvs env.sif
    Hello from a file
 
 ``APPTAINERENV_`` prefix
@@ -284,11 +284,11 @@ the environment variable ``xxx`` inside the container:
 
 .. code::
 
-   $ singularity run env.sif
+   $ {command} run env.sif
    Hello
 
    $ export APPTAINERENV_MYVAR="Overridden"
-   $ singularity run env.sif
+   $ {command} run env.sif
    Overridden
 
 Manipulating ``PATH``
@@ -330,11 +330,11 @@ variable in the container.
 
 .. code::
 
-   $ singularity exec env.sif sh -c 'echo $PATH'
+   $ {command} exec env.sif sh -c 'echo $PATH'
    /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
    $ export APPTAINERENV_APPEND_PATH="/endpath"
-   $ singularity exec env.sif sh -c 'echo $PATH'
+   $ {command} exec env.sif sh -c 'echo $PATH'
    /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/endpath
 
 Alternatively you could use the ``--env`` option to set a
@@ -346,11 +346,11 @@ to the start) of the ``PATH`` variable in the container.
 
 .. code::
 
-   $ singularity exec env.sif sh -c 'echo $PATH'
+   $ {command} exec env.sif sh -c 'echo $PATH'
    /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
    $ export APPTAINERENV_PREPEND_PATH="/startpath"
-   $ singularity exec env.sif sh -c 'echo $PATH'
+   $ {command} exec env.sif sh -c 'echo $PATH'
    /startpath:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 Alternatively you could use the ``--env`` option to set a
@@ -382,11 +382,11 @@ processed by the host shell before the value is passed to
 
 .. code::
 
-   singularity run --env "MYHOST=$HOSTNAME" mycontainer.sif
+   {command} run --env "MYHOST=$HOSTNAME" mycontainer.sif
 
 This will set the ``MYHOST`` environment variable inside the container
 to the value of the ``HOSTNAME`` on the host system. ``$HOSTNAME`` is
-substituted before the host shell runs ``singularity``.
+substituted before the host shell runs ``{command}``.
 
 .. note::
 
@@ -407,7 +407,7 @@ same value as ``PATH`` in the container (not the host's ``PATH``):
 
 .. code::
 
-   singularity run --env "MYPATH=\$PATH" mycontainer.sif
+   {command} run --env "MYPATH=\$PATH" mycontainer.sif
 
 You can also use this approach to append or prepend to variables that
 are already set in the container. For example, ``--env
@@ -425,7 +425,7 @@ you need to set a path containing a literal ``$LIB`` for the
 
 .. code::
 
-   singularity run --env="LD_PRELOAD=/foo/bar/\\\$LIB/baz.so" mycontainer.sif
+   {command} run --env="LD_PRELOAD=/foo/bar/\\\$LIB/baz.so" mycontainer.sif
 
 This will result in ``LD_PRELOAD`` having the value
 ``/foo/bar/$LIB/baz.so`` inside the container.
@@ -439,7 +439,7 @@ level of escaping:
 
 .. code::
 
-   singularity run --env='LD_PRELOAD=/foo/bar/\$LIB/baz.so' mycontainer.sif
+   {command} run --env='LD_PRELOAD=/foo/bar/\$LIB/baz.so' mycontainer.sif
 
 
 Environment Variable Precedence
@@ -546,7 +546,7 @@ it is not modifying an existing label when ``--force`` is not used:
 
 .. code::
 
-   $ singularity build test2.sif test2.def
+   $ {command} build test2.sif test2.def
    ...
    INFO:    Adding labels
    WARNING: Label: OWNER already exists and force option is false, not overwriting
@@ -562,7 +562,7 @@ Custom Labels
 You can add custom labels to your container using the ``%labels``
 section in a definition file:
 
-.. code:: singularity
+.. code:: {command}
 
    Bootstrap: library
    From: ubuntu:latest
@@ -582,7 +582,7 @@ building.
 file defined by the ``APPTAINER_LABELS`` environment variable in the
 ``%post`` section:
 
-.. code:: singularity
+.. code:: {command}
 
    Bootstrap: library
    From: ubuntu:latest
@@ -615,7 +615,7 @@ options will display any labels set on the container
 
 .. code:: console
 
-   $ singularity inspect ubuntu.sif
+   $ {command} inspect ubuntu.sif
    my.label: version 1.2.3
    OWNER: Joana
    org.label-schema.build-arch: amd64
@@ -639,11 +639,11 @@ used to build the container.
 
 .. code::
 
-   $ singularity inspect --deffile jupyter.sif
+   $ {command} inspect --deffile jupyter.sif
 
 And the output would look like:
 
-.. code:: singularity
+.. code:: {command}
 
    Bootstrap: library
    From: debian:9
@@ -710,7 +710,7 @@ The ``-r`` or ``--runscript`` option shows the runscript for the image.
 
 .. code::
 
-   $ singularity inspect --runscript jupyter.sif
+   $ {command} inspect --runscript jupyter.sif
 
 And the output would look like:
 
@@ -750,7 +750,7 @@ The ``-t`` or ``--test`` flag shows the test script for the image.
 
 .. code::
 
-   $ singularity inspect --test jupyter.sif
+   $ {command} inspect --test jupyter.sif
 
 This will output the corresponding ``%test`` section from the definition
 file.
@@ -764,7 +764,7 @@ more environment files, depending on how the container was built.
 
 .. code::
 
-   $ singularity inspect --environment jupyter.sif
+   $ {command} inspect --environment jupyter.sif
 
 And the output would look like:
 
@@ -787,7 +787,7 @@ You can call it this way:
 
 .. code::
 
-   $ singularity inspect --helpfile jupyter.sif
+   $ {command} inspect --helpfile jupyter.sif
 
 And the output would look like:
 
@@ -806,7 +806,7 @@ You can call it this way:
 
 .. code:: console
 
-   $ singularity inspect --json ubuntu.sif
+   $ {command} inspect --json ubuntu.sif
 
 And the output would look like:
 

@@ -61,9 +61,9 @@ to run a container can be run, unprivileged.
 
 {Project} supports running containers without setuid, using user
 namespaces. It can be compiled with the ``--without-suid`` option, or
-``allow setuid = no`` can be set in ``singularity.conf`` to enable this.
+``allow setuid = no`` can be set in ``{command}.conf`` to enable this.
 In this mode *all* operations run as the user who starts the
-``singularity`` program. However, there are some disadvantages:
+``{command}`` program. However, there are some disadvantages:
 
 -  SIF and other single file container images cannot be mounted
    directly. The container image must be extracted to a directory on
@@ -145,7 +145,7 @@ to verify that the image has not been tampered with or corrupted.
 
 We use private PGP keys to create a container signature, and the public
 key in order to verify the container. Verification of signed containers
-happens automatically in ``singularity pull`` commands against the
+happens automatically in ``{command} pull`` commands against the
 Sylabs Cloud Container Library. A Keystore in the Sylabs Cloud makes it
 easier to share and obtain public keys for container verification.
 

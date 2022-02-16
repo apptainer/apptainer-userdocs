@@ -202,7 +202,7 @@ html_show_copyright = False
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'singularity-' + version + '-user-guide'
+htmlhelp_basename = '{command}-' + version + '-user-guide'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -266,7 +266,7 @@ epub_publisher = author
 epub_copyright = copyright
 
 # The basename for the epub file. It defaults to the project name.
-epub_basename = 'singularity-' + version + '-user-guide'
+epub_basename = '{command}-' + version + '-user-guide'
 
 # The HTML theme for the epub output.
 # Since the default themes are not optimized for small screen space,
@@ -292,9 +292,9 @@ epub_exclude_files = []
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '.'))
 from sphinx.highlighting import lexers
-from pygments_singularity import SingularityLexer
+from pygments_apptainer import ApptainerLexer
 from pygments_json import JSONLexer
 from replacements import *
-# lexer for Singularity definition files (added here until it is upstreamed into Pygments).
-lexers['singularity'] = SingularityLexer(startinline=True)
+# lexer for Apptainer definition files (added here until it is upstreamed into Pygments).
+lexers['apptainer'] = ApptainerLexer(startinline=True)
 lexers['json'] = JSONLexer(startinline=True)
