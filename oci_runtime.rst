@@ -69,7 +69,7 @@ This is one way to bootstrap creation of this image in SIF that
 *retains* a local copy - i.e., a local copy of the SIF file *and* a
 cached copy of the OCI blobs. Additional approaches and details can be
 found in the section :ref:`Support for Docker and OCI
-<singularity-and-docker>`).
+<docker-and-oci>`).
 
 For the purpose of bootstrapping the creation of an OCI compliant
 container, this SIF file can be mounted as follows:
@@ -773,7 +773,7 @@ additional properties - for example:
    will make use of ``ENTRYPOINT`` or ``CMD`` (from the OCI image) to
    populate ``args``; for additional discussion, please refer to
    :ref:`Directing Execution <sec:def_files_execution>` in the section
-   :ref:`Support for Docker and OCI <singularity-and-docker>`.
+   :ref:`Support for Docker and OCI <docker-and-oci>`.
 
 For a comprehensive discussion of all the ``config.json`` file
 properties, refer to the `implementation guide

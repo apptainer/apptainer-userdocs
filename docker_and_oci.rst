@@ -1,4 +1,4 @@
-.. _{command}-and-docker:
+.. _docker-and-oci:
 
 #######################################
  Support for Docker and OCI Containers
@@ -1120,7 +1120,7 @@ The table below gives a quick reference comparing Dockerfile and
 
 
 ================ =========================== ================ =============================
-{Project} Definition file                Dockerfile
+{Project}        Definition file             Dockerfile
 -------------------------------------------- ----------------------------------------------
 Section          Description                 Section          Description
 ================ =========================== ================ =============================
@@ -1163,7 +1163,7 @@ Section          Description                 Section          Description
 
 ``%runscript```  | Commands that will
                  | be run when you           ``ENTRYPOINT``   | Commands / arguments
-                 | ``{command} run``       ``CMD``          | that will run in the
+                 | ``{command} run``         ``CMD``          | that will run in the
                  | the container image.                       | container image.
 
 ``%startscript`` | Commands that will

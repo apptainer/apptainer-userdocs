@@ -436,7 +436,7 @@ a base. ``registry`` is optional and defaults to ``index.docker.io``.
 correct namespace to use for some official containers (ubuntu for
 example). ``tag`` is also optional and will default to ``latest``
 
-See :ref:`{Project} and Docker <singularity-and-docker>` for more
+See :ref:`{Project} and Docker <docker-and-oci>` for more
 detailed info on using Docker registries.
 
 .. code:: {command}
