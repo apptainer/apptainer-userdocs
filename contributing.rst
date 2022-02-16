@@ -29,8 +29,7 @@ help out other users!
 ======================
 
 Many of our users come to Slack for quick help with an issue. You can
-find us at `apptainer
-<https://apptainer.slack.com/>`_.
+join through the `apptainer help page <https://apptainer.org/help/>`_.
 
 .. _contributing-to-documentation:
 
