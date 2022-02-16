@@ -66,7 +66,7 @@ compiled for the latest versions of CUDA.
 
 {Project} will find the NVIDIA/CUDA libraries on your host using the
 list of libraries in the configuration file
-``etc/singularity/nvbliblist``, and resolving paths through the
+``etc/{command}/nvbliblist``, and resolving paths through the
 ``ldconfig`` cache. At time of release this list is appropriate for the
 latest stable CUDA version. It can be modified by the administrator to
 add additional libraries if necessary. See the admin guide for more

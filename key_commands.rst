@@ -52,7 +52,7 @@ The output will look as it follows:
 
 .. code:: {command}
 
-   Private key listing (/home/joana/.singularity/sypgp/pgp-secret):
+   Private key listing (/home/joana/.{command}/sypgp/pgp-secret):
 
    0) U: Johnny Cash (none) <cash@sylabs.io>
    C: 2019-04-11 22:22:28 +0200 CEST
@@ -101,7 +101,7 @@ keystore by running ``{command} key list -s`` command:
 
 .. code:: {command}
 
-   Private key listing (/home/joana/.singularity/sypgp/pgp-secret):
+   Private key listing (/home/joana/.{command}/sypgp/pgp-secret):
 
      0) U: Johnny Cash (none) <cash@sylabs.io>
      C: 2019-04-11 22:22:28 +0200 CEST

@@ -781,12 +781,12 @@ For example, the ``docker://openjdk:latest`` container sets ``JAVA_HOME``:
 
    # Check JAVA_HOME in the docker container.
    # This value comes from ENV in the Dockerfile.
-   $ singularity run docker://openjdk:latest echo \$JAVA_HOME
+   $ {command} run docker://openjdk:latest echo \$JAVA_HOME
    /usr/java/openjdk-17
 
    # Override JAVA_HOME in the container
    export APPTAINERENV_JAVA_HOME=/test
-   $ singularity run docker://openjdk:latest echo \$JAVA_HOME
+   $ {command} run docker://openjdk:latest echo \$JAVA_HOME
    /test
 
 Namespace & Device Isolation

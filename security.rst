@@ -11,8 +11,8 @@
 If you suspect you have found a vulnerability in {Project} we want
 to work with you so that it can be investigated, fixed, and disclosed in
 a responsible manner. Please follow the steps in our published `Security
-Policy <https://{command}.org/security-policy/>`__, which begins with
-contacting us privately via security@{command}.org
+Policy <https://apptainer.org/security-policy/>`__, which begins with
+contacting us privately via security@apptainer.org
 
 We disclose vulnerabilities found in {Project} through public
 CVE reports, and notifications on our community channels. We encourage

@@ -23,7 +23,7 @@ other topics related to the build environment.
 
 {Project} will cache SIF container images generated from remote
 sources, and any OCI/docker layers used to create them. The cache is
-created at ``$HOME/.singularity/cache`` by default. The location of the
+created at ``$HOME/.{command}/cache`` by default. The location of the
 cache can be changed by setting the ``{ENVPREFIX}_CACHEDIR`` environment
 variable.
 
@@ -70,11 +70,11 @@ different kinds of data that are cached:
 
 .. code::
 
-   $HOME/.singularity/cache/blob
-   $HOME/.singularity/cache/library
-   $HOME/.singularity/cache/net
-   $HOME/.singularity/cache/oci-tmp
-   $HOME/.singularity/cache/shub
+   $HOME/.{command}/cache/blob
+   $HOME/.{command}/cache/library
+   $HOME/.{command}/cache/net
+   $HOME/.{command}/cache/oci-tmp
+   $HOME/.{command}/cache/shub
 
 You can safely delete these directories, or content within them.
 {Project} will re-create any directories and data that are needed in
@@ -112,7 +112,7 @@ your cache, without manually inspecting the cache directories.
 .. note::
 
    If you have built images as root, directly or via ``sudo``, the cache
-   location for those builds is ``/root/.singularity``. You will need to
+   location for those builds is ``/root/.{command}``. You will need to
    use ``sudo`` when running ``cache clean`` or ``cache list`` to manage
    these cache entries.
 

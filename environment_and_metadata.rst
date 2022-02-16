@@ -173,10 +173,10 @@ the host:
 .. code::
 
    $ export APPTAINERENV_MYVAR="$MYVAR"
-   $ singularity run mycontainer.sif
+   $ {command} run mycontainer.sif
 
    # or
-   $ singularity run --env "MYVAR=$MYVAR"
+   $ {command} run --env "MYVAR=$MYVAR"
 
 If you *do not want* the host environment variables to pass into the
 container you can use the ``-e`` or ``--cleanenv`` option. This gives a
@@ -623,7 +623,7 @@ options will display any labels set on the container
    org.label-schema.schema-version: 1.0
    org.label-schema.usage.singularity.deffile.bootstrap: library
    org.label-schema.usage.singularity.deffile.from: ubuntu:latest
-   org.label-schema.usage.{command}.version: 3.7.0-rc.1
+   org.label-schema.usage.singularity.version: 3.7.0-rc.1
 
 We can easily see when the container was built, the source of the base
 image, and the exact version of {Project} that was used to build it.
@@ -823,7 +823,7 @@ And the output would look like:
                                    "org.label-schema.schema-version": "1.0",
                                    "org.label-schema.usage.singularity.deffile.bootstrap": "library",
                                    "org.label-schema.usage.singularity.deffile.from": "ubuntu:latest",
-                                   "org.label-schema.usage.{command}.version": "3.7.0-rc.1"
+                                   "org.label-schema.usage.singularity.version": "3.7.0-rc.1"
                            }
                    }
            },
@@ -856,7 +856,7 @@ SIF file metadata descriptor.
    │   └── test
    ├── env
    │   ├── 01-base.sh
-   |   ├── 10-docker2{command}.sh
+   |   ├── 10-docker2singularity.sh
    │   ├── 90-environment.sh
    │   ├── 91-environment.sh
    |   ├── 94-appsbase.sh
@@ -895,7 +895,7 @@ SIF file metadata descriptor.
 -  **runscript**: The commands in this file will be executed when the
    container is invoked with the ``run`` command or called as an
    executable. For legacy purposes there is a symbolic link called
-   ``/{command}`` that points to this file.
+   ``/singularity`` that points to this file.
 
 -  **runscript.help**: Contains the description that was added in the
    ``%help`` section.

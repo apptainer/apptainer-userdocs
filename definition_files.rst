@@ -605,8 +605,8 @@ the following command:
      "org.label-schema.usage": "/.singularity.d/runscript.help",
      "org.label-schema.usage.singularity.deffile.bootstrap": "library",
      "org.label-schema.usage.singularity.deffile.from": "ubuntu:18.04",
-     "org.label-schema.usage.{command}.runscript.help": "/.singularity.d/runscript.help",
-     "org.label-schema.usage.{command}.version": "3.0.1"
+     "org.label-schema.usage.singularity.runscript.help": "/.singularity.d/runscript.help",
+     "org.label-schema.usage.singularity.version": "3.0.1"
    }
 
 Some labels that are captured automatically from the build process. You

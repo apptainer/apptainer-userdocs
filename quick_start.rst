@@ -796,7 +796,7 @@ similar to this:
        {admindocs}/installation.html
 
    If you have questions about any of the above, you can contact one of the
-   sources listed at https://{command}.org/help. I can do my best
+   sources listed at https://apptainer.org/help. I can do my best
    to facilitate this interaction if help is needed.
 
    Thank you kindly for considering this request!

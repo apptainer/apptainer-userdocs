@@ -212,7 +212,7 @@ on Ubuntu and that {Project} was installed with the
 
 First write a configuration file. An example configuration file is
 installed with {Project}, normally at
-``/usr/local/etc/singularity/seccomp-profiles/default.json``. For this
+``/usr/local/etc/{command}/seccomp-profiles/default.json``. For this
 example, we will use a much simpler configuration file to blacklist the
 ``mkdir`` command.
 

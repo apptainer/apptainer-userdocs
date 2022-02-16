@@ -102,7 +102,7 @@ or saved locally.`
 
    $ {command} key list
 
-   Public key listing (/home/dave/.singularity/sypgp/pgp-public):
+   Public key listing (/home/dave/.{command}/sypgp/pgp-public):
 
    0) U: David Trudgian (demo) <david.trudgian@sylabs.io>
       C: 2019-11-15 09:54:54 -0600 CST
@@ -142,7 +142,7 @@ download it again like so.
 
    $ {command} key pull 12EE233B
 
-   1 key(s) added to keyring of trust /home/dave/.singularity/sypgp/pgp-public
+   1 key(s) added to keyring of trust /home/dave/.{command}/sypgp/pgp-public
 
 But note that this only restores the *public* key (used for verifying)
 to your local machine and does not restore the *private* key (used for
@@ -233,7 +233,7 @@ offline with ``{command} key pull``
 
    $ {command} key pull E5F780B2C22F59DF748524B435C3844412EE233B
 
-   1 key(s) added to keyring of trust /home/dave/.singularity/sypgp/pgp-public
+   1 key(s) added to keyring of trust /home/dave/.{command}/sypgp/pgp-public
 
 Advanced Signing - SIF IDs and Groups
 =====================================

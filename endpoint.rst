@@ -95,7 +95,7 @@ You can interact with the public Sylabs Cloud using various
 ***************************
 
 Users can setup and switch between multiple remote endpoints, which are
-stored in their ``~/.singularity/remote.yaml`` file. Alternatively,
+stored in their ``~/.{command}/remote.yaml`` file. Alternatively,
 remote endpoints can be set system-wide by an administrator.
 
 A remote endpoint may be the public Sylabs Cloud, a private installation
@@ -211,7 +211,7 @@ system) an administrative user should run:
 .. note::
 
    Global remote configurations can only be modified by the root user
-   and are stored in the ``etc/singularity/remote.yaml`` file, at the
+   and are stored in the ``etc/{command}/remote.yaml`` file, at the
    {Project} installation location.
 
 Conversely, to ``remove`` an endpoint:
@@ -411,7 +411,7 @@ before using it:
 
    $ {command} remote login --username ian https://pgp.example.com
    Password (or token when username is empty):
-   INFO:    Token stored in /home/ian/.singularity/remote.yaml
+   INFO:    Token stored in /home/ian/.{command}/remote.yaml
 
 Now we can see that ``https://pgp.example.com`` is logged in:
 
@@ -505,7 +505,7 @@ We can login to multiple OCI registries at the same time:
 
    $ {command} remote login --username ian docker://registry.example.com
    Password (or token when username is empty):
-   INFO:    Token stored in /home/ian/.singularity/remote.yaml
+   INFO:    Token stored in /home/ian/.{command}/remote.yaml
 
    $ {command} remote list
    Cloud Services Endpoints
