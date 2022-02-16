@@ -41,7 +41,7 @@ find us at `apptainer
 ****************
 
 For general bugs/issues, you can open an issue `at the GitHub repo
-<https://github.com/apptainer/apptainer/issues/new>`_. However, if you
+<https://github.com/{orgrepo}/issues/new>`_. However, if you
 find a security related issue/problem, please email the {Project} Security Team directly at
 security@apptainer.org. More information about the {Project} security policies
 and procedures can be found `here
@@ -58,11 +58,11 @@ want to share the love so nobody feels left out!
 
 You can contribute to the documentation by `raising an issue to suggest
 an improvement
-<https://github.com/apptainer/apptainer-userdocs/issues/new>`_ or by
+<https://github.com/{orgrepo}-userdocs/issues/new>`_ or by
 sending a `pull request
-<https://github.com/apptainer/apptainer-userdocs/compare>`_ on `our
+<https://github.com/{orgrepo}-userdocs/compare>`_ on `our
 repository for documentation
-<https://github.com/apptainer/apptainer-userdocs>`_.
+<https://github.com/{orgrepo}-userdocs>`_.
 
 The current documentation is generated with:
 
@@ -77,7 +77,7 @@ Other dependencies include:
 More information about contributing to the documentation, instructions
 on how to install the dependencies, and how to generate the files can be
 obtained `here
-<https://github.com/apptainer/apptainer-userdocs/blob/master/README.md>`__.
+<https://github.com/{orgrepo}-userdocs/blob/master/README.md>`__.
 
 For more information on using Git and GitHub to create a pull request
 suggesting additions and edits to the docs, see the :ref:`section on
@@ -96,15 +96,15 @@ that you fork the main repo, create a new branch to make changes, and
 submit a pull request (PR) to the master branch.
 
 Check out our official `CONTRIBUTING.md
-<https://github.com/apptainer/apptainer/blob/master/CONTRIBUTING.md>`_
+<https://github.com/{orgrepo}/blob/master/CONTRIBUTING.md>`_
 document, which also includes a `code of conduct
-<https://github.com/apptainer/apptainer/blob/master/CONTRIBUTING.md#code-of-conduct>`_.
+<https://github.com/{orgrepo}/blob/master/CONTRIBUTING.md#code-of-conduct>`_.
 
 Step 1. Fork the repo
 =====================
 
 To contribute to {Project}, you should obtain a GitHub account and
-fork the `{Project} <https://github.com/apptainer/apptainer>`_
+fork the `{Project} <https://github.com/{orgrepo}>`_
 repository. Once forked, clone your fork of the repo to your computer.
 (Obviously, you should replace ``your-username`` with your GitHub
 username.)
@@ -203,7 +203,7 @@ you need to update a branch, you will need to follow the next steps:
 
 .. code::
 
-   $ git remote add upstream https://github.com/apptainer/apptainer.git && # to add a new remote named "upstream" \
+   $ git remote add upstream https://github.com/{orgrepo}.git && # to add a new remote named "upstream" \
        git checkout master && # or another branch to be updated \
        git pull upstream master && \
        git push origin master && # to update your fork \
