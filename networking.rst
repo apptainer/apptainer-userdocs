@@ -21,7 +21,7 @@ configure a virtualized network for a container.
    {Project} allows the administrator to permit a list of
    unprivileged users and/or groups to use specified network
    configurations. This is accomplished through settings in
-   ``singularity.conf``. See the administrator guide for details.
+   ``{command}.conf``. See the administrator guide for details.
 
 ***********
  ``--dns``
@@ -35,10 +35,10 @@ servers to add to the ``/etc/resolv.conf`` file.
    $ nslookup sylabs.io | grep Server
    Server:             127.0.0.53
 
-   $ sudo singularity exec --dns 8.8.8.8 ubuntu.sif nslookup sylabs.io | grep Server
+   $ sudo {command} exec --dns 8.8.8.8 ubuntu.sif nslookup sylabs.io | grep Server
    Server:             8.8.8.8
 
-   $ sudo singularity exec --dns 8.8.8.8 ubuntu.sif cat /etc/resolv.conf
+   $ sudo {command} exec --dns 8.8.8.8 ubuntu.sif cat /etc/resolv.conf
    nameserver 8.8.8.8
 
 ****************
@@ -53,7 +53,7 @@ hostname within the container.
    $ hostname
    ubuntu-bionic
 
-   $ sudo singularity exec --hostname hal-9000 my_container.sif hostname
+   $ sudo {command} exec --hostname hal-9000 my_container.sif hostname
    hal-9000
 
 ***********
@@ -69,7 +69,7 @@ interface will also be set up by default.
    $ hostname -I
    10.0.2.15
 
-   $ sudo singularity exec --net my_container.sif hostname -I
+   $ sudo {command} exec --net my_container.sif hostname -I
    10.22.0.4
 
 ***************
@@ -85,15 +85,15 @@ Each entry will bring up a dedicated interface inside container.
    $ hostname -I
    172.16.107.251 10.22.0.1
 
-   $ sudo singularity exec --net --network ptp ubuntu.sif hostname -I
+   $ sudo {command} exec --net --network ptp ubuntu.sif hostname -I
    10.23.0.6
 
-   $ sudo singularity exec --net --network bridge,ptp ubuntu.sif hostname -I
+   $ sudo {command} exec --net --network bridge,ptp ubuntu.sif hostname -I
    10.22.0.14 10.23.0.7
 
-When invoked, the ``--network`` option searches the singularity
+When invoked, the ``--network`` option searches the {command}
 configuration directory (commonly
-``/usr/local/etc/singularity/network/``) for the cni configuration file
+``/usr/local/etc/{command}/network/``) for the cni configuration file
 corresponding to the requested network type(s). Several configuration
 files are installed with {Project} by default corresponding to the
 following network types:
@@ -109,7 +109,7 @@ by non-privileged users. It isolates the container network from the host
 network with a loopback interface.
 
 Administrators can permit certain users or groups to request other
-network configurations through options in ``singularity.conf``.
+network configurations through options in ``{command}.conf``.
 Additional cni configuration files can be added to the ``network``
 configuration directory as required, and {Project}'s provided
 configurations may also be modified.
@@ -128,7 +128,7 @@ but you want to map it to port 8080 outside of the container:
 
 .. code::
 
-   $ sudo singularity instance start --writable-tmpfs \
+   $ sudo {command} instance start --writable-tmpfs \
        --net --network-args "portmap=8080:80/tcp" docker://nginx web2
 
 The above command will start the Docker Hub official NGINX image running
@@ -143,7 +143,7 @@ Now we can start NGINX inside of the container:
 
 .. code::
 
-   $ sudo singularity exec instance://web2 nginx
+   $ sudo {command} exec instance://web2 nginx
 
 And the ``curl`` command can be used to verify that NGINX is running on
 the host port 8080 as expected.

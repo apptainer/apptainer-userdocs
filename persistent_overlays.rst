@@ -42,12 +42,12 @@ To use a persistent overlay, you must first have a container.
 
 .. code::
 
-   $ sudo singularity build ubuntu.sif library://ubuntu
+   $ sudo {command} build ubuntu.sif library://ubuntu
 
 File system image overlay
 =========================
 
-{Project} provides a command ``singularity overlay
+{Project} provides a command ``{command} overlay
 create`` to create persistent overlay images. You can create a single
 EXT3 overlay image or adding a EXT3 writable overlay partition to an
 existing SIF image.
@@ -62,13 +62,13 @@ For example, to create a 1 GiB overlay image:
 
 .. code::
 
-   $ singularity overlay create --size 1024 /tmp/ext3_overlay.img
+   $ {command} overlay create --size 1024 /tmp/ext3_overlay.img
 
 To add a 1 GiB writable overlay partition to an existing SIF image:
 
 .. code::
 
-   $ singularity overlay create --size 1024 ubuntu.sif
+   $ {command} overlay create --size 1024 ubuntu.sif
 
 .. warning::
 
@@ -76,7 +76,7 @@ To add a 1 GiB writable overlay partition to an existing SIF image:
    **signed**, **encrypted** SIF image or if the SIF image already
    contain a writable overlay partition.
 
-``singularity overlay create`` also provides an option ``--create-dir``
+``{command} overlay create`` also provides an option ``--create-dir``
 to create additional directories owned by the calling user, it can be
 specified multiple times to create many directories. This is
 particularly useful when you need to make a directory writable by your
@@ -86,9 +86,9 @@ So for example:
 
 .. code::
 
-   $ singularity build /tmp/nginx.sif docker://nginx
-   $ singularity overlay create --size 1024 --create-dir /var/cache/nginx /tmp/nginx.sif
-   $ echo "test" | singularity exec /tmp/nginx.sif sh -c "cat > /var/cache/nginx/test"
+   $ {command} build /tmp/nginx.sif docker://nginx
+   $ {command} overlay create --size 1024 --create-dir /var/cache/nginx /tmp/nginx.sif
+   $ echo "test" | {command} exec /tmp/nginx.sif sh -c "cat > /var/cache/nginx/test"
 
 Directory overlay
 =================
@@ -113,7 +113,7 @@ The example below shows the directory overlay in action.
 
 .. code::
 
-   $ sudo singularity shell --overlay my_overlay/ ubuntu.sif
+   $ sudo {command} shell --overlay my_overlay/ ubuntu.sif
 
    {Project} ubuntu.sif:~> mkdir /data
 
@@ -146,7 +146,7 @@ functionality of {Project}.
 
 .. code::
 
-   $ singularity sif add --datatype 4 --partfs 2 --parttype 4 --partarch 2 --groupid 1 ubuntu_latest.sif overlay.img
+   $ {command} sif add --datatype 4 --partfs 2 --parttype 4 --partarch 2 --groupid 1 ubuntu_latest.sif overlay.img
 
 Below is the explanation what each parameter means, and how it can
 possibly affect the operation:
@@ -163,14 +163,14 @@ possibly affect the operation:
    there's no more than one group, therefore we can assume it is 1.
 
 All of these options are documented within the CLI help. Access it by
-running ``singularity sif add --help``.
+running ``{command} sif add --help``.
 
 After you've completed the steps above, you can shell into your
 container with the ``--writable`` option.
 
 .. code::
 
-   $ sudo singularity shell --writable ubuntu_latest.sif
+   $ sudo {command} shell --writable ubuntu_latest.sif
 
 Final note
 ==========
@@ -180,7 +180,7 @@ were using a writable container.
 
 .. code::
 
-   $ singularity shell --overlay my_overlay/ ubuntu.sif
+   $ {command} shell --overlay my_overlay/ ubuntu.sif
 
    {Project} ubuntu.sif:~> ls -lasd /data
    4 drwxr-xr-x 2 user root 4096 Apr  9 10:21 /data
@@ -195,7 +195,7 @@ changes will be gone.
 
 .. code::
 
-   $ singularity shell ubuntu.sif
+   $ {command} shell ubuntu.sif
 
    {Project} ubuntu.sif:~> ls /data
    ls: cannot access 'data': No such file or directory

@@ -111,8 +111,8 @@ username.)
 
 .. code::
 
-   $ git clone https://github.com/your-username/singularity.git && \
-       cd singularity/
+   $ git clone https://github.com/your-username/{command}.git && \
+       cd {command}/
 
 Step 2. Checkout a new branch
 =============================
@@ -203,7 +203,7 @@ you need to update a branch, you will need to follow the next steps:
 
 .. code::
 
-   $ git remote add upstream https://github.com/hpcng/singularity.git && # to add a new remote named "upstream" \
+   $ git remote add upstream https://github.com/apptainer/apptainer.git && # to add a new remote named "upstream" \
        git checkout master && # or another branch to be updated \
        git pull upstream master && \
        git push origin master && # to update your fork \

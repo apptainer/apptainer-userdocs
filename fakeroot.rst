@@ -69,7 +69,7 @@ system.
 Network
 =======
 
-Restrictions are also applied to networking, if ``singularity`` is
+Restrictions are also applied to networking, if ``{command}`` is
 executed without the ``--net`` flag, the **"fake root"** user won't be
 able to use ``ping`` or bind a container service to a port below 1024.
 
@@ -87,7 +87,7 @@ the host network.
 .. warning::
 
    For unprivileged installation of {Project} or if ``allow setuid =
-   no`` is set in ``singularity.conf`` users won't be able to use a
+   no`` is set in ``{command}.conf`` users won't be able to use a
    ``fakeroot`` network.
 
 ******************************
@@ -99,7 +99,7 @@ mappings in ``/etc/subgid``, so your username needs to be listed in
 those files with a valid mapping (see the admin-guide for details), if
 you can't edit the files ask an administrator.
 
-{Project} provides a ``singularity config fakeroot`` command 
+{Project} provides a ``{command} config fakeroot`` command 
 to allow configuration of the ``/etc/subuid`` and
 ``/etc/subgid`` mappings from the {Project} command line. You must
 be a root user or run with ``sudo`` to use ``config fakeroot``, as the
@@ -114,7 +114,7 @@ If your user account is configured with valid ``subuid`` and ``subgid``
 mappings you work as a fake root user inside a container by using the
 ``--fakeroot`` or ``-f`` option.
 
-The ``--fakeroot`` option is available with the following singularity
+The ``--fakeroot`` option is available with the following {command}
 commands:
 
    -  ``shell``
@@ -142,18 +142,18 @@ Build from a definition file:
 
 .. code::
 
-   singularity build --fakeroot /tmp/test.sif /tmp/test.def
+   {command} build --fakeroot /tmp/test.sif /tmp/test.def
 
 Ping from container:
 --------------------
 
 .. code::
 
-   singularity exec --fakeroot --net docker://alpine ping -c1 8.8.8.8
+   {command} exec --fakeroot --net docker://alpine ping -c1 8.8.8.8
 
 HTTP server:
 ------------
 
 .. code::
 
-   singularity run --fakeroot --net --network-args="portmap=8080:80/tcp" -w docker://nginx
+   {command} run --fakeroot --net --network-args="portmap=8080:80/tcp" -w docker://nginx

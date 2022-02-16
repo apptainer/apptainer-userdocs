@@ -53,7 +53,7 @@ Library.
 
 .. code::
 
-   $ sudo singularity build lolcow.sif library://lolcow
+   $ sudo {command} build lolcow.sif library://lolcow
 
 The first argument (``lolcow.sif``) specifies a path and name for your
 container. The second argument (``library://lolcow``) gives the
@@ -70,7 +70,7 @@ them into {Project} containers.
 
 .. code::
 
-   $ sudo singularity build lolcow.sif docker://sylabsio/lolcow
+   $ sudo {command} build lolcow.sif docker://sylabsio/lolcow
 
 .. _create_a_writable_container:
 
@@ -85,7 +85,7 @@ permissions it is recommended to do so as root.
 
 .. code::
 
-   $ sudo singularity build --sandbox lolcow/ library://lolcow
+   $ sudo {command} build --sandbox lolcow/ library://lolcow
 
 The resulting directory operates just like a container in a SIF file. To
 make changes within the container, use the ``--writable`` flag when you
@@ -95,7 +95,7 @@ change.
 
 .. code::
 
-   $ sudo singularity shell --writable lolcow/
+   $ sudo {command} shell --writable lolcow/
 
 **************************************************
  Converting containers from one format to another
@@ -109,7 +109,7 @@ one format to another. For example if you had a sandbox container called
 
 .. code::
 
-   $ sudo singularity build production.sif development/
+   $ sudo {command} build production.sif development/
 
 Use care when converting a sandbox directory to the default SIF format.
 If changes were made to the writable container before conversion, there
@@ -129,7 +129,7 @@ definition files, please see the :doc:`Container Definition docs
 definition file called ``lolcow.def``, and you want to use it to build a
 SIF container.
 
-.. code:: singularity
+.. code:: {command}
 
    Bootstrap: docker
    From: ubuntu:16.04
@@ -149,7 +149,7 @@ You can do so with the following command.
 
 .. code::
 
-   $ sudo singularity build lolcow.sif lolcow.def
+   $ sudo {command} build lolcow.sif lolcow.def
 
 The command requires ``sudo`` just as installing software on your local
 machine requires root privileges.

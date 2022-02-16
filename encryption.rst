@@ -37,7 +37,7 @@ or a PEM file containing an asymmetric RSA public key. Of these two
 methods the PEM file is more secure and is therefore recommended for
 production use.
 
-An ``-e|--encrypt`` flag to ``singularity build`` is used to indicate
+An ``-e|--encrypt`` flag to ``{command} build`` is used to indicate
 that the container needs to be encrypted.
 
 A passphrase or a key-file used to perform the encryption is supplied at
@@ -80,7 +80,7 @@ Encrypting with a passphrase interactively
 
 .. code::
 
-   $ sudo singularity build --passphrase encrypted.sif encrypted.def
+   $ sudo {command} build --passphrase encrypted.sif encrypted.def
    Enter encryption passphrase: <secret>
    INFO:    Starting build...
 
@@ -89,7 +89,7 @@ Using an environment variable
 
 .. code::
 
-   $ sudo APPTAINER_ENCRYPTION_PASSPHRASE=<secret> singularity build --encrypt encrypted.sif encrypted.def
+   $ sudo APPTAINER_ENCRYPTION_PASSPHRASE=<secret> {command} build --encrypt encrypted.sif encrypted.def
    Starting build...
 
 In this case it is necessary to use the ``--encrypt`` flag since the
@@ -106,7 +106,7 @@ like so.
 
    $ export APPTAINER_ENCRYPTION_PASSPHRASE=$(cat secret.txt)
 
-   $ sudo -E singularity build --encrypt encrypted.sif encrypted.def
+   $ sudo -E {command} build --encrypt encrypted.sif encrypted.def
    Starting build...
 
 PEM File Encryption
@@ -145,7 +145,7 @@ Encrypting with a command line option
 
 .. code::
 
-   $ sudo singularity build --pem-path=rsa_pub.pem encrypted.sif encrypted.def
+   $ sudo {command} build --pem-path=rsa_pub.pem encrypted.sif encrypted.def
    Starting build...
 
 Encrypting with an environment variable
@@ -153,7 +153,7 @@ Encrypting with an environment variable
 
 .. code::
 
-   $ sudo APPTAINER_ENCRYPTION_PEM_PATH=rsa_pub.pem singularity build --encrypt encrypted.sif encrypted.def
+   $ sudo APPTAINER_ENCRYPTION_PEM_PATH=rsa_pub.pem {command} build --encrypt encrypted.sif encrypted.def
    Starting build...
 
 In this case it is necessary to use the ``--encrypt`` flag since the
@@ -179,7 +179,7 @@ Running with a passphrase interactively
 
 .. code::
 
-   $ singularity run --passphrase encrypted.sif
+   $ {command} run --passphrase encrypted.sif
    Enter passphrase for encrypted container: <secret>
 
 Running with a passphrase in an environment variable
@@ -187,7 +187,7 @@ Running with a passphrase in an environment variable
 
 .. code::
 
-   $ APPTAINER_ENCRYPTION_PASSPHRASE="secret" singularity run encrypted.sif
+   $ APPTAINER_ENCRYPTION_PASSPHRASE="secret" {command} run encrypted.sif
 
 While this example shows how an environment variable can be used to set
 a passphrase, you should set the environment variable in a way that will
@@ -199,7 +199,7 @@ like so.
 
    $ export APPTAINER_ENCRYPTION_PASSPHRASE=$(cat secret.txt)
 
-   $ singularity run encrypted.sif
+   $ {command} run encrypted.sif
 
 Running a container encrypted with a PEM file
 =============================================
@@ -212,11 +212,11 @@ Running using a command line option
 
 .. code::
 
-   $ singularity run --pem-path=rsa_pri.pem encrypted.sif
+   $ {command} run --pem-path=rsa_pri.pem encrypted.sif
 
 Running using an environment variable
 -------------------------------------
 
 .. code::
 
-   $ APPTAINER_ENCRYPTION_PEM_PATH=rsa_pri.pem singularity run encrypted.sif
+   $ APPTAINER_ENCRYPTION_PEM_PATH=rsa_pri.pem {command} run encrypted.sif
