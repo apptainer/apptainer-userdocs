@@ -378,7 +378,7 @@ curl:
 
 .. code::
 
-   $ curl -o sylabs.pdf localhost:9000/api/render?url=http://sylabs.io/docs
+   $ curl -o apptainer.pdf localhost:9000/api/render?url=http://apptainer.org/docs
 
    % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                             Dload  Upload   Total   Spent    Left  Speed
