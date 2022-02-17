@@ -46,9 +46,9 @@ build time via an environment variable or a command line option.
 +------------------------+-------------------------------------------+--------------------------+
 | **Encryption Method**  | **Environment Variable**                  | **Commandline Option**   |
 +------------------------+-------------------------------------------+--------------------------+
-| Passphrase             | ``APPTAINER_ENCRYPTION_PASSPHRASE``       | ``--passphrase``         |
+| Passphrase             | ``{ENVPREFIX}_ENCRYPTION_PASSPHRASE``       | ``--passphrase``         |
 +------------------------+-------------------------------------------+--------------------------+
-| Asymmetric Key (PEM)   | ``APPTAINER_ENCRYPTION_PEM_PATH``         | ``--pem-path``           |
+| Asymmetric Key (PEM)   | ``{ENVPREFIX}_ENCRYPTION_PEM_PATH``         | ``--pem-path``           |
 +------------------------+-------------------------------------------+--------------------------+
 
 The ``-e|--encrypt`` flag is implicitly set when the ``--passphrase`` or
@@ -58,8 +58,8 @@ following precedence is respected.
 
 #. ``--pem-path``
 #. ``--passphrase``
-#. ``APPTAINER_ENCRYPTION_PEM_PATH``
-#. ``APPTAINER_ENCRYPTION_PASSPHRASE``
+#. ``{ENVPREFIX}_ENCRYPTION_PEM_PATH``
+#. ``{ENVPREFIX}_ENCRYPTION_PASSPHRASE``
 
 Passphrase Encryption
 =====================
@@ -89,7 +89,7 @@ Using an environment variable
 
 .. code::
 
-   $ sudo APPTAINER_ENCRYPTION_PASSPHRASE=<secret> {command} build --encrypt encrypted.sif encrypted.def
+   $ sudo {ENVPREFIX}_ENCRYPTION_PASSPHRASE=<secret> {command} build --encrypt encrypted.sif encrypted.def
    Starting build...
 
 In this case it is necessary to use the ``--encrypt`` flag since the
@@ -104,7 +104,7 @@ like so.
 
 .. code::
 
-   $ export APPTAINER_ENCRYPTION_PASSPHRASE=$(cat secret.txt)
+   $ export {ENVPREFIX}_ENCRYPTION_PASSPHRASE=$(cat secret.txt)
 
    $ sudo -E {command} build --encrypt encrypted.sif encrypted.def
    Starting build...
@@ -153,7 +153,7 @@ Encrypting with an environment variable
 
 .. code::
 
-   $ sudo APPTAINER_ENCRYPTION_PEM_PATH=rsa_pub.pem {command} build --encrypt encrypted.sif encrypted.def
+   $ sudo {ENVPREFIX}_ENCRYPTION_PEM_PATH=rsa_pub.pem {command} build --encrypt encrypted.sif encrypted.def
    Starting build...
 
 In this case it is necessary to use the ``--encrypt`` flag since the
@@ -187,7 +187,7 @@ Running with a passphrase in an environment variable
 
 .. code::
 
-   $ APPTAINER_ENCRYPTION_PASSPHRASE="secret" {command} run encrypted.sif
+   $ {ENVPREFIX}_ENCRYPTION_PASSPHRASE="secret" {command} run encrypted.sif
 
 While this example shows how an environment variable can be used to set
 a passphrase, you should set the environment variable in a way that will
@@ -197,7 +197,7 @@ like so.
 
 .. code::
 
-   $ export APPTAINER_ENCRYPTION_PASSPHRASE=$(cat secret.txt)
+   $ export {ENVPREFIX}_ENCRYPTION_PASSPHRASE=$(cat secret.txt)
 
    $ {command} run encrypted.sif
 
@@ -219,4 +219,4 @@ Running using an environment variable
 
 .. code::
 
-   $ APPTAINER_ENCRYPTION_PEM_PATH=rsa_pri.pem {command} run encrypted.sif
+   $ {ENVPREFIX}_ENCRYPTION_PEM_PATH=rsa_pri.pem {command} run encrypted.sif
