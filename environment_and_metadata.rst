@@ -721,27 +721,27 @@ And the output would look like:
    OCI_CMD="bash"
    # ENTRYPOINT only - run entrypoint plus args
    if [ -z "$OCI_CMD" ] && [ -n "$OCI_ENTRYPOINT" ]; then
-   {ENVPREFIX}_OCI_RUN="${OCI_ENTRYPOINT} $@"
+   SINGULARITY_OCI_RUN="${OCI_ENTRYPOINT} $@"
    fi
 
    # CMD only - run CMD or override with args
    if [ -n "$OCI_CMD" ] && [ -z "$OCI_ENTRYPOINT" ]; then
    if [ $# -gt 0 ]; then
-       {ENVPREFIX}_OCI_RUN="$@"
+       SINGULARITY_OCI_RUN="$@"
    else
-       {ENVPREFIX}_OCI_RUN="${OCI_CMD}"
+       SINGULARITY_OCI_RUN="${OCI_CMD}"
    fi
    fi
 
    # ENTRYPOINT and CMD - run ENTRYPOINT with CMD as default args
    # override with user provided args
    if [ $# -gt 0 ]; then
-       {ENVPREFIX}_OCI_RUN="${OCI_ENTRYPOINT} $@"
+       SINGULARITY_OCI_RUN="${OCI_ENTRYPOINT} $@"
    else
-       {ENVPREFIX}_OCI_RUN="${OCI_ENTRYPOINT} ${OCI_CMD}"
+       SINGULARITY_OCI_RUN="${OCI_ENTRYPOINT} ${OCI_CMD}"
    fi
 
-   exec ${ENVPREFIX}_OCI_RUN
+   exec $SINGULARITY_OCI_RUN
 
 ``-t`` / ``--test``
 -------------------
