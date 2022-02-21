@@ -18,18 +18,8 @@ Post to online communities about {Project}, and request that your
 distribution vendor, service provider, and system administrators include
 {Project} for you!
 
-{Project} Google Group
-==========================
-
-If you have been using {Project} and having good luck with it, join
-our `Google Group <https://groups.google.com/g/singularity-ce>`_ and
-help out other users!
-
-{Project} on Slack
-======================
-
-Many of our users come to Slack for quick help with an issue. You can
-join through the `apptainer help page <https://apptainer.org/help/>`_.
+You can reach the community through the mailing list or Slack.  Links to
+join those are on the `apptainer help page <https://apptainer.org/help/>`_.
 
 .. _contributing-to-documentation:
 
