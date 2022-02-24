@@ -30,13 +30,13 @@ verification.
 
 {Project} allows you to import keys reading either from binary or
 armored key format and automatically detect if it is a private or public
-key and add it to the correspondent local keystore.
+key and add it to the correspondent local keyring.
 
 To give a quick view on how it works, we will first consider the case in
 which a user wants to import a secret (private) key to the local
-keystore.
+keyring.
 
-First we will check what's the status of the local keystore (which keys
+First we will check what's the status of the local keyring (which keys
 are stored by the moment before importing a new key).
 
 .. code:: {command}
@@ -52,14 +52,14 @@ The output will look as it follows:
 
 .. code:: {command}
 
-   Private key listing (/home/joana/.{command}/sypgp/pgp-secret):
+   Private key listing (/home/joana/.{command}/keys/pgp-secret):
 
-   0) U: Johnny Cash (none) <cash@sylabs.io>
+   0) U: Johnny Cash (none) <cash@example.com>
    C: 2019-04-11 22:22:28 +0200 CEST
    F: 47282BDC661F58FA4BEBEF47CA576CBD8EF1A2B4
    L: 3072
    --------
-   1) U: John Green (none) <john@sylabs.io>
+   1) U: John Green (none) <john@example.com>
    C: 2019-04-11 13:08:45 +0200 CEST
    F: 5720799FE7B048CF36FAB8445EE1E2BD7B6342C5
    L: 1024
@@ -69,7 +69,7 @@ The output will look as it follows:
 
    Remember that running that same command but with sudo privilege, will
    give you a totally different list since it will be the correspondent
-   keystore from user ``root``
+   keyring from user ``root``
 
 After this, you can simply import the key you need by adding the exact
 location to the file, let's say you own a gpg key file named
@@ -87,7 +87,7 @@ you will just need to run the following command to import your key:
 
 Since you're importing a private (secret) key, you will need to specify
 the passphrase related to it and then a new passphrase to be added on
-your local keystore.
+your local keyring.
 
 .. code:: {command}
 
@@ -101,19 +101,19 @@ keystore by running ``{command} key list -s`` command:
 
 .. code:: {command}
 
-   Private key listing (/home/joana/.{command}/sypgp/pgp-secret):
+   Private key listing (/home/joana/.{command}/keys/pgp-secret):
 
-     0) U: Johnny Cash (none) <cash@sylabs.io>
+     0) U: Johnny Cash (none) <cash@example.com>
      C: 2019-04-11 22:22:28 +0200 CEST
      F: 47282BDC661F58FA4BEBEF47CA576CBD8EF1A2B4
      L: 3072
      --------
-     1) U: John Green (none) <john@sylabs.io>
+     1) U: John Green (none) <john@example.com>
      C: 2019-04-11 13:08:45 +0200 CEST
      F: 5720799FE7B048CF36FAB8445EE1E2BD7B6342C5
      L: 1024
      --------
-     3) U: Pinkie Pie (Eternal chaos comes with chocolate rain!) <balloons@sylabs.io>
+     3) U: Pinkie Pie (Eternal chaos comes with chocolate rain!) <balloons@example.com>
      C: 2019-04-26 12:07:07 +0200 CEST
      F: 8C10B902F438E4D504C3ACF689FCFFAED5F34A77
      L: 1024
@@ -136,9 +136,9 @@ detected by the ``key import`` command (no need to specify the format).
 ********************
 
 The key export command allows you to export a key that is on your local
-keystore. This key could be either private or public, and the key can be
+keyring. This key could be either private or public, and the key can be
 exported on ``ASCII`` armored format or on binary format. Of course to
-identify the keystore and the format the syntax varies from the ``key
+identify the keyring and the format the syntax varies from the ``key
 import`` command.
 
 For example to export a public key in binary format you can run:
@@ -172,8 +172,8 @@ and on binary format instead:
 
 .. note::
 
-   Exporting keys will not change the status of your local keystore or
-   keyring. This will just obtain the content of the keys and save it on
+   Exporting keys will not change the status of your local keyring.
+   This will just obtain the content of the keys and save it on
    a local file on your host.
 
 .. _key_remove:
