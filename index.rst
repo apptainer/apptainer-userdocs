@@ -65,7 +65,7 @@ decrypting them to disk first.
    :maxdepth: 1
 
    Remote Endpoints <endpoint>
-   Sylabs Cloud Library <cloud_library>
+   Library API Registries <library_api>
 
 ****************
  Advanced Usage
