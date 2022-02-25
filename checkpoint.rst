@@ -8,9 +8,9 @@
  Overview
 **********
 
-The checkpoint feature allows users to transparently save the state of their
+The checkpoint feature allows users to transparently save the state of
 containerized applications while they are executing and then restart them from
-saved.
+the saved state.
 
 This is valuable for use cases that need to minimize the impact of ephemeral
 environment failures, random hardware failures or job premption.
@@ -130,7 +130,7 @@ We can build this container using:
 
 First things first, we need to create a ``checkpoint`` using the ``checkpoint``
 command group. This initializes a location in your user home directory for
-{apptainer} to store state related to DMTCP and the checkpoint images it will
+{Project} to store state related to DMTCP and the checkpoint images it will
 generate.
 
 .. code::
