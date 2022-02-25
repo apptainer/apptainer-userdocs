@@ -41,8 +41,8 @@ met to allow this integration to work correctly:
 
 -  Applications that are the intended to be checkpointed must be dynamically
    linked.
--  dmtcp uses `dladdr1()` which is a GNU extension that requires `glibc` or
-   `glibc` compatibility inside the container.
+-  dmtcp uses ``dladdr1()`` which is a GNU extension that requires ``glibc`` or
+   ``glibc`` compatibility inside the container.
 
 In addition to these requirements, the {Project} integration with DMTCP
 requires that either:
@@ -63,7 +63,7 @@ DMTCP Installation
 Installation instructions for DMTCP can be found on their git `repository
 <https://github.com/dmtcp/dmtcp/blob/master/INSTALL.md>`.
 In order to maximize the portability of the DMTCP build, we recommend using the
-`--enable-static-libstdcxx` configure option.
+``--enable-static-libstdcxx`` configure option.
 
 The DMTCP project is currently working towards a ``3.0`` release. If you
 encounter issues using a ``2.x`` installation of DMTCP, we recommend trying the
@@ -73,11 +73,11 @@ that will become the next release.
 Example
 =======
 
-The following container (referred to as `server.sif` below) contains a simple
-http server that allows a variable to be read and written with `GET` and `POST`
-requests respectively. This is not typical of applications packaged by the
-{Project} community, but gives us an easy way to check that application state
-has been successfully restored upon restart.
+The following container (referred to as ``server.sif`` below) contains a simple
+http server that allows a variable to be read and written with ``GET`` and
+``POST`` requests respectively. This is not typical of applications packaged by
+the {Project} community, but gives us an easy way to check that application
+state has been successfully restored upon restart.
 
 .. code::
 
