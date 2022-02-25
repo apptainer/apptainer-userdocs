@@ -2,6 +2,7 @@
 #*
 *#
 /**/*.whl
+.vscode
 .idea
 .DS_Store
 *.pyc
