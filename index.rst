@@ -87,6 +87,7 @@ networking and security configuration.
    Security Options <security_options>
    Network Options <networking>
    Cgroups Support <cgroups>
+   Application Checkpointing <checkpoint>
 
 ***************
  Compatibility

@@ -9,8 +9,8 @@
 **********
 
 The checkpoint feature allows users to transparently save the state of their
-containerized applications while they are executing and then be able to restart
-them from the state captures at the time of the last checkpoint.
+containerized applications while they are executing and then restart them from
+saved.
 
 This is valuable for use cases that need to minimize the impact of ephemeral
 environment failures, random hardware failures or job premption.
@@ -47,15 +47,15 @@ met to allow this integration to work correctly:
 In addition to these requirements, the {Project} integration with DMTCP
 requires that either:
 
--  The DMTCP required binaries are within the user ``PATH`` and libraries
-   are within the ``ldconfig`` cache.
+-  The binaries and libraries required by DMTCP are within the user ``PATH`` and
+   the ``ldconfig`` cache respectively.
 -  The ``dmtcp-conf.yaml`` configuration file has been modified to contain
    the absolute paths of the listed binaries and libraries.
 
 At time of release, the list of libraries and binaries in this configuration
 is appropriate for the latest master branch of DMTCP. It can be modified by the
-system administrator to add additional libraries if necessary. See the admin
-guide for more details.
+system administrator to add additional libraries if necessary. See the `admin
+guide <{admindocs}/configfiles.html#dmtcp-conf-yaml>` for more details.
 
 DMTCP Installation
 ==================
@@ -76,7 +76,7 @@ Example
 The following container (referred to as `server.sif` below) contains a simple
 http server that allows a variable to be read and written with `GET` and `POST`
 requests respectively. This is not typical of applications packaged by the
-apptainer community, but gives us an easy way to check that application state
+{Project} community, but gives us an easy way to check that application state
 has been successfully restored upon restart.
 
 .. code::
@@ -146,7 +146,7 @@ naming the ``checkpoint`` we want to use to store state for this instance.
     $ {command} instance start --dmtcp-launch example-checkpoint server.sif server 8888 # this last arg is the port the server will listen to.
     INFO:    instance started successfully
 
-Once we have our application up an running, we can ``curl`` against it and read
+Once we have our application up and running, we can ``curl`` against it and read
 the state of a variable on the server.
 
 .. code::
@@ -174,7 +174,7 @@ Now that variable on our server is in a new state, ``1``, we can use the
     $ {command} checkpoint instance server
     INFO:    Using checkpoint "example-checkpoint"
 
-Now that we have checkpointed the state of out application, we can safely
+Now that we have checkpointed the state of our application, we can safely
 stop the instance:
 
 .. code::
@@ -185,7 +185,7 @@ stop the instance:
 
 We can restart our server and restore its state by starting a new instance using
 the ``--dmtcp-restart`` flag and specifying the checkpoint to be used to restore
-out application's state:
+our application's state:
 
 .. code::
 
