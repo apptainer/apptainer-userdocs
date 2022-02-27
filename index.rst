@@ -101,6 +101,7 @@ Docker, as well as how to use containerized MPI and GPU applications.
 .. toctree::
    :maxdepth: 1
 
+   Singularity Compatibility <singularity_compatibility>
    Support for Docker / OCI Containers <docker_and_oci>
    OCI Runtime Support <oci_runtime>
    {Project} and MPI applications <mpi>
