@@ -22,7 +22,7 @@ environment failures, random hardware failures or job premption.
     this feature set as it matures.
 
 In order to enable checkpointing as a feature, the `DMTCP
-<https://dmtcp.sourceforge.io/>` project has been chosen as the basis for an
+<https://dmtcp.sourceforge.io/>`_ project has been chosen as the basis for an
 integration. {Project} injects an installation of DMTCP from the host into the
 container at container creation and uses it to wrap the launching of the
 container process. When launching a process, DMTCP will monitor the spawned
@@ -31,7 +31,7 @@ of the application when triggered.
 
 For interested readers, more detailed information about the technology can be
 found in the publications listed on the `DMTCP website
-<https://dmtcp.sourceforge.io/publications.html>`.
+<https://dmtcp.sourceforge.io/publications.html>`_.
 
 Requirements
 ============
@@ -55,13 +55,13 @@ requires that either:
 At time of release, the list of libraries and binaries in this configuration
 is appropriate for the latest master branch of DMTCP. It can be modified by the
 system administrator to add additional libraries if necessary. See the `admin
-guide <{admindocs}/configfiles.html#dmtcp-conf-yaml>` for more details.
+guide <{admindocs}/configfiles.html#dmtcp-conf-yaml>`_ for more details.
 
 DMTCP Installation
 ==================
 
 Installation instructions for DMTCP can be found on their git `repository
-<https://github.com/dmtcp/dmtcp/blob/master/INSTALL.md>`.
+<https://github.com/dmtcp/dmtcp/blob/master/INSTALL.md>`_.
 In order to maximize the portability of the DMTCP build, we recommend using the
 ``--enable-static-libstdcxx`` configure option.
 
