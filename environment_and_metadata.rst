@@ -167,7 +167,7 @@ Except that:
 
 .. note::
 
-   See compatibility documentation for ``SINGUALRITYENV_`` prefixed environment
+   See compatibility documentation for ``SINGULARITYENV_`` prefixed environment
    variable support `here <singularity_environment_variable_compatibility>`.
 
 
@@ -241,7 +241,7 @@ program running in the container.
 
 .. note::
 
-   See compatibility documentation for ``SINGUALRITY_`` prefixed environment
+   See compatibility documentation for ``SINGULARITY_`` prefixed environment
    variable support `here <singularity_environment_variable_compatibility>`.
 
 **********************************

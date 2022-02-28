@@ -7,7 +7,7 @@
 Since the community decided to `move the project into the Linux Foundation
 <https://apptainer.org/news/community-announcement-20211130>`_ with the
 constraint of a name change to the project, it has been a goal of the
-project to minimize the impact to the user base. If you expereince issues making
+project to minimize the impact to the user base. If you experience issues making
 the move, please reach out to the `community <https://apptainer.org/help>`_ so
 we can help you!
 
@@ -19,7 +19,7 @@ we can help you!
 The {Project} project has decided to make no changes related to the project
 renaming at the image format level. This means that default metadata within
 SIF images and their filesystems will retain the ``singularity`` name without
-change. This will ensure that containers built with {Apptainer} will continue
+change. This will ensure that containers built with {Project} will continue
 to work with installations of Singularity.
 
 This decision was made to ensure that users can continue to package their
@@ -46,7 +46,7 @@ environment variable in the container with the name ``FOO`` and the value
 
 .. code::
 
-  $ APPTAINERENV_FOO=BAR apptainer exec docker://alpine env
+  $ {ENVPREFIX}ENV_FOO=BAR {command} exec docker://alpine env
   [...]
   FOO=BAR
 
@@ -56,13 +56,13 @@ set inside the container.
 Next we can use the ``SINGULARITYENV_`` prefix to do the same thing, but this
 time we wil have the intended value be ``BAZ``:
 
-  $ SINGULARITYENV_FOO=BAZ apptainer exec  docker://alpine env
-  WARNING: DEPRECATED USAGE: Forwarding SINGULARITYENV_FOO as environment variable will not be supported in the future, use APPTAINERENV_FOO instead
+  $ SINGULARITYENV_FOO=BAZ {command} exec  docker://alpine env
+  WARNING: DEPRECATED USAGE: Forwarding SINGULARITYENV_FOO as environment variable will not be supported in the future, use {ENVPREFIX}ENV_FOO instead
   [...]
   FOO=BAZ
 
 Notice that we have a warning for ``DEPRECATED USAGE`` when doing so. This is
-because future version of {Project} may stop supporting environment variable
+because a future version of {Project} may stop supporting environment variable
 compatibility once it is past this current period of transition.
 
 Finally, if both are set, the value set by the ``{ENVPREFIX}ENV_`` variable will
@@ -70,12 +70,12 @@ take priority over the ``SINGULARITYENV_`` variable.
 
 .. code::
 
-  $ APPTAINERENV_FOO=BAR SINGULARITYENV_FOO=BAZ apptainer exec iqube_latest.sif env
+  $ {ENVPREFIX}ENV_FOO=BAR SINGULARITYENV_FOO=BAZ {command} exec iqube_latest.sif env
   WARNING: Skipping environment variable [SINGULARITYENV_FOO=BAZ], FOO is already overridden with different value [BAR]
   [...]
   FOO=BAR
 
-In this case a warning is omitted to let the user know that two variables were
+In this case a warning is emitted to let the user know that two variables were
 set to create the same environment variable in the container in case they were
 unaware of one of them existing in their environment.
 
@@ -94,17 +94,17 @@ underlying binary:
 
 .. code::
 
-  $ apptainer version
-  {InstallationVersion}
-  $ singularity version
-  {InstallationVersion}
+  $ {command} --version
+  {command} version {InstallationVersion}
+  $ singularity --version
+  {command} version {InstallationVersion}
 
 
-***************************************
- Automatic User Configration Migration
-***************************************
+****************************************
+ Automatic User Configuration Migration
+****************************************
 
-{Project} stores user configration in files and directories under
+{Project} stores user configuration in files and directories under
 ``~/.{command}``. Invocation of the ``{command}`` command will automatically
 trigger {Project} to create this directory, if it doesn't exist. In order to
 ease the transition of users from Singularity to {Project}, {Project} will look
@@ -121,7 +121,7 @@ Below we can see example output from when user configuration is being migrated:
 
 .. code::
 
-  $ apptainer exec docker://alpine echo
+  $ {command} exec docker://alpine echo
   INFO:    Detected Singularity user configuration directory
   INFO:    Detected Singularity remote configuration, migrating...
   INFO:    Detected Singularity docker configuration, migrating...
@@ -131,13 +131,13 @@ Below we can see example output from when user configuration is being migrated:
   INFO:    Starting build...
   [...]
 
-We can also see that subsequent use of {Apptainer} will not perform this
+We can also see that subsequent use of {Project} will not perform this
 migration again:
 
 .. code::
 
-  $  apptainer exec docker://alpine echo
-  WARNING: /usr/local/etc/singularity/ exists, migration to apptainer by system administrator is not complete
+  $ {command} exec docker://alpine echo
+  WARNING: /usr/local/etc/singularity/ exists, migration to {command} by system administrator is not complete
   INFO:    Using cached SIF image
   [...]
 
