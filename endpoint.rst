@@ -43,10 +43,12 @@ various {Project} commands:
  Managing Remote Endpoints
 ***************************
 
-A fresh installation of {Project} is not configured to connect to a Library
-API endpoint and one should be set by the system administrator or users.
-Well known endpoint options are listed in the `Library API Registry Docs
-<https://singularityhub.github.io/library-api/#/?id=library-api>`_.
+A fresh installation of {Project} is configured with the ``DefaultRemote``,
+which does not suppor the Library API as it is only configured with a
+functioning key server, ``https://keys.openpgp.org``. Users or administrators
+should configure one of the Library API implementations listed `here
+<https://singularityhub.github.io/library-api/#/?id=library-api>`_ if they would
+like to use a Library API registry.
 
 Users can setup and switch between multiple remote endpoints, which are
 stored in their ``~/.{command}/remote.yaml`` file. Alternatively,
