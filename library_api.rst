@@ -1,53 +1,25 @@
-.. _cloud_library:
+.. _library_api_registries:
 
-###############
- Cloud Library
-###############
+########################
+ Library API Registries
+########################
 
 **********
  Overview
 **********
 
-The Sylabs Cloud Library is the place to :ref:`push <push>` your
-containers to the cloud so other users can :ref:`pull <pull>`,
-:ref:`verify <signNverify>`, and use them.
+{Project} enables users to use `Library API Container Registries
+<https://singularityhub.github.io/library-api/#/?id=library-api>`_ to
+:ref:`push <push>` containers to a registry that was designed specifically for
+SIF images and :ref:`pull <pull>` SIF images created by others.
 
-.. _make_a_account:
+Many Library API registries will require authentication to perform operations
+like pushing container images or pulling potentially private container images.
+The ``remote`` command group governs the authentication for Library API
+registries. Check out the instructions for how to add and login with a
+:ref:`remote endpoint <remote_add_and_login>`.
 
-*****************
- Make an Account
-*****************
-
-Making an account is easy, and straightforward:
-
-   #. Go to: https://cloud.sylabs.io/library.
-   #. Click "Sign in to Sylabs" (top right corner).
-   #. Select your method to sign in, with Google, GitHub, GitLab, or
-      Microsoft.
-   #. Type your passwords, and that's it!
-
-.. _creating_a_access_token:
-
-*************************
- Creating a Access token
-*************************
-
-Access tokens for pushing a container.
-
-To generate a access token, do the following steps:
-
-   #. Go to: https://cloud.sylabs.io/
-   #. Click "Sign In" and follow the sign in steps.
-   #. Click on your login id (same and updated button as the Sign in
-      one).
-   #. Select "Access Tokens" from the drop down menu.
-   #. Enter a name for your new access token, such as "test token"
-   #. Click the "Create a New Access Token" button.
-   #. Click "Copy token to Clipboard" from the "New API Token" page.
-   #. Run ``{command} remote login`` and paste the access token at the
-      prompt.
-
-Now that you have your token, you are ready to push your container!
+Once you have authenticated, you are ready to push your container!
 
 .. _push:
 
@@ -93,11 +65,10 @@ to setting the description via the web interface:
    2.7MiB / 2.7MiB [=========================================================================] 100 % 1.1 MiB/s 0s
 
    Library storage: using 13.24 MiB out of 11.00 GiB quota (0.1% used)
-   Container URL: https://cloud.sylabs.io/library/myuser/examples/alpine
+   Container URL: https://cloud.example.com/library/myuser/examples/alpine
 
-Note that when you push to a library that supports it, {Project} 3.7
-and above will report your quota usage and the direct URL to view the
-container in your web browser.
+Note that when you push to a library that supports it, {Project} will report
+your quota usage and the direct URL to view the container in your web browser.
 
 .. _pull:
 
@@ -105,9 +76,11 @@ container in your web browser.
  Pulling a container
 *********************
 
-The ``{command} pull`` command will download a container from the
-`Library <https://cloud.sylabs.io/library>`_ (``library://``), `Docker
-Hub <https://hub.docker.com/>`_ (``docker://``), and also `Shub
+The ``{command} pull`` command will download a container from an
+`OCI Registry <https://hub.docker.com/>`_ (``docker://``),
+`Library API Registry
+<https://singularityhub.github.io/library-api/#/?id=library-api>`_
+(``library://``), and also `Shub
 <https://singularity-hub.org>`_ (``shub://``).
 
 .. note::
@@ -177,17 +150,16 @@ sign your own containers <sign_your_own_containers>`.
  Searching the Library for Containers
 **************************************
 
-To find interesting or useful containers in the library, you can open
-https://cloud.sylabs.io/library in your browser and search from there
-through the web GUI.
+To find interesting or useful containers in a library, you can open that
+library in your browser if that project supports a web GUI.
 
 Alternatively, from the CLI you can use ``{command} search <query>``.
-This will search the library for container images matching ``<query>``.
+This will search a library for container images matching ``<query>``.
 
 Using the CLI Search
 ====================
 
-Here is an example of searching the library for ``centos``:
+Here is an example of searching a library for ``centos``:
 
 .. code:: console
 

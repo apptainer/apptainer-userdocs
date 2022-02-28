@@ -11,58 +11,12 @@ endpoints {Project} will interact with for many common command
 flows. This includes managing credentials for image storage services
 and key servers used to locate public keys for SIF
 image verification. Currently, there are three main types of remote
-endpoints managed by this command group: the public Sylabs Cloud (or
-local {Project} Enterprise installation), OCI registries and
-keyservers.
+endpoints managed by this command group: `Library API Registries
+<https://singularityhub.github.io/library-api/#/?id=library-api>`_,
+OCI registries and keyservers.
 
-*********************
- Public Sylabs Cloud
-*********************
-
-Sylabs introduced the online `Sylabs Cloud
-<https://cloud.sylabs.io/home>`_ to enable users to `Secure
-<https://cloud.sylabs.io/keystore?sign=true>`_, and `Share
-<https://cloud.sylabs.io/library>`_ their container images with others.
-
-A fresh, default installation of {Project} is configured to connect
-to the public `cloud.sylabs.io <https://cloud.sylabs.io>`__ services. If
-you only want to use the public services you just need to obtain an
-authentication token, and then ``{command} remote login``:
-
-   #. Go to: https://cloud.sylabs.io/
-   #. Click "Sign In" and follow the sign in steps.
-   #. Click on your login id (same and updated button as the Sign in
-      one).
-   #. Select "Access Tokens" from the drop down menu.
-   #. Enter a name for your new access token, such as "test token"
-   #. Click the "Create a New Access Token" button.
-   #. Click "Copy token to Clipboard" from the "New API Token" page.
-   #. Run ``{command} remote login`` and paste the access token at the
-      prompt.
-
-Once your token is stored, you can check that you are able to connect to
-the services with the ``status`` subcommand:
-
-.. code:: console
-
-   $ {command} remote status
-   INFO:    Checking status of default remote.
-   SERVICE    STATUS  VERSION             URI
-   Builder    OK      v1.1.14-0-gc7a68c1  https://build.sylabs.io
-   Consent    OK      v1.0.2-0-g2a24b4a   https://auth.sylabs.io/consent
-   Keyserver  OK      v1.13.0-0-g13c778b  https://keys.sylabs.io
-   Library    OK      v1.0.16-0-gb7eeae4  https://library.sylabs.io
-   Token      OK      v1.0.2-0-g2a24b4a   https://auth.sylabs.io/token
-   INFO:    Access Token Verified!
-
-   Valid authentication token set (logged in).
-
-If you see any errors you may need to check if your system requires
-proxy environment variables to be set, or if a firewall is blocking
-access to ``*.sylabs.io``. Talk to your system administrator.
-
-You can interact with the public Sylabs Cloud using various
-{Project} commands:
+You are most likely interacting with remote endpoints on a regular basis using
+various {Project} commands:
 
 `pull
 <cli/{command}_pull.html>`_,
@@ -85,29 +39,27 @@ You can interact with the public Sylabs Cloud using various
 `instance
 <cli/{command}_instance.html>`_
 
-.. note::
-
-   Using ``docker://``, ``oras://`` and ``shub://`` URIs with these
-   commands does not interact with the Sylabs Cloud.
-
 ***************************
  Managing Remote Endpoints
 ***************************
+
+A fresh installation of {Project} is configured with the ``DefaultRemote``,
+which does not support the Library API as it is only configured with a
+functioning key server, ``https://keys.openpgp.org``. Users or administrators
+should configure one of the Library API implementations listed `here
+<https://singularityhub.github.io/library-api/#/?id=library-api>`_ if they would
+like to use a Library API registry.
 
 Users can setup and switch between multiple remote endpoints, which are
 stored in their ``~/.{command}/remote.yaml`` file. Alternatively,
 remote endpoints can be set system-wide by an administrator.
 
-A remote endpoint may be the public Sylabs Cloud, a private installation
-of Singularity Enterprise, or community-developed service that are API
-compatible.
-
 Generally, users and administrators should manage remote endpoints using
 the ``{command} remote`` command, and avoid editing ``remote.yaml``
 configuration files directly.
 
-List and Login to Remotes
-=========================
+List Remotes
+============
 
 To ``list`` existing remote endpoints, run this:
 
@@ -118,61 +70,22 @@ To ``list`` existing remote endpoints, run this:
    Cloud Services Endpoints
    ========================
 
-   NAME         URI              ACTIVE  GLOBAL  EXCLUSIVE
-   SylabsCloud  cloud.sylabs.io  YES     YES     NO
+   NAME           URI                  ACTIVE  GLOBAL  EXCLUSIVE
+   DefaultRemote  cloud.apptainer.org  YES     YES     NO
 
    Keyservers
    ==========
 
-   URI                     GLOBAL  INSECURE  ORDER
-   https://keys.sylabs.io  YES     NO        1*
+   URI                       GLOBAL  INSECURE  ORDER
+   https://keys.openpgp.org  YES     NO        1*
 
-The ``YES`` in the ``ACTIVE`` column for ``SylabsCloud`` shows that this
+The ``YES`` in the ``ACTIVE`` column for ``DefaultRemote`` shows that this
 is the current default remote endpoint.
 
-To ``login`` to a remote, for the first time or if your token expires or
-was revoked:
+.. _remote_add_and_login:
 
-.. code:: console
-
-   # Login to the default remote endpoint
-   $ {command} remote login
-
-   # Login to another remote endpoint
-   $ {command} remote login <remote_name>
-
-   # example...
-   $ {command} remote login SylabsCloud
-   {command} remote login SylabsCloud
-   INFO:    Authenticating with remote: SylabsCloud
-   Generate an API Key at https://cloud.sylabs.io/auth/tokens, and paste here:
-   API Key:
-   INFO:    API Key Verified!
-
-If you ``login`` to a remote that you already have a valid token for,
-you will be prompted, and the new token will be verified, before it
-replaces your existing credential. If you enter an incorrect token your
-existing token will not be replaced:
-
-.. code:: console
-
-   $ {command} remote login
-   An access token is already set for this remote. Replace it? [N/y]y
-   Generate an access token at https://cloud.sylabs.io/auth/tokens, and paste it here.
-   Token entered will be hidden for security.
-   Access Token:
-   FATAL:   while verifying token: error response from server: Invalid Credentials
-
-   # Previous token is still in place
-
-.. note::
-
-   It is important for users to be aware that the login command will
-   store the supplied credentials or tokens unencrypted in your home
-   directory.
-
-Add & Remove Remotes
-====================
+Add & Login To Remotes
+======================
 
 To ``add`` a remote endpoint (for the current user only):
 
@@ -214,7 +127,52 @@ system) an administrative user should run:
    and are stored in the ``etc/{command}/remote.yaml`` file, at the
    {Project} installation location.
 
-Conversely, to ``remove`` an endpoint:
+To ``login`` to a remote, for the first time or if your token expires or
+was revoked:
+
+.. code:: console
+
+   # Login to the default remote endpoint
+   $ {command} remote login
+
+   # Login to another remote endpoint
+   $ {command} remote login <remote_name>
+
+   # example...
+   $ {command} remote login myremote
+   {command} remote login myremote
+   INFO:    Authenticating with remote: myremote
+   Generate an API Key at https://enterprise.example.com/auth/tokens, and paste here:
+   API Key:
+   INFO:    API Key Verified!
+
+If you ``login`` to a remote that you already have a valid token for,
+you will be prompted, and the new token will be verified, before it
+replaces your existing credential. If you enter an incorrect token your
+existing token will not be replaced:
+
+.. code:: console
+
+   $ {command} remote login
+   An access token is already set for this remote. Replace it? [N/y]y
+   Generate an access token at https://enterprise.example.com/auth/tokens, and paste it here.
+   Token entered will be hidden for security.
+   Access Token:
+   FATAL:   while verifying token: error response from server: Invalid Credentials
+
+   # Previous token is still in place
+
+.. note::
+
+   It is important for users to be aware that the login command will
+   store the supplied credentials or tokens unencrypted in your home
+   directory.
+
+
+Remove Remotes
+==============
+
+To ``remove`` an endpoint:
 
 .. code::
 
@@ -226,6 +184,7 @@ endpoint:
 .. code::
 
    $ sudo {command} remote remove --global <remote_name>
+
 
 Set the Default Remote
 ======================
@@ -247,15 +206,15 @@ in the output of ``remote list``:
    ========================
 
    NAME            URI                     ACTIVE  GLOBAL  EXCLUSIVE
-   SylabsCloud     cloud.sylabs.io         YES     YES     NO
+   DefaultRemote   cloud.apptainer.org     YES     YES     NO
    company-remote  enterprise.example.com  NO      YES     NO
    myremote        enterprise.example.com  NO      NO      NO
 
    Keyservers
    ==========
 
-   URI                     GLOBAL  INSECURE  ORDER
-   https://keys.sylabs.io  YES     NO        1*
+   URI                       GLOBAL  INSECURE  ORDER
+   https://keys.openpgp.org  YES     NO        1*
 
    * Active cloud services keyserver
 
@@ -267,7 +226,7 @@ in the output of ``remote list``:
    ========================
 
    NAME            URI                     ACTIVE  GLOBAL  EXCLUSIVE
-   SylabsCloud     cloud.sylabs.io         NO      YES     NO
+   DefaultRemote   cloud.apptainer.org     NO      YES     NO
    company-remote  enterprise.example.com  NO      YES     NO
    myremote        enterprise.example.com  YES     NO      NO
 
@@ -292,7 +251,7 @@ remote the only usable remote for the system by using the
    ========================
 
    NAME            URI                     ACTIVE  GLOBAL  EXCLUSIVE
-   SylabsCloud     cloud.sylabs.io         NO      YES     NO
+   DefaultRemote   cloud.apptainer.org     NO      YES     NO
    company-remote  enterprise.example.com  YES     YES     YES
    myremote        enterprise.example.com  NO      NO      NO
 
