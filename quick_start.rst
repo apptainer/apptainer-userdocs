@@ -257,7 +257,7 @@ command.
          --legacy-insecure   enable verification of (insecure) legacy signatures
      -l, --local             only verify with local keys
      -i, --sif-id uint32     verify object with the specified ID
-     -u, --url string        key server URL (default "https://keys.sylabs.io")
+     -u, --url string        key server URL (default "https://keys.openpgp.org")
 
 
    Examples:
