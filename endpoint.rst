@@ -44,7 +44,7 @@ various {Project} commands:
 ***************************
 
 A fresh installation of {Project} is configured with the ``DefaultRemote``,
-which does not suppor the Library API as it is only configured with a
+which does not support the Library API as it is only configured with a
 functioning key server, ``https://keys.openpgp.org``. Users or administrators
 should configure one of the Library API implementations listed `here
 <https://singularityhub.github.io/library-api/#/?id=library-api>`_ if they would
