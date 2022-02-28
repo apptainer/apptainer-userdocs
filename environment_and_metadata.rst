@@ -165,6 +165,12 @@ Except that:
       ``/.singularity.d/libs``, that will include NVIDIA / ROCm
       libraries if applicable.
 
+.. note::
+
+   See compatibility documentation for ``SINGULARITYENV_`` prefixed environment
+   variable support `here <singularity_environment_variable_compatibility>`.
+
+
 To override an environment variable that is already set in the container with
 the value from the host, use ``{ENVPREFIX}ENV_`` or the ``--env`` flag. For
 example, to force ``MYVAR`` in the container to take the value of ``MYVAR`` on
@@ -232,6 +238,11 @@ program running in the container.
    -  ``{ENVPREFIX}_BIND`` - a list of bind paths that the user
       requested, via flags or environment variables, when running the
       container.
+
+.. note::
+
+   See compatibility documentation for ``SINGULARITY_`` prefixed environment
+   variable support `here <singularity_environment_variable_compatibility>`.
 
 **********************************
  Overriding environment variables
