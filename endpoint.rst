@@ -331,7 +331,7 @@ of key servers used to verify container signatures by default, where
 entry, or ``order 1``, keyserver.
 
 When we list our default remotes, we can see that the default keyserver
-is ``https://keys.sylabs.io`` and the asterisk next to its order
+is ``https://keys.openpgp.org`` and the asterisk next to its order
 indicates that it is the keyserver associated to the current remote
 endpoint. We can also see the ``INSECURE`` column indicating that
 {Project} will use TLS when communicating with the keyserver.
@@ -342,14 +342,14 @@ endpoint. We can also see the ``INSECURE`` column indicating that
    Cloud Services Endpoints
    ========================
 
-   NAME         URI              ACTIVE  GLOBAL  EXCLUSIVE
-   SylabsCloud  cloud.sylabs.io  YES     YES     NO
+   NAME           URI                  ACTIVE  GLOBAL  EXCLUSIVE
+   DefaultRemote  cloud.apptainer.org  YES     YES     NO
 
    Keyservers
    ==========
 
-   URI                     GLOBAL  INSECURE  ORDER
-   https://keys.sylabs.io  YES     NO        1*
+   URI                       GLOBAL  INSECURE  ORDER
+   https://keys.openpgp.org  YES     NO        1*
 
    * Active cloud services keyserver
 
@@ -362,15 +362,15 @@ We can add a key server to list of keyservers with:
    Cloud Services Endpoints
    ========================
 
-   NAME         URI              ACTIVE  GLOBAL  EXCLUSIVE
-   SylabsCloud  cloud.sylabs.io  YES     YES     NO
+   NAME           URI                  ACTIVE  GLOBAL  EXCLUSIVE
+   DefaultRemote  cloud.apptainer.org  YES     YES     NO
 
    Keyservers
    ==========
 
-   URI                      GLOBAL  INSECURE  ORDER
-   https://keys.sylabs.io   YES     NO        1*
-   https://pgp.example.com  YES     NO        2
+   URI                       GLOBAL  INSECURE  ORDER
+   https://keys.openpgp.org  YES     NO        1*
+   https://pgp.example.com   YES     NO        2
 
    * Active cloud services keyserver
 
@@ -385,15 +385,15 @@ that this key is placed, we can use the ``--order`` flag:
    Cloud Services Endpoints
    ========================
 
-   NAME         URI              ACTIVE  GLOBAL  EXCLUSIVE
-   SylabsCloud  cloud.sylabs.io  YES     YES     NO
+   NAME           URI                  ACTIVE  GLOBAL  EXCLUSIVE
+   DefaultRemote  cloud.apptainer.org  YES     YES     NO
 
    Keyservers
    ==========
 
    URI                      GLOBAL  INSECURE  ORDER
    https://pgp.example.com  YES     NO        1
-   https://keys.sylabs.io   YES     NO        2*
+   https://keys.openpgp.org YES     NO        2*
 
    * Active cloud services keyserver
 
@@ -402,7 +402,7 @@ keyserver was placed as the first entry in the list and the default
 keyserver was moved to second in the list. With the keyserver
 configuration above, all image default image verification performed by
 {Project} will first reach out to ``https://pgp.example.com`` and
-then to ``https://keys.sylabs.io`` when searching for public keys.
+then to ``https://keys.openpgp.org`` when searching for public keys.
 
 If a keyserver requires authentication before usage, users can login
 before using it:
@@ -421,15 +421,15 @@ Now we can see that ``https://pgp.example.com`` is logged in:
    Cloud Services Endpoints
    ========================
 
-   NAME         URI              ACTIVE  GLOBAL  EXCLUSIVE
-   SylabsCloud  cloud.sylabs.io  YES     YES     NO
+   NAME           URI                  ACTIVE  GLOBAL  EXCLUSIVE
+   DefaultRemote  cloud.apptainer.org  YES     YES     NO
 
    Keyservers
    ==========
 
-   URI                      GLOBAL  INSECURE  ORDER
-   https://pgp.example.com  YES     NO        1
-   https://keys.sylabs.io   YES     NO        2*
+   URI                       GLOBAL  INSECURE  ORDER
+   https://pgp.example.com   YES     NO        1
+   https://keys.openpgp.org  YES     NO        2*
 
    * Active cloud services keyserver
 
@@ -476,14 +476,14 @@ specifying a ``docker://`` prefix to the registry hostname:
    Cloud Services Endpoints
    ========================
 
-   NAME         URI              ACTIVE  GLOBAL  EXCLUSIVE
-   SylabsCloud  cloud.sylabs.io  YES     YES     NO
+   NAME           URI                  ACTIVE  GLOBAL  EXCLUSIVE
+   DefaultRemote  cloud.apptainer.org  YES     YES     NO
 
    Keyservers
    ==========
 
-   URI                     GLOBAL  INSECURE  ORDER
-   https://keys.sylabs.io  YES     NO        1*
+   URI                       GLOBAL  INSECURE  ORDER
+   https://keys.openpgp.org  YES     NO        1*
 
    * Active cloud services keyserver
 
@@ -511,14 +511,14 @@ We can login to multiple OCI registries at the same time:
    Cloud Services Endpoints
    ========================
 
-   NAME         URI              ACTIVE  GLOBAL  EXCLUSIVE
-   SylabsCloud  cloud.sylabs.io  YES     YES     NO
+   NAME           URI                  ACTIVE  GLOBAL  EXCLUSIVE
+   DefaultRemote  cloud.apptainer.org  YES     YES     NO
 
    Keyservers
    ==========
 
-   URI                     GLOBAL  INSECURE  ORDER
-   https://keys.sylabs.io  YES     NO        1*
+   URI                       GLOBAL  INSECURE  ORDER
+   https://keys.openpgp.org  YES     NO        1*
 
    * Active cloud services keyserver
 
