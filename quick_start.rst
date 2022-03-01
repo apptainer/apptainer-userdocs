@@ -199,7 +199,7 @@ subcommands as follows:
      -v, --verbose   print additional information
 
    Available Commands:
-     build       Build a {Project} image
+     build       Build {aProject} image
      cache       Manage the local cache
      capability  Manage Linux capabilities for users and groups
      exec        Run a command within a container
@@ -424,7 +424,7 @@ The change in prompt indicates that you have entered the container
 (though you should not rely on that to determine whether you are in
 container or not).
 
-Once inside of a {Project} container, you are the same user as you
+Once inside of {aProject} container, you are the same user as you
 are on the host system.
 
 .. code::
@@ -645,7 +645,7 @@ Ubuntu Operating System and some {Project} metadata in your current
 working directory.
 
 You can use commands like ``shell``, ``exec`` , and ``run`` with this
-directory just as you would with a {Project} image. If you pass the
+directory just as you would with {aProject} image. If you pass the
 ``--writable`` option when you use your container you can also write
 files within the sandbox directory (provided you have the permissions to
 do so).
@@ -678,7 +678,7 @@ exercise care.
 ==============================
 
 For a reproducible, verifiable and production-quality container you
-should build a SIF file using a {Project} definition file. This also
+should build a SIF file using {aProject} definition file. This also
 makes it easy to add files, environment variables, and install custom
 software, and still start from your base of choice (e.g., the Container
 Library).

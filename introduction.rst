@@ -64,7 +64,7 @@ Containers change the user space into a swappable component. This means
 that the entire user space portion of a Linux operating system,
 including programs, custom configurations, and environment can be
 independent of whether your system is running CentOS, Fedora etc.,
-underneath. A {Project} container packages up whatever you need into
+underneath. {AProject} container packages up whatever you need into
 a single, verifiable file.
 
 Software developers can now build their stack onto whatever operating
@@ -146,7 +146,7 @@ prolong the use-fullness of the development effort considerably.
 Complicated work-flows that require custom installation and/or data
 ===================================================================
 
-Consolidating a work-flow into a {Project} container simplifies
+Consolidating a work-flow into {aProject} container simplifies
 distribution and replication of scientific results. Making containers
 available along with published work enables other scientists to build
 upon (and verify) previous scientific work.
