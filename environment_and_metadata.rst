@@ -562,11 +562,6 @@ it is not modifying an existing label when ``--force`` is not used:
    INFO:    Adding labels
    WARNING: Label: OWNER already exists and force option is false, not overwriting
 
-.. note::
-
-   {Project} 3.0 through 3.8 did not inherit labels from Docker/OCI
-   images during a build.
-
 Custom Labels
 =============
 
