@@ -73,8 +73,9 @@ you will be able to request your own bind paths within your container.
 
 The {Project} action commands (``run``, ``exec``, ``shell``, and
 ``instance start``) will accept the ``--bind/-B`` command-line option to
-specify bind paths, and will also honor the ``${ENVPREFIX}_BIND`` (or
-``${ENVPREFIX}_BINDPATH``) environment variable. The argument for this
+specify bind paths, and will also honor the ``${ENVPREFIX}_BIND`` and
+``${ENVPREFIX}_BINDPATH`` environment variables (in that order).
+The argument for this
 option is a comma-delimited string of bind path specifications in the
 format ``src[:dest[:opts]]``, where ``src`` and ``dest`` are paths
 outside and inside of the container respectively. If ``dest`` is not
