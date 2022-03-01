@@ -216,10 +216,10 @@ use the ``type`` / ``-T`` option:
  Temporary Folders
 *******************
 
-When building a container, or pulling/running a {Project} container
+When building a container, or pulling/running {aProject} container
 from a Docker/OCI source, a temporary working space is required. The
 container is constructed in this temporary space before being packaged
-into a {Project} SIF image. Temporary space is also used when
+into {aProject} SIF image. Temporary space is also used when
 running containers in unprivileged mode, and performing some operations
 on filesystems that do not fully support ``--fakeroot``.
 

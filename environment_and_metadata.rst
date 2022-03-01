@@ -75,7 +75,7 @@ environment variables will be set. If you are using a ``library`` or
 ``Docker`` source then you may inherit environment variables from your
 base image.
 
-If I build a {command} container from the image
+If I build {aProject} container from the image
 ``docker://python:3.7`` then when I run the container I can see that the
 ``PYTHON_VERSION`` variable is set in the container:
 

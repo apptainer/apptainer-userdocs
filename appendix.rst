@@ -942,7 +942,7 @@ a docker image stored in a ``docker-save`` formatted tar file:
 Keywords
 --------
 
-The ``docker-daemon`` bootstrap agent can be used in a {Project}
+The ``docker-daemon`` bootstrap agent can be used in {aProject}
 definition file as follows:
 
 .. code:: {command}

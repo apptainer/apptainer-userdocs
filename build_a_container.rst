@@ -115,7 +115,7 @@ Use care when converting a sandbox directory to the default SIF format.
 If changes were made to the writable container before conversion, there
 is no record of those changes in the {Project} definition file
 rendering your container non-reproducible. It is a best practice to
-build your immutable production containers directly from a {Project}
+build your immutable production containers directly from {aProject}
 definition file instead.
 
 *********************************************************

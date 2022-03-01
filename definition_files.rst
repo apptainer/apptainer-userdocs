@@ -6,7 +6,7 @@
 
 .. _sec:deffiles:
 
-A {Project} Definition File (or "def file" for short) is like a set
+{AProject} Definition File (or "def file" for short) is like a set
 of blueprints explaining how to build a custom container. It includes
 specifics about the base OS to build or the base container to start
 from, software to install, environment variables to set at runtime,
@@ -16,7 +16,7 @@ files to add from the host system, and container metadata.
  Overview
 **********
 
-A {Project} Definition file is divided into two parts:
+{AProject} Definition file is divided into two parts:
 
 #. **Header**: The Header describes the core operating system to build
    within the container. Here you will configure the base operating
@@ -709,7 +709,7 @@ tutorials, the specification, and other information.
 SCIF %app* sections
 ===================
 
-SCIF apps within a {Project} container are created using ``%app*``
+SCIF apps within {aProject} container are created using ``%app*``
 sections in a definition file. These ``%app*`` sections, which will
 impact the way the container runs a specific ``--app`` can exist
 alongside any of the primary sections (i.e. ``%post``,``%runscript``,

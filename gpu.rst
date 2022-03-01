@@ -151,7 +151,7 @@ whether some or all host GPUs are visible inside a container. The
 ``nvidia-container-runtime`` explicitly binds the devices into the
 container dependent on the value of ``NVIDIA_VISIBLE_DEVICES``.
 
-To control which GPUs are used in a {Project} container that is run
+To control which GPUs are used in {aProject} container that is run
 with ``--nv`` you can set ``{ENVPREFIX}ENV_CUDA_VISIBLE_DEVICES`` before
 running the container, or ``CUDA_VISIBLE_DEVICES`` inside the container.
 This variable will limit the GPU devices that CUDA programs see.

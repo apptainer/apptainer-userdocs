@@ -16,7 +16,7 @@ moment - `OpenMPI <https://www.open-mpi.org/>`_ and `MPICH
 and running of MPI programs using {Project} containers.
 
 There are several ways of carrying this out, the most popular way of
-executing MPI applications installed in a {Project} container is to
+executing MPI applications installed in {aProject} container is to
 rely on the MPI implementation available on the host. This is called the
 *Host MPI* or the *Hybrid* model since both the MPI implementations
 provided by system administrators (on the host) and in the containers
@@ -309,7 +309,7 @@ The drawbacks are:
    -  The user must ensure that the host MPI is compatible with the MPI
       used to compile and install the application in the container.
 
-The creation of a {Project} container for the bind model is based on
+The creation of {aProject} container for the bind model is based on
 the following steps:
 
 #. Compile your application on a system with the target MPI
@@ -400,7 +400,7 @@ to run the container in bind mode are:
 If your target system is setup with a batch system such as SLURM, a
 standard way to execute MPI applications is through a batch script. The
 following example illustrates the context of a batch script for Slurm
-that aims at starting a {Project} container on each node allocated
+that aims at starting {aProject} container on each node allocated
 to the execution of the job. It can easily be adapted for all major
 batch systems available.
 

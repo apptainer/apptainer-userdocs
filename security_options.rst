@@ -139,7 +139,7 @@ binaries may allow a user to execute a command as a service account.
 
 By default SetUID is disallowed within {Project} containers as a
 security precaution. But the root user can override this precaution and
-allow SetUID binaries to behave as expected within a {Project}
+allow SetUID binaries to behave as expected within {aProject}
 container with the ``--allow-setuid`` option like so:
 
 .. code::

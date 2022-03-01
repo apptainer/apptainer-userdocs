@@ -17,6 +17,8 @@ variable_replacements = {
     "{version}": "main",
     "{adminversion}": "main",
     "{Project}": "Apptainer",
+    "{AProject}": "An Apptainer",
+    "{aProject}": "an Apptainer",
     "{command}": "apptainer",
     "{ENVPREFIX}": "APPTAINER",
     "{orgrepo}": "apptainer/apptainer",

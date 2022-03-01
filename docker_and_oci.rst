@@ -392,7 +392,7 @@ methods.
 
 If you wish to use an existing Docker or OCI container as the basis for
 a new container, you will need to specify it as the *bootstrap* source
-in a {Project} definition file.
+in {aProject} definition file.
 
 Just as you can run or pull containers from different registries using a
 ``docker://`` URI, you can use different headers in a definition file to
@@ -581,7 +581,7 @@ the layers and metadata that make up a Docker container:
    -rw-r--r--  0 0      0   118356480 Aug 16 11:22 af7e389ea6636873dbc5adc17826e8401d96d3d384135b2f9fe990865af202ab/layer.tar
    -rw-r--r--  0 0      0         266 Dec 31  1969 manifest.json
 
-We can convert this tar file into a {command} container using the
+We can convert this tar file into {aProject} container using the
 ``docker-archive`` bootstrap agent. Because the agent accesses a file,
 rather than an object hosted by a service, it uses ``:<filename>``, not
 ``://<location>``. To build a tar archive directly to a SIF container:
@@ -757,7 +757,7 @@ are set in the container:
 
    # Set a host variable
    $ export HOST_VAR=123
-   # Set a {command} container environment variable
+   # Set a container environment variable
    $ export "{ENVPREFIX}ENV_FORCE_VAR="123"
 
    $ {command} run library://alpine env | grep VAR
@@ -830,7 +830,7 @@ directory, rather than binding in the entire host ``/dev`` tree.
 Init Shim Process
 =================
 
-When a {Project} container is run using the ``--pid / p`` option, or
+When {aProject} container is run using the ``--pid / p`` option, or
 started as an instance (which implies ``--pid``), a shim init process is
 executed that will run the container payload itself.
 
@@ -897,7 +897,7 @@ on the ``CMD`` and/or ``ENTRYPOINT`` set in the ``Dockerfile`` that was
 used to build it, along with any arguments on the command line. The
 ``CMD`` and ``ENTRYPOINT`` can also be overridden by flags.
 
-A {Project} container has the concept of a *runscript*, which is a
+{AProject} container has the concept of a *runscript*, which is a
 single shell script defining what happens when you ``{command} run``
 the container. Because there is no internal concept of ``CMD`` and
 ``ENTRYPOINT``, {Project} must create a runscript from the ``CMD``

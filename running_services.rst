@@ -11,7 +11,7 @@ There are :ref:`different ways <runcontainer>` in which you can run
 run containers in a "detached" or "daemon" mode which can run different
 services in the background. A "service" is essentially a process running
 in the background that multiple different clients can use. For example,
-a web server or a database. To run services in a {Project} container
+a web server or a database. To run services in {aProject} container
 one should use *instances*. A container instance is a persistent and
 isolated version of the container image that runs in the background.
 

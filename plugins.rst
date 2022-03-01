@@ -8,7 +8,7 @@
  Overview
 **********
 
-A {Project} plugin is a package that can be dynamically loaded by
+{AProject} plugin is a package that can be dynamically loaded by
 the {Project} runtime, augmenting {Project} with experimental,
 non-standard and/or vendor-specific functionality. Currently, plugins
 are able to add commands and flags to {Project}. In the future,
