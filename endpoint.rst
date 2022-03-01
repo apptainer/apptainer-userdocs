@@ -276,6 +276,42 @@ If you do not want to switch remote with ``remote use`` you can:
    ``--library`` option.
 -  Make ``keys`` use an alternative keyserver with the ``-url`` option.
 
+
+.. _restore_library_behavior:
+
+Restoring pre-{Project} library behavior
+========================================
+
+The previous sections described how to manipulate remotes in general,
+and in particular these are the commands for a user to restore the library
+behavior from before {Project}, where using the `library://` URI would
+download from the Sylabs Cloud anonymously:
+
+.. code::
+   $ {command} remote add --no-login SylabsCloud cloud.sylabs.io
+   INFO:    Remote "SylabsCloud" added.
+   $ {command} remote use SylabsCloud
+   INFO:    Remote "SylabsCloud" now in use.
+   $ {command} remote list
+   Cloud Services Endpoints
+   ========================
+
+   NAME           URI                  ACTIVE  GLOBAL  EXCLUSIVE
+   DefaultRemote  cloud.apptainer.org  NO      YES     NO
+   SylabsCloud    cloud.sylabs.io      YES     NO      NO
+
+   Keyservers
+   ==========
+
+   URI                     GLOBAL  INSECURE  ORDER
+   https://keys.sylabs.io  YES     NO        1*
+
+   * Active cloud services keyserver
+
+To set the defaults system-wide see the corresponding section in the
+`admin guide <{admindocs}/configfiles.html#restore_library_behavior>`_.
+
+
 **************************
  Keyserver Configurations
 **************************
