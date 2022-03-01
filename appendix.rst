@@ -826,7 +826,7 @@ module to use.
 
 .. code:: {command}
 
-   MirrorURL: https://www.busybox.net/downloads/binaries/1.26.1-defconfig-multiarch/busybox-x86_64
+   MirrorURL: https://www.busybox.net/downloads/binaries/1.35.0-x86_64-linux-musl/busybox
 
 The MirrorURL keyword is mandatory. It specifies a URI to use as a
 mirror when downloading the OS.
@@ -835,7 +835,7 @@ Notes
 -----
 
 You can build a fully functional BusyBox container that only takes up
-~600kB of disk space!
+~700kB of disk space!
 
 .. _build-zypper:
 
