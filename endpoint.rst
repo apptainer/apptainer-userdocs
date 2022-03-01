@@ -419,7 +419,7 @@ single registry. See :ref:`Authentication via Interactive Login
 <sec:authentication_via_docker_login>` and :ref:`Authentication via
 Environment Variables <sec:authentication_via_environment_variables>`
 
-{Project} 3.7 introduces the ability for users to supply credentials
+{Project} supports the ability for users to supply credentials
 on a per registry basis with the ``remote`` command group.
 
 Users can login to an oci registry with the ``remote login`` command by

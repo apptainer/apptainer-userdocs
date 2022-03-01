@@ -156,11 +156,10 @@ configured with an execution control list (ECL), which requires the
 presence of one or more valid signatures, to limit execution to approved
 containers.
 
-In {Project} 3.4 and above, the root filesystem of a container
-(stored in the squashFS partition of SIF) can be encrypted. As a result,
-everything inside the container becomes inaccessible without the correct
-key or passphrase. The content of the container is private, even if the
-SIF file is shared in public.
+With {Project}, the root filesystem of a container (stored in the squashFS
+partition of SIF) can be encrypted. As a result, everything inside the container
+becomes inaccessible without the correct key or passphrase. The content of the
+container is private, even if the SIF file is shared in public.
 
 Encryption and decryption are performed using the Linux kernel's LUKS2
 feature. This is the same technology routinely used for full disk

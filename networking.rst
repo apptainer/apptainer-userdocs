@@ -61,8 +61,8 @@ hostname within the container.
 ***********
 
 Passing the ``--net`` flag will cause the container to join a new
-network namespace when it initiates. New in {Project} 3.0, a bridge
-interface will also be set up by default.
+network namespace when it initiates. A bridge interface is also set up by
+default.
 
 .. code::
 
