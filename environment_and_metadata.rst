@@ -101,8 +101,8 @@ of a definition file to set a container environment variable:
 
 .. code:: {command}
 
-   Bootstrap: library
-   From: default/alpine
+   Bootstrap: docker
+   From: alpine
 
    %environment
        export MYVAR="Hello"
@@ -168,7 +168,7 @@ Except that:
 .. note::
 
    See compatibility documentation for ``SINGULARITYENV_`` prefixed environment
-   variable support `here <singularity_environment_variable_compatibility>`.
+   variable support :ref:`here <singularity_environment_variable_compatibility>`.
 
 
 To override an environment variable that is already set in the container with
@@ -242,7 +242,7 @@ program running in the container.
 .. note::
 
    See compatibility documentation for ``SINGULARITY_`` prefixed environment
-   variable support `here <singularity_environment_variable_compatibility>`.
+   variable support :ref:`here <singularity_environment_variable_compatibility>`.
 
 **********************************
  Overriding environment variables
@@ -254,8 +254,6 @@ workflow.
 
 ``--env`` option
 ================
-
-*New in {Project} 3.6*
 
 The ``--env`` option on the ``run/exec/shell`` commands allows you to
 specify environment variables as ``NAME=VALUE`` pairs:
@@ -570,7 +568,7 @@ section in a definition file:
 
 .. code:: {command}
 
-   Bootstrap: library
+   Bootstrap: docker
    From: ubuntu:latest
 
    %labels
@@ -590,7 +588,7 @@ file defined by the ``{ENVPREFIX}_LABELS`` environment variable in the
 
 .. code:: {command}
 
-   Bootstrap: library
+   Bootstrap: docker
    From: ubuntu:latest
 
    # These labels take a fixed value in the definition
@@ -627,7 +625,7 @@ options will display any labels set on the container
    org.label-schema.build-arch: amd64
    org.label-schema.build-date: Thursday_12_November_2020_10:51:59_CST
    org.label-schema.schema-version: 1.0
-   org.label-schema.usage.singularity.deffile.bootstrap: library
+   org.label-schema.usage.singularity.deffile.bootstrap: docker
    org.label-schema.usage.singularity.deffile.from: ubuntu:latest
    org.label-schema.usage.singularity.version: 3.7.0-rc.1
 
@@ -651,7 +649,7 @@ And the output would look like:
 
 .. code:: {command}
 
-   Bootstrap: library
+   Bootstrap: docker
    From: debian:9
 
    %help
@@ -827,7 +825,7 @@ And the output would look like:
                                    "org.label-schema.build-arch": "amd64",
                                    "org.label-schema.build-date": "Thursday_12_November_2020_10:51:59_CST",
                                    "org.label-schema.schema-version": "1.0",
-                                   "org.label-schema.usage.singularity.deffile.bootstrap": "library",
+                                   "org.label-schema.usage.singularity.deffile.bootstrap": "docker",
                                    "org.label-schema.usage.singularity.deffile.from": "ubuntu:latest",
                                    "org.label-schema.usage.singularity.version": "3.7.0-rc.1"
                            }

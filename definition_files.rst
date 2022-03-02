@@ -34,7 +34,7 @@ files to add from the host system, and container metadata.
    to be executed at runtime can accept options intended for ``/bin/sh``
 
 For more in-depth and practical examples of def files, see the `{Project}
-examples repository <https://github.com/{orgrepo}/tree/master/examples>`_
+examples repository <https://github.com/{orgrepo}/tree/main/examples>`_
 
 For a comparison between Dockerfile and {Project} definition file,
 please see: :ref:`this section <sec:deffile-vs-dockerfile>`.
@@ -50,8 +50,6 @@ build the container. It is composed of several keywords.
 The only keyword that is required for every type of build is
 ``Bootstrap``. It determines the *bootstrap agent* that will be used to
 create the base operating system you want to use. For example, the
-``library`` bootstrap agent will pull a container from the `Container
-Library <https://cloud.sylabs.io/library>`_ as a base. Similarly, the
 ``docker`` bootstrap agent will pull docker layers from `Docker Hub
 <https://hub.docker.com/>`_ as a base OS to start your image.
 
@@ -61,14 +59,13 @@ older versions that allow the parameters of the header to appear in any
 order.
 
 Depending on the value assigned to ``Bootstrap``, other keywords may
-also be valid in the header. For example, when using the ``library``
+also be valid in the header. For example, when using the ``docker``
 bootstrap agent, the ``From`` keyword becomes valid. Observe the
-following example for building a Debian container from the Container
-Library:
+following example for building a Debian container:
 
 .. code:: {command}
 
-   Bootstrap: library
+   Bootstrap: docker
    From: debian:7
 
 A def file that uses an official mirror to install CentOS 7 might look
@@ -88,17 +85,16 @@ about them and see examples in the :ref:`appendix section
 Preferred bootstrap agents
 ==========================
 
--  :ref:`library <build-library-module>` (images hosted on the
-   `Container Library <https://cloud.sylabs.io/library>`_)
 -  :ref:`docker <build-docker-module>` (images hosted on Docker Hub)
--  :ref:`shub <build-shub>` (images hosted on Singularity Hub)
 -  :ref:`oras <build-oras>` (images from supporting OCI registries)
+-  :ref:`library <build-library-module>` (images hosted on Library API Registries)
 -  :ref:`scratch <scratch-agent>` (a flexible option for building a
    container from scratch)
 
 Other bootstrap agents
 ======================
 
+-  :ref:`shub <build-shub>` (images hosted on Singularity Hub)
 -  :ref:`localimage <build-localimage>` (images saved on your machine)
 -  :ref:`yum <build-yum>` (yum based systems such as CentOS and
    Scientific Linux)
@@ -176,7 +172,7 @@ to one another during the build process.
 
 .. code:: {command}
 
-   Bootstrap: library
+   Bootstrap: docker
    From: ubuntu:18.04
    Stage: build
 
@@ -215,7 +211,7 @@ to one another during the build process.
        fi
 
    %labels
-       Author d@sylabs.io
+       Author alice
        Version v0.0.1
 
    %help
@@ -585,7 +581,7 @@ add it on the labels section and after the first space character add the
 correspondent value to the label.
 
 In the previous example, the first label name is ``Author``` with a
-value of ``d@sylabs.io``. The second label name is ``Version`` with a
+value of ``alice``. The second label name is ``Version`` with a
 value of ``v0.0.1``. Finally, the last label named ``MyLabel`` has the
 value of ``Hello World``.
 
@@ -596,18 +592,18 @@ the following command:
 
    $ {command} inspect my_container.sif
 
-   {
-     "Author": "d@sylabs.io",
-     "Version": "v0.0.1",
-     "MyLabel": "Hello World",
-     "org.label-schema.build-date": "Thursday_6_December_2018_20:1:56_UTC",
-     "org.label-schema.schema-version": "1.0",
-     "org.label-schema.usage": "/.singularity.d/runscript.help",
-     "org.label-schema.usage.singularity.deffile.bootstrap": "library",
-     "org.label-schema.usage.singularity.deffile.from": "ubuntu:18.04",
-     "org.label-schema.usage.singularity.runscript.help": "/.singularity.d/runscript.help",
-     "org.label-schema.usage.singularity.version": "3.0.1"
-   }
+   Author: alice
+   Version: v0.0.1
+   MyLabel: Hello World
+   org.label-schema.build-arch: amd64
+   org.label-schema.build-date: Tuesday_1_March_2022_16:49:5_PST
+   org.label-schema.schema-version: 1.0
+   org.label-schema.usage: /.singularity.d/runscript.help
+   org.label-schema.usage.apptainer.runscript.help: /.singularity.d/runscript.help
+   org.label-schema.usage.apptainer.version: 1.0.0
+   org.label-schema.usage.singularity.deffile.bootstrap: docker
+   org.label-schema.usage.singularity.deffile.from: ubuntu:18.04
+   org.label-schema.usage.singularity.deffile.stage: build
 
 Some labels that are captured automatically from the build process. You
 can read more about labels and metadata :ref:`here

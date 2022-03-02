@@ -8,10 +8,9 @@
 
 ``build`` is the “Swiss army knife” of container creation. You can use
 it to download and assemble existing containers from external resources
-like the `Container Library <https://cloud.sylabs.io/library>`_ and
-`Docker Hub <https://hub.docker.com/>`_. You can use it to convert
-containers between the formats supported by {Project}. And you can
-use it in conjunction with a :ref:`{Project} definition
+like `Docker Hub <https://hub.docker.com/>`_ and other OCI registries.
+You can use it to convert containers between the formats supported by
+{Project}. And you can use it in conjunction with a :ref:`{Project} definition
 <definition-files>` file to create a container from scratch and
 customized it to fit your needs.
 
@@ -25,8 +24,9 @@ as output.
 The target defines the method that ``build`` uses to create the
 container. It can be one of the following:
 
--  URI beginning with **library://** to build from the Container Library
 -  URI beginning with **docker://** to build from Docker Hub
+-  URI beginning with **oras://** to build from an OCI registry that supports OCI Artifacts
+-  URI beginning with **library://** to build from the Container Library
 -  URI beginning with **shub://** to build from Singularity Hub
 -  path to a **existing container** on your local machine
 -  path to a **directory** to build from a sandbox
@@ -44,9 +44,20 @@ Because ``build`` can accept an existing container as a target and
 create a container in either supported format you can convert existing
 containers from one format to another.
 
-**************************************************************
- Downloading an existing container from the Container Library
-**************************************************************
+***************************************************
+ Downloading an existing container from Docker Hub
+***************************************************
+
+You can use ``build`` to download layers from Docker Hub and assemble
+them into {Project} containers.
+
+.. code::
+
+   $ sudo {command} build alpine.sif docker://alpine
+
+***************************************************************
+ Downloading an existing container from a Library API Registry
+***************************************************************
 
 You can use the build command to download a container from the Container
 Library.
@@ -61,17 +72,6 @@ Container Library URI from which to download. By default the container
 will be converted to a compressed, read-only SIF. If you want your
 container in a writable format use the ``--sandbox`` option.
 
-***************************************************
- Downloading an existing container from Docker Hub
-***************************************************
-
-You can use ``build`` to download layers from Docker Hub and assemble
-them into {Project} containers.
-
-.. code::
-
-   $ sudo {command} build lolcow.sif docker://sylabsio/lolcow
-
 .. _create_a_writable_container:
 
 *********************************************
@@ -85,7 +85,7 @@ permissions it is recommended to do so as root.
 
 .. code::
 
-   $ sudo {command} build --sandbox lolcow/ library://lolcow
+   $ sudo {command} build --sandbox alpine/ docker://alpine
 
 The resulting directory operates just like a container in a SIF file. To
 make changes within the container, use the ``--writable`` flag when you
@@ -95,7 +95,7 @@ change.
 
 .. code::
 
-   $ sudo {command} shell --writable lolcow/
+   $ sudo {command} shell --writable alpine/
 
 **************************************************
  Converting containers from one format to another
@@ -207,8 +207,8 @@ definition file as a json.
 ``--library``
 =============
 
-This command allows you to set a different library. (The default library
-is "https://library.sylabs.io")
+This command allows you to set a different library. Look
+:ref:`here <library_api_registries>` for more information.
 
 ``--notest``
 ============

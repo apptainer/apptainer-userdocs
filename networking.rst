@@ -32,10 +32,10 @@ servers to add to the ``/etc/resolv.conf`` file.
 
 .. code::
 
-   $ nslookup sylabs.io | grep Server
+   $ nslookup google.com | grep Server
    Server:             127.0.0.53
 
-   $ sudo {command} exec --dns 8.8.8.8 ubuntu.sif nslookup sylabs.io | grep Server
+   $ sudo {command} exec --dns 8.8.8.8 ubuntu.sif nslookup google.com | grep Server
    Server:             8.8.8.8
 
    $ sudo {command} exec --dns 8.8.8.8 ubuntu.sif cat /etc/resolv.conf

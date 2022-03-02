@@ -80,7 +80,7 @@ Install Go
 
 {Project} is written in Go, and may require a newer version of Go than is
 available in the repositories of your distribution. We recommend installing the
-latest version of Go from the [official binaries](https://golang.org/dl/).
+latest version of Go from the `official binaries <https://golang.org/dl/>`_.
 
 {Project} aims to maintain support for the two most recent stable versions
 of Go. This corresponds to the Go Release Maintenance Policy and Security
@@ -210,7 +210,7 @@ subcommands as follows:
      oci         Manage OCI containers
      plugin      Manage {command} plugins
      pull        Pull an image from a URI
-     push        Upload image to the provided library (default is "cloud.sylabs.io")
+     push        Upload image to the provided URI
      remote      Manage {command} remote endpoints
      run         Run the user-defined default command within a container
      run-help    Show the user-defined help for an image
@@ -276,14 +276,14 @@ command and run {Project} with debugging messages on:
 
 .. code::
 
-   $ {command} --debug run library://lolcow
+   $ {command} --debug run docker://alpine
 
 To pass the ``--containall`` option to the ``run`` command and run a
 {Project} image in an isolated manner:
 
 .. code::
 
-   $ {command} run --containall library://lolcow
+   $ {command} run --containall docker://alpine
 
 {Project} has the concept of command groups. For
 instance, to list Linux capabilities for a particular user, you would
@@ -303,72 +303,24 @@ particular container, you can view them like so.
 
    $ {command} inspect --helpfile --app=foo foo.sif  # See the help for foo, if provided
 
-***************************
- Download pre-built images
-***************************
-
-You can use the ``search`` command to locate groups, collections, and
-containers of interest on the `Container Library
-<https://cloud.sylabs.io/library>`_ .
-
-.. code::
-
-   {command} search tensorflow
-   Found 22 container images for amd64 matching "tensorflow":
-
-       library://ajgreen/default/tensorflow2-gpu-py3-r-jupyter:latest
-               Current software: tensorflow2; py3.7; r; jupyterlab1.2.6
-               Signed by: 1B8565093D80FA393BC2BD73EA4711C01D881FCB
-
-       library://bensonyang/collection/tensorflow-rdma_v4.sif:latest
-
-       library://dxtr/default/hpc-tensorflow:0.1
-
-       library://emmeff/tensorflow/tensorflow:latest
-
-       library://husi253/default/tensorflow:20.01-tf1-py3-mrcnn-2020.10.07
-
-       library://husi253/default/tensorflow:20.01-tf1-py3-mrcnn-20201014
-
-       library://husi253/default/tensorflow:20.01-tf2-py3-lhx-20201007
-
-       library://irinaespejo/default/tensorflow-gan:sha256.0c1b6026ba2d6989242f418835d76cd02fc4cfc8115682986395a71ef015af18
-
-       library://jon/default/tensorflow:1.12-gpu
-               Signed by: D0E30822F7F4B229B1454388597B8AFA69C8EE9F
-
-       ...
+********************
+ Downloading images
+********************
 
 You can use the `pull
 <cli/{command}_pull.html>`_
 and `build
 <cli/{command}_build.html>`_
-commands to download pre-built images from an external resource like the
-`Container Library <https://cloud.sylabs.io/library>`_ or `Docker Hub
-<https://hub.docker.com/>`_.
+commands to download images from an external resource like an OCI registry.
 
-When called on a native {Project} image like those provided on the
-Container Library, ``pull`` simply downloads the image file to your
-system.
-
-.. code::
-
-   $ {command} pull library://lolcow
-
-You can also use ``pull`` with the ``docker://`` uri to reference Docker
-images served from a registry. In this case ``pull`` does not just
-download an image file. Docker images are stored in layers, so ``pull``
+You can use ``pull`` with the ``docker://`` uri to reference OCI
+images served from an OCI registry. In this case ``pull`` does not just
+download an image file. OCI images are stored in layers, so ``pull``
 must also combine those layers into a usable {Project} file.
 
 .. code::
 
-   $ {command} pull docker://sylabsio/lolcow
-
-Pulling Docker images reduces reproducibility. If you were to pull a
-Docker image today and then wait six months and pull again, you are not
-guaranteed to get the same image. If any of the source layers has
-changed the image will be altered. If reproducibility is a priority for
-you, try building your images from the Container Library.
+   $ {command} pull docker://alpine
 
 You can also use the ``build`` command to download pre-built images from
 an external resource. When using ``build`` you must specify a name for
@@ -376,9 +328,7 @@ your container like so:
 
 .. code::
 
-   $ {command} build ubuntu.sif library://ubuntu
-
-   $ {command} build lolcow.sif docker://sylabsio/lolcow
+   $ {command} build alpine.sif docker://alpine
 
 Unlike ``pull``, ``build`` will convert your image to the latest
 {Project} image format after downloading it. ``build`` is like a
@@ -400,11 +350,11 @@ You can interact with images in several ways, each of which can accept
 image URIs in addition to a local image path.
 
 For demonstration, we will use a ``lolcow_latest.sif`` image that can be
-pulled from the Container Library:
+pulled from DockerHub:
 
 .. code::
 
-   $ {command} pull library://lolcow
+   $ {command} pull docker://sylabsio/lolcow
 
 Shell
 =====
@@ -435,13 +385,13 @@ are on the host system.
    {Project} lolcow_latest.sif:~> id
    uid=1000(david) gid=1000(david) groups=1000(david),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),116(lpadmin),126(sambashare)
 
-``shell`` also works with the ``library://``, ``docker://``, and
+``shell`` also works with the ``docker://``, ``oras://``, ``library://``,  and
 ``shub://`` URIs. This creates an ephemeral container that disappears
 when the shell is exited.
 
 .. code::
 
-   $ {command} shell library://lolcow
+   $ {command} shell docker://sylabsio/lolcow
 
 Executing Commands
 ==================
@@ -464,15 +414,15 @@ program within the ``lolcow_latest.sif`` container:
                    ||----w |
                    ||     ||
 
-``exec`` also works with the ``library://``, ``docker://``, and
+``exec`` also works with the ``docker://``, ``oras://``, ``library://``, and
 ``shub://`` URIs. This creates an ephemeral container that executes a
 command and disappears.
 
 .. code::
 
-   $ {command} exec library://lolcow cowsay "Fresh from the library!"
+   $ {command} exec docker://sylabsio/lolcow cowsay "Fresh from the internet!"
     _________________________
-   < Fresh from the library! >
+   < Fresh from the internet! >
     -------------------------
            \   ^__^
             \  (oo)\_______
@@ -515,7 +465,7 @@ executable.
                    ||----w |
                    ||     ||
 
-``run`` also works with the ``library://``, ``docker://``, and
+``run`` also works with the ``docker://``, ``oras://``, ``library://``, and
 ``shub://`` URIs. This creates an ephemeral container that runs and then
 disappears.
 
@@ -536,13 +486,13 @@ Arguments to ``run``
 --------------------
 
 You can pass arguments to the runscript of a container, if it accepts
-them. For example, the default runscript of the ``library://alpine``
+them. For example, the default runscript of the ``docker://alpine``
 container passes any arguments to a shell. We can ask the container
 to run ``echo`` command in this shell:
 
 .. code::
 
-   $ {command} run library://alpine echo "hello"
+   $ {command} run docker://alpine echo "hello"
 
    hello
 
@@ -638,7 +588,7 @@ To build into a ``sandbox`` (container in a directory) use the ``build
 
 .. code::
 
-   $ sudo {command} build --sandbox ubuntu/ library://ubuntu
+   $ sudo {command} build --sandbox ubuntu/ docker://ubuntu
 
 This command creates a directory called ``ubuntu/`` with an entire
 Ubuntu Operating System and some {Project} metadata in your current
@@ -680,8 +630,9 @@ exercise care.
 For a reproducible, verifiable and production-quality container you
 should build a SIF file using {aProject} definition file. This also
 makes it easy to add files, environment variables, and install custom
-software, and still start from your base of choice (e.g., the Container
-Library).
+software. You can start with base images from Docker Hub and use
+images directly from official repositories such as Ubuntu, Debian,
+CentOS, Arch, and BusyBox.
 
 A definition file has a header and a body. The header determines the
 base container to begin with, and the body is further divided into
@@ -692,7 +643,7 @@ Here is an example of a definition file:
 
 .. code:: {command}
 
-   BootStrap: library
+   BootStrap: docker
    From: ubuntu:16.04
 
    %post
@@ -707,7 +658,7 @@ Here is an example of a definition file:
        date | cowsay | lolcat
 
    %labels
-       Author Sylabs
+       Author Alice
 
 To build a container from this definition file (assuming it is a file
 named lolcow.def), you would call build like so:
@@ -717,7 +668,7 @@ named lolcow.def), you would call build like so:
    $ sudo {command} build lolcow.sif lolcow.def
 
 In this example, the header tells {Project} to use a base Ubuntu
-16.04 image from the Container Library.
+16.04 image from the default OCI registry.
 
 -  The ``%post`` section executes within the container at build time
    after the base OS has been installed. The ``%post`` section is
@@ -733,10 +684,7 @@ In this example, the header tells {Project} to use a base Ubuntu
    added to the container.
 
 This is a very small example of the things that you can do with a
-:ref:`definition file <definition-files>`. In addition to building a
-container from the Container Library, you can start with base images
-from Docker Hub and use images directly from official repositories such
-as Ubuntu, Debian, CentOS, Arch, and BusyBox. You can also use an
+:ref:`definition file <definition-files>`. You can also use an
 existing container on your host system as a base.
 
 This quickstart document just scratches the surface of all of the things

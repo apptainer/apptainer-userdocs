@@ -19,8 +19,7 @@ the local keyring and are not related to the cloud keystore.
 
 {Project} has a global keyring which can be managed by
 administrators with the ``--global`` option. This global keyring is
-used by ECL
-({admindocs}/configfiles.html#ecl-toml)
+used by `ECL <{admindocs}/configfiles.html#ecl-toml>`_
 and allows administrators to manage public keys used during ECL image
 verification.
 
