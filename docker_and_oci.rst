@@ -93,8 +93,8 @@ from the cache.
    from OCI to SIF. If you ``{command} pull`` a Docker container
    twice, the output file isn't identical because metadata such as dates
    from the conversion will vary. This differs from pulling a SIF
-   container (e.g. from a ``library://`` URI), which always give you an
-   exact copy of the image.
+   container (e.g. from an ``oras:// or`` ``library://`` URI), which always
+   give you an exact copy of the image.
 
 Docker Hub Limits
 =================
@@ -172,7 +172,7 @@ credentials, use the ``--docker-login`` flag:
 
 .. code::
 
-   $ {command} pull --docker-login docker://sylabsio/private
+   $ {command} pull --docker-login docker://myuser/private
    Enter Docker Username: myuser
    Enter Docker Password:
 
@@ -193,7 +193,7 @@ credentials.
 
    $ export {ENVPREFIX}_DOCKER_USERNAME=myuser
    $ export {ENVPREFIX}_DOCKER_PASSWORD=mytoken
-   $ {command} pull docker://sylabsio/private
+   $ {command} pull docker://myuser/private
 
 **********************************
  Containers From Other Registries

@@ -127,7 +127,7 @@ Start your container, applying the toml file, e.g.:
 
 .. code::
 
-   $ sudo {command} run --apply-cgroups path/to/cgroups.toml library://alpine
+   $ sudo {command} run --apply-cgroups path/to/cgroups.toml docker://alpine
 
 After that, you can verify that the container is only using 500MB of
 memory. This example assumes that there is only one running container.
@@ -286,7 +286,7 @@ runtime-spec ``resources`` section, **except** native ``unified``
 cgroups v2 constraints. Use the cgroups v1 limits, which will be
 translated to v2 format when applied on a cgroups v1 system.
 
-See
-https://github.com/opencontainers/runtime-spec/blob/master/config-linux.md#control-groups
+See the `runtime spec
+<https://github.com/opencontainers/runtime-spec/blob/main/config-linux.md#control-groups>`_
 for information about the available limits. Note that {Project} uses
 TOML format for the configuration file, rather than JSON.

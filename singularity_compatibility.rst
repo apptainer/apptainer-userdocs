@@ -56,6 +56,8 @@ set inside the container.
 Next we can use the ``SINGULARITYENV_`` prefix to do the same thing, but this
 time we wil have the intended value be ``BAZ``:
 
+.. code::
+
   $ SINGULARITYENV_FOO=BAZ {command} exec  docker://alpine env
   WARNING: DEPRECATED USAGE: Forwarding SINGULARITYENV_FOO as environment variable will not be supported in the future, use {ENVPREFIX}ENV_FOO instead
   [...]

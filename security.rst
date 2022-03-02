@@ -143,11 +143,12 @@ features. The container filesystem is immutable, and can be signed. The
 signature travels in the SIF image itself so that it is always possible
 to verify that the image has not been tampered with or corrupted.
 
-We use private PGP keys to create a container signature, and the public
-key in order to verify the container. Verification of signed containers
-happens automatically in ``{command} pull`` commands against the
-Sylabs Cloud Container Library. A Keystore in the Sylabs Cloud makes it
-easier to share and obtain public keys for container verification.
+We use private PGP keys to create a container signature, and the corresponding
+public key in order to verify the container signature. Verification of signed
+containers can be done at any time by a user and happens automatically in
+``{command} pull`` commands against the Library API registries. The prevalence
+of PGP key servers, (like https://keys.openpgp.org/), make sharing and obtaining
+public keys for container verification relatively simple.
 
 A container may be signed once, by a trusted individual who approves its
 use. It could also be signed with multiple keys to signify it has passed

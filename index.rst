@@ -9,8 +9,7 @@ installation instructions, and cover topics relevant to users building
 and running containers.
 
 For a detailed guide to installation and configuration, please see the
-separate Admin Guide for this version of {Project} at
-{admindocs}.
+separate `Admin Guide <{admindocs}>`_ for this version of {Project}.
 
 ******************************************
  Getting Started & Background Information
