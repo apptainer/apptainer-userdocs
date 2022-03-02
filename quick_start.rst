@@ -311,7 +311,7 @@ You can use the `pull
 <cli/{command}_pull.html>`_
 and `build
 <cli/{command}_build.html>`_
-commands to download images from an external resource like the an OCI registry.
+commands to download images from an external resource like an OCI registry.
 
 You can use ``pull`` with the ``docker://`` uri to reference OCI
 images served from an OCI registry. In this case ``pull`` does not just
@@ -658,7 +658,7 @@ Here is an example of a definition file:
        date | cowsay | lolcat
 
    %labels
-       Authors Apptainer.org
+       Author Alice
 
 To build a container from this definition file (assuming it is a file
 named lolcow.def), you would call build like so:
