@@ -38,7 +38,7 @@ below with their respective functionality.
 ``B``
 =====
 
-#. **{ENVPREFIX}_BINDPATH** and **{ENVPREFIX}_BIND**: Comma separated
+#. **{ENVPREFIX}_BIND** and **{ENVPREFIX}_BINDPATH**: Comma separated
    string ``source:<dest>`` list of paths to bind between the host and
    the container.
 
