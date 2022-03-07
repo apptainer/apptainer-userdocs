@@ -6,6 +6,9 @@ SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
 PAPER         =
 BUILDDIR      = _build
+# containers_image_openpgp is needed at least on CentOS 7 because its
+#  gpgme package is too old
+GO_BUILD_TAGS = containers_image_openpgp
 
 # User-friendly check for sphinx-build
 ifeq ($(shell which $(SPHINXBUILD) >/dev/null 2>&1; echo $$?), 1)
@@ -58,7 +61,7 @@ apptainer_source/builddir/apptainer:
 
 cli/apptainer.rst: apptainer_source/builddir/apptainer
 	cd apptainer_source &&\
-	go run ./cmd/docs rst --dir ../cli
+	go run -tags "$(GO_BUILD_TAGS)" ./cmd/docs rst --dir ../cli 
 
 endif
 
