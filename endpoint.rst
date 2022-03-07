@@ -276,6 +276,7 @@ If you do not want to switch remote with ``remote use`` you can:
    ``--library`` option.
 -  Make ``keys`` use an alternative keyserver with the ``-url`` option.
 
+.. _restoring_pre-{command}_library_behavior:
 
 Restoring pre-{Project} library behavior
 ========================================
@@ -309,7 +310,7 @@ download from the Sylabs Cloud anonymously:
 
 To set the defaults system-wide see the corresponding section in the
 `admin guide
-<{admindocs}/configfiles.html#restoring-pre-apptainer-library-behavior>`_.
+<{admindocs}/configfiles.html#restoring-pre-{command}-library-behavior>`_.
 
 
 **************************
