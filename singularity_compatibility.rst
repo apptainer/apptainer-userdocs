@@ -149,3 +149,8 @@ migration again:
   {Project} will not migrate cached container data such as OCI blobs and SIF
   images. User caches will need to be manually migrated or reconstructed through
   normal use of {Project}.
+
+The default remote configuration has changed in {Project}, so if you did
+not previously set any remotes and want to continue to use the previous
+default for ``library://`` and/or pgp keys, see
+:ref:`Restoring pre-{Project} library behavior <restoring_pre-{command}_library_behavior>`.
