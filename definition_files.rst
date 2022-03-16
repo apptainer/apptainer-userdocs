@@ -406,18 +406,14 @@ not found``.
 
 Some programs return an error code when run without mandatory options.
 If you want to ignore this, and just check the program is present and
-can be called, you can run it as ``myprog || true`` in your test:
+executable, you can do this in your test:
 
 .. code:: {command}
 
    %test
-       # Run bwa - exits with error code if installed and run without
-       # options
-       bwa || true
-
-The ``|| true`` means that if the command before it is found but returns
-an error code it will be ignored, and replaced with the error code from
-``true`` - which is always ``0`` indicating success.
+       # Exits with error code if command can not be found or
+       # is not executable:
+       [ -x "$(command -v bwa)" ]
 
 Because the ``%test`` section is a shell scriptlet, complex tests are
 possible. Your scriptlet should usually be written so it will exit with
