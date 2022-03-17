@@ -138,7 +138,7 @@ network filesystem this means that reads from the container are
 data-only. Metadata operations happen locally, speeding up workloads
 with many small files.
 
-Holding the container image in a single file also enable unique security
+Holding the container image in a single file also enables unique security
 features. The container filesystem is immutable, and can be signed. The
 signature travels in the SIF image itself so that it is always possible
 to verify that the image has not been tampered with or corrupted.
