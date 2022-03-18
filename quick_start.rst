@@ -648,7 +648,7 @@ Here is an example of a definition file:
 
    %post
        apt-get -y update
-       apt-get -y install date cowsay lolcat
+       apt-get -y install cowsay lolcat
 
    %environment
        export LC_ALL=C
