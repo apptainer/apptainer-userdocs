@@ -910,15 +910,14 @@ SIF file metadata descriptor.
    dynamically written at runtime, *and should not be modified* in the
    container.
 
--  **env**: All ``*.sh`` files in this directory are sourced in
-   alphanumeric order when the container is started. For legacy purposes
-   there is a symbolic link called ``/environment`` that points to
-   ``/.singularity.d/env/90-environment.sh``. Whenever possible, avoid
-   modifying or creating environment files manually to prevent potential
-   issues building & running containers with future versions of
-   {Project}. Additional
-   facilities such as ``--env`` and ``--env-file`` are available to
-   allow manipulation of the container environment at runtime.
+-  **env**: All ``*.sh`` files in this directory are sourced in alphanumeric
+   order when the container is started. For legacy purposes there is a symbolic
+   link called ``/environment`` that points to
+   ``/.singularity.d/env/90-environment.sh``. Whenever possible, avoid modifying
+   or creating environment files manually to prevent potential issues building &
+   running containers with future versions of {Project}. Additional
+   facilities such as ``--env`` and ``--env-file`` are available to allow
+   manipulation of the container environment at runtime.
 
 -  **labels.json**: The json file that stores a containers labels
    described above.
