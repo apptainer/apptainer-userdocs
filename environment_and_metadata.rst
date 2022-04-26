@@ -62,7 +62,7 @@ container, rather than when running a container, see :ref:`build
 environment section <build-environment>`.
 
 *******************************
- Environment from a base image
+ Environment From a Base Image
 *******************************
 
 When you build a container with {Project} you might *bootstrap* from
@@ -92,7 +92,7 @@ You can override the inherited environment with ``{ENVPREFIX}ENV_`` vars, or the
 not be overridden by host environment variables of the same name.
 
 ************************************
- Environment from a definition file
+ Environment From a Definition File
 ************************************
 
 Environment variables can be included in your container by adding them
@@ -128,7 +128,7 @@ The ``%runscript`` is set to echo the value.
    initialization tasks because this would impact users running the
    image and the execution could abort due to timeout.
 
-Build time variables in ``%post``
+Build Time Cariables in ``%post``
 =================================
 
 In some circumstances the value that needs to be assigned to an
@@ -144,7 +144,7 @@ Variables set in the ``%post`` section through
 ``%environment``.
 
 ***************************
- Environment from the host
+ Environment From the Host
 ***************************
 
 If you have environment variables set outside of your container, on the
@@ -214,9 +214,9 @@ environment variables for correct operation of most software.
    such as ``PYTHONPATH`` that can change the way code runs, and
    consider using ``--cleanenv``.
 
-********************************************
- Environment from the {Project} runtime
-********************************************
+****************************************
+ Environment From the {Project} Runtime
+****************************************
 
 It can be useful for a program to know when it is running in a
 {Project} container, and some basic information about the container
@@ -245,7 +245,7 @@ program running in the container.
    variable support :ref:`here <singularity_environment_variable_compatibility>`.
 
 **********************************
- Overriding environment variables
+ Overriding Environment Variables
 **********************************
 
 You can override variables that have been set in the container image, or
@@ -365,24 +365,53 @@ to the start) of the ``PATH`` variable in the container.
 Alternatively you could use the ``--env`` option to set a
 ``PREPEND_PATH`` variable, e.g. ``--env PREPEND_PATH=/startpath``.
 
-Escaping and evaluation of environment variables
-================================================
+************************************************
+Escaping and Evaluation of Environment Variables
+************************************************
 
-{Project} uses an embedded shell interpreter to process the
-container startup scripts and environment. When this processing is
-performed, a single step of shell evaluation happens in the container
-context. The shell from which you are running {Project} may also
-evaluate variables on your command line before passing them to
-{Project}.
+{Project} uses an embedded shell interpreter to process the container
+startup scripts and environment. When this processing is performed, by default a
+single step of shell evaluation happens in the container context. The shell from
+which you are running {Project} may also evaluate variables on your command
+line before passing them to {Project}.
 
-.. warning::
+Docker / OCI Compatibility
+==========================
 
-   This behavior differs from Docker/OCI handling of environment
-   variables / ``ENV`` directives. You may need additional quoting and
-   escaping to replicate behavior. See below.
+This default behavior of {Project} differs from Docker/OCI handling of
+environment variables / ``ENV`` directives. To avoid the extra evaluation of
+variables that {Project} performs you can:
 
-Using host variables
---------------------
+* Follow the instructions about escaping in the sections below, to add
+  additional escape characters and/or quoting.
+* Use the ``--no-eval`` or ``--compat`` flags.
+
+
+``--no-eval`` prevents {Project} from evaluating environment variables on
+container startup, so that they will take the same value as with a Docker/OCI
+runtime:
+
+.. code::
+
+   # Set an environment variable that would run `date` if evaluated
+   $ export {ENVPREFIX}_MYVAR='$(date)'
+
+   # Default behavior
+   # MYVAR was evaluated in the container, and is set to the output of `date`
+   $ {command} run ~/ubuntu_latest.sif env | grep MYVAR
+   MYVAR=Tue Apr 26 14:37:07 CDT 2022
+
+   # --no-eval / --compat behavior
+   # MYVAR was not evaluated and is a literal `$(date)`
+   $ {command} run --no-eval ~/ubuntu_latest.sif env | grep MYVAR
+   MYVAR=$(date)
+
+
+The ``--compat`` flag is a short-hand flag to activate ``--no-eval`` along with
+other Docker/OCI compatibility flags. See :ref:`compat-flag` for more details.
+
+Using Host Variables
+====================
 
 To set a container environment variable to the value of a variable on
 the host, use double quotes around the variable, so that it is
@@ -404,7 +433,7 @@ substituted before the host shell runs ``{command}``.
    correctly.
 
 Using Container Variables
--------------------------
+=========================
 
 To set an environment variable to a value that references another
 variable inside the container, you should escape the ``$`` sign to
@@ -425,7 +454,7 @@ APPEND_PATH="/endpath"``, which uses the special ``APPEND/PREPEND``
 handling for ``PATH`` discussed above.
 
 Quoting / Avoiding Evaluation
------------------------------
+=============================
 
 If you need to pass an environment variable into the container
 verbatim, it must be quoted and escaped appropriately. For example, if
@@ -450,9 +479,9 @@ level of escaping:
 
    {command} run --env='LD_PRELOAD=/foo/bar/\$LIB/baz.so' mycontainer.sif
 
-
+*******************************
 Environment Variable Precedence
-===============================
+*******************************
 
 When a container is run with {Project}, the container
 environment is constructed in the following order:
