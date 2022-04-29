@@ -42,6 +42,13 @@ below with their respective functionality.
    string ``source:<dest>`` list of paths to bind between the host and
    the container.
 
+#. **{ENVPREFIX}_BLKIO_WEIGHT**: Specify a relative weight for block
+   device access during contention. Range 10-1000. Default is 0 (disabled).
+
+#. **{ENVPREFIX}_BLKIO_WEIGHT_DEVICE**: Specify a relative weight for
+   block device access during contention on a specific device.
+   Must be supplied in ``<device path>:weight`` format. Default is unset.
+
 #. **{ENVPREFIX}_BOOT**: Set to false by default, considers if executing
    ``/sbin/init`` when container boots (root only).
 
@@ -54,6 +61,10 @@ below with their respective functionality.
 #. **{ENVPREFIX}_CLEANENV**: Specifies if the environment should be
    cleaned or not before running the container. Default is set to false.
 
+#. **{ENVPREFIX}_COMPAT**: Set to true to enable Docker/OCI compatibility mode.
+   Equivalent to setting ``--containall --no-eval --no-init --no-umask
+   --writable-tmpfs``. Default is false.
+
 #. **{ENVPREFIX}_CONTAIN**: To use minimal ``/dev`` and empty other
    directories (e.g. ``/tmp`` and ``$HOME``) instead of sharing
    filesystems from your host. Default is set to false.
@@ -64,6 +75,18 @@ below with their respective functionality.
 #. **{ENVPREFIX}_CONTAINLIBS**: Used to specify a string of file names
    (comma separated string) to bind to the ``/.singularity.d/libs``
    directory.
+
+#. **{ENVPREFIX}_CPU_SHARES**: Specify a relative share of CPU time
+   available to the container. Default is -1 (disabled).
+
+#. **{ENVPREFIX}_CPUS**: Specify a fractional number of CPUs available
+   to the container. Default is unset. 
+
+#. **{ENVPREFIX}_CPUSET_CPUS**: Specify a list or range of CPU cores
+   available to the container. Default is unset.
+
+#. **{ENVPREFIX}_CPUSET_MEMS**: Specify a list or range of memory nodes
+   available to the container. Default is unset.
 
 ``D``
 =====
@@ -188,6 +211,15 @@ below with their respective functionality.
 ``M``
 =====
 
+#. **{ENVPREFIX}_MEMORY**: Specify a memory limit in bytes for the
+   container. Default is unset (no limit).
+
+#. **{ENVPREFIX}_MEMORY_RESERVATION**: Specify a memory soft limit in
+   bytes for the container. Default is unset (no limit).
+
+#. **{ENVPREFIX}_MEMORY_SWAP**: Specify a limit for memory + swap usage by the
+   container. Default is unset. Effect depends on **{ENVPREFIX}_MEMORY**.
+
 #. **{ENVPREFIX}_MOUNT**: To specify host to container mounts, using the
    syntax understood by the ``--mount`` flag. Multiple mounts should be
    separated by newline characters.
@@ -212,6 +244,10 @@ below with their respective functionality.
    HTTPS for communicating with the local docker registry. Default is
    set to false.
 
+#. **{ENVPREFIX}_NO_EVAL**: Set to true in order to prevent {Project}
+   performing shell evaluation on environment variables / runscript
+   arguments at startup.
+
 #. **{ENVPREFIX}_NO_HOME**: Considers not mounting users home directory
    if home is not the current working directory. Default is set to
    false.
@@ -219,11 +255,18 @@ below with their respective functionality.
 #. **{ENVPREFIX}_NO_INIT** and **{ENVPREFIX}_NOSHIMINIT**: Considers not
    starting the ``shim`` process with ``--pid``.
 
+#. **{ENVPREFIX}_NO_MOUNT**: Disable an automatic mount that has been set in
+   ``{command}.conf``. Accepts ``proc / sys / dev / devpts / home / tmp /
+   hostfs / cwd``, or the source path for a system specific bind.
+
 #. **{ENVPREFIX}_NO_NV**: Flag to disable Nvidia support. Opposite of
    ``{ENVPREFIX}_NV``.
 
 #. **{ENVPREFIX}_NO_PRIVS**: To drop all the privileges from root user
    in the container. Default is set to false.
+
+#. **{ENVPREFIX}_NO_UMASK**: Set to true to prevent host umask propagating
+   to container, and use a default 0022 umask instead. Default is false.
 
 #. **{ENVPREFIX}_NV**: To enable Nvidia GPU support. Default is
    set to false.
@@ -234,12 +277,18 @@ below with their respective functionality.
 ``O``
 =====
 
+#. **{ENVPREFIX}_OOM_KILL_DISABLE**: Set to true to disable OOM killer for
+   container processes, if possible. Default is false.
+
 #. **{ENVPREFIX}_OVERLAY** and **{ENVPREFIX}_OVERLAYIMAGE**: To indicate
    the use of an overlay file system image for persistent data storage
    or as read-only layer of container.
 
 ``P``
 =====
+
+#. **{ENVPREFIX}_PIDS_LIMIT**: Specify maximum number of processes that
+   the container may spawn. Default is 0 (no limit).
 
 #. **{ENVPREFIX}_PWD** and **{ENVPREFIX}_TARGET_PWD**: The initial
    working directory for payload process inside the container.
