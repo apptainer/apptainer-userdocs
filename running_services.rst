@@ -51,16 +51,13 @@ properly.
 **************************************
 
 For demonstration, let's use an easy (though somewhat useless) example
-of `alpine_latest.sif
-<https://cloud.sylabs.io/library/_container/5baba5e594feb900016ea41c>`_
-image from the `container library <https://cloud.sylabs.io/library/>`_:
+of ``alpine_latest.sif`` from {Project}'s github container registry:
 
 .. code::
 
-   $ {command} pull library://alpine
+   $ {command} pull oras://ghcr.io/apptainer/alpine:latest
 
-The above command will save the alpine image from the Container Library
-as ``alpine_latest.sif``.
+The above command will save the alpine image as ``alpine_latest.sif``.
 
 To start an instance, you should follow this procedure :
 
@@ -89,7 +86,7 @@ is running by using the ``instance list`` command like so:
    ``list`` it with sudo as well, or you will not be able to locate the
    instance.
 
-If you want to run multiple instances from the same image, it’s as
+If you want to run multiple instances from the same image, it's as
 simple as running the command multiple times with different instance
 names. The instance name uniquely identify instances, so they cannot be
 repeated.
@@ -118,7 +115,7 @@ You can also filter the instance list by supplying a pattern:
    $ {command} instance list '*2'
 
    INSTANCE NAME    PID      IP              IMAGE
-   instance2        22443                    /home/dave/instances/alpine_latest.s
+   instance2        22443                    /home/dave/instances/alpine_latest.sif
 
 You can use the ``{command} run/exec`` commands on instances:
 
@@ -166,7 +163,7 @@ commands are all identical.
    ``\*`` to pass it properly.
 
 **************************************
- Nginx “Hello-world” in {Project}
+ Nginx "Hello-world" in {Project}
 **************************************
 
 The above example, although not very useful, should serve as a fair
@@ -187,7 +184,7 @@ call it nginx.def):
 
 This downloads the official NGINX Docker container, converts it to a
 {Project} image, and tells it to run NGINX when you start the
-instance. Since we’re running a web server, we’re going to run the
+instance. Since we're running a web server, we're going to run the
 following commands as root.
 
 .. code::
@@ -203,8 +200,8 @@ following commands as root.
    execution, you should use ``--writable-tmpfs`` while starting the
    instance.
 
-Just like that we’ve downloaded, built, and run an NGINX {Project}
-image. And to confirm that it’s correctly running:
+Just like that we've downloaded, built, and run an NGINX {Project}
+image. And to confirm that it's correctly running:
 
 .. code::
 
@@ -247,11 +244,11 @@ into a container and running it. The service we will be packaging is an
 API server that converts a web page into a PDF, and can be found `here
 <https://github.com/alvarcarto/url-to-pdf-api>`__. You can build the
 image by following the steps described below or you can just download
-the final image directly from Container Library, simply run:
+the final image directly from the container registry, simply run:
 
 .. code::
 
-   $ {command} pull url-to-pdf.sif library://sylabs/doc-examples/url-to-pdf:latest
+   $ {command} pull url-to-pdf.sif oras://ghcr.io/apptainer/doc-examples/url-to-pdf:latest
 
 Building the image
 ==================
@@ -260,7 +257,7 @@ This section will describe the requirements for creating the definition
 file (url-to-pdf.def) that will be used to build the container image.
 ``url-to-pdf-api`` is based on a Node 8 server that uses a headless
 version of Chromium called `Puppeteer
-<https://github.com/GoogleChrome/puppeteer>`_. Let’s first choose a base
+<https://github.com/GoogleChrome/puppeteer>`_. Let's first choose a base
 from which to build our container, in this case the docker image
 ``node:8`` which comes pre-installed with Node 8 has been used:
 
@@ -291,6 +288,7 @@ well as the installation script for the ``url-to-pdf``:
        cd pdf_server
        npm install
        chmod -R 0755 .
+       cp .env.sample .env
 
 And now we need to define what happens when we start an instance of the
 container. In this situation, we want to run the commands that starts up
@@ -338,6 +336,7 @@ The complete definition file will look like this:
        cd pdf_server
        npm install
        chmod -R 0755 .
+       cp .env.sample .env
 
    %startscript
        cd /pdf_server
@@ -364,26 +363,27 @@ We can now start an instance and run the service:
 
 .. code::
 
-   $ sudo {command} instance start url-to-pdf.sif pdf
+   $ {command} instance start url-to-pdf.sif pdf
 
 .. note::
 
    If there occurs an error related to port connection being refused
    while starting the instance or while using it later, you can try
    specifying different port numbers in the ``%environment`` section of
-   the definition file above.
+   the definition file above.  Also, the starting directory has to
+   be bound in to the container and writable, so something under your
+   home directory is easiest.
 
-We can confirm it’s working by sending the server an http request using
+We can confirm it's working by sending the server an http request using
 curl:
 
 .. code::
 
    $ curl -o apptainer.pdf localhost:9000/api/render?url=http://apptainer.org/docs
+     % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                    Dload  Upload   Total   Spent    Left  Speed
+   100 64753  100 64753    0     0  19663      0  0:00:03  0:00:03 --:--:-- 19669
 
-   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                            Dload  Upload   Total   Spent    Left  Speed
-
-   100 73750  100 73750    0     0  14583      0  0:00:05  0:00:05 --:--:-- 19130
 
 You should see a PDF file being generated like the one shown below:
 
@@ -394,27 +394,32 @@ If you shell into the instance, you can see the running processes:
 
 .. code::
 
-   $ sudo {command} shell instance://pdf
-   {Project}: Invoking an interactive shell within container...
+   $ {command} shell instance://pdf
+   {Project}> ps -wef
+   UID        PID  PPID  C STIME TTY          TIME CMD
+   user         1     0  0 14:13 ?        00:00:00 sinit
+   user        13     1  0 14:13 ?        00:00:00 npm
+   user        23    13  0 14:13 ?        00:00:00 sh -c env-cmd nodemon --watch ./src -e js src/index.js
+   user        24    23  0 14:13 ?        00:00:00 node /pdf_server/node_modules/.bin/env-cmd nodemon --watch ./src -e js src/index.js
+   user        30    24  0 14:13 ?        00:00:00 node /pdf_server/node_modules/.bin/nodemon --watch ./src -e js src/index.js
+   user        42    30  0 14:13 ?        00:00:00 /usr/local/bin/node src/index.js
+   user       155     0  0 14:23 pts/1    00:00:00 /bin/bash --norc
+   user       161   155  0 14:23 pts/1    00:00:00 ps -wef
 
-   {Project} final.sif:/home/ysub> ps auxf
-   USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
-   root       461  0.0  0.0  18204  3188 pts/1    S    17:58   0:00 /bin/bash --norc
-   root       468  0.0  0.0  36640  2880 pts/1    R+   17:59   0:00  \_ ps auxf
-   root         1  0.0  0.1 565392 12144 ?        Sl   15:10   0:00 sinit
-   root        16  0.0  0.4 1113904 39492 ?       Sl   15:10   0:00 npm
-   root        26  0.0  0.0   4296   752 ?        S    15:10   0:00  \_ sh -c nodemon --watch ./src -e js src/index.js
-   root        27  0.0  0.5 1179476 40312 ?       Sl   15:10   0:00      \_ node /pdf_server/node_modules/.bin/nodemon --watch ./src -e js src/index.js
-   root        39  0.0  0.7 936444 61220 ?        Sl   15:10   0:02          \_ /usr/local/bin/node src/index.js
+When you are finished, use the instance stop command to stop the
+running instance.
 
-   {Project} final.sif:/home/ysub> exit
+.. code::
+
+   $ {command} instance stop pdf
+
 
 Making it Fancy
 ===============
 
-Now that we have confirmation that the server is working, let’s make it
-a little cleaner. It’s difficult to remember the exact ``curl`` command
-and URL syntax each time you want to request a PDF, so let’s automate
+Now that we have confirmation that the server is working, let's make it
+a little cleaner. It's difficult to remember the exact ``curl`` command
+and URL syntax each time you want to request a PDF, so let's automate
 it. Instead of creating completely separate containers for the server
 and our streamlined client, it'd be nice to have them both available in
 the same SIF file. To do that, we can use Scientific Filesystem (SCIF)
@@ -434,7 +439,7 @@ apps.
    SCIF is not specific to {Project}. You can learn more about it at
    the project site: <https://sci-f.github.io/>`_.
 
-First off, we’re going to move the installation of the url-to-pdf into
+First off, we're going to move the installation of the url-to-pdf into
 an app, so that there is a designated spot to place output files. To do
 that, we want to add a section to our definition file to build the
 server:
@@ -446,13 +451,14 @@ server:
        cd pdf_server
        npm install
        chmod -R 0755 .
+       cp .env.sample .env
 
 And update our ``startscript`` to point to the app location:
 
 .. code:: {command}
 
    %startscript
-       cd /scif/apps/pdf_server/scif/pdf_server
+       cd /scif/apps/pdf_server/pdf_server
        # Use nohup and /dev/null to completely detach server process from terminal
        nohup npm start > /dev/null 2>&1 < /dev/null &
 
@@ -496,9 +502,10 @@ The full def file will look like this:
        cd pdf_server
        npm install
        chmod -R 0755 .
+       cp .env.sample .env
 
    %startscript
-       cd /scif/apps/pdf_server/scif/pdf_server
+       cd /scif/apps/pdf_server/pdf_server
        # Use nohup and /dev/null to completely detach server process from terminal
        nohup npm start > /dev/null 2>&1 < /dev/null &
 
@@ -516,15 +523,12 @@ The full def file will look like this:
        fi
        curl -o "${{ENVPREFIX}_APPDATA}/output/${2:-output.pdf}" "${URL}:${PORT}/api/render?url=${1}"
 
-Create the container as before. The ``--force`` option will overwrite
-the old container:
-
 .. code::
 
-   $ sudo {command} build --force url-to-pdf.sif url-to-pdf.def
+   $ sudo {command} build url-to-pdf-app.sif url-to-pdf-app.def
 
 Now that we have an output directory in the container, we need to expose
-it to the host using a bind mount. Once we’ve rebuilt the container,
+it to the host using a bind mount. Once we've rebuilt the container,
 make a new directory called ``/tmp/out`` for the generated PDFs to go.
 
 .. code::
@@ -536,27 +540,27 @@ the instance:
 
 .. code::
 
-   $ {command} instance start --bind /tmp/out/:/output url-to-pdf.sif pdf
+   $ {command} instance start --bind /tmp/out/:/output url-to-pdf-app.sif pdf
 
 To request a pdf simply do:
 
 .. code::
 
-   $ {command} run --app pdf_client instance://pdf http://sylabs.io/docs sylabs.pdf
+   $ {command} run --app pdf_client instance://pdf http://apptainer.org/docs apptainer.pdf
 
 To confirm that it worked:
 
 .. code::
 
    $ ls /tmp/out/
-   sylabs.pdf
+   apptainer.pdf
 
-When you are finished, use the instance stop command to close all
-running instances.
+When you are finished, use the instance stop command to stop the
+running instance.
 
 .. code::
 
-   $ {command} instance stop --all
+   $ {command} instance stop pdf
 
 .. note::
 

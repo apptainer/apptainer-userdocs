@@ -427,8 +427,7 @@ example). ``tag`` is also optional and will default to ``latest``.
 
    Library: http://custom/library
 
-The Library keyword is optional. It will default to
-``https://library.sylabs.io``.
+The Library keyword is mandatory. It is the URL for the library server.
 
 .. code:: {command}
 
