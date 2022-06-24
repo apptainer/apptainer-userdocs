@@ -25,10 +25,9 @@ intended it.
 *********************************************
 
 The ``verify`` command will allow you to verify that a container has
-been signed using a PGP key. To use this feature with SIF images that you
-pull from container libraries or OCI registries via `oras://`. This ensures
-that the container image you pulled is a bit-for-bit resproduction of the
-original image.
+been signed using a PGP key. This ensures that the container image on your disk
+is a bit-for-bit reproduction of the original image.
+
 
 .. code::
 
@@ -47,6 +46,9 @@ original image.
 
 In this example you can see that **Ian Kaneshiro** has signed the
 container.
+
+This feature is available with SIF images like those you can pull from container 
+libraries or OCI registries via `oras://`.
 
 .. _sign_your_own_containers:
 
