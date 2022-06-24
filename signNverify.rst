@@ -26,7 +26,7 @@ intended it.
 
 The ``verify`` command will allow you to verify that a container has
 been signed using a PGP key. This ensures that the container image on your disk
-is a bit-for-bit resproduction of the original image.
+is a bit-for-bit reproduction of the original image.
 
 
 .. code::
