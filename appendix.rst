@@ -80,7 +80,7 @@ below with their respective functionality.
    available to the container. Default is -1 (disabled).
 
 #. **{ENVPREFIX}_CPUS**: Specify a fractional number of CPUs available
-   to the container. Default is unset. 
+   to the container. Default is unset.
 
 #. **{ENVPREFIX}_CPUSET_CPUS**: Specify a list or range of CPU cores
    available to the container. Default is unset.
@@ -90,6 +90,9 @@ below with their respective functionality.
 
 ``D``
 =====
+
+#. **{ENVPREFIX}_DEBUG**: Enable debug output when set. Equivalent to ``-d /
+   --debug``.
 
 #. **{ENVPREFIX}_DEFFILE**: Shows the {Project} recipe that was used
    to generate the image.
