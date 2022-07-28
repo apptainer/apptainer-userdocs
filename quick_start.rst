@@ -430,6 +430,18 @@ command and disappears.
                    ||----w |
                    ||     ||
 
+.. warning:: 
+   Using shell operators such as ``&&`` in the command supplied to {command} exec 
+   will run subsequent commands in the current shell, not within the {command} container!
+
+   For example:
+   
+   .. code::
+
+      $ {command} exec docker://sylabsio/lolcow echo "Hello" && cowsay "Fresh from the internet!"
+      Hello
+      Command 'cowsay' not found.
+
 .. _runcontainer:
 
 Running a container
