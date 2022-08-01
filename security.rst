@@ -51,7 +51,7 @@ and processes apply.
 **************************
 
 Using a setuid binary to run container setup operations used to be
-essential to support containers on older Linux distributions, that were
+essential to support containers on the older Linux distributions that were
 previously common in HPC and enterprise.
 
 Most distributions now have
@@ -103,11 +103,11 @@ However, there are also some disadvantages of the non-suid mode:
    container, which is a big advantage over having many files directly
    on networked filesystems.
 
--  Encryption is not yet supported. {Project} leverages kernel LUKS2
+-  Encryption is not yet supported. In suid mode, {Project} uses kernel LUKS2
    mounts to run encrypted containers without decrypting their content
    to disk.
-   A FUSE filesystem will hopefully be able to perform this operation
-   in a future release.
+   An unprivileged FUSE filesystem will hopefully be able to perform this
+   operation in a future release.
 
 -  {Project} configuration options that restrict the use of containers
    are not enforceable, because if unprivileged user namespaces are
@@ -117,67 +117,11 @@ However, there are also some disadvantages of the non-suid mode:
 -  Some sites hold the opinion that vulnerabilities in kernel user
    namespace code could have greater impact than vulnerabilities
    confined to a single piece of setuid software. Therefore they are
-   reluctant to enable unprivileged user namespace creation.
-   See the next section for details about mitigating the impact
+   reluctant to enable unprivileged user namespaces.
+   See the `User Namespaces section
+   <{admindocs}/user_namespaces.html#disabling-network-namespaces>`_
+   of the admin guide for details about mitigating the impact
    of those vulnerabilities through disabling network namespaces.
-
-******************************
- Disabling network namespaces
-******************************
-
-There have been many Linux kernel exploits that have made use of
-unprivileged user namespaces as a point of entry, but almost all of them
-in the last few years have been in combination with network namespaces.
-Therefore even though the {Project} project recommends enabling
-unprivileged user namespaces, it recommends disabling network namespaces
-when possible in order to substantially reduce the risk profile
-and need for urgent updates when vulnerabilities are announced.
-
-Network namespaces can be disabled on most Linux-based systems
-like this:
-
-.. code::
-
-   # echo "user.max_net_namespaces = 0" \
-        >/etc/sysctl.d/90-max_net_namespaces.conf
-   # sysctl -p /etc/sysctl.d/90-max_net_namespaces.conf 
-
-{Project} does not by default make use of network namespaces, but it
-does have some little-used privileged options beginning with ``--net``
-that do.
-Those options will not work when network namespaces are disabled.
-Unfortunately it is not possible to disable only unprivileged
-network namespaces, so this will affect programs that use them
-even if run as root.
-
-Some other container runtimes such as Docker and Podman do make use
-of network namespaces by default.
-Those two runtimes can still work by adding the ``--net=host`` option.
-
-Disabling network namespaces also blocks the systemd PrivateNetwork
-feature.
-To find services that use it, look for ``PrivateNetwork=true``
-or ``PrivateNetwork=yes`` in ``/lib/systemd/system/*.service``.
-This can be turned off for each service through a
-``/etc/systemd/system/<service>.d/*.conf`` file, for example for
-``systemd-hostnamed``:
-
-.. code::
-
-   # cd /etc/systemd/system
-   # mkdir -p systemd-hostnamed.service.d
-   # (echo "[Service]"; echo "PrivateNetwork=no") \
-        >systemd-hostnamed.service.d/no-private-network.conf
-
-If the service is enabled (that is, actively used) then restart it
-and check its status:
-
-.. code::
-
-   # systemctl status systemd-hostnamed
-   # systemctl daemon-reload
-   # systemctl restart systemd-hostnamed
-   # systemctl status systemd-hostnamed
 
 ********************************
  Runtime & User Privilege Model
@@ -219,7 +163,7 @@ additional namespaces and functionality such as seccomp and cgroups.
 {Project} uses SIF as its default container format. A SIF container
 is a single file, which makes it easy to manage and distribute. Inside
 the SIF file, the container filesystem is held in a SquashFS object. When
-in suid mount, we mount the container filesystem directly using SquashFS,
+in suid mode, we mount the container filesystem directly using SquashFS,
 otherwise we mount it with squashfuse. In either case, on a
 network filesystem this means that reads from the container are
 data-only. Metadata operations happen locally, speeding up workloads
@@ -265,17 +209,5 @@ System administrators who manage {Project} can use configuration
 files to set security restrictions, grant or revoke a user's
 capabilities, manage resources and authorize containers etc.
 
-For example, the `ecl.toml
-<{admindocs}/configfiles.html#ecl-toml>`_
-file allows blacklisting and whitelisting of containers.
-Configuration files and their parameters are documented for
-administrators `here
-<{admindocs}/configfiles.html>`__.
-
-These configuration options are only enforcable with suid installations,
-because if unprivileged user namespaces are available then users can always
-install their own copy of {Package} from source in their home directories.
-
-When running a container as root, {Project} can apply hardening rules
-using cgroups, seccomp, apparmor. See :ref:`details of these options
-here <security-options>`.
+For details see the `Security section <{admindocs}/security.html>`_
+of the admin guide.

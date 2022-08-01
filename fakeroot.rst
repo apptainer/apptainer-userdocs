@@ -8,25 +8,55 @@
  Overview
 **********
 
-The fakeroot feature (commonly referred as rootless mode) allows an
-unprivileged user to run a container as a **"fake root"** user by
-leveraging `user namespace UID/GID mapping
-<http://man7.org/linux/man-pages/man7/user_namespaces.7.html>`_.
+The fakeroot feature allows an unprivileged user to run a container with
+the appearance of running as root.
+{Project} does this in different ways, depending on what is available on
+the host:
 
-.. note::
+#. If the host is set up to map the current user via ``/etc/subuid`` and
+   ``/etc/subgid`` mapping files, {Project} will use that method first.
+   This is also commonly referred to as "rootless mode" and is the
+   method used for example by Podman.
+   It is the most complete emulation but it requires administrator setup
+   as described in the `admin guide
+   <{admindocs}/user_namespaces.html#rootless-fakeroot-feature>`__.
+   It also requires some setuid-root assistance on the host as described
+   there, which means that it will not be able to run nested inside another
+   container that disallows setuid-root, as {Project} does.
+#. Otherwise if user namespaces are available, {Project} will map only
+   the root user id to the original unprivileged user.
+   This method is sometimes called a "root-mapped user namespace".
+   Since this method is not as complete an emulation as rootless mode,
+   an INFO messaging showing it is happening will be displayed.
+#. If the "fakeroot" command is available on the host, {Project} will
+   use it in addition to a root-mapped user namespace.
+   This command fakes root privileges on file manipulation, telling
+   programs that operations that would succeed as root have succeeded
+   even though they really haven't.
+   This is useful for avoiding errors when building containers or when
+   adding packages to a writable container, because many package
+   installations attempt to do additional setup that only works as root.
+   When the fakeroot command is used, an INFO message will be displayed.
+#. If user namespaces are not available but {Project} has been installed
+   with setuid-root and also the "fakeroot" command is available, then
+   the fakeroot command will be run by itself.
+   This allows some package installations to succeed but others will
+   still fail; it is not as complete an emulation because the
+   root-mapped user namespace causes the kernel to allow bypassing
+   restrictions on files that are actually owned by the original user
+   on the host, things that the fakeroot command cannot do by itself.
 
-   This feature requires a Linux kernel >= 3.8, but the recommended
-   version is >= 3.18
-
-A **"fake root"** user has almost the same administrative rights as root
+As mentioned above, the "rootless" fakeroot mode is the most complete
+emulation.  That mode has almost the same administrative rights as root
 but only **inside the container** and the **requested namespaces**,
 which means that this user:
 
    -  can set different user/group ownership for files or directories
       they own
-   -  can change user/group identity with su/sudo commands
-   -  has full privileges inside the requested namespaces (network, ipc,
-      uts)
+   -  can change user/group identity with su/sudo commands when starting
+      as the fake root user
+   -  may have full privileges inside the requested network namespace
+      (see below)
 
 ***********************
  Restrictions/security
@@ -35,15 +65,17 @@ which means that this user:
 Filesystem
 ==========
 
-A **"fake root"** user can't access or modify files and directories for
+A "fake root" user can never access or modify files and directories for
 which they don't already have access or rights on the host filesystem,
-so a **"fake root"** user won't be able to access root-only host files
-like ``/etc/shadow`` or the host ``/root`` directory.
+so a "fake root" user won't be able to access root-only host files
+such as ``/etc/shadow`` or the host ``/root`` directory.
 
-Additionally, all files or directories created by the **"fake root"**
-user are owned by ``root:root`` inside container but as ``user:group``
-outside of the container. Let's consider the following example, in this
-case "user" is authorized to use the fakeroot feature and can use 65536
+Additionally, all files or directories created by the "fake root"
+user are owned by ``root:root`` inside the container but as ``user:group``
+outside of the container. 
+
+Let's consider the following example.  In this case "user" is authorized
+to use the rootless mode fakeroot feature and can use 65536
 UIDs starting at 131072 (same thing for GIDs).
 
 +----------------------+-----------------------+
@@ -60,58 +92,45 @@ UIDs starting at 131072 (same thing for GIDs).
 | 65536                | 196607                |
 +----------------------+-----------------------+
 
-Which means if the **"fake root"** user creates a file under a ``bin``
+This means that if the "fake root" user creates a file under a ``bin``
 user in the container, this file will be owned by ``131073:131073``
-outside of container. The responsibility relies on the administrator to
-ensure that there is no overlap with the current user's UID/GID on the
+outside of the container. The responsibility relies on the administrator to
+ensure that there is no overlap with any user's UID/GID on the
 system.
 
 Network
 =======
 
-Restrictions are also applied to networking, if ``{command}`` is
-executed without the ``--net`` flag, the **"fake root"** user won't be
-able to use ``ping`` or bind a container service to a port below 1024.
+Normally the kernel prevents unprivileged users from connecting to 
+ports below 1024, and the ``ping`` command requires a setcap capability in
+order to work on the network. 
+{Project} allows overriding these restrictions when all of the following
+conditions are true:
 
-With ``--net`` the **"fake root"** user has full privileges in a
+#. {Project} is installed with suid mode enabled
+#. Network namespaces are enabled
+#. The ``-net`` option is used
+#. The user is listed in ``/etc/subuid`` and so can use rootless mode
+#. The ``--fakeroot`` option is used
+
+If those conditions are true, the user has full network privileges in a
 dedicated container network. Inside the container network they can bind
 on privileged ports below 1024, use ping, manage firewall rules, listen
 to traffic, etc. Anything done in this dedicated network won't affect
 the host network.
+The ports inside the dedicated network can be mapped to other ports
+on the host with the ``--network-args="portmap"`` option.
 
 .. note::
 
-   Of course an unprivileged user could not map host ports below than
-   1024 by using: ``--network-args="portmap=80:80/tcp"``
-
-.. warning::
-
-   For unprivileged installation of {Project} or if ``allow setuid =
-   no`` is set in ``{command}.conf`` users won't be able to use a
-   ``fakeroot`` network.
-
-******************************
- Requirements / Configuration
-******************************
-
-Fakeroot depends on user mappings set in ``/etc/subuid`` and group
-mappings in ``/etc/subgid``, so your username needs to be listed in
-those files with a valid mapping (see the admin-guide for details), if
-you can't edit the files ask an administrator.
-
-{Project} provides a ``{command} config fakeroot`` command 
-to allow configuration of the ``/etc/subuid`` and
-``/etc/subgid`` mappings from the {Project} command line. You must
-be a root user or run with ``sudo`` to use ``config fakeroot``, as the
-mapping files are security sensitive. See the admin-guide for more
-details.
+   Of course an unprivileged user can not map host ports below 
+   1024 by using for example: ``--network-args="portmap=80:80/tcp"``
 
 *******
  Usage
 *******
 
-If your user account is configured with valid ``subuid`` and ``subgid``
-mappings you work as a fake root user inside a container by using the
+You can work as a fake root user inside a container by using the
 ``--fakeroot`` or ``-f`` option.
 
 The ``--fakeroot`` option is available with the following {command}
@@ -123,16 +142,31 @@ commands:
    -  ``instance start``
    -  ``build``
 
+The option is automatically implied when doing a build as an
+unprivileged user.
+
 Build
 =====
 
-With fakeroot an unprivileged user can now build an image from a
-definition file with few restrictions. Some bootstrap methods that
-require creation of block devices (like ``/dev/null``) may not always
-work correctly with **"fake root"**, {Project} uses seccomp filters
-to give programs the illusion that block device creation succeeded. This
-appears to work with ``yum`` bootstraps and *may* work with other
+Depending on the method of "fake root" used, an unprivileged user can build
+an image from a definition file with few restrictions.
+Some bootstrap methods that require creation of block devices (like
+``/dev/null``) may not always work correctly with "fake root".
+With the rootles mode "fake root", {Project} uses seccomp filters
+to give programs the illusion that block device creation succeeded.
+This appears to work with ``yum`` bootstraps and *may* work with other
 bootstrap methods, although ``debootstrap`` is known to not work.
+
+The combination of root-mapped user namespace with the fakeroot command
+allows most package installations to work, but the fakeroot command is
+bound in from the host so if the base host libraries are of very
+different vintage than the corresponding container libraries the
+fakeroot command can fail.
+If that situation happens it can be worth trying to run {command}
+under the ``unshare -r`` command which is essentially the same thing
+as running in a root-mapped user namespace; in that case {Project}
+will not try to run the fakeroot command even if it is in the user's
+PATH.
 
 Examples
 ========
@@ -140,12 +174,24 @@ Examples
 Build from a definition file:
 -----------------------------
 
+(fakeroot is implied)
+
 .. code::
 
-   {command} build --fakeroot /tmp/test.sif /tmp/test.def
+   {command} build /tmp/test.sif /tmp/test.def
+
+Add package to a writable overlay
+---------------------------------
+
+.. code::
+
+   mkdir /tmp/test.overlay
+   {command} exec --fakeroot --overlay /tmp/test.overlay /tmp/test.sif yum -y install openssh
 
 Ping from container:
 --------------------
+
+(when the Network conditions above are met)
 
 .. code::
 
@@ -153,6 +199,8 @@ Ping from container:
 
 HTTP server:
 ------------
+
+(when the Network conditions above are met)
 
 .. code::
 
