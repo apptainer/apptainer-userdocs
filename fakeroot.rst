@@ -20,9 +20,12 @@ the host:
    It is the most complete emulation but it requires administrator setup
    as described in the `admin guide
    <{admindocs}/user_namespaces.html#rootless-fakeroot-feature>`__.
-   It also requires some setuid-root assistance on the host as described
+   It also requires some elevated privilege assistance on the host as described
    there, which means that it will not be able to run nested inside another
-   container that disallows setuid-root, as {Project} does.
+   container that disallows elevating privileges, as {Project} does.
+   Those elevated privileges on the host come from either a setuid-root
+   install of {Project} or via the host ``newuidmap`` and ``newgidmap``
+   commands.
 #. Otherwise if user namespaces are available, {Project} will map only
    the root user id to the original unprivileged user.
    This method is sometimes called a "root-mapped user namespace".
@@ -37,6 +40,16 @@ the host:
    adding packages to a writable container, because many package
    installations attempt to do additional setup that only works as root.
    When the fakeroot command is used, an INFO message will be displayed.
+   The combination of a root-mapped user namespace with the fakeroot command
+   allows most package installations to work, but the fakeroot command is
+   bound in from the host so if the host libc library is of a very
+   different vintage than the corresponding container library the
+   fakeroot command can fail.
+   If that situation happens it can be worth trying to run {command}
+   under the ``unshare -r`` command which is essentially the same thing
+   as running in a root-mapped user namespace; in that case {Project}
+   will not try to run the fakeroot command even if it is in the user's
+   PATH.
 #. If user namespaces are not available but {Project} has been installed
    with setuid-root and also the "fakeroot" command is available, then
    the fakeroot command will be run by itself.
@@ -45,6 +58,8 @@ the host:
    root-mapped user namespace causes the kernel to allow bypassing
    restrictions on files that are actually owned by the original user
    on the host, things that the fakeroot command cannot do by itself.
+   When used in combination with ``--overlay`` or ``--writable-tmpfs``
+   then this mode requires the container image to be a sandbox.
 
 As mentioned above, the "rootless" fakeroot mode is the most complete
 emulation.  That mode has almost the same administrative rights as root
@@ -55,8 +70,9 @@ which means that this user:
       they own
    -  can change user/group identity with su/sudo commands when starting
       as the fake root user
-   -  may have full privileges inside the requested network namespace
-      (see below)
+
+In addition, the first three modes above may have full privileges inside
+the requested network namespace (see below).
 
 ***********************
  Restrictions/security
@@ -157,16 +173,10 @@ to give programs the illusion that block device creation succeeded.
 This appears to work with ``yum`` bootstraps and *may* work with other
 bootstrap methods, although ``debootstrap`` is known to not work.
 
-The combination of root-mapped user namespace with the fakeroot command
-allows most package installations to work, but the fakeroot command is
-bound in from the host so if the base host libraries are of very
-different vintage than the corresponding container libraries the
-fakeroot command can fail.
-If that situation happens it can be worth trying to run {command}
-under the ``unshare -r`` command which is essentially the same thing
-as running in a root-mapped user namespace; in that case {Project}
-will not try to run the fakeroot command even if it is in the user's
-PATH.
+If only the fakeroot command is used for "fake root" mode (because no
+user namespaces are available, in suid mode), then building a container
+also implies the ``--fix-perms`` option, because otherwise directories
+created may not be writable by the creating user.
 
 Examples
 ========

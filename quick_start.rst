@@ -8,8 +8,10 @@
 
 This guide is intended for running {Project} on a computer where you
 have root (administrative) privileges, and will install {Project}
-from source code. Other installation options, including building an RPM
-package and installing {Project} without root privileges are
+from source code. Other installation options,
+including installing from a pre-built RPM,
+building an RPM package,
+and installing {Project} without root privileges are
 discussed in the `installation section of the admin guide
 <{admindocs}/installation.html>`__.
 
@@ -22,9 +24,9 @@ https://apptainer.org/help
 
 .. _quick-installation:
 
-**************************
- Quick Installation Steps
-**************************
+********************
+ Quick Installation
+********************
 
 You will need a Linux system to run {Project} natively. Options for
 using {Project} on Mac and Windows machines, along with alternate
@@ -32,140 +34,15 @@ Linux installation options are discussed in the `installation section of
 the admin guide
 <{admindocs}/installation.html>`__.
 
-Install system dependencies
-===========================
-
-You must first install development tools and libraries to your host.
-
-On Debian-based systems, including Ubuntu:
-
-.. code::
-
-   # Ensure repositories are up-to-date
-   sudo apt-get update
-   # Install debian packages for dependencies
-   sudo apt-get install -y \
-      build-essential \
-      libseccomp-dev \
-      pkg-config \
-      squashfs-tools \
-      cryptsetup \
-      curl wget git
-
-On CentOS/RHEL:
-
-.. code::
-
-   # Install basic tools for compiling
-   sudo yum groupinstall -y 'Development Tools'
-   # Ensure EPEL repository is available
-   sudo yum install -y epel-release
-   # Install RPM packages for dependencies
-   sudo yum install -y \
-      libseccomp-devel \
-      squashfs-tools \
-      cryptsetup \
-      wget git
-
-There are 3 broad steps to installing {Project}:
-
-#. :ref:`Installing Go <install>`
-#. :ref:`Downloading {Project} <download>`
-#. :ref:`Compiling {Project} Source Code <compile>`
-
-.. _install:
-
-Install Go
-==========
-
-{Project} is written in Go, and may require a newer version of Go than is
-available in the repositories of your distribution. We recommend installing the
-latest version of Go from the `official binaries <https://golang.org/dl/>`_.
-
-{Project} aims to maintain support for the two most recent stable versions
-of Go. This corresponds to the Go Release Maintenance Policy and Security
-Policy, ensuring critical bug fixes and security patches are available for all
-supported language versions.
-
-If you are building rpm or debian packages using the packaging supplied
-in the ``dist`` directory, and the operating system distribution of Go
-is below the minimum required by {Project}, the packages can make
-use of the native Go to compile a newer version of Go whose source
-tarball is included with the package source.  That capability is
-supplied so packages can be built on systems with no access to the
-internet.  If you are not building a package or don't want to incur the
-overhead of compiling the Go toolchain from source, install a local
-binary copy of Go as follows.
-
-.. note::
-
-   If you have previously installed Go from a download, rather than an
-   operating system package, you should remove your ``go`` directory,
-   e.g. ``rm -r /usr/local/go`` before installing a newer version.
-   Extracting a new version of Go over an existing installation can lead
-   to errors when building Go programs, as it may leave old files, which
-   have been removed or replaced in newer versions.
-
-Visit the `Go Downloads page <https://golang.org/dl/>`_ and pick a
-package archive suitable to the environment you are in. Once the
-Download is complete, extract the archive to ``/usr/local`` (or use
-other instructions on go installation page). Alternatively, follow the
-commands here:
-
-.. code::
-
-   $ export VERSION=1.17.5 OS=linux ARCH=amd64 && \  # Replace the values as needed
-     wget https://dl.google.com/go/go$VERSION.$OS-$ARCH.tar.gz && \ # Downloads the required Go package
-     sudo tar -C /usr/local -xzvf go$VERSION.$OS-$ARCH.tar.gz && \ # Extracts the archive
-     rm go$VERSION.$OS-$ARCH.tar.gz    # Deletes the ``tar`` file
-
-Set the Environment variable ``PATH`` to point to Go:
-
-.. code::
-
-   $ echo 'export PATH=/usr/local/go/bin:$PATH' >> ~/.bashrc && \
-     source ~/.bashrc
-
-.. _download:
-
-Download {Project} from a release
-=====================================
-
-You can download {Project} from one of the releases. To see a full
-list, visit `the GitHub release page
-<https://github.com/{orgrepo}/releases>`_. After deciding on a
-release to install, you can run the following commands to proceed with
-the installation.
-
-.. code::
-
-   $ export VERSION={InstallationVersion} && # adjust this as necessary \
-       wget https://github.com/{orgrepo}/releases/download/v${VERSION}/{command}-${VERSION}.tar.gz && \
-       tar -xzf {command}-${VERSION}.tar.gz && \
-       cd {command}-${VERSION}
-
-.. _compile:
-
-Compile the {Project} source code
-=====================================
-
-Now you are ready to build {Project}. Dependencies will be
-automatically downloaded. You can build {Project} using the
-following commands:
-
-.. code::
-
-   $ ./mconfig && \
-       make -C builddir && \
-       sudo make -C builddir install
-
-{Project} must be installed as root to function properly.
+To install from source, follow the instructions in the `INSTALL.md
+<https://github.com/{orgrepo}/blob/{repobranch}/INSTALL.md>`_
+on github.
 
 *****************************************
  Overview of the {Project} Interface
 *****************************************
 
-{Project}’s :ref:`command line interface <cli>` allows you to build
+{Project}'s :ref:`command line interface <cli>` allows you to build
 and interact with containers transparently. You can run programs inside
 a container as if they were running on your host system. You can easily
 redirect IO, use pipes, pass arguments, and access files, sockets, and
@@ -332,7 +209,7 @@ your container like so:
 
 Unlike ``pull``, ``build`` will convert your image to the latest
 {Project} image format after downloading it. ``build`` is like a
-“Swiss Army knife” for container creation. In addition to downloading
+"Swiss Army knife" for container creation. In addition to downloading
 images, you can use ``build`` to create images from other images or from
 scratch using a :ref:`definition file <definition-files>`. You can also
 use ``build`` to convert an image between the container formats

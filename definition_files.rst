@@ -34,7 +34,7 @@ files to add from the host system, and container metadata.
    to be executed at runtime can accept options intended for ``/bin/sh``
 
 For more in-depth and practical examples of def files, see the `{Project}
-examples repository <https://github.com/{orgrepo}/tree/main/examples>`_
+examples repository <https://github.com/{orgrepo}/tree/{repobranch}/examples>`_
 
 For a comparison between Dockerfile and {Project} definition file,
 please see: :ref:`this section <sec:deffile-vs-dockerfile>`.
