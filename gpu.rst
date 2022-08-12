@@ -228,13 +228,14 @@ Requirements & Limitations
 
 -  For security reasons, ``--nvccli`` cannot be used with
    privileged mode in a set-uid install of {Project}.
-   Use the traditional binding method with ``--nv`` only or use
-   ``--nvccli`` with the the ``--user`` (or ``-u``) option to run unprivileged.
-   The option also cannot be used with ``--fakeroot``.
-   Since unprivileged mode does not support SIF files, use sandbox mode.
-   ``nvidia-container-cli`` also requires writing to the image, and
-   since without set-uid there is no overlay available, the ``--writable``
-   (or ``-w``) option is also required.
+   ``nvidia-container-cli`` also requires writing to the image, so
+   either the ``--writable`` (``-w``) or ``--writable-tmpfs`` option
+   is also required; if neither is given, ``--writable-tmpfs`` is
+   implied. 
+   That also means that the permissions on system directories such as
+   ``/usr/bin`` have to be writable, so either use a sandbox image that 
+   has that directory writable by the user (for example built with
+   the ``--fix-perms`` option) or use ``--fakeroot``.
 
 -  There are known problems with library discovery for the current
    ``nvidia-container-cli`` in recent Debian distributions. See `this
@@ -259,7 +260,7 @@ Then run the container with ``nvidia-container-cli`` GPU support:
 
 .. code::
 
-   $ {command} run -uw --nv --nvccli tensorflow_latest-gpu
+   $ {command} run --nvccli tensorflow_latest-gpu
 
    ________                               _______________
    ___  __/__________________________________  ____/__  /________      __
@@ -316,7 +317,7 @@ on a system with 4 GPUs, run the following:
 .. code::
 
    $ export NVIDIA_VISIBLE_DEVICES=1,2
-   $ {command} run -uwc --nv --nvccli tensorflow_latest-gpu
+   $ {command} run -uwc --nvccli tensorflow_latest-gpu
 
 Note that:
 
@@ -338,7 +339,7 @@ GPUs will be available in the container, and a warning will be shown:
 
 .. code::
 
-   $ {command} run -uwc --nv --nvccli tensorflow_latest-gpu
+   $ {command} run -uwc --nvccli tensorflow_latest-gpu
    WARNING: When using nvidia-container-cli with --contain NVIDIA_VISIBLE_DEVICES
    must be set or no GPUs will be available in container.
 
