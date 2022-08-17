@@ -222,12 +222,12 @@ operation has a number of advantages, including:
 Requirements & Limitations
 ==========================
 
--  ``nvidia-container-cli`` must be installed on your host. Its path must
-   be set in ``{command}.conf``. This value will be set at build time if
-   ``nvidia-container-cli`` is found on the search ``$PATH``.
+-  ``nvidia-container-cli`` must be installed on your host.
+   It must be able to be found by the ``binary path`` set in
+   ``{command}.conf`` which by default includes the user's PATH.
 
 -  For security reasons, ``--nvccli`` cannot be used with
-   privileged mode in a set-uid install of {Project}.
+   privileged mode in a setuid install of {Project}.
    ``nvidia-container-cli`` also requires writing to the image, so
    either the ``--writable`` (``-w``) or ``--writable-tmpfs`` option
    is also required; if neither is given, ``--writable-tmpfs`` is

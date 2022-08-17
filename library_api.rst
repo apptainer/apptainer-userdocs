@@ -141,7 +141,7 @@ Verify containers that you pull from the library, ensuring they are
 bit-for-bit reproductions of the original image.
 
 Check out :ref:`this page <signNverify>` on how to: :ref:`verify a
-container <verify_container_from_library>`, :ref:`making PGP key, and
+container <verify_container_from_remote_sources>`, :ref:`making PGP key, and
 sign your own containers <sign_your_own_containers>`.
 
 .. _search_the_library:
@@ -260,11 +260,6 @@ Now, to build the container, use the ``--remote`` flag, and without
 .. code::
 
    $ {command} build --remote ubuntu.sif ubuntu.def
-
-.. note::
-
-   Make sure you have a :ref:`access token <creating_a_access_token>`,
-   otherwise the build will fail.
 
 After building, you can test your container like so:
 

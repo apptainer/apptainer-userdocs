@@ -18,7 +18,11 @@ passphrase or asymmetrically via an RSA key pair in Privacy Enhanced
 Mail (PEM/PKCS1) format. The container is encrypted in transit, at rest,
 and even while running. In other words, there is no intermediate,
 decrypted version of the container on disk. Container decryption occurs
-at runtime completely within kernel space.
+at runtime within kernel space.
+
+Unlike other container builds,
+at this time building an encrypted container requires being the root user.
+Also, decryption still requires a setuid installation of {Project}.
 
 .. note::
 
@@ -124,11 +128,9 @@ specific flags like so:
 .. code::
 
    # Generate a key pair
-   $ ssh-keygen -t rsa -b 4096 -m pem
+   $ ssh-keygen -t rsa -b 4096 -m pem -N ''
    Generating public/private rsa key pair.
    Enter file in which to save the key (/home/vagrant/.ssh/id_rsa): rsa
-   Enter passphrase (empty for no passphrase):
-   Enter same passphrase again:
    [snip...]
 
    # Convert the public key to PEM PKCS1 format
@@ -138,7 +140,8 @@ specific flags like so:
    $ mv rsa rsa_pri.pem
 
 You would use the ``rsa_pub.pem`` file to encrypt your container and the
-``rsa_pri.pem`` file to run it.
+``rsa_pri.pem`` file to run it.  Be sure to keep the private key safe
+and private, because it is not encrypted itself.
 
 Encrypting with a command line option
 -------------------------------------

@@ -109,19 +109,28 @@ However, there are also some disadvantages of the non-suid mode:
    An unprivileged FUSE filesystem will hopefully be able to perform this
    operation in a future release.
 
+-  Some little used `security options <security-options>` and
+   `network options <networking>` of {Project} that give users elevated
+   privileges through configuration are only available in suid mode.
+
 -  {Project} configuration options that restrict the use of containers
    are not enforceable, because if unprivileged user namespaces are
    available then people could always compile their own copy from source
    and set their own configuration options.
 
--  Some sites hold the opinion that vulnerabilities in kernel user
-   namespace code could have greater impact than vulnerabilities
-   confined to a single piece of setuid software. Therefore they are
-   reluctant to enable unprivileged user namespaces.
+-  Since the Linux kernel is subject to a much greater amount of
+   scrutiny than the {Project} setuid software, there have been a greater
+   number of announced vulnerabilities that are exploitable through
+   kernel namespace code than have been announced for {Project} and
+   its predecessor. 
+   Security experts generally argue that it is better to have the
+   scrutiny than to have "security by obscurity",
+   but urgently responding to those vulnerabilities causes additional
+   administrator effort and can cause disruption to operations.
    See the `User Namespaces section
    <{admindocs}/user_namespaces.html#disabling-network-namespaces>`_
-   of the admin guide for details about mitigating the impact
-   of those vulnerabilities through disabling network namespaces.
+   of the admin guide for details about mitigating the impact of user
+   namespace vulnerabilities through disabling network namespaces.
 
 ********************************
  Runtime & User Privilege Model
@@ -163,8 +172,8 @@ additional namespaces and functionality such as seccomp and cgroups.
 {Project} uses SIF as its default container format. A SIF container
 is a single file, which makes it easy to manage and distribute. Inside
 the SIF file, the container filesystem is held in a SquashFS object. When
-in suid mode, we mount the container filesystem directly using SquashFS,
-otherwise we mount it with squashfuse. In either case, on a
+in suid mode, {Project} mounts the container filesystem directly using SquashFS,
+otherwise it mounts the filesystem with squashfuse. In either case, on a
 network filesystem this means that reads from the container are
 data-only. Metadata operations happen locally, speeding up workloads
 with many small files.
@@ -174,7 +183,7 @@ features. The container filesystem is immutable, and can be signed. The
 signature travels in the SIF image itself so that it is always possible
 to verify that the image has not been tampered with or corrupted.
 
-We use private PGP keys to create a container signature, and the corresponding
+{Project} uses private PGP keys to create a container signature, and the corresponding
 public key in order to verify the container signature. Verification of signed
 containers can be done at any time by a user and happens automatically in
 ``{command} pull`` commands against Library API registries. The prevalence

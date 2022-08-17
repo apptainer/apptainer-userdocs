@@ -301,7 +301,7 @@ Start your container, applying the toml file, e.g.:
 
 .. code::
 
-   $ {command} run --apply-cgroups path/to/cgroups.toml library://alpine
+   $ {command} run --apply-cgroups path/to/cgroups.toml docker://alpine
 
 After that, you can verify that the container is only using 500MB of
 memory. This example assumes that there is only one running container.

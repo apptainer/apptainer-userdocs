@@ -1,3 +1,5 @@
+.. _endpoints:
+
 ##################
  Remote Endpoints
 ##################
@@ -17,13 +19,12 @@ OCI registries and keyservers.
 
 You are most likely interacting with remote endpoints on a regular basis using
 various {Project} commands:
-
 `pull
 <cli/{command}_pull.html>`_,
 `push
 <cli/{command}_push.html>`_,
-`build --remote
-<cli/{command}_build.html#options>`_,
+`build
+<cli/{command}_build.html>`_,
 `key
 <cli/{command}_key.html>`_,
 `search
@@ -36,8 +37,10 @@ various {Project} commands:
 <cli/{command}_shell.html>`_,
 `run
 <cli/{command}_run.html>`_,
-`instance
-<cli/{command}_instance.html>`_
+or `instance
+<cli/{command}_instance.html>`_.
+
+.. _sec:managing-remote-endpoints:
 
 ***************************
  Managing Remote Endpoints
@@ -452,9 +455,7 @@ for their container images. Some registries require credentials to
 access certain images or the registry itself. Previously, the only
 methods in {Project} to supply credentials to registries were to
 supply credentials for each command or set environment variables for a
-single registry. See :ref:`Authentication via Interactive Login
-<sec:authentication_via_docker_login>` and :ref:`Authentication via
-Environment Variables <sec:authentication_via_environment_variables>`
+single registry.
 
 {Project} supports the ability for users to supply credentials
 on a per registry basis with the ``remote`` command group.
@@ -528,7 +529,6 @@ We can login to multiple OCI registries at the same time:
 {Project} will supply the correct credentials for the registry based
 off of the hostname when using the following commands with a
 ``docker://`` or ``oras://`` URI:
-
 `pull
 <cli/{command}_pull.html>`_,
 `push
@@ -541,9 +541,9 @@ off of the hostname when using the following commands with a
 <cli/{command}_shell.html>`_,
 `run
 <cli/{command}_run.html>`_,
-`instance
-<cli/{command}_instance.html>`_
-1
+or `instance
+<cli/{command}_instance.html>`_.
+
 .. note::
 
    It is important for users to be aware that the login command will

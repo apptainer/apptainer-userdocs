@@ -126,22 +126,25 @@ Step 3. Make your changes
 =========================
 
 On your new branch, go nuts! Make changes, test them, and when you are
-happy commit the changes to the branch:
+happy commit the changes to the branch.
+The {Project} requires that all contributed git commits use the ``-s`` option
+which adds a ``Signed-off-by`` line to indicate agreement with the 
+`Developer Certificate of Origin <https://developercertificate.org>`_.
 
 .. code::
 
    $ git add file-changed1 file-changed2...
 
-   $ git commit -m "what changed?"
+   $ git commit -s -m "what changed?"
 
 This commit message is important - it should describe exactly the
 changes that you have made. Good commit messages read like so:
 
 .. code::
 
-   $ git commit -m "changed function getConfig in functions.go to output csv to fix #2"
+   $ git commit -s -m "changed function getConfig in functions.go to output csv to fix #2"
 
-   $ git commit -m "updated docs about shell to close #10"
+   $ git commit -s -m "updated docs about shell to close #10"
 
 The tags ``close #10`` and ``fix #2`` are referencing issues that are
 posted on the upstream repo where you will direct your pull request.
