@@ -162,13 +162,12 @@ You can do so with the following command.
  Building encrypted containers
 *******************************
 
-With {Project} it is possible to build and run
+With {aProject} setuid installation it is possible to build and run
 encrypted containers. 
-When running in setuid-mode,
-the containers are decrypted at runtime entirely
+Encrypted containers are decrypted at runtime entirely
 in kernel space, meaning that no intermediate decrypted data is ever
-present on disk or in memory. See :ref:`encrypted containers
-<encryption>` for more details.
+present on disk.
+See :ref:`encrypted containers <encryption>` for more details.
 
 ***************
  Build options

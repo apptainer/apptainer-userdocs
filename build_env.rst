@@ -255,8 +255,8 @@ Remember to use ``-E`` option to pass the value of
 With {aProject} setuid installation it is possible to build and run
 encrypted containers. The containers are decrypted at runtime entirely
 in kernel space, meaning that no intermediate decrypted data is ever
-present on disk or in memory. See :ref:`encrypted containers
-<encryption>` for more details.
+present on disk.
+See :ref:`encrypted containers <encryption>` for more details.
 
 ***********************
  Environment Variables

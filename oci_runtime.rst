@@ -101,8 +101,6 @@ with permissions as follows:
    $ sudo ls -ld /var/tmp/busybox
    drwx------ 4 root root 4096 Apr  4 14:30 /var/tmp/busybox
 
-.. _cli-oci-bootstrap-agent:
-
 Content of an OCI Compliant Filesystem Bundle
 =============================================
 

@@ -28,7 +28,7 @@ an in-memory temporary filesystem which is discarded as soon as the
 container finishes executing.
 
 You can use persistent overlays with the following commands: ``run``,
-``exec``, ``shell``, and ``instance.start``.
+``exec``, ``shell``, and ``instance start``.
 
 *******
  Usage
@@ -208,7 +208,7 @@ but an external image file can also be added to a SIF file with the
 .. code::
 
    $ {command} sif add --datatype 4 --partfs 2 --parttype 4 --partarch 2 --groupid 1 ubuntu.sif overlay.img
-   $ {command} sif list ubuntu.sif|grep -i ext3
+   $ {command} sif list ubuntu.sif | grep -i ext3
    5    |1       |NONE    |29810688-1103552512       |FS (Ext3/Overlay/amd64)
 
 Below is the explanation what each parameter means, and how it can

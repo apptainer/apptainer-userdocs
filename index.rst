@@ -46,7 +46,8 @@ as a non-root user.
 signature travels with the container image, allowing you to verify that
 the image is unmodified at any time. Encryption of containers using
 LUKS2 is also supported. Encrypted containers can be run without
-decrypting them to disk first when using a setuid installation of
+decrypting them to disk first.  
+Using encrypted containers currently requires a setuid installation of
 {Project}.
 
 .. toctree::
