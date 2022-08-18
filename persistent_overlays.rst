@@ -11,38 +11,28 @@ changes are kept separately from the base container image.
  Overview
 **********
 
-A persistent overlay is a directory or file system image that “sits on
-top” of your immutable SIF container. When you install new software or
+A persistent overlay is a directory or file system image that "sits on
+top" of your immutable SIF container. When you install new software or
 create and modify files the overlay will store the changes.
 
 If you want to use a SIF container as though it were writable, you can
 create a directory, an ext3 file system image, or embed an ext3 file
 system image in SIF to use as a persistent overlay. Then you can specify
 that you want to use the directory or image as an overlay at runtime
-with the ``--overlay`` option, or ``--writable`` if you want to use the
-overlay embedded in SIF.
+with the ``--overlay`` option, or ``--writable`` if you want to modify
+the overlay embedded in SIF.
 
 If you want to make changes to the image, but do not want them to
 persist, use the ``--writable-tmpfs`` option. This stores all changes in
 an in-memory temporary filesystem which is discarded as soon as the
 container finishes executing.
 
-You can use persistent overlays with the following commands:
-
--  ``run``
--  ``exec``
--  ``shell``
--  ``instance.start``
+You can use persistent overlays with the following commands: ``run``,
+``exec``, ``shell``, and ``instance start``.
 
 *******
  Usage
 *******
-
-To use a persistent overlay, you must first have a container.
-
-.. code::
-
-   $ sudo {command} build ubuntu.sif library://ubuntu
 
 File system image overlay
 =========================
@@ -68,6 +58,8 @@ To add a 1 GiB writable overlay partition to an existing SIF image:
 
 .. code::
 
+   $ {command} build ubuntu.sif library://ubuntu
+   ...
    $ {command} overlay create --size 1024 ubuntu.sif
 
 .. warning::
@@ -87,21 +79,62 @@ So for example:
 .. code::
 
    $ {command} build /tmp/nginx.sif docker://nginx
+   ...
    $ {command} overlay create --size 1024 --create-dir /var/cache/nginx /tmp/nginx.sif
    $ echo "test" | {command} exec /tmp/nginx.sif sh -c "cat > /var/cache/nginx/test"
+
+Fakeroot with overlay
+=====================
+
+If you want to be able to modify the container with an overlay
+(including with ``--writable-tmpfs``) you will generally want to run it
+either as root or with ``--fakeroot`` because usually containers are
+modifiable only by root. 
+
+If that is the way you plan to use the image, then when creating the
+filesystem image with ``overlay create`` also give it a ``--fakeroot``
+option.
+
+For example:
+
+.. code::
+
+   $ {command} build ubuntu.sif docker://ubuntu
+   ...
+   $ {command} overlay create --fakeroot --size 1024 overlay.img
+   $ {command} shell --fakeroot --overlay overlay.img ubuntu.sif
+   {Project}> which vim
+   {Project}> apt-get update && apt-get install -y vim
+   ...
+   {Project}> which vim
+   /usr/bin/vim
+
+An exception is if you are using the 4th :ref:`fakeroot mode <fakeroot>`
+with a setuid installation and no unprivileged user namespaces available. 
+In that case the ``--fakeroot`` option to ``overlay create`` makes 
+the overlay image unwritable, so leave it out.
+This case also has other restrictions in that it only works when the
+underlying image is a sandbox directory, and yet the overlay itself must
+not be a directory.
 
 Directory overlay
 =================
 
-A directory overlay is simpler to use than a filesystem image overlay,
-but a directory of modifications to a base container image cannot be
-transported or shared as easily as a single overlay file.
+A directory overlay is simpler to use than a filesystem image overlay.
+On the other hand, a directory of modifications to a base container image
+cannot be transported or shared as easily as a single overlay file,
+and it generally does not work well on network file servers
+(see the `NFS <{admindocs}/installation.html#nfs>`_ and
+`Lustre / GPFS <{admindocs}/installation.html#lustre-gpfs>`_
+sections of the admin guide).
+It is supported, however, and this section describes how to use it.
 
 .. note::
 
-   For security reasons, you must be root to use a bare directory as an
-   overlay. ext3 file system images can be used as overlays without root
-   privileges.
+   For security reasons, with setuid mode only root may use a bare
+   directory as an overlay.
+   If unprivileged user namespaces are also available, however, the
+   ``--userns`` or ``--fakeroot`` options should make it work.
 
 Create a directory as usual:
 
@@ -113,18 +146,51 @@ The example below shows the directory overlay in action.
 
 .. code::
 
-   $ sudo {command} shell --overlay my_overlay/ ubuntu.sif
-
-   {Project} ubuntu.sif:~> mkdir /data
-
-   {Project} ubuntu.sif:~> chown user /data
-
-   {Project} ubuntu.sif:~> apt-get update && apt-get install -y vim
-
-   {Project} ubuntu.sif:~> which vim
+   $ {command} shell --fakeroot --overlay my_overlay ubuntu.sif
+   {Project}> mkdir /data
+   {Project}> apt-get update && apt-get install -y vim
+   ...
+   {Project}> which vim
    /usr/bin/vim
 
-   {Project} ubuntu.sif:~> exit
+You will find that your changes persist across sessions as though you
+were using a writable container.
+
+.. code::
+
+   $ {command} shell --userns --overlay my_overlay ubuntu.sif
+   {Project}> ls -ld /data
+   drwxr-xr-x 2 user group 4096 Apr  9 10:21 /data
+   {Project}> which vim
+   /usr/bin/vim
+
+If you mount your container without the ``--overlay`` directory, your
+changes will be gone.
+
+.. code::
+
+   $ {command} shell ubuntu.sif
+   {Project}> ls /data
+   ls: cannot access 'data': No such file or directory
+   {Project}> which vim
+
+Readonly overlay
+================
+
+After all modifications to an overlay (either ext3 image or directory) 
+have been completed,
+it can be mounted read-only by appending a ``:ro`` to the overlay path
+and no longer needs to use ``--fakeroot``.
+
+Continuing the above example:
+
+.. code::
+
+   $ {command} shell --userns --overlay my_overlay:ro ubuntu.sif
+   {Project}> which vim
+   /usr/bin/vim
+   {Project}> touch /usr/bin/myfile
+   touch: cannot touch '/usr/bin/more': Read-only file system
 
 .. _overlay-sif:
 
@@ -133,20 +199,17 @@ Overlay embedded in SIF
 
 It is possible to embed an overlay image in the SIF file that holds a
 container. This allows the read-only container image and your
-modifications to it to be managed as a single file. In order to do this,
-you must first create a file system image:
+modifications to it to be managed as a single file.
+An example of doing that directly with the ``{command} overlay create``
+command was shown above,
+but an external image file can also be added to a SIF file with the
+``{command} sif add`` command like this:
 
 .. code::
 
-   $ dd if=/dev/zero of=overlay.img bs=1M count=500 && \
-       mkfs.ext3 overlay.img
-
-Then, you can add the overlay to the SIF image using the ``sif``
-functionality of {Project}.
-
-.. code::
-
-   $ {command} sif add --datatype 4 --partfs 2 --parttype 4 --partarch 2 --groupid 1 ubuntu_latest.sif overlay.img
+   $ {command} sif add --datatype 4 --partfs 2 --parttype 4 --partarch 2 --groupid 1 ubuntu.sif overlay.img
+   $ {command} sif list ubuntu.sif | grep -i ext3
+   5    |1       |NONE    |29810688-1103552512       |FS (Ext3/Overlay/amd64)
 
 Below is the explanation what each parameter means, and how it can
 possibly affect the operation:
@@ -165,44 +228,22 @@ possibly affect the operation:
 All of these options are documented within the CLI help. Access it by
 running ``{command} sif add --help``.
 
-After you've completed the steps above, you can shell into your
-container with the ``--writable`` option.
+Unlike the ``--overlay`` option, an overlay image inside a SIF is by
+default mounted readonly.
+To modify the overlay image, use the ``--writable`` option (and likely
+also the ``--fakeroot`` option):
 
 .. code::
 
-   $ sudo {command} shell --writable ubuntu_latest.sif
+   $ {command} shell --writable --fakeroot ubuntu.sif
+   {Project}> apt-get update && apt-get install -y vim
+   ...
+   {Project}> exit
+   $ {command} exec ubuntu.sif which vim
+   /usr/bin/vim
 
 Final note
 ==========
-
-You will find that your changes persist across sessions as though you
-were using a writable container.
-
-.. code::
-
-   $ {command} shell --overlay my_overlay/ ubuntu.sif
-
-   {Project} ubuntu.sif:~> ls -lasd /data
-   4 drwxr-xr-x 2 user root 4096 Apr  9 10:21 /data
-
-   {Project} ubuntu.sif:~> which vim
-   /usr/bin/vim
-
-   {Project} ubuntu.sif:~> exit
-
-If you mount your container without the ``--overlay`` directory, your
-changes will be gone.
-
-.. code::
-
-   $ {command} shell ubuntu.sif
-
-   {Project} ubuntu.sif:~> ls /data
-   ls: cannot access 'data': No such file or directory
-
-   {Project} ubuntu.sif:~> which vim
-
-   {Project} ubuntu.sif:~> exit
 
 To resize an overlay, standard Linux tools which manipulate ext3 images
 can be used. For instance, to resize the 500MB file created above to
@@ -210,8 +251,8 @@ can be used. For instance, to resize the 500MB file created above to
 
 .. code::
 
-   $ e2fsck -f my_overlay && \
-       resize2fs my_overlay 700M
+   $ e2fsck -f overlay.img && \
+       resize2fs overlay.img 700M
 
 Hints for creating and manipulating ext3 images on your distribution are
 readily available online and are not treated further in this manual.

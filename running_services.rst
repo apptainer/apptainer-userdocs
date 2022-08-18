@@ -35,7 +35,7 @@ by:
 .. code::
 
    $ sudo apt-get update && sudo apt-get install -y nginx
-
+   ...
    $ sudo service nginx start
 
 If you were to do something like this from within a container you would
@@ -94,7 +94,6 @@ repeated.
 .. code::
 
    $ {command} instance start alpine_latest.sif instance2
-
    $ {command} instance start alpine_latest.sif instance3
 
 And again to confirm that the instances are running as we expected:
@@ -102,7 +101,6 @@ And again to confirm that the instances are running as we expected:
 .. code::
 
    $ {command} instance list
-
    INSTANCE NAME    PID      IP              IMAGE
    instance1        22084                    /home/dave/instances/alpine_latest.sif
    instance2        22443                    /home/dave/instances/alpine_latest.sif
@@ -113,7 +111,6 @@ You can also filter the instance list by supplying a pattern:
 .. code::
 
    $ {command} instance list '*2'
-
    INSTANCE NAME    PID      IP              IMAGE
    instance2        22443                    /home/dave/instances/alpine_latest.sif
 
@@ -122,7 +119,6 @@ You can use the ``{command} run/exec`` commands on instances:
 .. code::
 
    $ {command} run instance://instance1
-
    $ {command} exec instance://instance2 cat /etc/os-release
 
 When using ``run`` with an instance URI, the ``runscript`` will be
@@ -135,7 +131,6 @@ If you want to poke around inside of your instance, you can do a normal
 .. code::
 
    $ {command} shell instance://instance3
-
    {Project}>
 
 When you are finished with your instance you can clean it up with the
@@ -189,8 +184,8 @@ following commands as root.
 
 .. code::
 
-   $ sudo {command} build nginx.sif nginx.def
-
+   $ {command} build nginx.sif nginx.def
+   ...
    $ sudo {command} instance start --writable-tmpfs nginx.sif web
 
 .. note::
@@ -354,7 +349,7 @@ The container can be built like so:
 
 .. code::
 
-   $ sudo {command} build url-to-pdf.sif url-to-pdf.def
+   $ {command} build url-to-pdf.sif url-to-pdf.def
 
 Running the Service
 ===================
@@ -434,7 +429,7 @@ apps.
    need for a collection of different containers.
 
    {Project} implements SCIF, and you can read more about how to use
-   it :ref:`apps <in the SCIF Apps section>`.
+   it in the :ref:`SCIF Apps<apps>` section.
 
    SCIF is not specific to {Project}. You can learn more about it at
    the project site: <https://sci-f.github.io/>`_.
@@ -525,7 +520,7 @@ The full def file will look like this:
 
 .. code::
 
-   $ sudo {command} build url-to-pdf-app.sif url-to-pdf-app.def
+   $ {command} build url-to-pdf-app.sif url-to-pdf-app.def
 
 Now that we have an output directory in the container, we need to expose
 it to the host using a bind mount. Once we've rebuilt the container,

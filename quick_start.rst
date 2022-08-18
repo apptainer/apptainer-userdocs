@@ -7,13 +7,7 @@
 .. _sec:quickstart:
 
 This guide is intended for running {Project} on a computer where you
-have root (administrative) privileges, and will install {Project}
-from source code. Other installation options,
-including installing from a pre-built RPM,
-building an RPM package,
-and installing {Project} without root privileges are
-discussed in the `installation section of the admin guide
-<{admindocs}/installation.html>`__.
+will install {Project} yourself.
 
 If you need to request an installation on your shared resource, see the
 :ref:`requesting an installation section <installation-request>` for
@@ -28,15 +22,19 @@ https://apptainer.org/help
  Quick Installation
 ********************
 
-You will need a Linux system to run {Project} natively. Options for
-using {Project} on Mac and Windows machines, along with alternate
-Linux installation options are discussed in the `installation section of
-the admin guide
-<{admindocs}/installation.html>`__.
+You will need a Linux system to run {Project} natively and it's easiest
+to install if you have root access.
 
 To install from source, follow the instructions in the `INSTALL.md
 <https://github.com/{orgrepo}/blob/{repobranch}/INSTALL.md>`_
 on github.
+Other installation options,
+including installing from a pre-built RPM,
+building an RPM or Debian package,
+installing {Project} without root privileges,
+and using {Project} on Mac and Windows machines
+are discussed in the `installation section of the admin guide
+<{admindocs}/installation.html>`__.
 
 *****************************************
  Overview of the {Project} Interface
@@ -227,11 +225,11 @@ You can interact with images in several ways, each of which can accept
 image URIs in addition to a local image path.
 
 For demonstration, we will use a ``lolcow_latest.sif`` image that can be
-pulled from DockerHub:
+pulled from ghcr.io:
 
 .. code::
 
-   $ {command} pull docker://sylabsio/lolcow
+   $ {command} pull docker://ghcr.io/apptainer/lolcow
 
 Shell
 =====
@@ -268,7 +266,7 @@ when the shell is exited.
 
 .. code::
 
-   $ {command} shell docker://sylabsio/lolcow
+   $ {command} shell docker://ghcr.io/apptainer/lolcow
 
 Executing Commands
 ==================
@@ -297,9 +295,9 @@ command and disappears.
 
 .. code::
 
-   $ {command} exec docker://sylabsio/lolcow cowsay "Fresh from the internet!"
+   $ {command} exec docker://ghcr.io/apptainer/lolcow cowsay "Fresh from the internet"
     _________________________
-   < Fresh from the internet! >
+   < Fresh from the internet >
     -------------------------
            \   ^__^
             \  (oo)\_______
@@ -348,7 +346,7 @@ disappears.
 
 .. code::
 
-   $ {command} run library://lolcow
+   $ {command} run docker://ghcr.io/apptainer/lolcow
    ______________________________
    < Mon Aug 16 13:12:33 CDT 2021 >
     ------------------------------
@@ -407,7 +405,7 @@ Files on the host are reachable from within the container.
 
    Hello from inside the container
 
-This example works because ``hostfile.txt`` exists in the user’s home
+This example works because ``hostfile.txt`` exists in the user's home
 directory. By default {Project} bind mounts ``/home/$USER``,
 ``/tmp``, and ``$PWD`` into your container at runtime.
 
@@ -465,7 +463,7 @@ To build into a ``sandbox`` (container in a directory) use the ``build
 
 .. code::
 
-   $ sudo {command} build --sandbox ubuntu/ docker://ubuntu
+   $ {command} build --sandbox ubuntu/ docker://ubuntu
 
 This command creates a directory called ``ubuntu/`` with an entire
 Ubuntu Operating System and some {Project} metadata in your current
@@ -479,7 +477,7 @@ do so).
 
 .. code::
 
-   $ sudo {command} exec --writable ubuntu touch /foo
+   $ {command} exec --writable ubuntu touch /foo
 
    $ {command} exec ubuntu/ ls /foo
    /foo
@@ -521,7 +519,7 @@ Here is an example of a definition file:
 .. code:: {command}
 
    BootStrap: docker
-   From: ubuntu:16.04
+   From: ubuntu:20.04
 
    %post
        apt-get -y update
@@ -542,7 +540,7 @@ named lolcow.def), you would call build like so:
 
 .. code::
 
-   $ sudo {command} build lolcow.sif lolcow.def
+   $ {command} build lolcow.sif lolcow.def
 
 In this example, the header tells {Project} to use a base Ubuntu
 16.04 image from the default OCI registry.

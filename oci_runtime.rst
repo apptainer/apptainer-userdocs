@@ -17,10 +17,9 @@ OCI is an acronym for the `Open Containers Initiative
 <https://www.opencontainers.org/>`_ - an independent organization whose
 mandate is to develop open standards relating to containerization. To
 date, standardization efforts have focused on container formats and
-runtimes. {Project}'s compliance with respect to the OCI Image
-Specification is considered in detail :ref:`elsewhere
-<sec:oci_overview>`. It is {Project}'s compliance with the OCI
-Runtime Specification that is of concern here.
+runtimes. 
+It is {Project}'s compliance with the OCI
+Runtime Specification that is of concern here, not container formats.
 
 Briefly, compliance with respect to the OCI Runtime Specification is
 addressed in {Project} through the introduction of the ``oci``
@@ -767,13 +766,10 @@ additional properties - for example:
         ]
       ]
 
-   where ``run`` equates to the :ref:`familiar runscript
-   <sec:inspect_container_metadata>` for this container. If image
-   creation is bootstrapped via a Docker or OCI agent, {Project}
+   where ``run`` equates to the familiar runscript for this container.
+   If image creation is bootstrapped via a Docker or OCI agent, {Project}
    will make use of ``ENTRYPOINT`` or ``CMD`` (from the OCI image) to
-   populate ``args``; for additional discussion, please refer to
-   :ref:`Directing Execution <sec:def_files_execution>` in the section
-   :ref:`Support for Docker and OCI <docker-and-oci>`.
+   populate ``args``.
 
 For a comprehensive discussion of all the ``config.json`` file
 properties, refer to the `implementation guide

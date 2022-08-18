@@ -361,8 +361,8 @@ below with their respective functionality.
 
 #. **{ENVPREFIX}_USERNS** and **{ENVPREFIX}_UNSHARE_USERNS**: To specify
    that the container will run in a new user namespace, allowing
-   {Project} to run completely unprivileged on recent kernels. This
-   may not support every feature of {Project}. (Sandbox image only).
+   {Project} to run completely unprivileged even with a setuid
+   installation.
    Default is set to false.
 
 ``W``
@@ -396,15 +396,19 @@ below with their respective functionality.
 Overview
 --------
 
-You can use an existing container on the Container Library as your
-“base,” and then add customization. This allows you to build multiple
+You can use an existing container in a Container Library as your
+"base" and then add customization. This allows you to build multiple
 images from the same starting point. For example, you may want to build
 several containers with the same custom python installation, the same
 custom compiler toolchain, or the same base MPI installation. Instead of
 building these from scratch each time, you could create a base container
-on the Container Library and then build new containers from that
+in the Container Library and then build new containers from that
 existing base container adding customizations in ``%post``,
 ``%environment``, ``%runscript``, etc.
+
+This requires setting up a Container Library as shown in the
+:ref:`Managing Remote Endpoints <sec:managing-remote-endpoints>`
+section.
 
 Keywords
 --------
@@ -453,13 +457,13 @@ Overview
 
 Docker images are comprised of layers that are assembled at runtime to
 create an image. You can use Docker layers to create a base image, and
-then add your own custom software. For example, you might use Docker’s
+then add your own custom software. For example, you might use Docker's
 Ubuntu image layers to create an Ubuntu {Project} container. You
 could do the same with CentOS, Debian, Arch, Suse, Alpine, BusyBox, etc.
 
 Or maybe you want a container that already has software installed. For
 instance, maybe you want to build a container that uses CUDA and cuDNN
-to leverage the GPU, but you don’t want to install from scratch. You can
+to leverage the GPU, but you don't want to install from scratch. You can
 start with one of the ``nvidia/cuda`` containers and install your
 software on top of that.
 
@@ -512,11 +516,6 @@ then assembled in the proper order to produce a viable file system. Then
 the file system must be converted to Singularity Image File (sif)
 format.
 
-Building from Docker Hub is not considered reproducible because if any
-of the layers of the image are changed, the container will change. If
-reproducibility is important to your workflow, consider hosting a base
-container on the Container Library and building from it instead.
-
 For detailed information about setting your build environment see
 :ref:`Build Customization <build-environment>`.
 
@@ -528,7 +527,7 @@ For detailed information about setting your build environment see
 Overview
 --------
 
-You can use an existing container on Singularity Hub as your “base,” and
+You can use an existing container on Singularity Hub as your "base" and
 then add customization. This allows you to build multiple images from
 the same starting point. For example, you may want to build several
 containers with the same custom python installation, the same custom
@@ -577,7 +576,7 @@ Overview
 
 Using, this module, a container from supporting OCI Registries - Eg: ACR
 (Azure Container Registry), local container registries, etc can be used
-as your “base” image and later customized. This allows you to build
+as your "base" image and later customized. This allows you to build
 multiple images from the same starting point. For example, you may want
 to build several containers with the same custom python installation,
 the same custom compiler toolchain, or the same base MPI installation.
@@ -619,7 +618,7 @@ format.
 Overview
 --------
 
-You can use an existing container image as your “base”, and then add
+You can use an existing container image as your "base", and then add
 customization. This allows you to build multiple images from the same
 starting point. For example, you may want to build several containers
 with the same custom python installation, the same custom compiler
@@ -727,7 +726,7 @@ system. If the RPM implementation inside the container is not compatible
 with the RPM database that was used to create the container, RPM and YUM
 commands inside the container may fail. This issue can be easily
 demonstrated by bootstrapping an older RHEL compatible image by a newer
-one (e.g. bootstrap a Centos 5 or 6 container from a Centos 7 host).
+one (e.g. bootstrap a Centos 6 container from a Centos 7 host).
 
 In order to use the ``yum`` build module, you must have ``yum``
 installed on your system. It may seem counter-intuitive to install YUM

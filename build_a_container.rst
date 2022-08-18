@@ -6,7 +6,7 @@
 
 .. _sec:build_a_container:
 
-``build`` is the “Swiss army knife” of container creation. You can use
+``build`` is the "Swiss army knife" of container creation. You can use
 it to download and assemble existing containers from external resources
 like `Docker Hub <https://hub.docker.com/>`_ and other OCI registries.
 You can use it to convert containers between the formats supported by
@@ -53,18 +53,20 @@ them into {Project} containers.
 
 .. code::
 
-   $ sudo {command} build alpine.sif docker://alpine
+   $ {command} build alpine.sif docker://alpine
 
 ***************************************************************
  Downloading an existing container from a Library API Registry
 ***************************************************************
 
-You can use the build command to download a container from the Container
+If you have set up a library remote endpoint as described in
+:ref:`Managing Remote Endpoints <sec:managing-remote-endpoints>`,
+you can use the build command to download a container from the Container
 Library.
 
 .. code::
 
-   $ sudo {command} build lolcow.sif library://lolcow
+   $ {command} build lolcow.sif library://lolcow
 
 The first argument (``lolcow.sif``) specifies a path and name for your
 container. The second argument (``library://lolcow``) gives the
@@ -79,23 +81,19 @@ container in a writable format use the ``--sandbox`` option.
 *********************************************
 
 If you wanted to create a container within a writable directory (called
-a sandbox) you can do so with the ``--sandbox`` option. It’s possible to
-create a sandbox without root privileges, but to ensure proper file
-permissions it is recommended to do so as root.
+a sandbox) you can do so with the ``--sandbox`` option.
 
 .. code::
 
-   $ sudo {command} build --sandbox alpine/ docker://alpine
+   $ {command} build --sandbox alpine/ docker://alpine
 
 The resulting directory operates just like a container in a SIF file. To
 make changes within the container, use the ``--writable`` flag when you
-invoke your container. It’s a good idea to do this as root to ensure you
-have permission to access the files and directories that you want to
-change.
+invoke your container.
 
 .. code::
 
-   $ sudo {command} shell --writable alpine/
+   $ {command} shell --writable alpine/
 
 **************************************************
  Converting containers from one format to another
@@ -104,12 +102,12 @@ change.
 If you already have a container saved locally, you can use it as a
 target to build a new container. This allows you convert containers from
 one format to another. For example if you had a sandbox container called
-``development/`` and you wanted to convert it to SIF container called
+``development/`` and you wanted to convert it to a SIF container called
 ``production.sif`` you could:
 
 .. code::
 
-   $ sudo {command} build production.sif development/
+   $ {command} build production.sif development/
 
 Use care when converting a sandbox directory to the default SIF format.
 If changes were made to the writable container before conversion, there
@@ -125,14 +123,14 @@ definition file instead.
 Of course, {Project} definition files can be used as the target when
 building a container. For detailed information on writing {Project}
 definition files, please see the :doc:`Container Definition docs
-<definition_files>`. Let’s say you already have the following container
+<definition_files>`. Let's say you already have the following container
 definition file called ``lolcow.def``, and you want to use it to build a
 SIF container.
 
 .. code:: {command}
 
    Bootstrap: docker
-   From: ubuntu:16.04
+   From: ubuntu:20.04
 
    %post
        apt-get -y update
@@ -149,10 +147,7 @@ You can do so with the following command.
 
 .. code::
 
-   $ sudo {command} build lolcow.sif lolcow.def
-
-The command requires ``sudo`` just as installing software on your local
-machine requires root privileges.
+   $ {command} build lolcow.sif lolcow.def
 
 .. note::
 
@@ -160,18 +155,19 @@ machine requires root privileges.
    image not work on a different host. This could be because of the
    default compressor supported by the host. For example, when building
    an image on a host in which the default compressor is ``xz`` and then
-   trying to run that image on a CentOS 6 node, where the only
+   trying to run that image on a node where the only
    compressor available is ``gzip``.
 
 *******************************
  Building encrypted containers
 *******************************
 
-With {Project} it is possible to build and run
-encrypted containers. The containers are decrypted at runtime entirely
+With {aProject} setuid installation it is possible to build and run
+encrypted containers. 
+Encrypted containers are decrypted at runtime entirely
 in kernel space, meaning that no intermediate decrypted data is ever
-present on disk or in memory. See :ref:`encrypted containers
-<encryption>` for more details.
+present on disk.
+See :ref:`encrypted containers <encryption>` for more details.
 
 ***************
  Build options
@@ -189,8 +185,10 @@ more details.
 ``--fakeroot``
 ==============
 
-Gives users a way to build containers completely unprivileged. See
-:ref:`the fakeroot feature <fakeroot>` for details.
+Gives users a way to build containers completely unprivileged.
+This option is implied when an unprivileged user invokes build
+on a definition file.
+See :ref:`the fakeroot feature <fakeroot>` for details.
 
 ``--force``
 ===========
@@ -213,12 +211,12 @@ This command allows you to set a different library. Look
 ``--notest``
 ============
 
-If you don’t want to run the ``%test`` section during the container
+If you don't want to run the ``%test`` section during the container
 build, you can skip it with the ``--notest`` option. For instance, maybe
 you are building a container intended to run in a production environment
 with GPUs. But perhaps your local build resource does not have GPUs. You
 want to include a ``%test`` section that runs a short validation but you
-don’t want your build to exit with an error because it cannot find a GPU
+don't want your build to exit with an error because it cannot find a GPU
 on your system.
 
 ``--passphrase``
@@ -250,7 +248,7 @@ or any combination of the following: ``setup``, ``post``, ``files``,
 ``environment``, ``test``, ``labels``.
 
 Under normal build conditions, the {Project} definition file is
-saved into a container’s meta-data so that there is a record showing how
+saved into a container's meta-data so that there is a record showing how
 the container was built. Using the ``--section`` option may render this
 meta-data useless, so use care if you value reproducibility.
 
@@ -282,6 +280,12 @@ of ``post`` and ``test`` sections.
     This option can't be set via the environment variable `{ENVPREFIX}_NV`.
     {Project} will attempt to bind binaries listed in {ENVPREFIX}_CONFDIR/nvliblist.conf,
     if the mount destination doesn't exist inside the container, they are ignored.
+
+``--nvccli``
+============
+
+Experimental option to use Nvidia's ``nvidia-container-cli`` for GPU setup.
+See more details in the :ref:`GPU Support<gpu>` section.
 
 ``--rocm``
 ==========

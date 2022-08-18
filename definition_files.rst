@@ -34,10 +34,10 @@ files to add from the host system, and container metadata.
    to be executed at runtime can accept options intended for ``/bin/sh``
 
 For more in-depth and practical examples of def files, see the `{Project}
-examples repository <https://github.com/{orgrepo}/tree/{repobranch}/examples>`_
+examples repository <https://github.com/{orgrepo}/tree/{repobranch}/examples>`_.
 
 For a comparison between Dockerfile and {Project} definition file,
-please see: :ref:`this section <sec:deffile-vs-dockerfile>`.
+please see :ref:`this section <sec:deffile-vs-dockerfile>`.
 
 ********
  Header
@@ -87,23 +87,21 @@ Preferred bootstrap agents
 
 -  :ref:`docker <build-docker-module>` (images hosted on Docker Hub)
 -  :ref:`oras <build-oras>` (images from supporting OCI registries)
--  :ref:`library <build-library-module>` (images hosted on Library API Registries)
+-  :ref:`localimage <build-localimage>` (images saved on your machine)
 -  :ref:`scratch <scratch-agent>` (a flexible option for building a
    container from scratch)
 
 Other bootstrap agents
 ======================
 
+-  :ref:`library <build-library-module>` (images hosted on Library API Registries)
 -  :ref:`shub <build-shub>` (images hosted on Singularity Hub)
--  :ref:`localimage <build-localimage>` (images saved on your machine)
 -  :ref:`yum <build-yum>` (yum based systems such as CentOS and
    Scientific Linux)
 -  :ref:`debootstrap <build-debootstrap>` (apt based systems such as
    Debian and Ubuntu)
--  :ref:`oci <cli-oci-bootstrap-agent>` (bundle compliant with OCI Image
-   Specification)
--  :ref:`oci-archive <cli-oci-archive-bootstrap-agent>` (tar files
-   obeying the OCI Image Layout Specification)
+-  oci (bundle compliant with OCI Image Specification)
+-  oci-archive (tar files obeying the OCI Image Layout Specification)
 -  :ref:`docker-daemon <docker-daemon-archive>` (images managed by the
    locally running docker daemon)
 -  :ref:`docker-archive <docker-daemon-archive>` (archived docker
@@ -233,9 +231,8 @@ has been installed. You can reference the container file system with the
 .. note::
 
    Be careful with the ``%setup`` section! This scriptlet is executed
-   outside of the container on the host system itself, and is executed
-   with elevated privileges. Commands in ``%setup`` can alter and
-   potentially damage the host.
+   outside of the container on the host system itself.
+   Commands in ``%setup`` can alter and potentially damage the host.
 
 Consider the example from the definition file above:
 
@@ -253,7 +250,7 @@ section below. The ``file2`` is created at the root of the file system
 The ``%files`` section is provided as
 a safer alternative to copying files from the host system into the
 container during the build. Because of the potential danger involved in
-running the ``%setup`` scriptlet with elevated privileges on the host
+running the ``%setup`` scriptlet on the host
 system during the build, it's use is generally discouraged.
 
 %files
@@ -379,7 +376,7 @@ build option:
 
 .. code::
 
-   $ sudo {command} build --notest my_container.sif my_container.def
+   $ {command} build --notest my_container.sif my_container.def
 
 Running the test command on a container built with this def file yields
 the following:

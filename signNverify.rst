@@ -20,9 +20,9 @@ intended it.
 
 .. _verify_container_from_remote_sources:
 
-*********************************************
- Verifying containers from the remote sources
-*********************************************
+******************************************
+ Verifying containers from remote sources
+******************************************
 
 The ``verify`` command will allow you to verify that a container has
 been signed using a PGP key. This ensures that the container image on your disk

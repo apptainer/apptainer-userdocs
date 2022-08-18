@@ -21,7 +21,9 @@ configure a virtualized network for a container.
    {Project} allows the administrator to permit a list of
    unprivileged users and/or groups to use specified network
    configurations. This is accomplished through settings in
-   ``{command}.conf``. See the administrator guide for details.
+   ``{command}.conf`` and only work in setuid mode.
+   See the `administrator guide
+   <{admindocs}/configfiles.html#networking-options>`_ for details.
 
 ***********
  ``--dns``

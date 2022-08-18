@@ -307,6 +307,13 @@ Docker Hub), with your username and personal access token:
 -  Set the ``{ENVPREFIX}_DOCKER_USERNAME`` and
    ``{ENVPREFIX}_DOCKER_PASSWORD`` environment variables.
 
+.. note::
+
+   {Project} can directly push SIF files to ghcr.io as well, using the
+   ``oras://`` protocol.
+   The containers share the same namespace, but they have to be pulled
+   using the same protocol that they were pushed with.
+
 AWS ECR
 =======
 
@@ -449,7 +456,7 @@ ensure that the credentials needed to access the image are available to
 {Project}.
 
 A build might be run as the ``root`` user, e.g. via ``sudo``, or under
-your own account with ``--fakeroot``.
+your own account.
 
 If you are running the build as ``root``, using ``sudo``, then any
 stored credentials or environment variables must be available to the
@@ -471,8 +478,8 @@ stored credentials or environment variables must be available to the
 -  Use ``sudo docker login`` if ``docker`` is on your machine. This is
    separate from storing the credentials under your own account.
 
-If you are running the build under your account via the ``--fakeroot``
-feature you do not need to specially set credentials for the root user.
+If you are running the build under your account
+you do not need to specially set credentials for the root user.
 
 Archives & Docker Daemon
 ========================
@@ -692,11 +699,11 @@ account will generally require modification for use with {Project}.
 
 {Project}'s ``--fakeroot`` mode will start a container as a fake
 ``root`` user, mapped to the user's real account outside of the
-container. Inside the container it is possible to change to another user
-account, which is mapped to a configured range of sub-uids / gids
+container. When using the fakeroot mode that is based on `/etc/subuid`,
+then inside the container it is possible to change to another user
+account which is mapped to different subuids 
 belonging to the original user. It may be possible to execute software
-expecting a fixed user account manually inside a ``--fakeroot`` shell,
-if your adminstrator has configured the system for ``--fakeroot``.
+expecting a fixed user account manually inside such a ``--fakeroot`` shell.
 
 Default Mounts / $HOME
 ======================
@@ -760,11 +767,11 @@ are set in the container:
    # Set a container environment variable
    $ export "{ENVPREFIX}ENV_FORCE_VAR="123"
 
-   $ {command} run library://alpine env | grep VAR
+   $ {command} run docker://alpine env | grep VAR
    FORCE_VAR=123
    HOST_VAR=ABC
 
-   $ {command} run --cleanenv library://alpine env | grep VAR
+   $ {command} run --cleanenv docker://alpine env | grep VAR
    FORCE_VAR=123
 
 Any environment variables set via an ``ENV`` line in a ``Dockerfile`` will be
@@ -844,8 +851,7 @@ enable some of the extra namespaces that Docker uses, with flags:
    container networking from the host.
 
 -  ``--userns / -u`` runs the container unprivileged, inside a user
-   namespace and avoiding setuid setup code. This prevents executing SIF
-   images directly. They will be extracted to a directory sandbox.
+   namespace and avoiding setuid setup code if it is installed.
 
 -  ``--uts`` creates a new UTS namespace, which allows a different
    hostname and/or NIS domain for the container.

@@ -16,7 +16,7 @@ read and write data on the host system with ease.
  Overview
 **********
 
-When {Project} ‘swaps’ the host operating system for the one inside
+When {Project} 'swaps' the host operating system for the one inside
 your container, the host file systems becomes inaccessible. However, you
 may want to read and write files on the host system from within the
 container. To enable this functionality, {Project} will bind
@@ -29,7 +29,7 @@ system-defined bind paths and user-defined bind paths.
 
 The system administrator has the ability to define what bind paths will
 be included automatically inside each container. Some bind paths are
-automatically derived (e.g. a user’s home directory) and some are
+automatically derived (e.g. a user's home directory) and some are
 statically defined (e.g. bind paths in the {Project} configuration
 file). In the default configuration, the system default bind points are
 ``$HOME`` , ``/sys:/sys`` , ``/proc:/proc``, ``/tmp:/tmp``,
@@ -93,7 +93,7 @@ runtimes.
 ``--bind`` Examples
 ===================
 
-Here’s an example of using the ``--bind`` option and binding ``/data``
+Here's an example of using the ``--bind`` option and binding ``/data``
 on the host to ``/mnt`` in the container (``/mnt`` does not need to
 already exist in the container):
 
@@ -126,7 +126,7 @@ this would be:
 Using the environment variable ``${ENVPREFIX}_BIND``, you can bind paths
 even when you are running your container as an executable file with a
 runscript. If you bind many directories into your {Project}
-containers and they don’t change, you could even benefit by setting this
+containers and they don't change, you could even benefit by setting this
 variable in your ``.bashrc`` file.
 
 ``--mount`` Examples
@@ -273,7 +273,8 @@ located on the host, or in the container.
 Requirements
 ============
 
-The FUSE command *must* be based on libfuse3 3.3.0 or greater to work
+The FUSE command invoked with the ``--fusemount`` option
+*must* be based on libfuse3 3.3.0 or greater to work
 correctly with {Project}. Older versions do not support the way in
 which the {Project} runtime passes a pre-mounted file descriptor
 into the container.
@@ -281,10 +282,7 @@ into the container.
 If you are using an older distribution that provides FUSE commands such
 as ``sshfs`` based on FUSE 2 then you can install FUSE 3 versions of the
 commands you need inside your container. EL7 distributions can install a
-compatible version of FUSE 3 from the EPEL repository. EL8 distributions
-ship FUSE 3.2.1 as a base package. Unfortunately this is an older version
-which does not fully support the way in which {Project} prepares FUSE
-mounts.
+compatible version of FUSE 3 from the EPEL repository. 
 
 FUSE mount definitions
 ======================

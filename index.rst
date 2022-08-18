@@ -27,9 +27,8 @@ separate `Admin Guide <{admindocs}>`_ for this version of {Project}.
 *********************
 
 Learn how to write a definition file that can be used to build a
-container. Understand the environment within a build, how to perform
-remote builds, and how to use the ``--fakeroot`` feature to build as a
-non-root user.
+container. Understand the environment within a build and how to build
+as a non-root user.
 
 .. toctree::
    :maxdepth: 1
@@ -47,7 +46,9 @@ non-root user.
 signature travels with the container image, allowing you to verify that
 the image is unmodified at any time. Encryption of containers using
 LUKS2 is also supported. Encrypted containers can be run without
-decrypting them to disk first.
+decrypting them to disk first.  
+Using encrypted containers currently requires a setuid installation of
+{Project}.
 
 .. toctree::
    :maxdepth: 1

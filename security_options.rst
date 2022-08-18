@@ -36,7 +36,8 @@ open raw sockets so that they can use ``ping`` in a container where the
 binary is controlled via capabilities. For information about how to
 manage capabilities as an admin please refer to the `capability admin
 docs
-<{admindocs}/configfiles.html#capability.json>`_.
+<{admindocs}/configfiles.html#capability-json>`_.
+This feature requires a setuid-root installation of {Project}.
 
 To take advantage of this granted capability as a user, ``pinger`` must
 also request the capability when executing a container with the
@@ -44,7 +45,7 @@ also request the capability when executing a container with the
 
 .. code::
 
-   $ {command} exec --add-caps CAP_NET_RAW library://sylabs/tests/ubuntu_ping:v1.0 ping -c 1 8.8.8.8
+   $ {command} exec --add-caps CAP_NET_RAW oras://ghcr.io/apptainer/ubuntu_ping:v1.0 ping -c 1 8.8.8.8
    PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
    64 bytes from 8.8.8.8: icmp_seq=1 ttl=52 time=73.1 ms
 
@@ -59,7 +60,7 @@ to add that capability to their containers anymore:
 
 .. code::
 
-   $ {command} exec --add-caps CAP_NET_RAW library://sylabs/tests/ubuntu_ping:v1.0 ping -c 1 8.8.8.8
+   $ {command} exec --add-caps CAP_NET_RAW oras://ghcr.io/apptainer/ubuntu_ping:v1.0 ping -c 1 8.8.8.8
    WARNING: not authorized to add capability: CAP_NET_RAW
    ping: socket: Operation not permitted
 
@@ -80,7 +81,7 @@ above works without the need to grant capabilities:
 
 .. code::
 
-   # {command} exec library://sylabs/tests/ubuntu_ping:v1.0 ping -c 1 8.8.8.8
+   # {command} exec oras://ghcr.io/apptainer/ubuntu_ping:v1.0 ping -c 1 8.8.8.8
    PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
    64 bytes from 8.8.8.8: icmp_seq=1 ttl=52 time=59.6 ms
 
@@ -92,7 +93,7 @@ Now we can manually drop the ``CAP_NET_RAW`` capability like so:
 
 .. code::
 
-   # {command} exec --drop-caps CAP_NET_RAW library://sylabs/tests/ubuntu_ping:v1.0 ping -c 1 8.8.8.8
+   # {command} exec --drop-caps CAP_NET_RAW oras://ghcr.io/apptainer/ubuntu_ping:v1.0 ping -c 1 8.8.8.8
    ping: socket: Operation not permitted
 
 And now the container will not have the ability to create new sockets,
@@ -106,7 +107,8 @@ this keyword.
  Building encrypted containers
 *******************************
 
-With {Project} it is possible to build and run encrypted containers.
+With {aProject} setuid installation it is possible to build and run
+encrypted containers.
 The containers are decrypted at runtime entirely in kernel space, meaning
 that no intermediate decrypted data is ever present on disk. See
 :ref:`encrypted containers <encryption>` for more details.
@@ -158,7 +160,7 @@ file and enter the container with full capabilities using the
 
 .. code::
 
-   $ sudo {command} exec --keep-privs library://centos ping -c 1 8.8.8.8
+   $ sudo {command} exec --keep-privs docker://centos:7 ping -c 1 8.8.8.8
    PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
    64 bytes from 8.8.8.8: icmp_seq=1 ttl=128 time=18.8 ms
 
@@ -178,7 +180,7 @@ inside the container:
 
 .. code::
 
-   $ sudo {command} exec --drop-caps CAP_NET_RAW library://centos ping -c 1 8.8.8.8
+   $ sudo {command} exec --drop-caps CAP_NET_RAW docker://centos:7 ping -c 1 8.8.8.8
    ping: socket: Operation not permitted
 
 The ``drop-caps`` option will also accept the case insensitive keyword

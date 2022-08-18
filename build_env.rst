@@ -27,8 +27,8 @@ created at ``$HOME/.{command}/cache`` by default. The location of the
 cache can be changed by setting the ``{ENVPREFIX}_CACHEDIR`` environment
 variable.
 
-When you run builds as root, using ``sudo``, images will be cached in
-root’s home at ``/root`` and not your user’s home. Use the ``-E`` option
+If you run builds as root, using ``sudo``, images will be cached in
+root's home at ``/root`` and not your user's home. Use the ``-E`` option
 to sudo to pass through the ``{ENVPREFIX}_CACHEDIR`` environment
 variable, if you set it.
 
@@ -219,9 +219,7 @@ use the ``type`` / ``-T`` option:
 When building a container, or pulling/running {aProject} container
 from a Docker/OCI source, a temporary working space is required. The
 container is constructed in this temporary space before being packaged
-into {aProject} SIF image. Temporary space is also used when
-running containers in unprivileged mode, and performing some operations
-on filesystems that do not fully support ``--fakeroot``.
+into {aProject} SIF image. 
 
 The location for temporary directories defaults to ``/tmp``.
 {Project} will also respect the environment variable ``TMPDIR``, and
@@ -254,11 +252,11 @@ Remember to use ``-E`` option to pass the value of
  Encrypted Containers
 **********************
 
-With {Project} it is possible to build and run
+With {aProject} setuid installation it is possible to build and run
 encrypted containers. The containers are decrypted at runtime entirely
 in kernel space, meaning that no intermediate decrypted data is ever
-present on disk or in memory. See :ref:`encrypted containers
-<encryption>` for more details.
+present on disk.
+See :ref:`encrypted containers <encryption>` for more details.
 
 ***********************
  Environment Variables
@@ -283,20 +281,20 @@ environment variables at runtime.
 Docker
 ------
 
-**{ENVPREFIX}_DOCKER_LOGIN** Used for the interactive login for Docker
+**{ENVPREFIX}_DOCKER_LOGIN** - Used for the interactive login for Docker
 Hub.
 
-**{ENVPREFIX}_DOCKER_USERNAME** Your Docker username.
+**{ENVPREFIX}_DOCKER_USERNAME** - Your Docker username.
 
-**{ENVPREFIX}_DOCKER_PASSWORD** Your Docker password.
+**{ENVPREFIX}_DOCKER_PASSWORD** - Your Docker password.
 
-**RUNSCRIPT_COMMAND** Is not obtained from the environment, but is a
-hard coded default (“/bin/bash”). This is the fallback command used in
+**RUNSCRIPT_COMMAND** - Is not obtained from the environment, but is a
+hard coded default ("/bin/bash". This is the fallback command used in
 the case that the docker image does not have a CMD or ENTRYPOINT.
 **TAG** Is the default tag, ``latest``.
 
-**{ENVPREFIX}_NOHTTPS** This is relevant if you want to use a registry
-that doesn’t have https, and it speaks for itself. If you export the
+**{ENVPREFIX}_NOHTTPS** - This is relevant if you want to use a registry
+that doesn't have https, and it speaks for itself. If you export the
 variable ``{ENVPREFIX}_NOHTTPS`` you can force the software to not use
 https when interacting with a Docker registry. This use case is
 typically for use of a local registry.
@@ -304,19 +302,16 @@ typically for use of a local registry.
 Library
 -------
 
-**{ENVPREFIX}_LIBRARY** Used to specify the library to pull from.
-Default is set to our Cloud Library.
-
-**{ENVPREFIX}_REMOTE** Used to build an image remotely (This does not
-require root). The default is set to false.
+**{ENVPREFIX}_LIBRARY** - Used to specify the library to pull from.
+Default is the currently selected :ref:`remote endpoint <endpoints>`.
 
 Encryption
 ----------
 
-**{ENVPREFIX}_ENCRYPTION_PASSPHRASE** Used to pass a plaintext
+**{ENVPREFIX}_ENCRYPTION_PASSPHRASE** - Used to pass a plaintext
 passphrase to encrypt a container file system (with the ``--encrypt``
 flag). The default is empty.
 
-**{ENVPREFIX}_ENCRYPTION_PEM_PATH** Used to specify the location of a
+**{ENVPREFIX}_ENCRYPTION_PEM_PATH** - Used to specify the location of a
 public key to use for container encryption (with the ``--encrypt``
 flag). The default is empty.
