@@ -128,7 +128,7 @@ However, there are also some disadvantages of the non-suid mode:
    but urgently responding to those vulnerabilities causes additional
    administrator effort and can cause disruption to operations.
    See the `User Namespaces section
-   <{admindocs}/user_namespaces.html#disabling-network-namespaces>`_
+   <{admindocs}/user_namespace.html#disabling-network-namespaces>`_
    of the admin guide for details about mitigating the impact of user
    namespace vulnerabilities through disabling network namespaces.
 
