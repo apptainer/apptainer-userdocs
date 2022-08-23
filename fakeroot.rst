@@ -19,7 +19,7 @@ the host:
    method used for example by Podman.
    It is the most complete emulation but it requires administrator setup
    as described in the `admin guide
-   <{admindocs}/user_namespaces.html#rootless-fakeroot-feature>`__.
+   <{admindocs}/user_namespace.html#rootless-fakeroot-feature>`__.
    It also requires some elevated privilege assistance on the host as described
    there, which means that it will not be able to run nested inside another
    container that disallows elevating privileges, as {Project} does.
