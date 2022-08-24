@@ -30,7 +30,7 @@ the host:
    the root user id to the original unprivileged user.
    This method is sometimes called a "root-mapped user namespace".
    Since this method is not as complete an emulation as rootless mode,
-   an INFO messaging showing it is happening will be displayed.
+   an INFO message showing it is happening is displayed.
 #. If the "fakeroot" command is available on the host, {Project} will
    use it in addition to a root-mapped user namespace.
    This command fakes root privileges on file manipulation, telling
@@ -39,7 +39,7 @@ the host:
    This is useful for avoiding errors when building containers or when
    adding packages to a writable container, because many package
    installations attempt to do additional setup that only works as root.
-   When the fakeroot command is used, an INFO message will be displayed.
+   When the fakeroot command is used, an INFO message is displayed.
    The combination of a root-mapped user namespace with the fakeroot command
    allows most package installations to work, but the fakeroot command is
    bound in from the host so if the host libc library is of a very
