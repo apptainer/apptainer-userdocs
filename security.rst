@@ -109,8 +109,8 @@ However, there are also some disadvantages of the non-suid mode:
    An unprivileged FUSE filesystem will hopefully be able to perform this
    operation in a future release.
 
--  Some little used `security options <security-options>` and
-   `network options <networking>` of {Project} that give users elevated
+-  Some little used :ref:`security options <security-options>` and
+   :ref:`network options <networking>` of {Project} that give users elevated
    privileges through configuration are only available in suid mode.
 
 -  {Project} configuration options that restrict the use of containers
