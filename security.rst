@@ -96,9 +96,9 @@ However, there are also some disadvantages of the non-suid mode:
 
 -  Mounting from unprivileged user namespaces makes use of FUSE
    filesystems, which run extra processes in user space.
-   This has lower performance than kernel filesystems, but it is
-   believed to not be a very significant overhead for most HPC
-   workflows.
+   This has slightly lower performance than kernel filesystems,
+   but it is has been shown to not be a very significant overhead for
+   typical HPC workflows.
    Metadata operations are still moved to the node running the
    container, which is a big advantage over having many files directly
    on networked filesystems.
