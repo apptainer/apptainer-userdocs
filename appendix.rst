@@ -351,6 +351,9 @@ below with their respective functionality.
 #. **{ENVPREFIX}_UNSHARE_UTS**: To specify that the container will run
    in a new UTS namespace. Default is set to false.
 
+#. **{ENVPREFIX}_UNSQUASH**: To convert SIF files to temporary sandboxes
+   before running a container. Default is set to false.
+
 #. **{ENVPREFIX}_UPDATE**: To run the definition over an existing
    container (skips the header). Default is set to false.
 
