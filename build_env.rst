@@ -204,7 +204,7 @@ option. E.g. to clean cache entries older than 30 days:
    $ {command} cache clean --days 30
 
 To remove only a specific kind of cache entry, e.g. only library images,
-use the ``type`` / ``-T`` option:
+use the ``--type`` / ``-T`` option:
 
 .. code::
 
