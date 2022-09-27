@@ -56,7 +56,7 @@ copyright = u'epub placeholder'
 # built documents.
 #
 # The short X.Y version.
-version = 'main'
+version = '1.1'
 # We have not had separate docs per release version for some time, so set
 # release = version here.
 release = version
