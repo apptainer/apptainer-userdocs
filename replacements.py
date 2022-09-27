@@ -14,15 +14,15 @@ def variableReplace(app, docname, source):
 variable_replacements = {
     "{InstallationVersion}" : "1.1.0",
     "{admindocs}" : "https://apptainer.org/docs/admin/main",
-    "{version}": "main",
-    "{adminversion}": "main",
+    "{version}": "1.1",
+    "{adminversion}": "1.1",
     "{Project}": "Apptainer",
     "{AProject}": "An Apptainer",
     "{aProject}": "an Apptainer",
     "{command}": "apptainer",
     "{ENVPREFIX}": "APPTAINER",
     "{orgrepo}": "apptainer/apptainer",
-    "{repobranch}": "main",
+    "{repobranch}": "1.1",
 }
 
 
