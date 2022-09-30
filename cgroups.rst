@@ -105,20 +105,20 @@ time than is available.
    # Container A - half as much CPU priority as container A
    $ {command} run --cpu-shares 512 mysecondapp.sif
 
-``--cpu-set-cpus`` specifies a list of physical CPU IDs on which a container can
+``--cpuset-cpus`` specifies a list of physical CPU IDs on which a container can
 run. For example, on a dual CPU system you might pin one container to the first
 12 cores on CPU 1, and a second container to the second 12 cores on CPU 2.
 
-``--cpu-set-mems`` specifies a list of memory nodes the container can use. It
-should generally be set to the same value as ``--cpu-set-cpus``.
+``--cpuset-mems`` specifies a list of memory nodes the container can use. It
+should generally be set to the same value as ``--cpuset-cpus``.
 
 .. code::
    
    # Container A - first CPU
-   $ {command} run --cpu-set-cpus 0-11 --cpu-set-mems 0-11 myfirstapp.sif
+   $ {command} run --cpuset-cpus 0-11 --cpuset-mems 0-11 myfirstapp.sif
 
    # Container B - second CPU
-   $ {command} run --cpu-set-cpus 12-23 --cpu-set-mems 12-23 myfirstapp.sif
+   $ {command} run --cpuset-cpus 12-23 --cpuset-mems 12-23 myfirstapp.sif
 
 Memory Limits
 =============
