@@ -258,7 +258,7 @@ are on the host system.
    david
 
    {Project} lolcow_latest.sif:~> id
-   uid=1000(david) gid=1000(david) groups=1000(david),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),116(lpadmin),126(sambashare)
+   uid=1000(david) gid=1000(david) groups=1000(david),65534(nfsnobody)
 
 ``shell`` also works with the ``docker://``, ``oras://``, ``library://``,  and
 ``shub://`` URIs. This creates an ephemeral container that disappears
