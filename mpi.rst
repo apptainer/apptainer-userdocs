@@ -211,6 +211,9 @@ If the host MPI is Open MPI, the definition file looks like:
        export PATH="$OMPI_DIR/bin:$PATH"
        export LD_LIBRARY_PATH="$OMPI_DIR/lib:$LD_LIBRARY_PATH"
        export MANPATH="$OMPI_DIR/share/man:$MANPATH"
+       # Work around a problem that UCX has with unprivileged user namespaces
+       # See https://github.com/apptainer/apptainer/issues/769
+       export UCX_POSIX_USE_PROC_LINK=n
 
    %post
        echo "Installing required packages..."
