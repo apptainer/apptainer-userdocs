@@ -291,7 +291,7 @@ download from the Sylabs Cloud anonymously:
 
 .. code::
 
-   $ {command} remote add --no-login SylabsCloud cloud.sylabs.io
+   $ {command} remote add --no-login SylabsCloud cloud.sycloud.io
    INFO:    Remote "SylabsCloud" added.
    $ {command} remote use SylabsCloud
    INFO:    Remote "SylabsCloud" now in use.
@@ -301,13 +301,13 @@ download from the Sylabs Cloud anonymously:
 
    NAME           URI                  ACTIVE  GLOBAL  EXCLUSIVE
    DefaultRemote  cloud.apptainer.org  NO      YES     NO
-   SylabsCloud    cloud.sylabs.io      YES     NO      NO
+   SylabsCloud    cloud.sycloud.io     YES     NO      NO
 
    Keyservers
    ==========
 
-   URI                     GLOBAL  INSECURE  ORDER
-   https://keys.sylabs.io  YES     NO        1*
+   URI                                 GLOBAL  INSECURE  ORDER
+   https://keys.production.sycloud.io  YES     NO        1*
 
    * Active cloud services keyserver
 
