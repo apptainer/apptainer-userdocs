@@ -251,7 +251,7 @@ The ``%files`` section is provided as
 a safer alternative to copying files from the host system into the
 container during the build. Because of the potential danger involved in
 running the ``%setup`` scriptlet on the host
-system during the build, its use is generally discouraged.
+system during the build, it's use is generally discouraged.
 
 %files
 ======
