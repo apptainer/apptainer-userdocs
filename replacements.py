@@ -22,7 +22,7 @@ variable_replacements = {
     "{command}": "apptainer",
     "{ENVPREFIX}": "APPTAINER",
     "{orgrepo}": "apptainer/apptainer",
-    "{repobranch}": "1.1",
+    "{repobranch}": "release-1.1",
 }
 
 
