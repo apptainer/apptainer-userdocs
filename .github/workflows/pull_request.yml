@@ -40,7 +40,7 @@ jobs:
         run: |
           set -x
           python3 copyreplace.py *.rst
-          rstcheck --ignore-language c,c++ --report warning *.rep
+          rstcheck --ignore-languages c,c++ --report-level warning *.rep
           rm -f *.rep
 
       - name: Build web documentation
