@@ -65,6 +65,23 @@ Installation instructions for DMTCP can be found on their git `repository
 In order to maximize the portability of the DMTCP build, we recommend using the
 ``--enable-static-libstdcxx`` configure option.
 
+A build and install of DMTCP from source will generally place libraries at
+``/usr/local/lib/dmtcp``, which is not a standard path for the linker. You can
+configure your linker to find these libraries and update its cache with the
+following commands:
+
+.. code::
+
+    # echo /usr/local/lib/dmtcp > /etc/ld.so.conf.d/dmtcp.conf
+    # ldconfig
+
+Verify that the libraries are in the cache by ensuring there is output from the
+following command:
+
+.. code::
+
+    $ ldconfig -p | grep dmtcp
+
 The DMTCP project is currently working towards a ``3.0`` release. If you
 encounter issues using a ``2.x`` installation of DMTCP, we recommend trying the
 tip of the ``master`` branch to see if the issue has been resolved in the code
@@ -125,7 +142,7 @@ We can build this container using:
 
 .. code::
 
-    $ {command} build --fakeroot server.sif server.def
+    $ {command} build server.sif server.def
 
 
 First things first, we need to create a ``checkpoint`` using the ``checkpoint``
