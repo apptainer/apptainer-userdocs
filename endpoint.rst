@@ -285,7 +285,7 @@ If you do not want to switch remote with ``remote use`` you can:
 Restoring pre-{Project} library behavior
 ========================================
 
-{Project} has no default remote endpoint defined.
+By default, {Project} has no remote endpoint defined.
 The previous sections described how to manipulate remotes in general,
 and in particular these are the commands for a user to restore the library
 behavior from before {Project}, where using the `library://` URI would
