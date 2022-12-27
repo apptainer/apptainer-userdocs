@@ -279,11 +279,13 @@ If you do not want to switch remote with ``remote use`` you can:
    ``--library`` option.
 -  Make ``keys`` use an alternative keyserver with the ``-url`` option.
 
+.. _no_default_remote:
 .. _restoring_pre-{command}_library_behavior:
 
 Restoring pre-{Project} library behavior
 ========================================
 
+{Project} has no default remote endpoint defined.
 The previous sections described how to manipulate remotes in general,
 and in particular these are the commands for a user to restore the library
 behavior from before {Project}, where using the `library://` URI would
