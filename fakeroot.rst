@@ -161,6 +161,8 @@ commands:
 The option is automatically implied when doing a build as an
 unprivileged user.
 
+.. _build:
+
 Build
 =====
 

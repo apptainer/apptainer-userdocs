@@ -285,10 +285,19 @@ If you do not want to switch remote with ``remote use`` you can:
 Restoring pre-{Project} library behavior
 ========================================
 
-By default, {Project} has no remote endpoint defined.
-The previous sections described how to manipulate remotes in general,
-and in particular these are the commands for a user to restore the library
-behavior from before {Project}, where using the `library://` URI would
+{Project}'s default remote endpoint configures only a public key
+server, it does not support the ``library://`` protocol.
+Formerly the default was set to point to Sylabs servers, but the
+read/write support of the ``oras://`` protocol by for example the
+:ref:`GitHub Container Registry <github_container_registry>`
+makes it unnecessary.
+The remote endpoint was also formerly used for builds using the 
+build ``--remote`` option, but {Project} does not support that.
+Instead, it supports :ref:`unprivileged local builds <build>`.
+
+If you would still like to have the previous default,
+these are the commands to restore the library
+behavior from before {Project}, where using the ``library://`` URI would
 download from the Sylabs Cloud anonymously:
 
 .. code::
@@ -316,7 +325,6 @@ download from the Sylabs Cloud anonymously:
 To set the defaults system-wide see the corresponding section in the
 `admin guide
 <{admindocs}/configfiles.html#restoring-pre-{command}-library-behavior>`_.
-
 
 **************************
  Keyserver Configurations
