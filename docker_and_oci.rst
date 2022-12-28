@@ -278,6 +278,8 @@ your NGC API key.
 See also:
 https://docs.nvidia.com/ngc/ngc-private-registry-user-guide/index.html
 
+.. _github_container_registry:
+
 GitHub Container Registry
 =========================
 
