@@ -565,7 +565,7 @@ Consider the example from the def file above:
 .. code:: {command}
 
    %labels
-       Author d@sylabs.io
+       Author alice
        Version v0.0.1
        MyLabel Hello World
 
