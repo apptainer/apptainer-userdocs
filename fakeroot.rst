@@ -17,6 +17,7 @@ the host:
    ``/etc/subgid`` mapping files, {Project} will use that method first.
    This is also commonly referred to as "rootless mode" and is the
    method used for example by Podman.
+   This mode requires user namespaces to be enabled.
    It is the most complete emulation but it requires administrator setup
    as described in the `admin guide
    <{admindocs}/user_namespace.html#rootless-fakeroot-feature>`__.
@@ -26,7 +27,8 @@ the host:
    Those elevated privileges on the host come from either a setuid-root
    install of {Project} or via the host ``newuidmap`` and ``newgidmap``
    commands.
-#. Otherwise if user namespaces are available, {Project} will map only
+#. Otherwise if user namespaces are available without ``/etc/subuid``
+   and ``/etc/subguid`` mapping files, {Project} will map only
    the root user id to the original unprivileged user.
    This method is sometimes called a "root-mapped user namespace".
    Since this method is not as complete an emulation as rootless mode,
@@ -58,8 +60,7 @@ the host:
    root-mapped user namespace causes the kernel to allow bypassing
    restrictions on files that are actually owned by the original user
    on the host, things that the fakeroot command cannot do by itself.
-   When used in combination with ``--overlay`` or ``--writable-tmpfs``
-   then this mode requires the container image to be a sandbox.
+   Also, this mode requires the container image to be a sandbox.
 
 As mentioned above, the "rootless" fakeroot mode is the most complete
 emulation.  That mode has almost the same administrative rights as root
