@@ -124,11 +124,9 @@ specific flags like so:
 .. code::
 
    # Generate a key pair
-   $ ssh-keygen -t rsa -b 2048
+   $ ssh-keygen -t rsa -b 4096 -m pem -N ''
    Generating public/private rsa key pair.
    Enter file in which to save the key (/home/vagrant/.ssh/id_rsa): rsa
-   Enter passphrase (empty for no passphrase):
-   Enter same passphrase again:
    [snip...]
 
    # Convert the public key to PEM PKCS1 format
