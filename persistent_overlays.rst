@@ -27,20 +27,28 @@ persist, use the ``--writable-tmpfs`` option. This stores all changes in
 an in-memory temporary filesystem which is discarded as soon as the
 container finishes executing.
 
-You can use persistent overlays with the following commands: ``run``,
-``exec``, ``shell``, and ``instance start``.
+.. note::
+
+   The ``--writable-tmpfs`` size is controlled by ``sessiondir max size`` in
+   ``{command}.conf``. This defaults to 64MiB, and may need to be increased if
+   your workflows create larger temporary files.
+
+You can use persistent overlays with the following commands:
+
+-  ``run``
+-  ``exec``
+-  ``shell``
+-  ``instance start``
 
 *******
  Usage
 *******
 
-File system image overlay
-=========================
+Filesystem image overlay
+========================
 
 {Project} provides a command ``{command} overlay
-create`` to create persistent overlay images. You can create a single
-EXT3 overlay image or adding a EXT3 writable overlay partition to an
-existing SIF image.
+create`` to create persistent overlay images.
 
 .. note::
 
@@ -54,20 +62,6 @@ For example, to create a 1 GiB overlay image:
 
    $ {command} overlay create --size 1024 /tmp/ext3_overlay.img
 
-To add a 1 GiB writable overlay partition to an existing SIF image:
-
-.. code::
-
-   $ {command} build ubuntu.sif library://ubuntu
-   ...
-   $ {command} overlay create --size 1024 ubuntu.sif
-
-.. warning::
-
-   It is not possible to add a writable overlay partition to a
-   **signed**, **encrypted** SIF image or if the SIF image already
-   contain a writable overlay partition.
-
 ``{command} overlay create`` also provides an option ``--create-dir``
 to create additional directories owned by the calling user, it can be
 specified multiple times to create many directories. This is
@@ -80,8 +74,44 @@ So for example:
 
    $ {command} build /tmp/nginx.sif docker://nginx
    ...
-   $ {command} overlay create --size 1024 --create-dir /var/cache/nginx /tmp/nginx.sif
-   $ echo "test" | {command} exec /tmp/nginx.sif sh -c "cat > /var/cache/nginx/test"
+   $ {command} overlay create --size 1024 --create-dir /var/cache/nginx /tmp/nginx_overlay.img
+   $ echo "test" | {command} exec --overlay /tmp/nginx_overlay.img /tmp/nginx.sif sh -c "cat > /var/cache/nginx/test"
+
+Sparse overlay images
+---------------------
+
+{Project} allows the creation of overlay images as sparse files.
+A sparse overlay image only takes up space on disk as data is written to it. A
+standard overlay image will use an amount of disk space equal to its size, from
+the time that it is created.
+
+To create a sparse overlay image, use the ``--sparse`` flag.
+
+.. code::
+
+   $ {command} overlay create --sparse --size 1024 /tmp/ext3_overlay.img
+
+Note that ``ls`` will show the full size of the file, while ``du`` will show the
+space on disk that the file is currently using:
+
+.. code::
+
+   $ ls -lah /tmp/ext3_overlay.img 
+   -rw-------. 1 user user 1.0G Jan 27 11:47 /tmp/ext3_overlay.img
+
+   $ du -h /tmp/ext3_overlay.img 
+   33M     /tmp/ext3_overlay.img
+
+If you copy or move the sparse image you should ensure that the tool you use to
+do so supports sparse files, which may require enabling an option. Failure to
+copy or move the file with sparse file support will lead to it taking its full
+size on disk in the new location.
+
+Create an overlay image manually
+--------------------------------
+
+You can use tools like ``dd`` and ``mkfs.ext3`` to create and format an
+empty ext3 file system image that will be used as an overlay.
 
 Fakeroot with overlay
 =====================
@@ -89,7 +119,7 @@ Fakeroot with overlay
 If you want to be able to modify the container with an overlay
 (including with ``--writable-tmpfs``) you will generally want to run it
 either as root or with ``--fakeroot`` because usually containers are
-modifiable only by root. 
+modifiable only by root.
 
 If that is the way you plan to use the image, then when creating the
 filesystem image with ``overlay create`` also give it a ``--fakeroot``
@@ -131,8 +161,9 @@ It is supported, however, and this section describes how to use it.
 
 .. note::
 
-   For security reasons, with setuid mode only root may use a bare
-   directory as an overlay.
+   For security reasons, if {Project} is installed in setuid mode, you must
+   be root to use a bare directory as an overlay. ext3 file system images can be
+   used as overlays without root privileges.
    If unprivileged user namespaces are also available, however, the
    ``--userns`` or ``--fakeroot`` options should make it work.
 
@@ -197,13 +228,44 @@ Continuing the above example:
 Overlay embedded in SIF
 =======================
 
-It is possible to embed an overlay image in the SIF file that holds a
+It is possible to embed an overlay image into the SIF file that holds a
 container. This allows the read-only container image and your
-modifications to it to be managed as a single file.
-An example of doing that directly with the ``{command} overlay create``
-command was shown above,
-but an external image file can also be added to a SIF file with the
-``{command} sif add`` command like this:
+modifications to it to be managed as a single file. 
+
+To add a 1 GiB writable overlay partition to an existing SIF image:
+
+.. code::
+
+   $ {command} overlay create --size 1024 ubuntu.sif
+
+.. warning::
+
+   It is not possible to add a writable overlay partition to a
+   **signed**, **encrypted** SIF image or if the SIF image already
+   contains a writable overlay partition.
+
+``{command} overlay create`` also provides an option ``--create-dir``
+to create additional directories owned by the calling user, it can be
+specified multiple times to create many directories. This is
+particularly useful when you need to make a directory writable by your
+user.
+
+So for example:
+
+.. code::
+
+   $ {command} build /tmp/nginx.sif docker://nginx
+   $ {command} overlay create --size 1024 --create-dir /var/cache/nginx /tmp/nginx.sif
+   $ echo "test" | {command} exec /tmp/nginx.sif sh -c "cat > /var/cache/nginx/test"
+
+
+Embed an overlay image in SIF
+-----------------------------
+
+To embed an existing overlay in a SIF image, or to create an empty overlay,
+use the ``sif add`` subcommand.
+
+In order to do this, you must first create a file system image:
 
 .. code::
 

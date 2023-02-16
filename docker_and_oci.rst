@@ -682,6 +682,13 @@ A writable overlay file in a SIF partition cannot be used in parallel.
 {Project} will refuse to run concurrently using the same SIF
 writable overlay partition.
 
+.. note::
+
+   The ``--writable-tmpfs`` size is controlled by ``sessiondir max size`` in
+   ``{command}.conf``. This defaults to 64MiB, and may need to be increased if
+   your workflows create larger temporary files.
+
+
 Dockerfile ``USER``
 ===================
 
