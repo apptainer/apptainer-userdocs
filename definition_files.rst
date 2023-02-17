@@ -102,9 +102,9 @@ Other bootstrap agents
    Debian and Ubuntu)
 -  oci (bundle compliant with OCI Image Specification)
 -  oci-archive (tar files obeying the OCI Image Layout Specification)
--  :ref:`docker-daemon <docker-daemon-archive>` (images managed by the
+-  :ref:`docker-daemon <docker-daemon>` (images managed by the
    locally running docker daemon)
--  :ref:`docker-archive <docker-daemon-archive>` (archived docker
+-  :ref:`docker-archive <docker-archive>` (saved docker
    images)
 -  :ref:`arch <build-arch>` (Arch Linux)
 -  :ref:`busybox <build-busybox>` (BusyBox)

@@ -106,14 +106,20 @@ below with their respective functionality.
 #. **{ENVPREFIX}_DNS**: A list of the DNS server addresses separated by
    commas to be added in ``resolv.conf``.
 
+#. **{ENVPREFIX}_DOCKER_HOST**: Host address / socket to use when pulling images
+   from a ``docker-daemon`` source. ``DOCKER_HOST`` without the
+   ``{ENVPREFIX}_`` prefix is also accepted.
+
 #. **{ENVPREFIX}_DOCKER_LOGIN**: To specify the interactive prompt for
    docker authentication.
 
-#. **{ENVPREFIX}_DOCKER_USERNAME**: To specify a username for docker
-   authentication.
-
 #. **{ENVPREFIX}_DOCKER_PASSWORD**: To specify the password for docker
-   authentication.
+   authentication. ``DOCKER_PASSWORD`` without the ``{ENVPREFIX}_`` prefix is
+   also accepted.
+
+#. **{ENVPREFIX}_DOCKER_USERNAME**: To specify the username for docker
+   authentication. ``DOCKER_USERNAME`` without the ``{ENVPREFIX}_`` prefix is
+   also accepted.
 
 #. **{ENVPREFIX}_DOWNLOAD_CONCURRENCY**: To specify how many concurrent streams
    when downloading (pulling) an image from cloud library.
@@ -939,21 +945,16 @@ only the bare essentials such that the ``%post`` section has what it
 needs to properly complete the build. One common package you may want to
 install when using the zypper build module is ``zypper`` itself.
 
-.. _docker-daemon-archive:
+.. _docker-daemon:
 
-``docker-daemon`` and ``docker-archive`` bootstrap agents
-=========================================================
-
-If you are using docker locally there are two options for creating
-{Project} images without the need for a repository. You can either
-build a SIF from a ``docker-save`` tar file or you can convert any
-docker image present in docker's daemon internal storage.
+``docker-daemon`` bootstrap agent
+=================================
 
 Overview
 --------
 
-``docker-daemon`` allows you to build a SIF from any docker image
-currently residing in docker's daemon internal storage:
+``docker-daemon`` allows you to build a SIF from any Docker image
+currently residing in the Docker daemon's internal storage:
 
 .. code:: console
 
@@ -973,8 +974,40 @@ currently residing in docker's daemon internal storage:
    INFO:    Creating SIF file...
    {Project}>
 
-while ``docker-archive`` permits you to do the same thing starting from
-a docker image stored in a ``docker-save`` formatted tar file:
+The ``{ENVPREFIX}_DOCKER_HOST`` or ``DOCKER_HOST`` environment variables may be
+set to instruct {{Project}} to pull images from a Docker daemon that is not
+running at the default location. For example, when using a virtualized Docker you may be instructed to set ``DOCKER_HOST`` e.g.
+
+.. code:: 
+
+   To connect the Docker client to the Docker daemon, please set
+   export DOCKER_HOST=tcp://192.168.59.103:2375
+
+Keywords
+--------
+
+In a definition file, the ``docker-daemon`` bootstrap agent requires the source container reference to
+be provided with the ``From:`` keyword:
+
+.. code:: {command}
+
+   Bootstrap: docker-daemon
+   From: <image>:<tag>
+
+where both ``<image>`` and ``<tag>`` are mandatory fields that must be
+written explicitly.
+
+
+.. _docker-daemon:
+
+``docker-archive`` bootstrap agent
+==================================
+
+Overview
+--------
+
+The ``docker-archive`` boostrap agent allows you to create a {Project} image
+from a docker image stored in a ``docker save`` formatted tar file:
 
 .. code:: console
 
@@ -995,24 +1028,13 @@ a docker image stored in a ``docker-save`` formatted tar file:
 Keywords
 --------
 
-The ``docker-daemon`` bootstrap agent can be used in {aProject}
-definition file as follows:
+In a definition file, the ``docker-archive`` bootstrap agent requires the path
+to the tar file containing the image to be specified with the ``From:`` keyword.
 
 .. code:: {command}
 
-   From: docker-daemon:<image>:<tag>
-
-where both ``<image>`` and ``<tag>`` are mandatory fields that must be
-written explicitly. The ``docker-archive`` bootstrap agent requires
-instead the path to the tar file containing the image:
-
-.. code:: {command}
-
-   From: docker-archive:<path-to-tar-file>
-
-Note that differently from the ``docker://`` bootstrap agent both
-``docker-daemon`` and ``docker-archive`` don't require a double slash
-``//`` after the colon in the agent name.
+   Bootstrap: docker-archive
+   From: <path-to-tar-file>
 
 .. _scratch-agent:
 
@@ -1062,6 +1084,7 @@ The resulting container provides a shell, and is 696KiB in size:
    Hello from a 696KiB container
 
 Keywords
+--------
 
 .. code:: {command}
 

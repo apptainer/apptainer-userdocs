@@ -189,6 +189,11 @@ secrets into jobs within CI pipelines.
 respectively. These environment variables will override any stored
 credentials.
 
+If ``DOCKER_USERNAME`` and ``DOCKER_PASSWORD``, without the ``{ENVPREFIX}_``
+prefix, are set they will also be used provided the ``{ENVPREFIX}_`` equivalent
+is not overriding them. This allows a single set of environment variables to be
+set for both ``{command}`` and ``docker`` operations.
+
 .. code::
 
    $ export {ENVPREFIX}_DOCKER_USERNAME=myuser
