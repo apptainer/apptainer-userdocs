@@ -581,8 +581,9 @@ If you need additional help or support, see https://apptainer.org/help.
 
 .. _installation-request:
 
-{Project} on a shared resource
-----------------------------------
+***********************************
+ {Project} on a shared resource
+***********************************
 
 Perhaps you are a user who wants a few talking points and background to
 share with your administrator. Or maybe you are an administrator who
