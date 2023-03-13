@@ -115,7 +115,7 @@ If changes were made to the writable container before conversion, there
 is no record of those changes in the {Project} definition file,
 which compromises the reproducibility of your container. It is therefore
 preferable to build production containers directly from {aProject}
-definition file, instead.
+definition file instead.
 
 *******************************************************
 Building containers from {Project} definition files
@@ -261,7 +261,7 @@ with care.
 ============
 
 You can build into the same sandbox container multiple times (though the
-results may be unpredictable, and under most circumstances, it would be
+results may be unpredictable, and under most circumstances, it is
 preferable to delete your container and start from scratch).
 
 By default, if you build into an existing sandbox container, the

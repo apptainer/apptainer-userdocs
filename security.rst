@@ -19,7 +19,7 @@ We disclose vulnerabilities found in {Project} through public
 CVE reports, as well as notifications on our community channels. We
 encourage all users to monitor new releases of {Project} for
 security information. Security patches are applied to the latest
-open-source release.
+release.
 
 **********
 Background
@@ -209,7 +209,7 @@ encryption and decryption are performed using the Linux kernel's LUKS2
 feature. This is the same technology routinely used for full disk
 encryption. The encrypted container is mounted directly through the
 kernel. Unlike other container formats, the encrypted container is run
-without ever decrypted its contents to disk.
+without ever decrypting its contents to disk.
 Encryption and decryption is not currently supported in non-suid mode.
 
 *******************************
