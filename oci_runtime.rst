@@ -3,21 +3,21 @@
 ..
    TODO-MUST something with the long json snippet ...
 
-#####################
- OCI Runtime Support
-#####################
+###################
+OCI Runtime Support
+###################
 
 .. _sec:oci_runtime_overview:
 
-**********
- Overview
-**********
+********
+Overview
+********
 
 OCI is an acronym for the `Open Containers Initiative
 <https://www.opencontainers.org/>`_ - an independent organization whose
 mandate is to develop open standards relating to containerization. To
 date, standardization efforts have focused on container formats and
-runtimes. 
+runtimes.
 It is {Project}'s compliance with the OCI
 Runtime Specification that is of concern here, not container formats.
 
@@ -37,9 +37,9 @@ command group.
 ..
    TODO Compliance testing/validation  - need to document ... https://github.com/opencontainers/runtime-tools
 
-********************************
- Mounted OCI Filesystem Bundles
-********************************
+******************************
+Mounted OCI Filesystem Bundles
+******************************
 
 Mounting an OCI Filesystem Bundle
 =================================
@@ -784,9 +784,9 @@ properties, refer to the `implementation guide
    filesystem bundle that conforms with the OCI runtime specification,
    this extensibility is evident.
 
-********************************************
- Creating OCI Compliant Container Instances
-********************************************
+******************************************
+Creating OCI Compliant Container Instances
+******************************************
 
 SIF files encapsulate the OCI runtime. By 'OCI mounting' a SIF file (see
 above), this encapsulated runtime is revealed; please refer to the note
@@ -880,9 +880,9 @@ in deployments where auditing requirements exist.
 ..
    sandbox???
 
-***********************************
- Unmounting OCI Filesystem Bundles
-***********************************
+*********************************
+Unmounting OCI Filesystem Bundles
+*********************************
 
 To unmount a mounted OCI filesystem bundle, the following command should
 be issued:

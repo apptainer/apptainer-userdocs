@@ -1,17 +1,17 @@
 .. _contributing:
 
-##############
- Contributing
-##############
+############
+Contributing
+############
 
 {Project} is an open source project, meaning we have the challenge
 of limited resources. We are grateful for any support that you can
 offer. Helping other users, raising issues, helping write documentation,
 or contributing code are all ways to help!
 
-********************
- Join the community
-********************
+******************
+Join the community
+******************
 
 This is a huge endeavor, and your help would be greatly appreciated!
 Post to online communities about {Project}, and request that your
@@ -25,9 +25,9 @@ join those are on the `apptainer help page <https://apptainer.org/help/>`_.
 
 .. _report-a-issue:
 
-****************
- Raise an Issue
-****************
+**************
+Raise an Issue
+**************
 
 For general bugs/issues, you can open an issue `at the GitHub repo
 <https://github.com/{orgrepo}/issues/new>`_. However, if you
@@ -36,9 +36,9 @@ security@apptainer.org. More information about the {Project} security policies
 and procedures can be found `here
 <https://apptainer.org/security-policy/>`__
 
-*********************
- Write Documentation
-*********************
+*******************
+Write Documentation
+*******************
 
 We (like almost all open source software providers) have a documentation
 dilemma… We tend to focus on the code features and functionality before
@@ -75,9 +75,9 @@ identical for contributions to the documentation and the code base.
 
 .. _contribute-to-the-code:
 
-************************
- Contribute to the code
-************************
+**********************
+Contribute to the code
+**********************
 
 We use the traditional `GitHub Flow
 <https://guides.github.com/introduction/flow/>`_ to develop. This means
@@ -128,7 +128,7 @@ Step 3. Make your changes
 On your new branch, go nuts! Make changes, test them, and when you are
 happy commit the changes to the branch.
 The {Project} requires that all contributed git commits use the ``-s`` option
-which adds a ``Signed-off-by`` line to indicate agreement with the 
+which adds a ``Signed-off-by`` line to indicate agreement with the
 `Developer Certificate of Origin <https://developercertificate.org>`_.
 
 .. code::

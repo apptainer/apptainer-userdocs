@@ -1,12 +1,12 @@
 .. _library_api_registries:
 
-########################
- Library API Registries
-########################
+######################
+Library API Registries
+######################
 
-**********
- Overview
-**********
+********
+Overview
+********
 
 {Project} enables users to use `Library API Container Registries
 <https://singularityhub.github.io/library-api/#/?id=library-api>`_ to
@@ -23,9 +23,9 @@ Once you have authenticated, you are ready to push your container!
 
 .. _push:
 
-*********************
- Pushing a Container
-*********************
+*******************
+Pushing a Container
+*******************
 
 The ``{command} push`` command will push a container to the container
 library with the given URL. Here's an example of a typical push command:
@@ -72,9 +72,9 @@ your quota usage and the direct URL to view the container in your web browser.
 
 .. _pull:
 
-*********************
- Pulling a container
-*********************
+*******************
+Pulling a container
+*******************
 
 The ``{command} pull`` command will download a container from an
 `OCI Registry <https://hub.docker.com/>`_ (``docker://``),
@@ -133,9 +133,9 @@ etc...
    automatically, but it's good practice to always specify your output
    file.
 
-****************************
- Verify/Sign your Container
-****************************
+**************************
+Verify/Sign your Container
+**************************
 
 Verify containers that you pull from the library, ensuring they are
 bit-for-bit reproductions of the original image.
@@ -146,9 +146,9 @@ sign your own containers <sign_your_own_containers>`.
 
 .. _search_the_library:
 
-**************************************
- Searching the Library for Containers
-**************************************
+************************************
+Searching the Library for Containers
+************************************
 
 To find interesting or useful containers in a library, you can open that
 library in your browser if that project supports a web GUI.

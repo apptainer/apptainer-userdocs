@@ -1,12 +1,12 @@
 .. _endpoints:
 
-##################
- Remote Endpoints
-##################
+################
+Remote Endpoints
+################
 
-**********
- Overview
-**********
+********
+Overview
+********
 
 The ``remote`` command group allows users to manage the service
 endpoints {Project} will interact with for many common command
@@ -42,9 +42,9 @@ or `instance
 
 .. _sec:managing-remote-endpoints:
 
-***************************
- Managing Remote Endpoints
-***************************
+*************************
+Managing Remote Endpoints
+*************************
 
 A fresh installation of {Project} is configured with the ``DefaultRemote``,
 which does not support the Library API as it is only configured with a
@@ -291,7 +291,7 @@ Formerly the default was set to point to Sylabs servers, but the
 read/write support of the ``oras://`` protocol by for example the
 :ref:`GitHub Container Registry <github_container_registry>`
 makes it unnecessary.
-The remote endpoint was also formerly used for builds using the 
+The remote endpoint was also formerly used for builds using the
 build ``--remote`` option, but {Project} does not support that.
 Instead, it supports :ref:`unprivileged local builds <build>`.
 
@@ -326,9 +326,9 @@ To set the defaults system-wide see the corresponding section in the
 `admin guide
 <{admindocs}/configfiles.html#restoring-pre-{command}-library-behavior>`_.
 
-**************************
- Keyserver Configurations
-**************************
+************************
+Keyserver Configurations
+************************
 
 By default, {Project} will use the keyserver correlated to the
 active cloud service endpoint. This behavior can be changed or
@@ -456,9 +456,9 @@ Now we can see that ``https://pgp.example.com`` is logged in:
 
 .. _sec:managing_oci_registries:
 
-*************************
- Managing OCI Registries
-*************************
+***********************
+Managing OCI Registries
+***********************
 
 It is common for users of {Project} to use OCI registries as sources
 for their container images. Some registries require credentials to

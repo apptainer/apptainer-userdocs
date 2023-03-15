@@ -1,8 +1,8 @@
 .. _singularity_compatibility:
 
-###########################
- Singularity Compatibility
-###########################
+#########################
+Singularity Compatibility
+#########################
 
 Since the community decided to `move the project into the Linux Foundation
 <https://apptainer.org/news/community-announcement-20211130>`_ with the
@@ -12,9 +12,9 @@ the move, please reach out to the `community <https://apptainer.org/help>`_ so
 we can help you!
 
 
-*************************
- SIF Image Compatibility
-*************************
+***********************
+SIF Image Compatibility
+***********************
 
 The {Project} project has decided to make no changes related to the project
 renaming at the image format level. This means that default metadata within
@@ -30,9 +30,9 @@ collaborating with colleagues that still use a Singularity installation.
 
 .. _singularity_environment_variable_compatibility:
 
-***************************************************
- Singularity Prefixed Environment Variable Support
-***************************************************
+*************************************************
+Singularity Prefixed Environment Variable Support
+*************************************************
 
 {Project} respects environment variables with the ``SINGULARITY_`` and
 ``SINGULARITYENV_`` prefixes when their respective ``{ENVPREFIX}_`` and
@@ -82,9 +82,9 @@ set to create the same environment variable in the container in case they were
 unaware of one of them existing in their environment.
 
 
-*****************************
- Singularity Command Symlink
-*****************************
+***************************
+Singularity Command Symlink
+***************************
 
 With the same intention as the environment variable handling, {Project}
 installations will include a symlink to the ``{command}`` binary named
@@ -102,9 +102,9 @@ underlying binary:
   {command} version {InstallationVersion}
 
 
-****************************************
- Automatic User Configuration Migration
-****************************************
+**************************************
+Automatic User Configuration Migration
+**************************************
 
 {Project} stores user configuration in files and directories under
 ``~/.{command}``. Invocation of the ``{command}`` command will automatically

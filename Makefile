@@ -61,7 +61,7 @@ apptainer_source/builddir/apptainer:
 
 cli/apptainer.rst: apptainer_source/builddir/apptainer
 	cd apptainer_source &&\
-	go run -tags "$(GO_BUILD_TAGS)" ./cmd/docs rst --dir ../cli 
+	go run -tags "$(GO_BUILD_TAGS)" ./cmd/docs rst --dir ../cli
 
 endif
 

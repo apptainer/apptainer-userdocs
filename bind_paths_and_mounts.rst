@@ -1,8 +1,8 @@
 .. _bind-paths-and-mounts:
 
-#######################
- Bind Paths and Mounts
-#######################
+#####################
+Bind Paths and Mounts
+#####################
 
 .. _sec:bindpaths:
 
@@ -12,9 +12,9 @@ Unless `disabled by the system administrator
 directories within your container using bind mounts. This allows you to
 read and write data on the host system with ease.
 
-**********
- Overview
-**********
+********
+Overview
+********
 
 When {Project} 'swaps' the host operating system for the one inside
 your container, the host file systems becomes inaccessible. However, you
@@ -23,9 +23,9 @@ container. To enable this functionality, {Project} will bind
 directories back into the container via two primary methods:
 system-defined bind paths and user-defined bind paths.
 
-***************************
- System-defined bind paths
-***************************
+*************************
+System-defined bind paths
+*************************
 
 The system administrator has the ability to define what bind paths will
 be included automatically inside each container. Some bind paths are
@@ -82,9 +82,9 @@ To disable all ``bind path`` entries set in ``{command}.conf``, use
 
 .. _user-defined-bind-paths:
 
-*************************
- User-defined bind paths
-*************************
+***********************
+User-defined bind paths
+***********************
 
 Unless the system administrator has `disabled user control of binds
 <{admindocs}/configfiles.html#bind-mount-management>`_,
@@ -267,9 +267,9 @@ host ``$HOME`` directory with the ``--no-home`` flag.
 
    $ {command} shell --containall my_container.sif
 
-*************
- FUSE mounts
-*************
+***********
+FUSE mounts
+***********
 
 Filesystem in Userspace (FUSE) is an interface to allow filesystems to
 be mounted using code that runs in userspace, rather than in the Linux
@@ -301,7 +301,7 @@ into the container.
 If you are using an older distribution that provides FUSE commands such
 as ``sshfs`` based on FUSE 2 then you can install FUSE 3 versions of the
 commands you need inside your container. EL7 distributions can install a
-compatible version of FUSE 3 from the EPEL repository. 
+compatible version of FUSE 3 from the EPEL repository.
 
 FUSE mount definitions
 ======================
@@ -366,9 +366,9 @@ added to your container, you can use the ``container`` mount type:
    {Project}> cat /server/etc/hostname
    server
 
-**************
- Image Mounts
-**************
+************
+Image Mounts
+************
 
 In {Project} you can mount a directory contained in an
 image file into a container. This may be useful if you want to

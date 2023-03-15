@@ -1,8 +1,8 @@
 .. _signnverify:
 
-##################################
- Signing and Verifying Containers
-##################################
+################################
+Signing and Verifying Containers
+################################
 
 .. _sec:signnverify:
 
@@ -20,9 +20,9 @@ intended it.
 
 .. _verify_container_from_remote_sources:
 
-******************************************
- Verifying containers from remote sources
-******************************************
+****************************************
+Verifying containers from remote sources
+****************************************
 
 The ``verify`` command will allow you to verify that a container has
 been signed using a PGP key. This ensures that the container image on your disk
@@ -47,14 +47,14 @@ is a bit-for-bit reproduction of the original image.
 In this example you can see that **Ian Kaneshiro** has signed the
 container.
 
-This feature is available with SIF images like those you can pull from container 
+This feature is available with SIF images like those you can pull from container
 libraries or OCI registries via `oras://`.
 
 .. _sign_your_own_containers:
 
-*****************************
- Signing your own containers
-*****************************
+***************************
+Signing your own containers
+***************************
 
 Generating and managing PGP keys
 ================================
@@ -276,7 +276,7 @@ option to ``sign`` and ``verify``.
 .. code::
 
    $ {command} sign --sif-id 1 my_container.sif
-   
+
    Signing image: my_container.sif
    Enter key passphrase :
    Signature created and applied to my_container.sif
