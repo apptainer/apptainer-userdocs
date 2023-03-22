@@ -1,6 +1,6 @@
-##########################
- {Project} User Guide
-##########################
+########################
+{Project} User Guide
+########################
 
 Welcome to the {Project} User Guide!
 
@@ -11,9 +11,9 @@ and running containers.
 For a detailed guide to installation and configuration, please see the
 separate `Admin Guide <{admindocs}>`_ for this version of {Project}.
 
-******************************************
- Getting Started & Background Information
-******************************************
+****************************************
+Getting Started & Background Information
+****************************************
 
 .. toctree::
    :maxdepth: 2
@@ -22,9 +22,9 @@ separate `Admin Guide <{admindocs}>`_ for this version of {Project}.
    Quick Start <quick_start>
    Security in {Project} <security>
 
-*********************
- Building Containers
-*********************
+*******************
+Building Containers
+*******************
 
 Learn how to write a definition file that can be used to build a
 container. Understand the environment within a build and how to build
@@ -38,15 +38,15 @@ as a non-root user.
    Build Environment <build_env>
    Fakeroot feature <fakeroot>
 
-********************************
- Container Signing & Encryption
-********************************
+******************************
+Container Signing & Encryption
+******************************
 
 {Project} allows containers to be signed using a PGP key. The
 signature travels with the container image, allowing you to verify that
 the image is unmodified at any time. Encryption of containers using
 LUKS2 is also supported. Encrypted containers can be run without
-decrypting them to disk first.  
+decrypting them to disk first.
 Using encrypted containers currently requires a setuid installation of
 {Project}.
 
@@ -57,9 +57,9 @@ Using encrypted containers currently requires a setuid installation of
    Key management commands <key_commands>
    Encrypted Containers <encryption>
 
-***************************
- Sharing & Online Services
-***************************
+*************************
+Sharing & Online Services
+*************************
 
 .. toctree::
    :maxdepth: 1
@@ -67,9 +67,9 @@ Using encrypted containers currently requires a setuid installation of
    Remote Endpoints <endpoint>
    Library API Registries <library_api>
 
-****************
- Advanced Usage
-****************
+**************
+Advanced Usage
+**************
 
 Once you've understood the basics, explore all the options which
 {Project} provides for accessing data, running persistent services
@@ -89,9 +89,9 @@ networking and security configuration.
    Limiting Container Resources <cgroups>
    Application Checkpointing <checkpoint>
 
-***************
- Compatibility
-***************
+*************
+Compatibility
+*************
 
 {Project} has unique benefits and supports easy access to GPUs and
 other hardware. It also strives for compatibility with Docker/OCI
@@ -107,9 +107,9 @@ Docker, as well as how to use containerized MPI and GPU applications.
    {Project} and MPI applications <mpi>
    GPU Support <gpu>
 
-**************
- Get Involved
-**************
+************
+Get Involved
+************
 
 We'd love you to get involved in the {Project} community! Whether
 through contributing feature and fixes, helping to answer questions from
@@ -120,9 +120,9 @@ other users, or simply testing new releases.
 
    Contributing <contributing>
 
-***********
- Reference
-***********
+*********
+Reference
+*********
 
 .. toctree::
    :maxdepth: 2

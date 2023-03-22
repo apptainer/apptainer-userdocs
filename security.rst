@@ -1,12 +1,12 @@
 .. _security:
 
-###########################
- Security in {Project}
-###########################
+#########################
+Security in {Project}
+#########################
 
-*****************
- Security Policy
-*****************
+***************
+Security Policy
+***************
 
 If you suspect you have found a vulnerability in {Project} we want
 to work with you so that it can be investigated, fixed, and disclosed in
@@ -20,9 +20,9 @@ all users to monitor new releases of {Project} for security
 information. Security patches are applied to the latest open-source
 release.
 
-************
- Background
-************
+**********
+Background
+**********
 
 {Project} grew out of the need to implement a container platform
 that was suitable for use on shared systems, such as HPC clusters. In
@@ -44,11 +44,11 @@ wouldn't normally have permission to do.
 When a user runs a container with {Project}, it is started as a
 normal process running under the user's account. Standard file
 permissions and other security controls based on user accounts, groups,
-and processes apply. 
+and processes apply.
 
-**************************
- Setuid & User Namespaces
-**************************
+************************
+Setuid & User Namespaces
+************************
 
 Using a setuid binary to run container setup operations used to be
 essential to support containers on the older Linux distributions that were
@@ -70,17 +70,17 @@ component is not installed by default and the installer must separately
 install the ``{command}-suid`` package if setuid mode is desired.
 
 In non-suid mode *all* operations run as the user who starts the
-``{command}`` program. 
+``{command}`` program.
 This has some advantages over suid mode:
 
 -  Setuid-root programs are notoriously difficult to make fully secure.
    {Project} keeps the setuid portions to a minimum and has passed a
    careful review, but still it is a risk.
 
--  Linux kernel developers believe that it is inherently unsafe to 
+-  Linux kernel developers believe that it is inherently unsafe to
    allow unprivileged users to modify an underlying filesystem at will
    while kernel code is actively accessing the filesystem
-   (see `this article <https://lwn.net/Articles/652468/>`__). 
+   (see `this article <https://lwn.net/Articles/652468/>`__).
    Kernel filesystem drivers do not and cannot protect against all kinds
    of modifications to that data which it has not itself written, and
    that fact could potentially be used to attack the kernel.
@@ -122,7 +122,7 @@ However, there are also some disadvantages of the non-suid mode:
    scrutiny than the {Project} setuid software, there have been a greater
    number of announced vulnerabilities that are exploitable through
    kernel namespace code than have been announced for {Project} and
-   its predecessor. 
+   its predecessor.
    Security experts generally argue that it is better to have the
    scrutiny than to have "security by obscurity",
    but urgently responding to those vulnerabilities causes additional
@@ -132,9 +132,9 @@ However, there are also some disadvantages of the non-suid mode:
    of the admin guide for details about mitigating the impact of user
    namespace vulnerabilities through disabling network namespaces.
 
-********************************
- Runtime & User Privilege Model
-********************************
+******************************
+Runtime & User Privilege Model
+******************************
 
 While other runtimes have aimed to safely sandbox containers executing
 as the ``root`` user, so that they cannot affect the host system,
@@ -165,9 +165,9 @@ If you do require the additional isolation of the network, devices, PIDs
 etc. provided by other runtimes, {Project} can make use of
 additional namespaces and functionality such as seccomp and cgroups.
 
-********************************
- Singularity Image Format (SIF)
-********************************
+******************************
+Singularity Image Format (SIF)
+******************************
 
 {Project} uses SIF as its default container format. A SIF container
 is a single file, which makes it easy to manage and distribute. Inside
@@ -210,9 +210,9 @@ kernel. Unlike other container formats, an encrypted container is not
 decrypted to disk in order to run it.
 Encryption and decryption is not currently supported in non-suid mode.
 
-*********************************
- Configuration & Runtime Options
-*********************************
+*******************************
+Configuration & Runtime Options
+*******************************
 
 System administrators who manage {Project} can use configuration
 files to set security restrictions, grant or revoke a user's

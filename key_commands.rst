@@ -1,8 +1,8 @@
 .. _key_commands:
 
-##############
- Key commands
-##############
+############
+Key commands
+############
 
 .. _sec:key_commands:
 
@@ -13,9 +13,9 @@ the local keyring and are not related to the cloud keystore.
 
 .. _key_import:
 
-******************************
- Global keyring
-******************************
+****************************
+Global keyring
+****************************
 
 {Project} has a global keyring which can be managed by
 administrators with the ``--global`` option. This global keyring is
@@ -23,9 +23,9 @@ used by `ECL <{admindocs}/configfiles.html#ecl-toml>`_
 and allows administrators to manage public keys used during ECL image
 verification.
 
-********************
- Key import command
-********************
+******************
+Key import command
+******************
 
 {Project} allows you to import keys reading either from binary or
 armored key format and automatically detect if it is a private or public
@@ -130,9 +130,9 @@ detected by the ``key import`` command (no need to specify the format).
 
 .. _key_export:
 
-********************
- Key export command
-********************
+******************
+Key export command
+******************
 
 The key export command allows you to export a key that is on your local
 keyring. This key could be either private or public, and the key can be
@@ -177,9 +177,9 @@ and on binary format instead:
 
 .. _key_remove:
 
-********************
- Key remove command
-********************
+******************
+Key remove command
+******************
 
 In case you would want to remove a public key from your public local
 keystore, you can do so by running the following command:

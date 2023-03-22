@@ -1,17 +1,17 @@
 .. _appendix:
 
-##########
- Appendix
-##########
+########
+Appendix
+########
 
 ..
    TODO oci & oci-archive along with http & https
 
 .. _{command}-environment-variables:
 
-***************************************
- {Project}'s environment variables
-***************************************
+*************************************
+{Project}'s environment variables
+*************************************
 
 {Project} comes with some environment variables you can set or
 modify depending on your needs. You can see them listed alphabetically
@@ -391,9 +391,9 @@ below with their respective functionality.
 
 .. _buildmodules:
 
-***************
- Build Modules
-***************
+*************
+Build Modules
+*************
 
 .. _build-library-module:
 
@@ -978,7 +978,7 @@ The ``{ENVPREFIX}_DOCKER_HOST`` or ``DOCKER_HOST`` environment variables may be
 set to instruct {{Project}} to pull images from a Docker daemon that is not
 running at the default location. For example, when using a virtualized Docker you may be instructed to set ``DOCKER_HOST`` e.g.
 
-.. code:: 
+.. code::
 
    To connect the Docker client to the Docker daemon, please set
    export DOCKER_HOST=tcp://192.168.59.103:2375

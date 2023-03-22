@@ -1,8 +1,8 @@
 .. _running_services:
 
-##################
- Running Services
-##################
+################
+Running Services
+################
 
 There are :ref:`different ways <runcontainer>` in which you can run
 {Project} containers. If you use commands like ``run``, ``exec`` and
@@ -15,9 +15,9 @@ a web server or a database. To run services in {aProject} container
 one should use *instances*. A container instance is a persistent and
 isolated version of the container image that runs in the background.
 
-**********
- Overview
-**********
+********
+Overview
+********
 
 .. _sec:instances:
 
@@ -46,9 +46,9 @@ couldn't easily kill or interface with it. This is a called an orphan
 process. {Project} instances give you the ability to handle services
 properly.
 
-**************************************
- Container Instances in {Project}
-**************************************
+************************************
+Container Instances in {Project}
+************************************
 
 For demonstration, let's use an easy (though somewhat useless) example
 of ``alpine_latest.sif`` from {Project}'s github container registry:
@@ -157,9 +157,9 @@ commands are all identical.
    Note that you must escape the wildcard with a backslash like this
    ``\*`` to pass it properly.
 
-**************************************
- Nginx "Hello-world" in {Project}
-**************************************
+************************************
+Nginx "Hello-world" in {Project}
+************************************
 
 The above example, although not very useful, should serve as a fair
 introduction to the concept of {Project} instances and running
@@ -230,9 +230,9 @@ image. And to confirm that it's correctly running:
 
 Visit localhost on your browser, you should see a Welcome message!
 
-**********************
- Putting all together
-**********************
+********************
+Putting all together
+********************
 
 In this section, we will demonstrate an example of packaging a service
 into a container and running it. The service we will be packaging is an
@@ -569,9 +569,9 @@ running instance.
 
       $ {command} instance start --bind output/dir/outside/:/output/ nginx.sif  web
 
-********************************
- System integration / PID files
-********************************
+******************************
+System integration / PID files
+******************************
 
 If you are running services in containers you may want them to be
 started on boot, and shutdown gracefully automatically. This is usually

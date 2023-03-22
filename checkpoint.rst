@@ -1,12 +1,12 @@
 .. _checkpoint:
 
-####################
- Checkpoint Feature
-####################
+##################
+Checkpoint Feature
+##################
 
-**********
- Overview
-**********
+********
+Overview
+********
 
 The checkpoint feature allows users to transparently save the state of
 containerized applications while they are executing and then restart them from

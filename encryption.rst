@@ -1,15 +1,15 @@
 .. _encryption:
 
-######################
- Encrypted Containers
-######################
+####################
+Encrypted Containers
+####################
 
 Users can build a secure, confidential container environment by
 encrypting the root file system.
 
-**********
- Overview
-**********
+********
+Overview
+********
 
 {Project} provides a feature to build and run encrypted
 containers to allow users to encrypt the file system
@@ -32,9 +32,9 @@ Also, decryption still requires a setuid installation of {Project}.
    Ubuntu 18.04, Debian 10 and CentOS/RHEL 7, but users of older Linux
    versions may have to update.
 
-************************
- Encrypting a container
-************************
+**********************
+Encrypting a container
+**********************
 
 A container can be encrypted either by supplying a plaintext passphrase
 or a PEM file containing an asymmetric RSA public key. Of these two
@@ -163,9 +163,9 @@ In this case it is necessary to use the ``--encrypt`` flag since the
 presence of an environment variable alone will not trigger the encrypted
 build workflow.
 
-********************************
- Running an encrypted container
-********************************
+******************************
+Running an encrypted container
+******************************
 
 To ``run``, ``shell``, or ``exec`` an encrypted image, credentials to
 decrypt the image need to be supplied at runtime either in a key-file or

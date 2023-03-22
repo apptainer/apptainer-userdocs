@@ -1,12 +1,12 @@
 .. _fakeroot:
 
-##################
- Fakeroot feature
-##################
+################
+Fakeroot feature
+################
 
-**********
- Overview
-**********
+********
+Overview
+********
 
 The fakeroot feature allows an unprivileged user to run a container with
 the appearance of running as root.
@@ -75,9 +75,9 @@ which means that this user:
 In addition, the first three modes above may have full privileges inside
 the requested network namespace (see below).
 
-***********************
- Restrictions/security
-***********************
+*********************
+Restrictions/security
+*********************
 
 Filesystem
 ==========
@@ -89,7 +89,7 @@ such as ``/etc/shadow`` or the host ``/root`` directory.
 
 Additionally, all files or directories created by the "fake root"
 user are owned by ``root:root`` inside the container but as ``user:group``
-outside of the container. 
+outside of the container.
 
 Let's consider the following example.  In this case "user" is authorized
 to use the rootless mode fakeroot feature and can use 65536
@@ -118,9 +118,9 @@ system.
 Network
 =======
 
-Normally the kernel prevents unprivileged users from connecting to 
+Normally the kernel prevents unprivileged users from connecting to
 ports below 1024, and the ``ping`` command requires a setcap capability in
-order to work on the network. 
+order to work on the network.
 {Project} allows overriding these restrictions when all of the following
 conditions are true:
 
@@ -140,12 +140,12 @@ on the host with the ``--network-args="portmap"`` option.
 
 .. note::
 
-   Of course an unprivileged user can not map host ports below 
+   Of course an unprivileged user can not map host ports below
    1024 by using for example: ``--network-args="portmap=80:80/tcp"``
 
-*******
- Usage
-*******
+*****
+Usage
+*****
 
 You can work as a fake root user inside a container by using the
 ``--fakeroot`` or ``-f`` option.

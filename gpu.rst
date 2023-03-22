@@ -1,8 +1,8 @@
 .. _gpu:
 
-######################################
- GPU Support (NVIDIA CUDA & AMD ROCm)
-######################################
+####################################
+GPU Support (NVIDIA CUDA & AMD ROCm)
+####################################
 
 {Project} natively supports running application containers that use
 NVIDIA's CUDA GPU compute framework, or AMD's ROCm solution. This allows
@@ -21,9 +21,9 @@ functionality, accessible via the new ``--nvccli`` flag, improves
 compatibility with OCI runtimes and exposes additional container
 configuration options.
 
-*******************************
- NVIDIA GPUs & CUDA (Standard)
-*******************************
+*****************************
+NVIDIA GPUs & CUDA (Standard)
+*****************************
 
 Commands that ``run``, or otherwise execute containers (``shell``,
 ``exec``) can take an ``--nv`` option, which will setup the container's
@@ -190,9 +190,9 @@ driver stack on the host first, by running a CUDA program there or
 ``modprobe nvidia_uvm`` as root, and using ``nvidia-persistenced`` to
 avoid driver unload.
 
-*******************************************
- NVIDIA GPUs & CUDA (nvidia-container-cli)
-*******************************************
+*****************************************
+NVIDIA GPUs & CUDA (nvidia-container-cli)
+*****************************************
 
 The ``--nvccli`` option instructs
 {Project} to perform GPU container setup using the
@@ -231,9 +231,9 @@ Requirements & Limitations
    ``nvidia-container-cli`` also requires writing to the image, so
    either the ``--writable`` (``-w``) or ``--writable-tmpfs`` option
    is also required; if neither is given, ``--writable-tmpfs`` is
-   implied. 
+   implied.
    That also means that the permissions on system directories such as
-   ``/usr/bin`` have to be writable, so either use a sandbox image that 
+   ``/usr/bin`` have to be writable, so either use a sandbox image that
    has that directory writable by the user (for example built with
    the ``--fix-perms`` option) or use ``--fakeroot``.
 
@@ -389,9 +389,9 @@ be found in the container-toolkit guide:
 
 https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/user-guide.html#environment-variables-oci-spec
 
-*****************
- AMD GPUs & ROCm
-*****************
+***************
+AMD GPUs & ROCm
+***************
 
 {Project} has a ``--rocm`` flag to support GPU compute with the
 ROCm framework using AMD Radeon GPU cards.
@@ -484,9 +484,9 @@ tensorflow ``list_local_devices()`` function:
    pciBusID 0000:09:00.0
    ...
 
-*********************
- OpenCL Applications
-*********************
+*******************
+OpenCL Applications
+*******************
 
 Both the ``--rocm`` and ``--nv`` flags will bind the vendor OpenCL
 implementation libraries into a container that is being run. However,

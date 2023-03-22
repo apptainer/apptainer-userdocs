@@ -1,14 +1,14 @@
 .. _build-environment:
 
-###################
- Build Environment
-###################
+#################
+Build Environment
+#################
 
 .. _sec:buildenv:
 
-**********
- Overview
-**********
+********
+Overview
+********
 
 You may wish to customize your build environment by doing things such as
 specifying a custom cache directory for images or sending your Docker
@@ -17,9 +17,9 @@ other topics related to the build environment.
 
 .. _sec:cache:
 
-***************
- Cache Folders
-***************
+*************
+Cache Folders
+*************
 
 {Project} will cache SIF container images generated from remote
 sources, and any OCI/docker layers used to create them. The cache is
@@ -102,9 +102,9 @@ file:
 
    rm ~/.local/share/containers/cache/blob-info-cache-v1.boltdb
 
-****************
- Cache commands
-****************
+**************
+Cache commands
+**************
 
 The ``cache`` command for {Project} allows you to view and clean up
 your cache, without manually inspecting the cache directories.
@@ -212,14 +212,14 @@ use the ``--type`` / ``-T`` option:
 
 .. _sec:temporaryfolders:
 
-*******************
- Temporary Folders
-*******************
+*****************
+Temporary Folders
+*****************
 
 When building a container, or pulling/running {aProject} container
 from a Docker/OCI source, a temporary working space is required. The
 container is constructed in this temporary space before being packaged
-into {aProject} SIF image. 
+into {aProject} SIF image.
 
 The location for temporary directories defaults to ``/tmp``.
 {Project} will also respect the environment variable ``TMPDIR``, and
@@ -248,9 +248,9 @@ Remember to use ``-E`` option to pass the value of
    Set ``{ENVPREFIX}_TMPDIR`` to a disk location, or disable the
    ``tmpfs`` ``/tmp`` mount on your system if you experience problems.
 
-**********************
- Encrypted Containers
-**********************
+********************
+Encrypted Containers
+********************
 
 With {aProject} setuid installation it is possible to build and run
 encrypted containers. The containers are decrypted at runtime entirely
@@ -258,9 +258,9 @@ in kernel space, meaning that no intermediate decrypted data is ever
 present on disk.
 See :ref:`encrypted containers <encryption>` for more details.
 
-***********************
- Environment Variables
-***********************
+*********************
+Environment Variables
+*********************
 
 #. If a flag is represented by both a CLI option and an environment
    variable, and both are set, the CLI option will always take

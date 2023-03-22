@@ -1,8 +1,8 @@
 .. _docker-and-oci:
 
-#######################################
- Support for Docker and OCI Containers
-#######################################
+#####################################
+Support for Docker and OCI Containers
+#####################################
 
 The Open Containers Initiative (OCI) container format, which grew out of
 Docker, is the dominant standard for cloud-focused containerized
@@ -27,9 +27,9 @@ This section will highlight these workflows, and discuss the limitations
 and best practices to keep in mind when creating containers targeting
 both Docker and {Project}.
 
-****************************
- Containers From Docker Hub
-****************************
+**************************
+Containers From Docker Hub
+**************************
 
 Docker Hub is the most common place that projects publish public
 container images. At some point, it's likely that you will want to run
@@ -200,9 +200,9 @@ set for both ``{command}`` and ``docker`` operations.
    $ export {ENVPREFIX}_DOCKER_PASSWORD=mytoken
    $ {command} pull docker://myuser/private
 
-**********************************
- Containers From Other Registries
-**********************************
+********************************
+Containers From Other Registries
+********************************
 
 You can use ``docker://`` URIs with {Project} to pull and run
 containers from OCI registries other than Docker Hub. To do this, you'll
@@ -400,9 +400,9 @@ which details how to use ``az acr token create`` to obtain a token name
 and password pair that can be used to authenticate with the above
 methods.
 
-***************************************
- Building From Docker / OCI Containers
-***************************************
+*************************************
+Building From Docker / OCI Containers
+*************************************
 
 If you wish to use an existing Docker or OCI container as the basis for
 a new container, you will need to specify it as the *bootstrap* source
@@ -632,9 +632,9 @@ filename in the ``From:`` line:
 
 .. _sec:optional_headers_def_files:
 
-***************************************
- Differences and Limitations vs Docker
-***************************************
+*************************************
+Differences and Limitations vs Docker
+*************************************
 
 Though Docker / OCI container compatibility is a goal of {Project},
 there are some differences and limitations due to the way {Project}
@@ -715,7 +715,7 @@ account will generally require modification for use with {Project}.
 ``root`` user, mapped to the user's real account outside of the
 container. When using the fakeroot mode that is based on `/etc/subuid`,
 then inside the container it is possible to change to another user
-account which is mapped to different subuids 
+account which is mapped to different subuids
 belonging to the original user. It may be possible to execute software
 expecting a fixed user account manually inside such a ``--fakeroot`` shell.
 
@@ -910,9 +910,9 @@ around this, use the ``--no-init`` flag to disable the shim:
 
 .. _compat-flag:
 
-*******************************
- Docker-like ``--compat`` Flag
-*******************************
+*****************************
+Docker-like ``--compat`` Flag
+*****************************
 
 If Docker-like behavior is important, {Project} can be started with
 the ``--compat`` flag. This flag is a convenient short-hand alternative
@@ -946,9 +946,9 @@ execute correctly under {Project}. The user namespace and network
 namespace are not used, as these negate benefits of SIF and direct
 access to high performance cluster networks.
 
-****************************
- CMD / ENTRYPOINT Behaviour
-****************************
+**************************
+CMD / ENTRYPOINT Behaviour
+**************************
 
 When a container is run using ``docker``, its default behavior depends
 on the ``CMD`` and/or ``ENTRYPOINT`` set in the ``Dockerfile`` that was
@@ -1068,9 +1068,9 @@ runtimes as there is no evaluated runscript.
 
 .. _sec:best_practices:
 
-*********************************************************
- Best Practices for Docker & {Project} Compatibility
-*********************************************************
+*******************************************************
+Best Practices for Docker & {Project} Compatibility
+*******************************************************
 
 As detailed previously, {Project} can make use of most Docker and
 OCI images without issues, or via simple workarounds. In general,
@@ -1134,9 +1134,9 @@ creating Docker / OCI containers that will also be run using
 
 .. _sec:troubleshooting:
 
-*****************
- Troubleshooting
-*****************
+***************
+Troubleshooting
+***************
 
 Registry Authentication Issues
 ==============================
@@ -1193,9 +1193,9 @@ you believe they are due to a bug in {Project}.
 
 .. _sec:deffile-vs-dockerfile:
 
-**********************************************
- {Project} Definition file vs. Dockerfile
-**********************************************
+********************************************
+{Project} Definition file vs. Dockerfile
+********************************************
 
 An alternative to running Docker containers with {Project} is to
 re-write the ``Dockerfile`` as a definition file, and build a native SIF

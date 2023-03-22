@@ -1,8 +1,8 @@
 .. _quick-start:
 
-#############
- Quick Start
-#############
+###########
+Quick Start
+###########
 
 .. _sec:quickstart:
 
@@ -18,9 +18,9 @@ https://apptainer.org/help
 
 .. _quick-installation:
 
-********************
- Quick Installation
-********************
+******************
+Quick Installation
+******************
 
 You will need a Linux system to run {Project} natively and it's easiest
 to install if you have root access.
@@ -36,9 +36,9 @@ and using {Project} on Mac and Windows machines
 are discussed in the `installation section of the admin guide
 <{admindocs}/installation.html>`__.
 
-*****************************************
- Overview of the {Project} Interface
-*****************************************
+***************************************
+Overview of the {Project} Interface
+***************************************
 
 {Project}'s :ref:`command line interface <cli>` allows you to build
 and interact with containers transparently. You can run programs inside
@@ -178,9 +178,9 @@ particular container, you can view them like so.
 
    $ {command} inspect --helpfile --app=foo foo.sif  # See the help for foo, if provided
 
-********************
- Downloading images
-********************
+******************
+Downloading images
+******************
 
 You can use the `pull
 <cli/{command}_pull.html>`_
@@ -217,9 +217,9 @@ definition file with Dockerfile, please see: :ref:`this section
 
 .. _cowimage:
 
-**********************
- Interact with images
-**********************
+********************
+Interact with images
+********************
 
 You can interact with images in several ways, each of which can accept
 image URIs in addition to a local image path.
@@ -391,9 +391,9 @@ quoting of arguments.
 The ``exec`` command replicates the Docker/OCI behavior as it calls
 the specified executable directly.
 
-********************
- Working with Files
-********************
+******************
+Working with Files
+******************
 
 Files on the host are reachable from within the container.
 
@@ -438,9 +438,9 @@ do with normal Linux commands.
 
 .. _build-images-from-scratch:
 
-***************************
- Build images from scratch
-***************************
+*************************
+Build images from scratch
+*************************
 
 .. _sec:buildimagesfromscratch:
 

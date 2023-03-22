@@ -1,8 +1,8 @@
 .. _security-options:
 
-##################
- Security Options
-##################
+################
+Security Options
+################
 
 .. _sec:security_options:
 
@@ -11,9 +11,9 @@ container runtime. This document describes the methods users
 have for specifying the security scope and context when running
 {Project} containers.
 
-********************
- Linux Capabilities
-********************
+******************
+Linux Capabilities
+******************
 
 .. note::
 
@@ -103,9 +103,9 @@ The ``--add-caps`` and ``--drop-caps`` options will accept the ``all``
 keyword. Of course appropriate caution should be exercised when using
 this keyword.
 
-*******************************
- Building encrypted containers
-*******************************
+*****************************
+Building encrypted containers
+*****************************
 
 With {aProject} setuid installation it is possible to build and run
 encrypted containers.
@@ -113,9 +113,9 @@ The containers are decrypted at runtime entirely in kernel space, meaning
 that no intermediate decrypted data is ever present on disk. See
 :ref:`encrypted containers <encryption>` for more details.
 
-*********************************
- Security related action options
-*********************************
+*******************************
+Security related action options
+*******************************
 
 {Project} has many security related flags that can be passed to the
 action commands; ``shell``, ``exec``, and ``run`` allowing fine grained
