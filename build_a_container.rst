@@ -6,13 +6,14 @@ Build a Container
 
 .. _sec:build_a_container:
 
-``build`` is the "Swiss army knife" of container creation. You can use
-it to download and assemble existing containers from external resources
-like `Docker Hub <https://hub.docker.com/>`_ and other OCI registries.
-You can use it to convert containers between the formats supported by
-{Project}. And you can use it in conjunction with a :ref:`{Project} definition
-<definition-files>` file to create a container from scratch and
-customized it to fit your needs.
+The ``build`` command is the "Swiss army knife" of container creation.
+You can use it to download and assemble existing containers from
+external resources like `Docker Hub <https://hub.docker.com/>`_ and other OCI registries.
+You can use it to convert containers
+between the formats supported by {Project}. And you can use it in
+conjunction with a :ref:`{Project} definition <definition-files>`
+file to create a container from scratch and customized it to fit your
+needs.
 
 ********
 Overview
@@ -21,28 +22,28 @@ Overview
 The ``build`` command accepts a target as input and produces a container
 as output.
 
-The target defines the method that ``build`` uses to create the
-container. It can be one of the following:
+The type of target given determines the method that ``build`` will use
+to create the container. It can be one of the following:
 
 -  URI beginning with **docker://** to build from Docker Hub
 -  URI beginning with **oras://** to build from an OCI registry that supports OCI Artifacts
 -  URI beginning with **library://** to build from the Container Library
 -  URI beginning with **shub://** to build from Singularity Hub
--  path to a **existing container** on your local machine
+-  path to an **existing container** on your local machine
 -  path to a **directory** to build from a sandbox
 -  path to a :ref:`{Project} definition file <definition-files>`
 
-``build`` can produce containers in two different formats that can be
-specified as follows.
+``build`` can produce containers in two different formats, which can be
+specified as follows:
 
--  compressed read-only **Singularity Image File (SIF)** format suitable
-   for production (default)
--  writable **(ch)root directory** called a sandbox for interactive
+-  a compressed read-only **Singularity Image File (SIF)** format,
+   suitable for production *(default)*
+-  a writable **(ch)root directory** called a sandbox, for interactive
    development ( ``--sandbox`` option)
 
 Because ``build`` can accept an existing container as a target and
-create a container in either supported format you can convert existing
-containers from one format to another.
+create a container in either supported format, you can use it to convert
+existing containers from one format to another.
 
 *************************************************
 Downloading an existing container from Docker Hub
@@ -68,11 +69,11 @@ Library.
 
    $ {command} build lolcow.sif library://lolcow
 
-The first argument (``lolcow.sif``) specifies a path and name for your
+The first argument (``lolcow.sif``) specifies the path and name for your
 container. The second argument (``library://lolcow``) gives the
-Container Library URI from which to download. By default the container
+Container Library URI from which to download. By default, the container
 will be converted to a compressed, read-only SIF. If you want your
-container in a writable format use the ``--sandbox`` option.
+container in a writable format, use the ``--sandbox`` option.
 
 .. _create_a_writable_container:
 
@@ -80,16 +81,16 @@ container in a writable format use the ``--sandbox`` option.
 Creating writable ``--sandbox`` directories
 *******************************************
 
-If you wanted to create a container within a writable directory (called
-a sandbox) you can do so with the ``--sandbox`` option.
+If you want to create a container within a writable directory (called a
+*sandbox*) you can do so with the ``--sandbox`` option.
 
 .. code::
 
    $ {command} build --sandbox alpine/ docker://alpine
 
 The resulting directory operates just like a container in a SIF file. To
-make changes within the container, use the ``--writable`` flag when you
-invoke your container.
+make persistent changes within the sandbox container, use the
+``--writable`` flag when you invoke your container.
 
 .. code::
 
@@ -101,9 +102,9 @@ Converting containers from one format to another
 
 If you already have a container saved locally, you can use it as a
 target to build a new container. This allows you convert containers from
-one format to another. For example if you had a sandbox container called
-``development/`` and you wanted to convert it to a SIF container called
-``production.sif`` you could:
+one format to another. For example, if you had a sandbox container
+called ``development/`` and you wanted to convert it to a SIF container
+called ``production.sif``, you could do so as follows:
 
 .. code::
 
@@ -111,21 +112,21 @@ one format to another. For example if you had a sandbox container called
 
 Use care when converting a sandbox directory to the default SIF format.
 If changes were made to the writable container before conversion, there
-is no record of those changes in the {Project} definition file
-rendering your container non-reproducible. It is a best practice to
-build your immutable production containers directly from {aProject}
+is no record of those changes in the {Project} definition file,
+which compromises the reproducibility of your container. It is therefore
+preferable to build production containers directly from {aProject}
 definition file instead.
 
 *******************************************************
 Building containers from {Project} definition files
 *******************************************************
 
-Of course, {Project} definition files can be used as the target when
+{Project} definition files are the most powerful type of target when
 building a container. For detailed information on writing {Project}
-definition files, please see the :doc:`Container Definition docs
-<definition_files>`. Let's say you already have the following container
-definition file called ``lolcow.def``, and you want to use it to build a
-SIF container.
+definition files, please see the :doc:`Container Definitions
+documentation <definition_files>`. Suppose you already have the
+following container definition file called, ``lolcow.def``, and you want
+to use it to build a SIF container:
 
 .. code:: {command}
 
@@ -166,8 +167,8 @@ With {aProject} setuid installation it is possible to build and run
 encrypted containers.
 Encrypted containers are decrypted at runtime entirely
 in kernel space, meaning that no intermediate decrypted data is ever
-present on disk.
-See :ref:`encrypted containers <encryption>` for more details.
+written to disk. See :ref:`encrypted containers <encryption>` for more
+details.
 
 *************
 Build options
@@ -185,7 +186,7 @@ more details.
 ``--fakeroot``
 ==============
 
-Gives users a way to build containers completely unprivileged.
+Gives users a way to build containers without root privileges.
 This option is implied when an unprivileged user invokes build
 on a definition file.
 See :ref:`the fakeroot feature <fakeroot>` for details.
@@ -194,36 +195,38 @@ See :ref:`the fakeroot feature <fakeroot>` for details.
 ===========
 
 The ``--force`` option will delete and overwrite an existing
-{Project} image without presenting the normal interactive prompt.
+{Project} image without presenting the normal interactive
+confirmation prompt.
 
 ``--json``
 ==========
 
 The ``--json`` option will force {Project} to interpret a given
-definition file as a json.
+definition file as JSON.
 
 ``--library``
 =============
 
-This command allows you to set a different library. Look
+This command allows you to set a different image library. Look
 :ref:`here <library_api_registries>` for more information.
 
 ``--notest``
 ============
 
 If you don't want to run the ``%test`` section during the container
-build, you can skip it with the ``--notest`` option. For instance, maybe
-you are building a container intended to run in a production environment
-with GPUs. But perhaps your local build resource does not have GPUs. You
-want to include a ``%test`` section that runs a short validation but you
-don't want your build to exit with an error because it cannot find a GPU
-on your system.
+build, you can skip it using the ``--notest`` option. For instance, you
+might be building a container intended to run in a production
+environment with GPUs, while your local build resource does not have
+GPUs. You want to include a ``%test`` section that runs a short
+validation, but you don't want your build to exit with an error because
+it cannot find a GPU on your system. In such a scenario, passing the
+``--notest`` flag would be appropriate.
 
 ``--passphrase``
 ================
 
 This flag allows you to pass a plaintext passphrase to encrypt the
-container file system at build time. See :ref:`encrypted containers
+container filesystem at build time. See :ref:`encrypted containers
 <encryption>` for more details.
 
 ``--pem-path``
@@ -236,44 +239,46 @@ container file system at build time. See :ref:`encrypted containers
 ``--sandbox``
 =============
 
-Build a sandbox (chroot directory) instead of the default SIF format.
+Build a sandbox (container in a directory) instead of the default SIF
+format.
 
 ``--section``
 =============
 
 Instead of running the entire definition file, only run a specific
-section or sections. This option accepts a comma delimited string of
+section or sections. This option accepts a comma-delimited string of
 definition file sections. Acceptable arguments include ``all``, ``none``
 or any combination of the following: ``setup``, ``post``, ``files``,
 ``environment``, ``test``, ``labels``.
 
 Under normal build conditions, the {Project} definition file is
-saved into a container's meta-data so that there is a record showing how
-the container was built. Using the ``--section`` option may render this
-meta-data useless, so use care if you value reproducibility.
+saved into a container's metadata so that there is a record of how the
+container was built. The ``--section`` option may render this metadata
+inaccurate, compromising reproducibility, and should therefore be used
+with care.
 
 ``--update``
 ============
 
 You can build into the same sandbox container multiple times (though the
-results may be unpredictable and it is generally better to delete your
-container and start from scratch).
+results may be unpredictable, and under most circumstances, it is
+preferable to delete your container and start from scratch).
 
-By default if you build into an existing sandbox container, the
+By default, if you build into an existing sandbox container, the
 ``build`` command will prompt you to decide whether or not to overwrite
-the container. Instead of this behavior you can use the ``--update``
-option to build _into_ an existing container. This will cause
-{Project} to skip the header and build any sections that are in the
-definition file into the existing container.
+existing container data. Instead of this behavior, you can use the
+``--update`` option to build *into* an existing container. This will
+cause {Project} to skip the definition-file's header, and build any
+sections that are in the definition file into the existing container.
 
 The ``--update`` option is only valid when used with sandbox containers.
 
 ``--nv``
 ========
 
-This flag allows you to mount the Nvidia CUDA libraries of your host
-into your build environment. Libraries are mounted during the execution
-of ``post`` and ``test`` sections.
+This flag allows you to mount the Nvidia CUDA libraries from your host
+environment into your build environment. Libraries are mounted during
+the execution of ``post`` and ``test`` sections.
 
 .. note::
 
@@ -290,9 +295,9 @@ See more details in the :ref:`GPU Support<gpu>` section.
 ``--rocm``
 ==========
 
-This flag allows you to mount the AMD Rocm libraries of your host into
-your build environment. Libraries are mounted during the execution of
-``post`` and ``test`` sections.
+This flag allows you to mount the AMD Rocm libraries from your host
+environment into your build environment. Libraries are mounted during
+the execution of ``post`` and ``test`` sections.
 
 .. note::
 
@@ -303,11 +308,12 @@ your build environment. Libraries are mounted during the execution of
 ``--bind``
 ==========
 
-This flag allows you to mount a directory, a file or an image during
-build, it works the same way as ``--bind`` for ``shell``, ``exec`` and
-``run`` and can be specified multiple times, see :ref:`user defined bind
-paths <user-defined-bind-paths>`. Bind mount occurs during the execution
-of ``post`` and ``test`` sections.
+This flag allows you to mount a directory, file or image during build.
+It works the same way as ``--bind`` for the ``shell``, ``exec`` and
+``run`` subcommands of {Project}, and can be specified multiple
+times. See :ref:`user defined bind paths <user-defined-bind-paths>`.
+Bind mounts occur during the execution of ``post`` and ``test``
+sections.
 
 .. note::
 
@@ -332,7 +338,7 @@ workaround that by adding a ``setup`` section:
 ====================
 
 This flag will run the ``%test`` section of the build with a writable
-tmpfs overlay filesystem in place. This allows the tests to create
+``tmpfs`` overlay filesystem in place. This allows the tests to create
 files, which will be discarded at the end of the build. Other portions
 of the build do not use this temporary filesystem.
 
@@ -341,12 +347,13 @@ More Build topics
 *****************
 
 -  If you want to **customize the cache location** (where Docker layers
-   are downloaded on your system), specify Docker credentials, or any
-   custom tweaks to your build environment, see :ref:`build environment
-   <build-environment>`.
+   are downloaded on your system), specify Docker credentials, or apply
+   other custom tweaks to your build environment, see :ref:`build
+   environment <build-environment>`.
 
 -  If you want to make internally **modular containers**, check out the
-   getting started guide `here <https://sci-f.github.io/tutorials>`_
+   Getting Started guide `here <https://sci-f.github.io/tutorials>`_.
 
 -  If you want to **build a container with an encrypted file system**
-   look :ref:`here <encryption>`.
+   consult the {Project} documentation on encryption :ref:`here
+   <encryption>`.

@@ -105,8 +105,8 @@ subcommands as follows:
 
    For additional help or support, please visit https://www.apptainer.org/docs/
 
-Information about subcommand can also be viewed with the ``help``
-command.
+Information about individual subcommands can also be viewed by using the
+``help`` command:
 
 .. code::
 
@@ -141,10 +141,10 @@ command.
 
    For additional help or support, please visit https://www.apptainer.org/docs/
 
-{Project} uses positional syntax (i.e. the order of commands and
-options matters). Global options affecting the behavior of all commands
-follow the main ``{command}`` command. Then sub commands are followed
-by their options and arguments.
+{Project} uses positional syntax (i.e. the order of commands and options
+matters). Global options affecting the behavior of all commands follow
+immediately after the main ``{command}`` command. Then come subcommands,
+followed by their options and arguments.
 
 For example, to pass the ``--debug`` option to the main ``{command}``
 command and run {Project} with debugging messages on:
@@ -162,15 +162,16 @@ To pass the ``--containall`` option to the ``run`` command and run a
 
 {Project} has the concept of command groups. For
 instance, to list Linux capabilities for a particular user, you would
-use the ``list`` command in the ``capability`` command group like so:
+use the ``list`` command in the ``capability`` command group, as
+follows:
 
 .. code::
 
    $ {command} capability list dave
 
-Container authors might also write help docs specific to a container or
+Container authors might also write help docs specific to a container, or
 for an internal module called an ``app``. If those help docs exist for a
-particular container, you can view them like so.
+particular container, you can view them as follows:
 
 .. code::
 
@@ -211,21 +212,21 @@ Unlike ``pull``, ``build`` will convert your image to the latest
 images, you can use ``build`` to create images from other images or from
 scratch using a :ref:`definition file <definition-files>`. You can also
 use ``build`` to convert an image between the container formats
-supported by {Project}. To see a comparison of {Project}
+supported by {Project}. To see a comparison of the {Project}
 definition file with Dockerfile, please see: :ref:`this section
 <sec:deffile-vs-dockerfile>`.
 
 .. _cowimage:
 
-********************
-Interact with images
-********************
+***********************
+Interacting with images
+***********************
 
 You can interact with images in several ways, each of which can accept
 image URIs in addition to a local image path.
 
-For demonstration, we will use a ``lolcow_latest.sif`` image that can be
-pulled from ghcr.io:
+As an example, the following command will pull a ``lolcow_latest.sif`` image
+from ghcr.io:
 
 .. code::
 
@@ -237,7 +238,7 @@ Shell
 The `shell
 <cli/{command}_shell.html>`_
 command allows you to spawn a new shell within your container and
-interact with it as though it were a small virtual machine.
+interact with it as though it were a virtual machine.
 
 .. code::
 
@@ -246,8 +247,8 @@ interact with it as though it were a small virtual machine.
    {Project} lolcow_latest.sif:~>
 
 The change in prompt indicates that you have entered the container
-(though you should not rely on that to determine whether you are in
-container or not).
+(though you should not rely on prompt forms to determine whether you are in
+a container or not).
 
 Once inside of {aProject} container, you are the same user as you
 are on the host system.
@@ -295,7 +296,7 @@ command and disappears.
 
 .. code::
 
-   $ {command} exec docker://ghcr.io/apptainer/lolcow cowsay "Fresh from the internet"
+   $ {command} exec docker://ghcr.io/apptainer/lolcow cowsay 'Fresh from the internet'
     _________________________
    < Fresh from the internet >
     -------------------------
@@ -311,7 +312,7 @@ Running a container
 ===================
 
 {Project} containers contain :ref:`runscripts <runscript>`. These
-are user defined scripts that define the actions a container should
+are user-defined scripts that define the actions a container should
 perform when someone runs it. The runscript can be triggered with the
 `run
 <cli/{command}_run.html>`_
@@ -363,7 +364,7 @@ Arguments to ``run``
 You can pass arguments to the runscript of a container, if it accepts
 them. For example, the default runscript of the ``docker://alpine``
 container passes any arguments to a shell. We can ask the container
-to run ``echo`` command in this shell:
+to run ``echo`` command in this shell as follows:
 
 .. code::
 
@@ -371,11 +372,10 @@ to run ``echo`` command in this shell:
 
    hello
 
-Because {Project} runscripts are evaluated shell scripts
-arguments can behave slightly differently than in Docker/OCI
-runtimes, if they contain shell code that may be evaluated. To
-replicate Docker/OCI behaviour you may need additional escaping or
-quoting of arguments.
+Because {Project} runscripts are evaluated shell scripts, arguments
+can behave slightly differently than in Docker/OCI runtimes, if they
+contain expressions that have special meaning to the shell. Here is an
+illustrative example:
 
 .. code::
 
@@ -388,14 +388,25 @@ quoting of arguments.
    $ {command} run docker://alpine echo "\\\$HOSTNAME"
    $HOSTNAME
 
-The ``exec`` command replicates the Docker/OCI behavior as it calls
-the specified executable directly.
+To replicate Docker/OCI behavior, you may need additional escaping or
+quoting of arguments.
+
+Unlike the ``run`` command, the ``exec`` command replicates the Docker/OCI
+behavior, as it calls the specified executable directly:
+
+.. code::
+
+   $ {command} exec docker://alpine echo "\$HOSTNAME"
+   $HOSTNAME
+
+   $ {command} exec docker://alpine echo "\\\$HOSTNAME"
+   \$HOSTNAME
 
 ******************
 Working with Files
 ******************
 
-Files on the host are reachable from within the container.
+Files on the host are reachable from within the container:
 
 .. code::
 
@@ -406,7 +417,7 @@ Files on the host are reachable from within the container.
    Hello from inside the container
 
 This example works because ``hostfile.txt`` exists in the user's home
-directory. By default {Project} bind mounts ``/home/$USER``,
+directory. By default, {Project} bind mounts ``/home/$USER``,
 ``/tmp``, and ``$PWD`` into your container at runtime.
 
 You can specify additional directories to bind mount into your container
@@ -421,8 +432,8 @@ container.
    $ {command} exec --bind /data:/mnt lolcow_latest.sif cat /mnt/cow_advice.txt
    Drink milk (and never eat hamburgers).
 
-Pipes and redirects also work with {Project} commands just like they
-do with normal Linux commands.
+Pipes and redirects also work with {Project} commands, just like they
+do with normal Linux commands:
 
 .. code::
 
@@ -438,9 +449,9 @@ do with normal Linux commands.
 
 .. _build-images-from-scratch:
 
-*************************
-Build images from scratch
-*************************
+****************************
+Building images from scratch
+****************************
 
 .. _sec:buildimagesfromscratch:
 
@@ -471,7 +482,7 @@ working directory.
 
 You can use commands like ``shell``, ``exec`` , and ``run`` with this
 directory just as you would with {aProject} image. If you pass the
-``--writable`` option when you use your container you can also write
+``--writable`` option when you use your container, you can also write
 files within the sandbox directory (provided you have the permissions to
 do so).
 
@@ -485,75 +496,77 @@ do so).
 Converting images from one format to another
 ============================================
 
-The ``build`` command allows you to build a container from an existing
-container. This means that you can use it to convert a container from
-one format to another. For instance, if you have already created a
-sandbox (directory) and want to convert it to the default immutable
-image format (squashfs) you can do so:
+The ``build`` command allows you to build a new container from an existing
+container. This means that you can use it to convert a container from one format
+to another. For instance, if you have already created a sandbox (directory) and
+want to convert it to the Singularity Image Format you can do so:
 
 .. code::
 
-   $ {command} build new-sif sandbox
+   $ {command} build new.sif sandbox
 
-Doing so may break reproducibility if you have altered your sandbox
-outside of the context of a definition file, so you are advised to
-exercise care.
+Doing so may break reproducibility if you have altered your sandbox outside of
+the context of a :ref:`definition file <qs-def-files>`, so you are advised
+to exercise care.
+
+.. _qs-def-files:
 
 {Project} Definition Files
 ==============================
 
-For a reproducible, verifiable and production-quality container you
-should build a SIF file using {aProject} definition file. This also
-makes it easy to add files, environment variables, and install custom
+For a reproducible, verifiable and production-quality container, it is
+recommended that you build a SIF file using {aProject} definition file.
+This also makes it easy to add files, environment variables, and install custom
 software. You can start with base images from Docker Hub and use
 images directly from official repositories such as Ubuntu, Debian,
 CentOS, Arch, and BusyBox.
 
 A definition file has a header and a body. The header determines the
 base container to begin with, and the body is further divided into
-sections that perform things like software installation, environment
-setup, and copying files into the container from host system, etc.
+sections that perform tasks such as software installation, environment
+setup, and copying files into the container from host system.
 
 Here is an example of a definition file:
 
 .. code:: {command}
 
    BootStrap: docker
-   From: ubuntu:20.04
+   From: ubuntu:22.04
 
    %post
-       apt-get -y update
-       apt-get -y install cowsay lolcat
+      apt-get -y update
+      apt-get -y install cowsay lolcat
 
    %environment
-       export LC_ALL=C
-       export PATH=/usr/games:$PATH
+      export LC_ALL=C
+      export PATH=/usr/games:$PATH
 
    %runscript
-       date | cowsay | lolcat
+      date | cowsay | lolcat
 
    %labels
-       Author Alice
+      Author Alice
 
 To build a container from this definition file (assuming it is a file
-named lolcow.def), you would call build like so:
+named ``lolcow.def``), you would call ``build`` as follows:
 
 .. code::
 
    $ {command} build lolcow.sif lolcow.def
 
-In this example, the header tells {Project} to use a base Ubuntu
-16.04 image from the default OCI registry.
+In this example, the header tells {Project} to use a base Ubuntu 22.04 image
+from the Container Library. The other sections in this definition file are as
+follows:
 
--  The ``%post`` section executes within the container at build time
-   after the base OS has been installed. The ``%post`` section is
-   therefore the place to perform installations of new applications.
+-  The ``%post`` section is executed within the container at build time, after
+   the base OS has been installed. The ``%post`` section is therefore the place
+   to perform installations of new libraries and applications.
 
--  The ``%environment`` section defines some environment variables that
-   will be available to the container at runtime.
+-  The ``%environment`` section defines environment variables that will be
+   available to the container at runtime.
 
 -  The ``%runscript`` section defines actions for the container to take
-   when it is executed.
+   when it is executed. (These commands will therefore not be run at build time.)
 
 -  And finally, the ``%labels`` section allows for custom metadata to be
    added to the container.
@@ -569,18 +582,19 @@ If you need additional help or support, see https://apptainer.org/help.
 
 .. _installation-request:
 
+*********************************
 {Project} on a shared resource
-----------------------------------
+*********************************
 
 Perhaps you are a user who wants a few talking points and background to
 share with your administrator. Or maybe you are an administrator who
 needs to decide whether to install {Project}.
 
-This document, and the accompanying administrator documentation provides
+This document and the accompanying administrator documentation provide
 answers to many common questions.
 
-If you need to request an installation you may decide to draft a message
-similar to this:
+If you need to request an installation from your administrator, you may decide
+to draft a message similar to this:
 
 .. code::
 
