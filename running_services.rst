@@ -1,19 +1,24 @@
 .. _running_services:
 
-################
-Running Services
-################
+############################
+Instances - Running Services
+############################
 
-There are :ref:`different ways <runcontainer>` in which you can run
-{Project} containers. If you use commands like ``run``, ``exec`` and
-``shell`` to interact with processes in the container, you are running
-{Project} containers in the foreground. {Project}, also lets you
-run containers in a "detached" or "daemon" mode which can run different
-services in the background. A "service" is essentially a process running
-in the background that multiple different clients can use. For example,
-a web server or a database. To run services in {aProject} container
-one should use *instances*. A container instance is a persistent and
-isolated version of the container image that runs in the background.
+{Project} is most commonly used to run containers interactively, or in a
+batch job, where the container runs in the foreground, performs some work, and
+then exits. There are :ref:`different ways <runcontainer>` in which you can run
+{Project} containers in the foreground. If you use  ``run``, ``exec`` and
+``shell`` to interact with processes in the container, then you are running
+{Project} containers in the foreground.
+
+{Project}, also allows you to run containers in a "detached" or "daemon"
+mode where the container runs a service. A "service" is essentially a process
+running in the background that multiple different clients can use. For example,
+a web server or a database. 
+
+A {Project} container running a service in the background is called an
+*instance*, to distinguish it from the default mode which runs containers in the
+foreground.
 
 ********
 Overview
@@ -21,43 +26,44 @@ Overview
 
 .. _sec:instances:
 
-{Project} has the concept of *instances* allowing users
-to run services in {Project}. This page will help you understand
-instances using an elementary example followed by a more useful example
-running an NGINX web server using instances. In the end, you will find a
-more detailed example of running an instance of an API that converts URL
-to PDFs.
+This page will help you understand instances using an elementary example
+followed by a more useful example running an NGINX web server using instances.
+At the end, you will find a more detailed example of running an instance of a
+service exposing an API that converts URL to PDFs.
 
-To begin with, suppose you want to run an NGINX web server outside of a
-container. On Ubuntu, you can simply install NGINX and start the service
-by:
+To run a service, such as a web server, outside of a container you would
+typically install the package for the web server and then instruct systemd
+(which manages system services on most Linux distributions) to start it. E.g.
 
 .. code::
 
-   $ sudo apt-get update && sudo apt-get install -y nginx
-   ...
-   $ sudo service nginx start
+   $ sudo yum install nginx
+   $ sudo systemctl enable --now nginx
 
-If you were to do something like this from within a container you would
-also see the service start, and the web server running. But then if you
-were to exit the container, the process would continue to run within an
-unreachable mount namespace. The process would still be running, but you
-couldn't easily kill or interface with it. This is a called an orphan
-process. {Project} instances give you the ability to handle services
-properly.
+If you were to attempt this in a container, it's likely that it will not work as
+expected. You cannot use systemd to run services in a container, by default. It
+expects various conditions that are satisfied on the host system, but not inside
+containers.
+
+Instead, you should run NGINX in the foreground *inside* the container, but then
+run the container in the background, as an *instance*.
 
 ************************************
 Container Instances in {Project}
 ************************************
 
-For demonstration, let's use an easy (though somewhat useless) example
-of ``alpine_latest.sif`` from {Project}'s github container registry:
+To demonstrate the basics of instances, let's use an easy (though somewhat
+useless) example, using an Alpine Linux image from {Project}'s github container
+registry:
 
 .. code::
 
    $ {command} pull oras://ghcr.io/apptainer/alpine:latest
 
 The above command will save the alpine image as ``alpine_latest.sif``.
+
+Starting Instances
+==================
 
 To start an instance, you should follow this procedure :
 
@@ -68,8 +74,8 @@ To start an instance, you should follow this procedure :
    $ {command} instance start   alpine_latest.sif     instance1
 
 This command causes {Project} to create an isolated environment for
-the container services to live inside. One can confirm that an instance
-is running by using the ``instance list`` command like so:
+the container services to live inside. You can confirm that an instance
+is running by using the ``instance list`` command:
 
 .. code::
 
@@ -80,11 +86,10 @@ is running by using the ``instance list`` command like so:
 
 .. note::
 
-   The instances are linked with your user account. So make sure to run
-   *all* instance commands either with or without the ``sudo``
-   privilege. If you ``start`` an instance with sudo then you must
-   ``list`` it with sudo as well, or you will not be able to locate the
-   instance.
+   Instances are linked to the user account that started them. This means that
+   if you use ``sudo`` to start an instance as ``root``, you will need to use
+   ``sudo`` for all commands managing that instance. ``instance list`` will not
+   show instances started by other users.
 
 If you want to run multiple instances from the same image, it's as
 simple as running the command multiple times with different instance
@@ -96,7 +101,7 @@ repeated.
    $ {command} instance start alpine_latest.sif instance2
    $ {command} instance start alpine_latest.sif instance3
 
-And again to confirm that the instances are running as we expected:
+We now have 3 instances, all using the same image:
 
 .. code::
 
@@ -106,7 +111,7 @@ And again to confirm that the instances are running as we expected:
    instance2        22443                    /home/dave/instances/alpine_latest.sif
    instance3        22493                    /home/dave/instances/alpine_latest.sif
 
-You can also filter the instance list by supplying a pattern:
+You can filter the instance list by supplying a pattern:
 
 .. code::
 
@@ -114,24 +119,42 @@ You can also filter the instance list by supplying a pattern:
    INSTANCE NAME    PID      IP              IMAGE
    instance2        22443                    /home/dave/instances/alpine_latest.sif
 
-You can use the ``{command} run/exec`` commands on instances:
+When an instance is started, it will begin to run the ``%startscript`` from the
+container's :ref:`definition file <definition-files>` in the background. If
+there is no ``%startscript`` the container will stay idle in the background.
+
+Interacting With Instances
+==========================
+
+Although an instance runs its ``%startscript`` (if there is one) in the
+background, you can also interact with it in the foreground, by referring to it
+with an ``instance://<name>`` URI, where ``<name>`` is replaced with the
+instance name.
+
+To run a specific command against an instance, in the foreground, use
+``{command} exec``:
 
 .. code::
 
-   $ {command} run instance://instance1
-   $ {command} exec instance://instance2 cat /etc/os-release
+   $ {command} exec instance://instance1 cat /etc/os-release
 
-When using ``run`` with an instance URI, the ``runscript`` will be
-executed inside of the instance. Similarly with ``exec``, it will
-execute the given command in the instance.
+Similarly, you can use ``{command} run`` to run the ``%runscript`` for the
+container, against a running instance:
 
-If you want to poke around inside of your instance, you can do a normal
+.. code::
+
+   $ {command} run instance://instance2
+
+If you want to poke around inside of your instance, you can use the normal
 ``{command} shell`` command, but give it the instance URI:
 
 .. code::
 
    $ {command} shell instance://instance3
    {Project}>
+
+Stopping Instances
+==================
 
 When you are finished with your instance you can clean it up with the
 ``instance stop`` command as follows:
@@ -142,7 +165,7 @@ When you are finished with your instance you can clean it up with the
 
 If you have multiple instances running and you want to stop all of them,
 you can do so with a wildcard or the --all flag. The following three
-commands are all identical.
+commands are identical.
 
 .. code::
 
@@ -154,8 +177,8 @@ commands are all identical.
 
 .. note::
 
-   Note that you must escape the wildcard with a backslash like this
-   ``\*`` to pass it properly.
+   You must escape the wildcard with a backslash ``\*`` to pass it properly
+   through your shell.
 
 ************************************
 Nginx "Hello-world" in {Project}
@@ -163,8 +186,8 @@ Nginx "Hello-world" in {Project}
 
 The above example, although not very useful, should serve as a fair
 introduction to the concept of {Project} instances and running
-services in the background. The following illustrates a more useful
-example of setting up a sample NGINX web server using instances. First
+containers in the background. We will now look at a more useful
+example of setting up an NGINX web server using instances. First
 we will create a basic :ref:`definition file <definition-files>` (let's
 call it nginx.def):
 
@@ -172,15 +195,15 @@ call it nginx.def):
 
    Bootstrap: docker
    From: nginx
-   Includecmd: no
 
    %startscript
       nginx
 
 This downloads the official NGINX Docker container, converts it to a
-{Project} image, and tells it to run NGINX when you start the
-instance. Since we're running a web server, we're going to run the
-following commands as root.
+{Project} image, and tells it to run the ``nginx`` command when you start
+the instance. Because we are running a web server, which defaults to listening
+on privileged port 80, we're going to run the following instance commands as
+root, using ``sudo``.
 
 .. code::
 
@@ -188,15 +211,14 @@ following commands as root.
    ...
    $ sudo {command} instance start --writable-tmpfs nginx.sif web
 
-.. note::
+The ``--writable-tmpfs`` option is needed, because NGINX will attempt to write
+some files when it starts up. ``--writable-tmpfs`` allows these to be written
+to a temporary, in-memory location, that will be removed when the instance is
+stopped.
 
-   The above ``start`` command requires ``sudo`` because we are running
-   a web server. Also, to let the instance write temporary files during
-   execution, you should use ``--writable-tmpfs`` while starting the
-   instance.
-
-Just like that we've downloaded, built, and run an NGINX {Project}
-image. And to confirm that it's correctly running:
+Just like that we've downloaded, built, and run an NGINX {Project} image. We
+can confirm it's running using the curl tool, to fetch the web page that is now
+being hosted by NGINX.
 
 .. code::
 
@@ -228,43 +250,34 @@ image. And to confirm that it's correctly running:
    </body>
    </html>
 
-Visit localhost on your browser, you should see a Welcome message!
+You could also visit ``http://localhost`` in a web browser, if you are running
+the instance from a desktop session.
 
-********************
-Putting all together
-********************
+******************
+API Server Example
+******************
 
-In this section, we will demonstrate an example of packaging a service
-into a container and running it. The service we will be packaging is an
-API server that converts a web page into a PDF, and can be found `here
-<https://github.com/alvarcarto/url-to-pdf-api>`__. You can build the
-image by following the steps described below or you can just download
-the final image directly from the container registry, simply run:
-
-.. code::
-
-   $ {command} pull url-to-pdf.sif oras://ghcr.io/apptainer/doc-examples/url-to-pdf:latest
+Let's now package a useful service into a SIF container, and run it as an
+instance. The service we will be packaging is an API server that converts a web
+page into a PDF, and can be found `here
+<https://github.com/alvarcarto/url-to-pdf-api>`__.
 
 Building the image
 ==================
 
-This section will describe the requirements for creating the definition
-file (url-to-pdf.def) that will be used to build the container image.
-``url-to-pdf-api`` is based on a Node 8 server that uses a headless
-version of Chromium called `Puppeteer
-<https://github.com/GoogleChrome/puppeteer>`_. Let's first choose a base
-from which to build our container, in this case the docker image
-``node:8`` which comes pre-installed with Node 8 has been used:
+To package the Web to PDF service into a SIF container, we must create a
+definition file. Let's first choose a base from which to build our container. In
+this case the docker image ``node:8`` which comes pre-installed with Node 8 has
+been used:
 
 .. code:: {command}
 
    Bootstrap: docker
    From: node:8
-   Includecmd: no
 
-Puppeteer also requires a slew of dependencies to be manually installed
+The service also requires a slew of dependencies to be manually installed
 in addition to Node 8, so we can add those into the ``post`` section as
-well as the installation script for the ``url-to-pdf``:
+well as calling the installation script for the ``url-to-pdf``:
 
 .. code:: {command}
 
@@ -282,19 +295,19 @@ well as the installation script for the ``url-to-pdf``:
        git clone https://github.com/alvarcarto/url-to-pdf-api.git pdf_server
        cd pdf_server
        npm install
+       touch .env
        chmod -R 0755 .
        cp .env.sample .env
 
-And now we need to define what happens when we start an instance of the
-container. In this situation, we want to run the commands that starts up
-the url-to-pdf service:
+We need to define what happens when we start an instance of the container by
+writing a ``%startscript``. In this situation, we want to run the commands that
+start up the url-to-pdf service:
 
 .. code:: {command}
 
    %startscript
        cd /pdf_server
-       # Use nohup and /dev/null to completely detach server process from terminal
-       nohup npm start > /dev/null 2>&1 < /dev/null &
+       npm start
 
 Also, the ``url-to-pdf`` service requires some environment variables to
 be set, which we can do in the environment section:
@@ -314,7 +327,6 @@ The complete definition file will look like this:
 
    Bootstrap: docker
    From: node:8
-   Includecmd: no
 
    %post
 
@@ -330,13 +342,13 @@ The complete definition file will look like this:
        git clone https://github.com/alvarcarto/url-to-pdf-api.git pdf_server
        cd pdf_server
        npm install
+       touch .env
        chmod -R 0755 .
        cp .env.sample .env
 
    %startscript
        cd /pdf_server
-       # Use nohup and /dev/null to completely detach server process from terminal
-       nohup npm start > /dev/null 2>&1 < /dev/null &
+       npm start
 
    %environment
        NODE_ENV=development
@@ -345,7 +357,7 @@ The complete definition file will look like this:
        URL=localhost
        export NODE_ENV PORT ALLOW_HTTP URL
 
-The container can be built like so:
+We can now build the container image from the definition file:
 
 .. code::
 
@@ -354,20 +366,14 @@ The container can be built like so:
 Running the Service
 ===================
 
-We can now start an instance and run the service:
+We can now start an instance to run the service:
 
 .. code::
 
    $ {command} instance start url-to-pdf.sif pdf
 
-.. note::
-
-   If there occurs an error related to port connection being refused
-   while starting the instance or while using it later, you can try
-   specifying different port numbers in the ``%environment`` section of
-   the definition file above.  Also, the starting directory has to
-   be bound in to the container and writable, so something under your
-   home directory is easiest.
+Because the service listens on port 9000, which is not a privileged port, we
+don't need to run it with ``sudo`` this time.
 
 We can confirm it's working by sending the server an http request using
 curl:
@@ -385,189 +391,103 @@ You should see a PDF file being generated like the one shown below:
 .. image:: docpage.png
    :alt: Screenshot of the PDF generated!
 
-If you shell into the instance, you can see the running processes:
+If you shell into the instance, you can see the processes that are running, to
+provide the service:
 
 .. code::
 
    $ {command} shell instance://pdf
-   {Project}> ps -wef
-   UID        PID  PPID  C STIME TTY          TIME CMD
-   user         1     0  0 14:13 ?        00:00:00 sinit
-   user        13     1  0 14:13 ?        00:00:00 npm
-   user        23    13  0 14:13 ?        00:00:00 sh -c env-cmd nodemon --watch ./src -e js src/index.js
-   user        24    23  0 14:13 ?        00:00:00 node /pdf_server/node_modules/.bin/env-cmd nodemon --watch ./src -e js src/index.js
-   user        30    24  0 14:13 ?        00:00:00 node /pdf_server/node_modules/.bin/nodemon --watch ./src -e js src/index.js
-   user        42    30  0 14:13 ?        00:00:00 /usr/local/bin/node src/index.js
-   user       155     0  0 14:23 pts/1    00:00:00 /bin/bash --norc
-   user       161   155  0 14:23 pts/1    00:00:00 ps -wef
-
-When you are finished, use the instance stop command to stop the
-running instance.
-
-.. code::
-
-   $ {command} instance stop pdf
+   {Project}> ps aux
+   USER     PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+   user       1  0.0  0.0 1178984 20700 ?       Sl   11:40   0:00 sinit
+   user      13  0.0  0.0   4284   696 ?        S    11:40   0:00 /bin/sh /.singularity.d/startscript
+   user      15  1.0  0.0 984908 41508 ?        Sl   11:40   0:00 npm
+   user      25  0.0  0.0   4292   716 ?        S    11:40   0:00 sh -c env-cmd nodemon --watch ./src -e js src/index.js
+   user      26  0.1  0.0 876908 31084 ?        Sl   11:40   0:00 node /pdf_server/node_modules/.bin/env-cmd nodemon --watch ./src -e js src/index
+   user      32  0.7  0.0 1113984 39976 ?       Sl   11:40   0:00 node /pdf_server/node_modules/.bin/nodemon --watch ./src -e js src/index.js
+   user      44  1.7  0.0 941556 53804 ?        Sl   11:40   0:00 /usr/local/bin/node src/index.js
+   user     124  0.0  0.0  18372  3592 pts/1    S    11:41   0:00 /bin/bash --norc
+   user     130  0.0  0.0  36640  2836 pts/1    R+   11:41   0:00 ps aux
 
 
-Making it Fancy
-===============
+*************
+Instance Logs
+*************
 
-Now that we have confirmation that the server is working, let's make it
-a little cleaner. It's difficult to remember the exact ``curl`` command
-and URL syntax each time you want to request a PDF, so let's automate
-it. Instead of creating completely separate containers for the server
-and our streamlined client, it'd be nice to have them both available in
-the same SIF file. To do that, we can use Scientific Filesystem (SCIF)
-apps.
+Generally, when running services using instances, we write the ``%startscript``
+so that the service will run in the foreground, and would write any log messages
+to the terminal. When an instance container is started there is no terminal.
+{Project} moves the container into the background, and collects output and
+error messages into log files.
 
-.. note::
+You can view the location of log files for running instances using the ``--log``
+option of the ``instance list`` command:
 
-   SCIF is a standard for encapsulating multiple apps into a container.
-   A container with SCIF apps has multiple entry points, and you can
-   choose which to run easily. Each entry point can carry out a
-   different task with it's own environment, metadata etc., without the
-   need for a collection of different containers.
+.. code:: 
 
-   {Project} implements SCIF, and you can read more about how to use
-   it in the :ref:`SCIF Apps<apps>` section.
+   $ {command} instance list --logs
+   INSTANCE NAME    PID       LOGS
+   pdf              935864    /home/user/.{command}/instances/logs/mini/user/pdf.err
+                              /home/user/.{command}/instances/logs/mini/user/pdf.out
 
-   SCIF is not specific to {Project}. You can learn more about it at
-   the project site: <https://sci-f.github.io/>`_.
+Note that the log files are located under ``.{command}/instances`` in the
+user's home directory, and are grouped by the hostname, and instance name.
 
-First off, we're going to move the installation of the url-to-pdf into
-an app, so that there is a designated spot to place output files. To do
-that, we want to add a section to our definition file to build the
-server:
+The ``.out`` log collects standard output. The ``.err`` log collects standard
+error. You can look at the content of the log files to check how your service is
+running:
 
-.. code:: {command}
+.. code:: 
 
-   %appinstall pdf_server
-       git clone https://github.com/alvarcarto/url-to-pdf-api.git pdf_server
-       cd pdf_server
-       npm install
-       chmod -R 0755 .
-       cp .env.sample .env
+   $ cat /home/user/.{command}/instances/logs/mini/user/pdf.out
 
-And update our ``startscript`` to point to the app location:
+   > url-to-pdf-api@1.0.0 start /pdf_server
+   > env-cmd nodemon --watch ./src -e js src/index.js
 
-.. code:: {command}
+   [nodemon] 1.19.0
+   [nodemon] to restart at any time, enter `rs`
+   [nodemon] watching: /pdf_server/src/**/*
+   [nodemon] starting `node src/index.js`
+   2023-02-01T11:14:58.185Z - info: [app.js] ALLOW_HTTP=true, unsafe requests are allowed. Don't use this in production.
+   2023-02-01T11:14:58.187Z - info: [app.js] ALLOW_URLS set! Allowed urls patterns are: 
+   2023-02-01T11:14:58.187Z - info: [app.js] Using CORS options: origin=*, methods=[GET, POST, PUT, DELETE, OPTIONS, HEAD, PATCH]
+   2023-02-01T11:14:58.206Z - warn: [router.js] Warning: no authentication required to use the API
+   2023-02-01T11:14:58.209Z - info: [index.js] Express server listening on http://localhost:9000/ in development mode
+   2023-02-01T11:15:17.269Z - info: [render-core.js] Rendering with opts: {
+   ...
 
-   %startscript
-       cd /scif/apps/pdf_server/pdf_server
-       # Use nohup and /dev/null to completely detach server process from terminal
-       nohup npm start > /dev/null 2>&1 < /dev/null &
+***********************
+Resource Usage / Limits
+***********************
 
-Now we want to define the pdf_client app, which we will run to send the
-requests to the server:
+If you are running a container as the ``root`` user, or your system supports
+cgroups v2, then all instances will be started inside a cgroup. A cgroup allows
+the resources used by the instance to be monitored, and limited.
 
-.. code:: {command}
+To monitor the resource usage of an instance, use the ``instance stats`` command:
 
-   %apprun pdf_client
-       if [ -z "${1:-}" ]; then
-           echo "Usage: {command} run --app pdf <instance://name> <URL> [output file]"
-           exit 1
-       fi
-       curl -o "${{ENVPREFIX}_APPDATA}/output/${2:-output.pdf}" "${URL}:${PORT}/api/render?url=${1}"
+.. code:: 
 
-As you can see, the ``pdf_client`` app checks to make sure that the user
-provides at least one argument.
+    $ {command} instance stats pdf
+   INSTANCE NAME    CPU USAGE    MEM USAGE / LIMIT     MEM %    BLOCK I/O            PIDS
+   pdf              0.00%        479.8MiB / 62.2GiB    0.75%    470MiB / 131.6MiB    45
 
-The full def file will look like this:
+We can see that the instance is currently idle (0.00% CPU), and is using
+479.8MiB of RAM. No limits have been applied, so the total RAM size of the
+machine is shown.
 
-.. code:: {command}
+By default, ``instance stats`` is interactive when run from a terminal, and will
+update every second. To obtain point-in-time usage details use the
+``--no-stream`` or ``--json`` options.
 
-   Bootstrap: docker
-   From: node:8
-   Includecmd: no
+Where supported by the system's cgroups configuration, resource limits can be
+applied to instances using the same :ref:`command line flags <cgroup_flags>`
+that are available for interactive containers. E.g. to limit memory usage to
+1GiB, we can use the ``--memory`` flag:
 
-   %post
+.. code:: 
 
-       apt-get update && apt-get install -yq gconf-service libasound2 \
-           libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 libexpat1 \
-           libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 \
-           libglib2.0-0 libgtk-3-0 libnspr4 libpango-1.0-0 \
-           libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 \
-           libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 \
-           libxrandr2 libxrender1 libxss1 libxtst6 ca-certificates \
-           fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils \
-           wget curl && rm -r /var/lib/apt/lists/*
-
-   %appinstall pdf_server
-       git clone https://github.com/alvarcarto/url-to-pdf-api.git pdf_server
-       cd pdf_server
-       npm install
-       chmod -R 0755 .
-       cp .env.sample .env
-
-   %startscript
-       cd /scif/apps/pdf_server/pdf_server
-       # Use nohup and /dev/null to completely detach server process from terminal
-       nohup npm start > /dev/null 2>&1 < /dev/null &
-
-   %environment
-       NODE_ENV=development
-       PORT=9000
-       ALLOW_HTTP=true
-       URL=localhost
-       export NODE_ENV PORT ALLOW_HTTP URL
-
-   %apprun pdf_client
-       if [ -z "${1:-}" ]; then
-           echo "Usage: {command} run --app pdf <instance://name> <URL> [output file]"
-           exit 1
-       fi
-       curl -o "${{ENVPREFIX}_APPDATA}/output/${2:-output.pdf}" "${URL}:${PORT}/api/render?url=${1}"
-
-.. code::
-
-   $ {command} build url-to-pdf-app.sif url-to-pdf-app.def
-
-Now that we have an output directory in the container, we need to expose
-it to the host using a bind mount. Once we've rebuilt the container,
-make a new directory called ``/tmp/out`` for the generated PDFs to go.
-
-.. code::
-
-   $ mkdir /tmp/out
-
-After building the image from the edited definition file we simply start
-the instance:
-
-.. code::
-
-   $ {command} instance start --bind /tmp/out/:/output url-to-pdf-app.sif pdf
-
-To request a pdf simply do:
-
-.. code::
-
-   $ {command} run --app pdf_client instance://pdf http://apptainer.org/docs apptainer.pdf
-
-To confirm that it worked:
-
-.. code::
-
-   $ ls /tmp/out/
-   apptainer.pdf
-
-When you are finished, use the instance stop command to stop the
-running instance.
-
-.. code::
-
-   $ {command} instance stop pdf
-
-.. note::
-
-   If the service you want to run in your instance requires a bind
-   mount, then you must pass the ``--bind`` option when calling
-   ``instance start``. For example, if you wish to capture the output of
-   the ``web`` container instance which is placed at ``/output/`` inside
-   the container you could do:
-
-   .. code::
-
-      $ {command} instance start --bind output/dir/outside/:/output/ nginx.sif  web
+   {command} instance start --memory 1G url-to-pdf.sif pdf
 
 ******************************
 System integration / PID files
@@ -579,7 +499,7 @@ performed by an init process, or another supervisor daemon installed on
 your host. Many init and supervisor daemons support managing processes
 via pid files.
 
-You can specify a `--pid-file` option to `{command} instance start` to
+You can specify a ``--pid-file`` option to ``{command} instance start`` to
 write the PID for an instance to the specified file, e.g.
 
 .. code::
