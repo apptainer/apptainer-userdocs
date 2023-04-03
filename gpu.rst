@@ -7,10 +7,16 @@ GPU Support (NVIDIA CUDA & AMD ROCm)
 {Project} natively supports running application containers that use
 NVIDIA's CUDA GPU compute framework, or AMD's ROCm solution. This allows
 easy access to users of GPU-enabled machine learning frameworks such as
-tensorflow, regardless of the host operating system. As long as the host
-has a driver and library installation for CUDA/ROCm then it's possible
-to e.g. run tensorflow in an up-to-date Ubuntu 20.04 container, from an
-older RHEL 7 host.
+TensorFlow, regardless of the host operating system. As long as the host
+has a driver and library installation for CUDA/ROCm, then it's possible
+to e.g. run TensorFlow in an up-to-date Ubuntu 20.04 container, from an
+older RHEL 7 host. However, note the libc version present in the container 
+and on the host shouldn't be too far apart, especially if the version in 
+the container is newer than the version on the host, as this type of 
+mismatch can lead to a variety of low-level problems. Generally, running
+a container with an older libc than the host will work, but the reverse 
+(running a container with a newer libc than the host) is more likely to 
+cause issues.
 
 Applications that support OpenCL for compute acceleration can also be
 used easily, with an additional bind option.
