@@ -11,8 +11,8 @@ Overview
 ********
 
 You may wish to customize your build environment by doing things such as
-specifying a custom cache directory for images or sending your Docker
-Credentials to the registry endpoint. Here we will discuss these and
+specifying a custom cache directory for images, or sending your Docker
+Credentials to the registry endpoint. In this section, we will discuss these and
 other topics related to the build environment.
 
 .. _sec:cache:
@@ -27,10 +27,10 @@ created at ``$HOME/.{command}/cache`` by default. The location of the
 cache can be changed by setting the ``{ENVPREFIX}_CACHEDIR`` environment
 variable.
 
-If you run builds as root, using ``sudo``, images will be cached in
-root's home at ``/root`` and not your user's home. Use the ``-E`` option
-to sudo to pass through the ``{ENVPREFIX}_CACHEDIR`` environment
-variable, if you set it.
+If you run builds as root, using ``sudo``, images will be cached in root's
+home directory at ``/root``, rather than your user's home directory. Use the
+``-E`` option to ``sudo`` to pass through the ``{ENVPREFIX}_CACHEDIR``
+environment variable, if you have set it.
 
 .. code::
 
