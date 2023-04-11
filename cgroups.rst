@@ -58,7 +58,8 @@ system must:
 
 Recent distributions such as Ubuntu 22.04, Debian 11, Fedora 31, and newer,
 satisfy these criteria by default. On older distributions support can often be
-enabled. Consult the admin documentation or speak to your system administrator
+enabled. Consult the `admin security documentation <{admindocs}/security.html>`_
+or speak to your system administrator
 about this.
 
 .. _cgroup_flags:
