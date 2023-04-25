@@ -22,6 +22,11 @@ that you want to use the directory or image as an overlay at runtime
 with the ``--overlay`` option, or ``--writable`` if you want to modify
 the overlay embedded in SIF.
 
+.. note::
+    By default for security reasons the ext3 format is only supported in
+    unprivileged user namespace mode, so unless that default is changed a
+    ``-u/--userns`` option may be needed with a setuid-root installation.
+
 If you want to make changes to the image, but do not want them to
 persist, use the ``--writable-tmpfs`` option. This stores all changes in
 an in-memory temporary filesystem which is discarded as soon as the
