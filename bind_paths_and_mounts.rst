@@ -420,6 +420,10 @@ wish to distribute in an image file that allows read/write:
        --mount type=bind,src=inputs.img,dst=/input-data,image-src=/ \
        mycontainer.sif
 
+By default for security reasons the ext3 format is only supported in
+unprivileged user namespace mode, so unless that default is changed a
+``-u/--userns`` option may be needed with a setuid-root installation.
+
 SquashFS Image Files
 ====================
 

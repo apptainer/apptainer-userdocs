@@ -80,14 +80,19 @@ This has some advantages over suid mode:
 -  Linux kernel developers believe that it is inherently unsafe to 
    allow unprivileged users to modify an underlying filesystem at will
    while kernel code is actively accessing the filesystem
-   (see `this article <https://lwn.net/Articles/652468/>`__). 
+   (see this `article <https://lwn.net/Articles/652468/>`__).
    Kernel filesystem drivers do not and cannot protect against all kinds
    of modifications to that data which it has not itself written, and
    that fact could potentially be used to attack the kernel.
    By the way it does mounts (details below), {Project} prevents the
    most obvious modifications which would enable elevated privileges,
    and there are not currently any publicly known kernel attacks for
-   this, but this is a significant risk.
+   the filesystem type that {Project} allows by default (squashfs),
+   but this is a significant risk.  There is a known public attack
+   for the ext4 filesystemm that is unpatched on many older operating
+   systems, so {Project} disallows using that in setuid-root mode
+   by default (see this `advisory
+   <https://github.com/apptainer/apptainer/security/advisories/GHSA-j4rf-7357-f4cg>`__).
 
 -  Non-suid {command} can run nested inside another {command} command
    or in other container runtimes that restrict setuid-root.
