@@ -6,11 +6,29 @@ Signing and Verifying Containers
 
 .. _sec:signnverify:
 
-{Project} has the ability to create and manage PGP keys
-and use them to sign and verify containers. This provides a trusted
-method for {Project} users to share containers. It ensures a
-bit-for-bit reproduction of the original container as the author
-intended it.
+{Project}'s SIF images can be signed, and subsequently verified, so that a
+user can be confident that an image they have obtained is a bit-for-bit
+reproduction of the original container as the author intended it. The signature,
+over the metadata and content of the container, is created using a private key,
+and directly added to the SIF file. This means that a signed container carries
+it's signature with it, avoiding the need for extra infrastructure to distribute
+signatures to end users of the container.
+
+A user verifies the container has not been modified since signing using a public
+key or certificate. By default, {Project} uses PGP keys to sign and verify
+containers. Signing and verifying containers with X.509 key material
+/ certificates is also supported.
+
+PGP Public keys for verification can be distributed manually, or can be uploaded
+to and automatically retrieved from a keyserver.
+
+As well as indicating a container has not been modified, a valid signature may
+be used to indicate a container has undergone testing or review, and is approved
+for execution. Multiple signatures can be added to a container, to document its
+progress through an approval process. {Project}'s Execution Control List
+(ECL) feature can be enable by administrators of privileged installations to
+restrict execution of containers based on their signatures (see the admin guide
+for more information).
 
 .. note::
 
@@ -24,7 +42,7 @@ intended it.
 Verifying containers from remote sources
 ****************************************
 
-The ``verify`` command will allow you to verify that a container has
+The ``verify`` command will allow you to verify that a SIF container image has
 been signed using a PGP key. This ensures that the container image on your disk
 is a bit-for-bit reproduction of the original image.
 
@@ -357,3 +375,122 @@ specifying ``--group-id`` can also verify the container:
    3   |1       |NONE    |JSON.Generic
    4   |1       |NONE    |FS
    Container verified: my_container.sif
+
+***********************************
+PEM Key / X.509 Certificate Support
+***********************************
+
+{Project} also supports signing SIF container images
+using a PEM format private key, and verifying with a PEM format public key, or
+X.509 certificate. Non-PGP signatures are implemented using the `Dead Simple
+Signing Envelope <https://github.com/secure-systems-lab/dsse>`__ (DSSE)
+standard.
+
+Signing with a PEM key
+======================
+
+To sign a container using a private key in PEM format, provide the key material
+to the ``sign`` command using the ``--key`` flag:
+
+.. code:: 
+
+   $ {command} sign --key mykey.pem lolcow.sif 
+   INFO:    Signing image with key material from 'mykey.pem'
+   INFO:    Signature created and applied to image 'lolcow.sif'
+
+The DSSE signature descriptor can now be seen by inspecting the SIF file:
+
+.. code:: 
+
+   $ {command} sif list lolcow.sif 
+   ------------------------------------------------------------------------------
+   ID   |GROUP   |LINK    |SIF POSITION (start-end)  |TYPE
+   ------------------------------------------------------------------------------
+   1    |1       |NONE    |32176-32393               |Def.FILE
+   2    |1       |NONE    |32393-33522               |JSON.Generic
+   3    |1       |NONE    |33522-33718               |JSON.Generic
+   4    |1       |NONE    |36864-84656128            |FS (Squashfs/*System/amd64)
+   5    |NONE    |1   (G) |84656128-84658191         |Signature (SHA-256)
+
+   $ {command} sif dump 5 lolcow.sif | jq
+   {
+   "payloadType": "application/vnd.{command}.sif-metadata+json",
+   ...
+
+Attempting to ``verify`` the image without options will fail, as it is not signed with a PGP key:
+
+.. code:: 
+
+   $ {command} verify lolcow.sif 
+   INFO:    Verifying image with PGP key material
+   FATAL:   Failed to verify container: integrity: key material not provided for DSSE envelope signature
+
+Note that the error message shows that the container image has a DSSE signature present.
+
+Verifying with a PEM key
+========================
+
+To verify a container using a PEM public key directly, provide the key material
+to the ``verify`` command using the ``key`` flag:
+
+.. code:: 
+
+   $ {command} verify --key mypublic.pem lolcow.sif 
+   INFO:    Verifying image with key material from 'mypublic.pem'
+   Objects verified:
+   ID  |GROUP   |LINK    |TYPE
+   ------------------------------------------------
+   1   |1       |NONE    |Def.FILE
+   2   |1       |NONE    |JSON.Generic
+   3   |1       |NONE    |JSON.Generic
+   4   |1       |NONE    |FS
+   INFO:    Verified signature(s) from image 'lolcow.sif'
+
+Verifying with an X.509 certificate
+===================================
+
+To verify a container that was signed with a PEM private key, using an X.509 certificate,
+pass the certificate to the ``verify`` command using the ``--certificate`` flag.
+If the certificate is part of a chain, provide intermediate and valid root
+certificates with the ``--certificate-intermediates`` and
+``--certificate-roots`` flags:
+
+.. code::
+
+   $ {command} verify \
+      --certificate leaf.pem \
+      --certificate-intermediates intermediate.pem \
+      --certificate-roots root.pem \
+      lolcow.sif 
+
+.. note:: 
+
+   The certificate must have a usage field that allows code signing in order to
+   verify container images.
+
+OSCP Certificate Revocation Checks
+==================================
+
+When verifying a container using X.509 certificates, {Project} can perform
+online revocation checks using the Online Certificate Status Protocol (OCSP). To
+enable OCSP checks, add the ``--ocsp-verify`` flag to your ``verify`` command:
+
+.. code:: 
+
+   $ {command} verify \
+      --certificate leaf.pem \
+      --certificate-intermediates intermediate.pem \
+      --certificate-roots root.pem \
+      --ocsp-verify
+      lolcow.sif 
+
+{Project} will then attempt to contact the prescribed OCSP responder for
+each certificate in the chain, in order to check that the relevant certificate
+has not been revoked. In the event that an OCSP responder cannot be contacted,
+or a certificate has been revoked, verification will fail with a validation
+error:
+
+.. code:: 
+
+   INFO:    Validate: cert:leaf  issuer:intermediate
+   FATAL:   Failed to verify container: OCSP verification has failed
