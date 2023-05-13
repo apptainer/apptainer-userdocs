@@ -45,13 +45,13 @@ the host:
    The combination of a root-mapped user namespace with the fakeroot command
    allows most package installations to work, but the fakeroot command is
    bound in from the host so if the host libc library is of a very
-   different vintage than the corresponding container library the
-   fakeroot command can fail.
-   If that situation happens it can be worth trying to run {command}
-   under the ``unshare -r`` command which is essentially the same thing
-   as running in a root-mapped user namespace; in that case {Project}
-   will not try to run the fakeroot command even if it is in the user's
-   PATH.
+   different vintage than the corresponding container the
+   fakeroot command can fail with errors about a missing GLIBC version.
+   If that situation happens the easiest solution is to first run a
+   container with an operating system matching the target glibc version,
+   `install {Project} unprivileged
+   <{admindocs}/installation.html#install-from-pre-built-packages>`__
+   there, and do the build nested inside that container.
 #. If user namespaces are not available but {Project} has been installed
    with setuid-root and also the "fakeroot" command is available, then
    the fakeroot command will be run by itself.
