@@ -18,11 +18,7 @@ passphrase or asymmetrically via an RSA key pair in Privacy Enhanced
 Mail (PEM/PKCS1) format. The container is encrypted in transit, at rest,
 and even while running. In other words, there is no intermediate,
 decrypted version of the container on disk. Container decryption occurs
-at runtime within kernel space.
-
-Unlike other container builds,
-at this time building an encrypted container requires being the root user.
-Also, decryption still requires a setuid installation of {Project}.
+at runtime in memory.
 
 .. note::
 
@@ -31,6 +27,18 @@ Also, decryption still requires a setuid installation of {Project}.
    This version should be standard with recent Linux versions such as
    Ubuntu 18.04, Debian 10 and CentOS/RHEL 7, but users of older Linux
    versions may have to update.
+
+.. note:: 
+
+   We use ``Privileged Encryption`` to represent the case of an encrypted image built by the
+   root user and decrypted with a suid installation.  The partition type in a SIF image in this
+   case wil be shown as ``Encrypted squashfs``.
+
+   We use ``Unprivileged Encryption`` to represent the case of an encrypted image built by
+   normal unprivileged users and decrypted either without a suid installion or with the ``--userns``
+   option.  The partition type in a SIF image in this case will be shown as ``Gocryptfs squashfs``.
+   This case requires 
+   `unprivileged user namespaces <https://apptainer.org/docs/admin/main/user_namespace.html>`_. 
 
 **********************
 Encrypting a container
@@ -79,8 +87,8 @@ Passphrase Encryption
 In case of plaintext passphrase encryption, a passphrase is supplied by
 one of the following methods.
 
-Encrypting with a passphrase interactively
-------------------------------------------
+Encrypting with a passphrase interactively (``Privileged Encryption``)
+----------------------------------------------------------------------
 
 .. code::
 
@@ -88,8 +96,8 @@ Encrypting with a passphrase interactively
    Enter encryption passphrase: <secret>
    INFO:    Starting build...
 
-Using an environment variable
------------------------------
+Using an environment variable (``Privileged Encryption``)
+---------------------------------------------------------
 
 .. code::
 
@@ -112,6 +120,74 @@ like so.
 
    $ sudo -E {command} build --encrypt encrypted.sif encrypted.def
    Starting build...
+
+Image info verification (``Privileged Encryption``)
+---------------------------------------------------
+
+.. code:: 
+
+   $ {command} sif list encrypted.sif
+
+Example:
+
+.. code:: 
+
+   ------------------------------------------------------------------------------
+   ID   |GROUP   |LINK    |SIF POSITION (start-end)  |TYPE
+   ------------------------------------------------------------------------------
+   1    |1       |NONE    |32176-32223               |Def.FILE
+   2    |1       |NONE    |32223-34202               |JSON.Generic
+   3    |1       |NONE    |34202-34292               |JSON.Generic
+   4    |1       |NONE    |36864-17608704            |FS (Encrypted squashfs/*System/arm64)
+   5    |1       |4       |17608704-17609449         |Cryptographic Message (PEM/RSA-OAEP)
+
+Note that partition 4 is type ``Encrypted squashfs``.
+
+Encrypting with a passphrase interactively (``Unprivileged Encryption``)
+------------------------------------------------------------------------
+
+.. code::
+
+   $ {command} build --passphrase encrypted.sif encrypted.def
+   Enter encryption passphrase: <secret>
+   INFO:    Starting build...
+
+Using an environment variable (``Unprivileged Encryption``)
+-----------------------------------------------------------
+
+.. code::
+
+   $ {ENVPREFIX}_ENCRYPTION_PASSPHRASE=<secret> {command} build encrypted.sif encrypted.def
+   Starting build...
+
+
+.. code::
+
+   $ export {ENVPREFIX}_ENCRYPTION_PASSPHRASE=$(cat secret.txt)
+
+   $ {command} build encrypted.sif encrypted.def
+   Starting build...
+
+Image info verification (``Unprivileged Encryption``)
+-----------------------------------------------------
+
+.. code:: 
+
+   $ {command} sif list encrypted.sif
+
+Example:
+
+.. code:: 
+
+   ------------------------------------------------------------------------------
+   ID   |GROUP   |LINK    |SIF POSITION (start-end)  |TYPE
+   ------------------------------------------------------------------------------
+   1    |1       |NONE    |32176-32215               |Def.FILE
+   2    |1       |NONE    |32215-36269               |JSON.Generic
+   3    |1       |NONE    |36269-36465               |JSON.Generic
+   4    |1       |NONE    |36864-26386432            |FS (Gocryptfs squashfs/*System/arm64)
+
+Note that partition 4 is type ``Gocryptfs squashfs``.
 
 PEM File Encryption
 ===================
@@ -143,16 +219,16 @@ You would use the ``rsa_pub.pem`` file to encrypt your container and the
 ``rsa_pri.pem`` file to run it.  Be sure to keep the private key safe
 and private, because it is not encrypted itself.
 
-Encrypting with a command line option
--------------------------------------
+Encrypting with a command line option (``Privileged Encryption``)
+-----------------------------------------------------------------
 
 .. code::
 
    $ sudo {command} build --pem-path=rsa_pub.pem encrypted.sif encrypted.def
    Starting build...
 
-Encrypting with an environment variable
----------------------------------------
+Encrypting with an environment variable (``Privileged Encryption``)
+-------------------------------------------------------------------
 
 .. code::
 
@@ -162,6 +238,64 @@ Encrypting with an environment variable
 In this case it is necessary to use the ``--encrypt`` flag since the
 presence of an environment variable alone will not trigger the encrypted
 build workflow.
+
+.. code:: 
+
+   $ {command} sif list encrypted.sif
+
+Example:
+
+.. code:: 
+
+   ------------------------------------------------------------------------------
+   ID   |GROUP   |LINK    |SIF POSITION (start-end)  |TYPE
+   ------------------------------------------------------------------------------
+   1    |1       |NONE    |32176-32215               |Def.FILE
+   2    |1       |NONE    |32215-36269               |JSON.Generic
+   3    |1       |NONE    |36269-36465               |JSON.Generic
+   4    |1       |NONE    |36864-42954752            |FS (Encrypted squashfs/*System/arm64)
+   5    |1       |4       |42954752-42955497         |Cryptographic Message (PEM/RSA-OAEP)
+
+Note that partition 4 is type ``Encrypted squashfs``.
+
+Encrypting with a command line option (``Unprivileged Encryption``)
+-------------------------------------------------------------------
+
+.. code::
+
+   $ {command} build --pem-path=rsa_pub.pem encrypted.sif encrypted.def
+   Starting build...
+
+Encrypting with an environment variable (``Unprivileged Encryption``)
+---------------------------------------------------------------------
+
+.. code::
+
+   $ {ENVPREFIX}_ENCRYPTION_PEM_PATH=rsa_pub.pem {command} build --encrypt encrypted.sif encrypted.def
+   Starting build...
+
+In this case it is necessary to use the ``--encrypt`` flag since the
+presence of an environment variable alone will not trigger the encrypted
+build workflow.
+
+.. code:: 
+
+   $ {command} sif list encrypted.sif
+
+Example:
+
+.. code:: 
+
+   ------------------------------------------------------------------------------
+   ID   |GROUP   |LINK    |SIF POSITION (start-end)  |TYPE
+   ------------------------------------------------------------------------------
+   1    |1       |NONE    |32176-32215               |Def.FILE
+   2    |1       |NONE    |32215-36269               |JSON.Generic
+   3    |1       |NONE    |36269-36465               |JSON.Generic
+   4    |1       |NONE    |36864-26386432            |FS (Gocryptfs squashfs/*System/arm64)
+   5    |1       |4       |26386432-26387177         |Cryptographic Message (PEM/RSA-OAEP)
+
+Note that partition 4 is type ``Gocryptfs squashfs``.
 
 ******************************
 Running an encrypted container
@@ -223,3 +357,22 @@ Running using an environment variable
 .. code::
 
    $ {ENVPREFIX}_ENCRYPTION_PEM_PATH=rsa_pri.pem {command} run encrypted.sif
+
+When executing an ``Unprivileged Encryption`` encrypted image with {aProject} suid 
+installation, ``--userns`` is required.
+
+.. code:: 
+
+   $ {command} run --pem-path=rsa_pri.pem encrypted.sif
+
+The following error will be shown
+
+.. code:: 
+
+   FATAL:   container creation failed: mount hook function failure: mount /proc/self/fd/3->/usr/local/var/apptainer/mnt/session/rootfs error: while mounting image /proc/self/fd/3: gocryptfs requires user namespace, please add `--userns` option
+
+Add ``--userns`` option
+
+.. code:: 
+
+   $ {command} run --pem-path=rsa_pri.pem --userns encrypted.sif
