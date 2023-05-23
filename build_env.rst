@@ -27,10 +27,12 @@ created at ``$HOME/.{command}/cache`` by default. The location of the
 cache can be changed by setting the ``{ENVPREFIX}_CACHEDIR`` environment
 variable.
 
-If you run builds as root, using ``sudo``, images will be cached in root's
-home directory at ``/root``, rather than your user's home directory. Use the
-``-E`` option to ``sudo`` to pass through the ``{ENVPREFIX}_CACHEDIR``
-environment variable, if you have set it.
+If you run builds as root, using ``sudo``, images will be cached in root's home
+directory at ``/root``, rather than your user's home directory. If you have set
+the ``{ENVPREFIX}_CACHEDIR`` environment variable, you may use ``sudo``'s ``-E``
+option to pass the value of ``{ENVPREFIX}_CACHEDIR`` through to the root user's
+environment. This allows you to control where images will be cached even when
+running builds under ``sudo``.
 
 .. code::
 
@@ -45,25 +47,24 @@ environment variable, if you have set it.
 If you change the value of ``{ENVPREFIX}_CACHEDIR`` be sure to choose a
 location that is:
 
-   -  Unique to you. Permissions are set on the cache so that private
-      images cached for one user are not exposed to another. This means
-      that ``{ENVPREFIX}_CACHEDIR`` cannot be shared.
+   -  Unique to you. Permissions are set on the cache so that private images
+      cached for one user are not exposed to another. This means that
+      {Project} cache directories cannot be shared across users.
 
-   -  Located on a filesystem with sufficient space for the number and
-      size of container images anticipated.
+   -  Located on a filesystem with sufficient space for the number and size of
+      container images you anticipate using.
 
    -  Located on a filesystem that supports atomic rename, if possible.
 
 .. warning::
 
-   If you are not certain that your ``$HOME`` or
-   ``{ENVPREFIX}_CACHEDIR`` filesystems support atomic rename, do not
-   run {Project} in parallel using remote container URLs. Instead
-   use ``{command} pull`` to create a local SIF image, and then run
-   this SIF image in a parallel step. An alternative is to use the
-   ``--disable-cache`` option, but this will result in each
-   {Project} instance independently fetching the container from the
-   remote source, into a temporary location.
+   If you are not certain that your ``$HOME`` or ``{ENVPREFIX}_CACHEDIR``
+   filesystems support atomic rename, do not run {Project} in parallel using
+   remote container URLs. Instead, use ``{command} pull`` to create a local
+   SIF image, and then run this SIF image in a parallel step. Alternatively, you
+   may use the ``--disable-cache`` option, but this will result in each
+   {Project} instance independently fetching the container from the remote
+   source, into a temporary location.
 
 Inside the cache location you will find separate directories for the
 different kinds of data that are cached:
@@ -80,23 +81,22 @@ You can safely delete these directories, or content within them.
 {Project} will re-create any directories and data that are needed in
 future runs.
 
-You should not add any additional files, or modify files in the cache,
-as this may cause checksum / integrity errors when you run or build
-containers. If you experience problems use ``{command} cache clean``
-to reset the cache to a clean, empty state.
+You should not add any additional files, or modify files in the cache, as this
+may cause checksum / integrity errors when you run or build containers. If you
+experience problems use, ``{command} cache clean`` to reset the cache to a
+clean, empty state.
 
 BoltDB Corruption Errors
 ========================
 
 The library that {Project} uses to retrieve and cache Docker/OCI
-layers keeps track of them using a single file database. If your home
+layers keeps track of them using a single-file database. If your home
 directory is on a network filesystem which experiences interruptions, or
 you run out of storage, it is possible for this database to become
 inconsistent.
 
-If you observe error messages when trying to run {Project} that
-mention `github.com/etcd-io/bbolt` then you should remove the database
-file:
+If you observe error messages that mention `github.com/etcd-io/bbolt` when
+trying to run {Project}, then you should remove the database file:
 
 .. code::
 
@@ -106,18 +106,18 @@ file:
 Cache commands
 **************
 
-The ``cache`` command for {Project} allows you to view and clean up
-your cache, without manually inspecting the cache directories.
+The ``cache`` command for {Project} allows you to view and clean up your
+cache, without needing to manually inspect the cache directories.
 
 .. note::
 
-   If you have built images as root, directly or via ``sudo``, the cache
-   location for those builds is ``/root/.{command}``. You will need to
-   use ``sudo`` when running ``cache clean`` or ``cache list`` to manage
-   these cache entries.
+   If you have built images as root, directly or via ``sudo``, the default cache
+   location for those builds is ``/root/.{command}``. You will need to use
+   ``sudo`` when running ``cache clean`` or ``cache list`` to manage these cache
+   entries.
 
-Listing Cache
-=============
+Listing the Cache
+=================
 
 To view a summary of cache usage, use ``{command} cache list``:
 
@@ -127,7 +127,7 @@ To view a summary of cache usage, use ``{command} cache list``:
    There are 4 container file(s) using 59.45 MB and 23 oci blob file(s) using 379.10 MB of space
    Total space used: 438.55 MB
 
-To view detailed information, use ``{command} cache list -v``:
+To view more detailed information, use ``{command} cache list -v``:
 
 .. code::
 
@@ -165,15 +165,15 @@ To view detailed information, use ``{command} cache list -v``:
    Total space used: 438.55 MB
 
 All cache entries are named using a content hash, so that identical
-layers or images that are pulled from different URIs do not consume more
-space than needed.
+layers or images that are pulled from different URIs do not result in
+duplication within the cache.
 
-Entries marked ``blob`` are OCI/docker layers and manifests, that are
-used to create SIF format images in the ``oci-tmp`` cache. Other caches
-are named for the source of the image e.g. ``library`` and ``oras``.
+Entries marked ``blob`` are OCI/docker layers and manifests, which are used to
+create SIF format images in the ``oci-tmp`` cache. Other caches are named for
+the source of the image, e.g. ``library`` or ``oras``.
 
-You can limit the cache list to a specific cache type with the ``-type``
-/ ``-t`` option.
+You can limit the cache list to a specific cache type with the ``--type`` /
+``-t`` option.
 
 Cleaning the Cache
 ==================
@@ -181,7 +181,7 @@ Cleaning the Cache
 To reclaim space used by the {Project} cache, use ``{command}
 cache clean``.
 
-By default ``{command} cache clean`` will remove all cache entries,
+By default, ``{command} cache clean`` will remove all cache entries,
 after asking you to confirm:
 
 .. code::
@@ -216,25 +216,25 @@ use the ``--type`` / ``-T`` option:
 Temporary Folders
 *****************
 
-When building a container, or pulling/running {aProject} container
-from a Docker/OCI source, a temporary working space is required. The
-container is constructed in this temporary space before being packaged
-into {aProject} SIF image.
+When building a container, or pulling/running {aProject} container from a
+Docker/OCI source, a temporary working space is required. The container is
+constructed in this temporary space before being packaged into {aProject}
+SIF image.
 
 The location for temporary directories defaults to ``/tmp``.
-{Project} will also respect the environment variable ``TMPDIR``, and
+However, {Project} will respect the environment variable ``TMPDIR``, and
 both of these locations can be overridden by setting the environment
 variable ``{ENVPREFIX}_TMPDIR``.
 
-The temporary directory used during a build must be on a filesystem that
-has enough space to hold the entire container image, uncompressed,
-including any temporary files that are created and later removed during
-the build. You may need to set ``{ENVPREFIX}_TMPDIR`` when building a
-large container on a system which has a small ``/tmp`` filesystem.
+The temporary directory used during a build must be on a filesystem that has
+enough space to hold the entire container image, uncompressed, including any
+temporary files that are created and later removed in the course of the build.
+You may therefore need to set ``{ENVPREFIX}_TMPDIR`` when building a large
+container on a system which has a small ``/tmp`` filesystem.
 
-Remember to use ``-E`` option to pass the value of
-``{ENVPREFIX}_TMPDIR`` to root's environment when executing the
-``build`` command with ``sudo``.
+Remember to use ``-E`` option to pass the value of ``{ENVPREFIX}_TMPDIR``
+through to root's environment when executing the ``build`` command with
+``sudo``.
 
 .. warning::
 
@@ -245,73 +245,78 @@ Remember to use ``-E`` option to pass the value of
    ``tmpfs`` also uses default mount options that can interfere with
    some container builds.
 
-   Set ``{ENVPREFIX}_TMPDIR`` to a disk location, or disable the
-   ``tmpfs`` ``/tmp`` mount on your system if you experience problems.
+   If you experience problems, set ``{ENVPREFIX}_TMPDIR`` to a disk location, or
+   disable the ``tmpfs`` ``/tmp`` mount on your system.
 
 ********************
 Encrypted Containers
 ********************
 
-With {aProject} setuid installation it is possible to build and run
-encrypted containers. The containers are decrypted at runtime entirely
-in kernel space, meaning that no intermediate decrypted data is ever
-present on disk.
-See :ref:`encrypted containers <encryption>` for more details.
+With {Project} it is possible to build and run encrypted
+containers. The containers are decrypted at runtime entirely in memory,
+meaning that no intermediate decrypted data is ever present on disk. See
+:ref:`encrypted containers <encryption>` for more details.
 
 *********************
 Environment Variables
 *********************
 
-#. If a flag is represented by both a CLI option and an environment
-   variable, and both are set, the CLI option will always take
-   precedence. This is true for all environment variables except for
-   ``{ENVPREFIX}_BIND`` and ``{ENVPREFIX}_BINDPATH`` which is combined
-   with the ``--bind`` option, argument pair if both are present.
+#. If a flag is represented by both a CLI option and an environment variable,
+   and both are set, the CLI option will take precedence. This is true for all
+   environment variables with the exception for ``{ENVPREFIX}_BIND`` and
+   ``{ENVPREFIX}_BINDPATH``, which are combined with the ``--bind`` option /
+   argument pair, if both are present.
 
-#. Environment variables overwrite default values in the CLI code
+#. Environment variables will override default values of CLI options that have
+   not been explicitly set in the command line.
 
-#. Any defaults in the CLI code are applied.
+#. Any default values for CLI options that have not been overridden on the
+   command line, or by corresponding environment variables, will then take
+   effect.
 
 Defaults
 ========
 
-The following variables have defaults that can be customized by you via
-environment variables at runtime.
+The following variables have defaults that can be overridden by assigning your
+own values to the corresponding environment variables at runtime:
 
 Docker
 ------
 
-**{ENVPREFIX}_DOCKER_LOGIN** - Used for the interactive login for Docker
-Hub.
+| ``{ENVPREFIX}_DOCKER_LOGIN`` -
+| Set this to login to a Docker Repository interactively.
 
-**{ENVPREFIX}_DOCKER_USERNAME** - Your Docker username.
+| ``{ENVPREFIX}_DOCKER_USERNAME`` -
+| Your Docker username.
 
-**{ENVPREFIX}_DOCKER_PASSWORD** - Your Docker password.
+| ``{ENVPREFIX}_DOCKER_PASSWORD`` -
+| Your Docker password.
 
-**RUNSCRIPT_COMMAND** - Is not obtained from the environment, but is a
-hard coded default ("/bin/bash". This is the fallback command used in
-the case that the docker image does not have a CMD or ENTRYPOINT.
-**TAG** Is the default tag, ``latest``.
+| ``RUNSCRIPT_COMMAND`` -
+| Is not obtained from the environment, but is a hard coded default
+  ("/bin/bash"). This is the fallback command used in the case that the docker
+  image does not have a CMD or ENTRYPOINT. ``TAG`` Is the default tag,
+  ``latest``.
 
-**{ENVPREFIX}_NOHTTPS** - This is relevant if you want to use a registry
-that doesn't have https, and it speaks for itself. If you export the
-variable ``{ENVPREFIX}_NOHTTPS`` you can force the software to not use
-https when interacting with a Docker registry. This use case is
-typically for use of a local registry.
+| ``{ENVPREFIX}_NOHTTPS`` -
+| This is relevant if you want to use a registry that doesn't support https. A
+  typical use-case for this variable is when using local registry, running on
+  the same machine as {Project} itself.
 
 Library
 -------
 
-**{ENVPREFIX}_LIBRARY** - Used to specify the library to pull from.
-Default is the currently selected :ref:`remote endpoint <endpoints>`.
+| ``{ENVPREFIX}_LIBRARY`` -
+| Used to specify the library to pull from.
+| Default is set to Sylabs' Cloud Library.
 
 Encryption
 ----------
 
-**{ENVPREFIX}_ENCRYPTION_PASSPHRASE** - Used to pass a plaintext
-passphrase to encrypt a container file system (with the ``--encrypt``
-flag). The default is empty.
+| ``{ENVPREFIX}_ENCRYPTION_PASSPHRASE`` -
+| Used to pass a plaintext passphrase to be used to encrypt a container file
+  system (in conjunction with the ``--encrypt`` flag). The default is empty.
 
-**{ENVPREFIX}_ENCRYPTION_PEM_PATH** - Used to specify the location of a
-public key to use for container encryption (with the ``--encrypt``
-flag). The default is empty.
+| ``{ENVPREFIX}_ENCRYPTION_PEM_PATH`` -
+| Used to specify the location of a public key to use for container encryption
+  (in conjunction with the ``--encrypt`` flag). The default is empty.

@@ -67,13 +67,13 @@ For example, to create a 1 GiB overlay image:
 
    $ {command} overlay create --size 1024 /tmp/ext3_overlay.img
 
-``{command} overlay create`` also provides an option ``--create-dir``
-to create additional directories owned by the calling user, it can be
-specified multiple times to create many directories. This is
-particularly useful when you need to make a directory writable by your
+``{command} overlay create`` also provides an option ``--create-dir`` to
+create additional directories owned by the calling user. This option can be
+specified multiple times to create several such directories. This is
+particularly useful when you need to make a directory that is writable by your
 user.
 
-So for example:
+For example:
 
 .. code::
 
@@ -287,7 +287,7 @@ possibly affect the operation:
    SquashFS, ext3, raw.
 -  ``parttype`` determines the type of partition. In our case it is
    being set to overlay.
--  ``partarch`` must be set to the architecture against you're building.
+-  ``partarch`` must be set to the architecture against which you're building.
    In this case it's ``amd64``.
 -  ``groupid`` is the ID of the container image group. In most cases
    there's no more than one group, therefore we can assume it is 1.
@@ -312,14 +312,15 @@ also the ``--fakeroot`` option):
 Final note
 ==========
 
-To resize an overlay, standard Linux tools which manipulate ext3 images
-can be used. For instance, to resize the 500MB file created above to
-700MB one could use the ``e2fsck`` and ``resize2fs`` utilities like so:
+To resize an overlay, standard Linux tools which manipulate ext3 images can be
+used. For instance, to resize the 500MB file created above to 700MB one could
+use the ``e2fsck`` and ``resize2fs`` utilities as follows:
 
 .. code::
 
    $ e2fsck -f overlay.img && \
        resize2fs overlay.img 700M
 
-Hints for creating and manipulating ext3 images on your distribution are
-readily available online and are not treated further in this manual.
+More information on creating and manipulating ext3 images on various Linux
+distribution are available where documentation for those respective
+distributions is found.
