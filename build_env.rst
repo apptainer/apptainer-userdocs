@@ -283,40 +283,42 @@ own values to the corresponding environment variables at runtime:
 Docker
 ------
 
-| ``{ENVPREFIX}_DOCKER_LOGIN`` -
-| Set this to login to a Docker Repository interactively.
+``{ENVPREFIX}_DOCKER_LOGIN`` -
+Set this to login to a Docker Repository interactively.
 
-| ``{ENVPREFIX}_DOCKER_USERNAME`` -
-| Your Docker username.
+``{ENVPREFIX}_DOCKER_USERNAME`` -
+Your Docker username.
 
-| ``{ENVPREFIX}_DOCKER_PASSWORD`` -
-| Your Docker password.
+``{ENVPREFIX}_DOCKER_PASSWORD`` -
+Your Docker password.
 
-| ``RUNSCRIPT_COMMAND`` -
-| Is not obtained from the environment, but is a hard coded default
-  ("/bin/bash"). This is the fallback command used in the case that the docker
-  image does not have a CMD or ENTRYPOINT. ``TAG`` Is the default tag,
-  ``latest``.
+``RUNSCRIPT_COMMAND`` -
+Is not obtained from the environment, but is a hard coded default
+("/bin/bash"). This is the fallback command used in the case that the docker
+image does not have a CMD or ENTRYPOINT.
 
-| ``{ENVPREFIX}_NOHTTPS`` -
-| This is relevant if you want to use a registry that doesn't support https. A
-  typical use-case for this variable is when using local registry, running on
-  the same machine as {Project} itself.
+``TAG`` -
+Is the default tag, ``latest``.
+
+``{ENVPREFIX}_NOHTTPS`` -
+This is relevant if you want to use a registry that doesn't support https. A
+typical use-case for this variable is when using local registry, running on
+the same machine as {Project} itself.
 
 Library
 -------
 
-| ``{ENVPREFIX}_LIBRARY`` -
-| Used to specify the library to pull from.
-| Default is set to Sylabs' Cloud Library.
+``{ENVPREFIX}_LIBRARY`` -
+Used to specify the library to pull from.
+Default is the currently selected :ref:`remote endpoint <endpoints>`.
 
 Encryption
 ----------
 
-| ``{ENVPREFIX}_ENCRYPTION_PASSPHRASE`` -
-| Used to pass a plaintext passphrase to be used to encrypt a container file
-  system (in conjunction with the ``--encrypt`` flag). The default is empty.
+``{ENVPREFIX}_ENCRYPTION_PASSPHRASE`` -
+Used to pass a plaintext passphrase to be used to encrypt a container file
+system (in conjunction with the ``--encrypt`` flag). The default is empty.
 
-| ``{ENVPREFIX}_ENCRYPTION_PEM_PATH`` -
-| Used to specify the location of a public key to use for container encryption
-  (in conjunction with the ``--encrypt`` flag). The default is empty.
+``{ENVPREFIX}_ENCRYPTION_PEM_PATH`` -
+Used to specify the location of a public key to use for container encryption
+(in conjunction with the ``--encrypt`` flag). The default is empty.
