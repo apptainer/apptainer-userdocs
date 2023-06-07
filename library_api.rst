@@ -249,7 +249,7 @@ This is our definition file. Let's call it ``ubuntu.def``:
 .. code:: {command}
 
    bootstrap: library
-   from: ubuntu:18.04
+   from: ubuntu:22.04
 
    %runscript
        echo "hello world from ubuntu container!"
