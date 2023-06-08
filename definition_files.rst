@@ -685,7 +685,7 @@ following command:
    org.label-schema.usage.apptainer.runscript.help: /.singularity.d/runscript.help
    org.label-schema.usage.apptainer.version: 1.0.0
    org.label-schema.usage.singularity.deffile.bootstrap: docker
-   org.label-schema.usage.singularity.deffile.from: ubuntu:18.04
+   org.label-schema.usage.singularity.deffile.from: ubuntu:22.04
    org.label-schema.usage.singularity.deffile.stage: build
 
 As you can see from this output, some labels are generated automatically
