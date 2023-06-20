@@ -37,7 +37,7 @@ at runtime in memory.
    normal unprivileged users and decrypted either without a suid installion or with the ``--userns``
    option.  The partition type in a SIF image in this case will be shown as ``Gocryptfs squashfs``.
    This case requires 
-   `unprivileged user namespaces <https://apptainer.org/docs/admin/main/user_namespace.html>`_. 
+   `unprivileged user namespaces <{admindocs}/user_namespace.html>`_. 
 
 **********************
 Encrypting a container
