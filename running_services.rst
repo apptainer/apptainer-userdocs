@@ -65,7 +65,7 @@ The above command will save the alpine image as ``alpine_latest.sif``.
 Starting Instances
 ==================
 
-To start an instance, you should follow this procedure :
+To start an instance, you should follow this procedure:
 
 .. code::
 
@@ -73,9 +73,14 @@ To start an instance, you should follow this procedure :
 
    $ {command} instance start   alpine_latest.sif     instance1
 
-This command causes {Project} to create an isolated environment for
-the container services to live inside. You can confirm that an instance
-is running by using the ``instance list`` command:
+This command causes {Project} to create an isolated environment for the
+container services to live inside. It will execute the contents of the
+``startscript`` file which can be defined when you build the container via the
+def file. You can also use the `instance run` command if you want the container
+to execute the ``runscript`` when the instance initiates.
+
+You can confirm that an instance is running by using the ``instance
+list`` command:
 
 .. code::
 
