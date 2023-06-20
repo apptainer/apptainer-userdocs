@@ -179,7 +179,7 @@ download it again like so.
 
 But note that this only restores the *public* key (used for verifying) to your
 local machine and does not restore the *private* key (used for signing).  **If
-you perminantly delete your private key, there is no way to recover it.**
+you permanently delete your private key, there is no way to recover it.**
 
 .. _searching_for_keys:
 
@@ -396,16 +396,16 @@ following commands:
 
 .. code::
 
-   $ git clone https://github.com/apptainer/apptainer.git
+   $ git clone https://github.com/{orgrepo}.git
 
    $ export KEYD="${PWD}/apptainer/test/keys"
 
    $ export CERTD="${PWD}/apptainer/test/certs"
 
-Information on creating PEM files can be found in the `encrypted container docs
-<https://apptainer.org/docs/user/main/encryption.html#pem-file-encryption>`__,
-and the method for creating certificates is documented `here
-<https://github.com/apptainer/apptainer/blob/main/test/certs/gen_certs.go>`__.
+Information on creating PEM files can be found in the :ref:`encrypted container
+docs <sec:pem-file-encryption>`, and the method for creating certificates is
+documented `here
+<https://github.com/{orgrepo}/blob/{repobranch}/test/certs/gen_certs.go>`__.
 
 Signing with a PEM key
 ======================
