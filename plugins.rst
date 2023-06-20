@@ -147,4 +147,4 @@ by reading the `Go documentation
 plugin package.
 
 Example plugins can be found in the {Project} `source code
-<https://github.com/{orgrepo}/tree/master/examples/plugins>`_.
+<https://github.com/{orgrepo}/tree/{repobranch}/examples/plugins>`_.

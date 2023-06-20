@@ -66,7 +66,7 @@ Other dependencies include:
 More information about contributing to the documentation, instructions
 on how to install the dependencies, and how to generate the files can be
 obtained `here
-<https://github.com/{orgrepo}-userdocs/blob/main/README.md>`__.
+<https://github.com/{orgrepo}-userdocs/blob/{repobranch}/README.md>`__.
 
 For more information on using Git and GitHub to create a pull request
 suggesting additions and edits to the docs, see the :ref:`section on
@@ -85,9 +85,9 @@ that you fork the main repo, create a new branch to make changes, and
 submit a pull request (PR) to the main branch.
 
 Check out our official `CONTRIBUTING.md
-<https://github.com/{orgrepo}/blob/main/CONTRIBUTING.md>`_
+<https://github.com/{orgrepo}/blob/{repobranch}/CONTRIBUTING.md>`_
 document, which also includes a `code of conduct
-<https://github.com/{orgrepo}/blob/main/CONTRIBUTING.md#code-of-conduct>`_.
+<https://github.com/{orgrepo}/blob/{repobranch}/CONTRIBUTING.md#code-of-conduct>`_.
 
 Step 1. Fork the repo
 =====================
