@@ -821,6 +821,9 @@ the same container using SCIF modules:
    %apprun foo
        exec echo "RUNNING FOO"
 
+   %appstart foo
+       exec echo "STARTING FOO"
+
    %applabels foo
        BESTAPP FOO
 
@@ -850,6 +853,9 @@ the same container using SCIF modules:
    %apprun bar
        exec echo "RUNNING BAR"
 
+   %appstart bar
+       exec echo "STARTING BAR"
+
    %appenv bar
        SOFTWARE=bar
        export SOFTWARE
@@ -877,6 +883,12 @@ Installing apps into modules using the ``%app*`` sections enables the
 
 This runs a specific app, ``foo``, from the multi-app container we
 built.
+
+You can also launch an app as a service using the `instance start` command:
+
+.. code::
+
+   % {command} instance start --app foo my_container.sif
 
 The same environment variable, ``$SOFTWARE`` is defined for both apps in
 the def file above. You can execute the following command to search the

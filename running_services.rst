@@ -14,7 +14,7 @@ then exits. There are :ref:`different ways <runcontainer>` in which you can run
 {Project}, also allows you to run containers in a "detached" or "daemon"
 mode where the container runs a service. A "service" is essentially a process
 running in the background that multiple different clients can use. For example,
-a web server or a database. 
+a web server or a database.
 
 A {Project} container running a service in the background is called an
 *instance*, to distinguish it from the default mode which runs containers in the
@@ -122,6 +122,18 @@ You can filter the instance list by supplying a pattern:
 When an instance is started, it will begin to run the ``%startscript`` from the
 container's :ref:`definition file <definition-files>` in the background. If
 there is no ``%startscript`` the container will stay idle in the background.
+
+You can also define start scripts on a per app basis.
+
+.. code::
+
+    $ {command} instance start --app myapp alpine_latest.sif myapp-instance
+
+When this app instance is started, it will begin to run the ``%myappstart`` from the
+container's :ref:`definition file <definition-files>` in the background. If
+there is no ``%myappstart`` the container will stay idle in the background.
+
+Besides how they are started, app instances behave just like regular instances.
 
 Interacting With Instances
 ==========================
@@ -423,7 +435,7 @@ error messages into log files.
 You can view the location of log files for running instances using the ``--log``
 option of the ``instance list`` command:
 
-.. code:: 
+.. code::
 
    $ {command} instance list --logs
    INSTANCE NAME    PID       LOGS
@@ -437,7 +449,7 @@ The ``.out`` log collects standard output. The ``.err`` log collects standard
 error. You can look at the content of the log files to check how your service is
 running:
 
-.. code:: 
+.. code::
 
    $ cat /home/user/.{command}/instances/logs/mini/user/pdf.out
 
@@ -449,7 +461,7 @@ running:
    [nodemon] watching: /pdf_server/src/**/*
    [nodemon] starting `node src/index.js`
    2023-02-01T11:14:58.185Z - info: [app.js] ALLOW_HTTP=true, unsafe requests are allowed. Don't use this in production.
-   2023-02-01T11:14:58.187Z - info: [app.js] ALLOW_URLS set! Allowed urls patterns are: 
+   2023-02-01T11:14:58.187Z - info: [app.js] ALLOW_URLS set! Allowed urls patterns are:
    2023-02-01T11:14:58.187Z - info: [app.js] Using CORS options: origin=*, methods=[GET, POST, PUT, DELETE, OPTIONS, HEAD, PATCH]
    2023-02-01T11:14:58.206Z - warn: [router.js] Warning: no authentication required to use the API
    2023-02-01T11:14:58.209Z - info: [index.js] Express server listening on http://localhost:9000/ in development mode
@@ -466,7 +478,7 @@ the resources used by the instance to be monitored, and limited.
 
 To monitor the resource usage of an instance, use the ``instance stats`` command:
 
-.. code:: 
+.. code::
 
     $ {command} instance stats pdf
    INSTANCE NAME    CPU USAGE    MEM USAGE / LIMIT     MEM %    BLOCK I/O            PIDS
@@ -485,7 +497,7 @@ applied to instances using the same :ref:`command line flags <cgroup_flags>`
 that are available for interactive containers. E.g. to limit memory usage to
 1GiB, we can use the ``--memory`` flag:
 
-.. code:: 
+.. code::
 
    {command} instance start --memory 1G url-to-pdf.sif pdf
 
