@@ -14,13 +14,13 @@ and directly added to the SIF file. This means that a signed container carries
 it's signature with it, avoiding the need for extra infrastructure to distribute
 signatures to end users of the container.
 
-A user verifies the container has not been modified since signing using a public
-key or certificate. By default, {Project} uses PGP keys to sign and verify
-containers. Signing and verifying containers with X.509 key material
+A user verifies the container has not been modified since it was signed using a 
+public key or certificate. By default, {Project} uses PGP keys to sign and 
+verify containers. Signing and verifying containers with X.509 key material
 / certificates is also supported.
 
-PGP Public keys for verification can be distributed manually, or can be uploaded
-to and automatically retrieved from a keyserver.
+PGP Public key material (used for verification) can be distributed manually, or
+can be uploaded to and automatically retrieved from a remote keyserver.
 
 As well as indicating a container has not been modified, a valid signature may
 be used to indicate a container has undergone testing or review, and is approved
@@ -43,8 +43,8 @@ Verifying containers from remote sources
 ****************************************
 
 The ``verify`` command will allow you to verify that a SIF container image has
-been signed using a PGP key. This ensures that the container image on your disk
-is a bit-for-bit reproduction of the original image.
+been signed using a PGP key or certificate. This ensures that the container
+image on your disk is a bit-for-bit reproduction of the original image.
 
 
 .. code::
@@ -66,7 +66,7 @@ In this example you can see that **Ian Kaneshiro** has signed the
 container.
 
 This feature is available with SIF images like those you can pull from container
-libraries or OCI registries via `oras://`.
+libraries or OCI registries via ``oras://``.
 
 .. _sign_your_own_containers:
 
@@ -77,12 +77,10 @@ Signing your own containers
 Generating and managing PGP keys
 ================================
 
-To sign your own containers you first need to generate one or more keys.
+To sign your own containers with a PGP key you first need to generate one or
+more keys.
 
-If you attempt to sign a container before you have generated any keys,
-{Project} will guide you through the interactive process of creating
-a new key. Or you can use the ``newpair`` subcommand in the ``key``
-command group like so:
+You can use the ``newpair`` subcommand in the ``key`` command group like so:
 
 .. code::
 
@@ -96,7 +94,7 @@ command group like so:
    Generating Entity and OpenPGP Key Pair... done
 
 The ``list`` subcommand will show you all of the keys you have created
-or saved locally.`
+or saved locally.
 
 .. code::
 
@@ -147,14 +145,22 @@ First we can check which key server we have configured using:
    URI             INSECURE
    oras://ghcr.io  NO
 
-Here we can see that we will be pushing to `https://keys.openpgp.org`. Now
-we can use the following command to push our key:
+Here we can see that we will be pushing to `https://keys.openpgp.org
+<https://keys.openpgp.org>`__. Now we can use the following command to push our
+key:
 
 .. code::
 
    $ {command} key push 8232570480B868E1473AEEB03DBCBA1EE9D661E5
 
-   public key `8232570480B868E1473AEEB03DBCBA1EE9D661E5' pushed to server successfully
+   WARNING: No default remote in use, falling back to default keyserver: https://keys.openpgp.org
+   INFO:    Key server response: Upload successful. This is a new key, a welcome email has been sent.
+   public key '8232570480B868E1473AEEB03DBCBA1EE9D661E5' pushed to server successfully
+
+.. note::
+
+   The default key server keys.openpgp.org requires you to verify your key via
+   email before the public key material will be accessible.
 
 If you delete your local public PGP key, you can always locate and
 download it again like so.
@@ -171,19 +177,19 @@ download it again like so.
    $ {command} key pull 8232570480B868E1473AEEB03DBCBA1EE9D661E5
    1 key(s) added to keyring of trust /home/ian/.{command}/keys/pgp-public
 
-But note that this only restores the *public* key (used for verifying)
-to your local machine and does not restore the *private* key (used for
-signing).
+But note that this only restores the *public* key (used for verifying) to your
+local machine and does not restore the *private* key (used for signing).  **If
+you permanently delete your private key, there is no way to recover it.**
 
 .. _searching_for_keys:
 
 Searching for keys
 ==================
 
-{Project} allows you to search the keystore for public keys. You can
-search for names, emails, and fingerprints (key IDs). When searching for
-a fingerprint, you need to use ``0x`` before the fingerprint, check the
-example:
+{Project} allows you to search the keystore for public keys. You can search for
+names, emails, and fingerprints (key IDs) provided that the backend keystore
+supports these actions. When searching for a fingerprint, you need to use ``0x``
+before the fingerprint, check the example:
 
 .. code::
 
@@ -202,8 +208,7 @@ example:
 Signing and validating your own containers
 ==========================================
 
-Now that you have a key generated, you can use it to sign images like
-so:
+Now that you have a key generated, you can use it to sign images like so:
 
 .. code::
 
@@ -255,10 +260,10 @@ command again.
    4   |1       |NONE    |FS
    Container verified: my_container.sif
 
-Note that the ``[REMOTE]`` message shows the key used for verification
-was obtained from a key server, and is not present on your local
-computer. You can retrieve it, so that you can verify even if you are
-offline with ``{command} key pull``
+Note that the ``[REMOTE]`` message shows the key used for verification was
+obtained from a key server, and is not present on your local computer. You can
+retrieve it, so that you can verify even if you are offline with ``{command} key
+pull``
 
 .. code::
 
@@ -380,23 +385,40 @@ specifying ``--group-id`` can also verify the container:
 PEM Key / X.509 Certificate Support
 ***********************************
 
-{Project} also supports signing SIF container images
-using a PEM format private key, and verifying with a PEM format public key, or
-X.509 certificate. Non-PGP signatures are implemented using the `Dead Simple
-Signing Envelope <https://github.com/secure-systems-lab/dsse>`__ (DSSE)
-standard.
+{Project} also supports signing SIF container images using a PEM format private
+key, and verifying with a PEM format public key, or X.509 certificate. Non-PGP
+signatures are implemented using the `Dead Simple Signing Envelope
+<https://github.com/secure-systems-lab/dsse>`__ (DSSE) standard.
+
+The {Project} GitHub repo contains keys and certificates useful for testing. If
+you want to use them to carry out the commands below, first, carry out the
+following commands:
+
+.. code::
+
+   $ git clone https://github.com/{orgrepo}.git
+
+   $ export KEYD="${PWD}/apptainer/test/keys"
+
+   $ export CERTD="${PWD}/apptainer/test/certs"
+
+Information on creating PEM files can be found in the :ref:`encrypted container
+docs <sec:pem-file-encryption>`, and the method for creating certificates is
+documented `here
+<https://github.com/{orgrepo}/blob/{repobranch}/test/certs/gen_certs.go>`__.
 
 Signing with a PEM key
 ======================
 
-To sign a container using a private key in PEM format, provide the key material
-to the ``sign`` command using the ``--key`` flag:
+To sign a container using a private key in PEM format, provide the private key
+material to the ``sign`` command using the ``--key`` flag. 
 
 .. code:: 
 
-   $ {command} sign --key mykey.pem lolcow.sif 
-   INFO:    Signing image with key material from 'mykey.pem'
+   $ {command} sign --key $KEYD/rsa-private.pem lolcow.sif 
+   INFO:    Signing image with key material from 'rsa_pri.pem'
    INFO:    Signature created and applied to image 'lolcow.sif'
+
 
 The DSSE signature descriptor can now be seen by inspecting the SIF file:
 
@@ -435,8 +457,8 @@ to the ``verify`` command using the ``key`` flag:
 
 .. code:: 
 
-   $ {command} verify --key mypublic.pem lolcow.sif 
-   INFO:    Verifying image with key material from 'mypublic.pem'
+   $ {command} verify --key $KEYD/rsa-public.pem lolcow.sif 
+   INFO:    Verifying image with key material from 'rsa_pub.pem'
    Objects verified:
    ID  |GROUP   |LINK    |TYPE
    ------------------------------------------------
@@ -445,6 +467,7 @@ to the ``verify`` command using the ``key`` flag:
    3   |1       |NONE    |JSON.Generic
    4   |1       |NONE    |FS
    INFO:    Verified signature(s) from image 'lolcow.sif'
+
 
 Verifying with an X.509 certificate
 ===================================
@@ -458,9 +481,9 @@ certificates with the ``--certificate-intermediates`` and
 .. code::
 
    $ {command} verify \
-      --certificate leaf.pem \
-      --certificate-intermediates intermediate.pem \
-      --certificate-roots root.pem \
+      --certificate $CERTD/leaf.pem \
+      --certificate-intermediates $CERTD/intermediate.pem \
+      --certificate-roots $CERTD/root.pem \
       lolcow.sif 
 
 .. note:: 
@@ -478,9 +501,9 @@ enable OCSP checks, add the ``--ocsp-verify`` flag to your ``verify`` command:
 .. code:: 
 
    $ {command} verify \
-      --certificate leaf.pem \
-      --certificate-intermediates intermediate.pem \
-      --certificate-roots root.pem \
+      --certificate $CERTD/leaf.pem \
+      --certificate-intermediates $CERTD/intermediate.pem \
+      --certificate-roots $CERTD/root.pem \
       --ocsp-verify
       lolcow.sif 
 
