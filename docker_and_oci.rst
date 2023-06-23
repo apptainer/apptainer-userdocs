@@ -1224,6 +1224,13 @@ Section          Description                 Section          Description
                  | image from which to the                    | the specified docker image.
                  | build the container.
 
+``%arguments``   | Section to set the        ``ARG``          | Support templating build.
+                 | default values for                         | Users can change the variable
+                 | defined variables in                       | values among different builds.
+                 | the definition file.
+                 | Used for image building
+                 | process.
+
 ``%setup``       | Run setup commands        \-               | Not supported.
                  | outside of the
                  | container (on the host
@@ -1278,5 +1285,4 @@ Section          Description                 Section          Description
                  | define metadata           ``LABEL``        | Declare container
                  | describing your                            | metadata as a
                  | container.                                 | key-value pair.
-
 ================ =========================== ================ =============================
