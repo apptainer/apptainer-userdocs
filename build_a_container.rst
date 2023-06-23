@@ -172,6 +172,26 @@ meaning that no intermediate decrypted data is ever written to disk. See
 Build options
 *************
 
+``--build-arg``
+===============
+
+Specifies values of :ref:`defined template variables <arguments>` in the 
+definition file. Values passed via ``--build-arg`` follow the form of 
+``variable=value``. Multiple ``--build-arg`` options are acceptable for build command.
+
+``--build-arg-file``
+====================
+
+Similar to ``--build-arg`` but specifiles values of defined template variables 
+via a file, which contains multiple ``variable=value`` entries. 
+
+``--warn-unused-build-args``
+============================
+
+By default, when users provide unused variables to the build process, fatal
+errors will return. This option makes the build process show warnings instead of 
+returning fatal errors.
+
 ``--encrypt``
 =============
 

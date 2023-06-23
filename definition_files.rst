@@ -174,8 +174,11 @@ to one another during the build process.
 .. code:: {command}
 
    Bootstrap: docker
-   From: ubuntu:22.04
+   From: ubuntu:{{ VERSION }}
    Stage: build
+
+   %arguments
+       VERSION=22.04
 
    %setup
        touch /file1
@@ -222,6 +225,40 @@ to one another during the build process.
 Although the order of the sections in the def file is unimportant, they
 have been documented below in the order of their execution during the
 build process for ease of understanding.
+
+%arguments
+========== 
+.. _arguments:
+
+During the build process, variables defined via a matching pair of double curly
+brackets in the current definition file, i.e., the form of ``{{ variable }}``, 
+will be replaced by a value defined by a ``variable=value`` entry in this section.
+Note that values defined in this section are only the default values for defined
+variables; if the same variables are passed with different values via the options
+``--build-arg`` or ``-biuld-arg-file`` they will overwrite values defined in
+this section.
+
+Consider the example from the definition file above:
+
+.. code:: {command}
+
+   Bootstrap: docker
+   From: ubuntu:{{ VERSION }}
+   Stage: build
+
+   %arguments
+      VERSION=22.04
+
+The value in this entry ``VERSION=22.04`` will replace the template variable 
+``{{ VERSION }}`` during the build process by default.
+
+However, if a user builds the image with the command
+
+.. code:: {command}
+
+   apptainer build --build-arg VERSION=23.04 my_container.sif my_container.def
+
+then the From image tag will be overridden to ``23.04`` rather than ``22.04``.
 
 %setup
 ======
