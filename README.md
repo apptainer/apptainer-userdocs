@@ -212,10 +212,12 @@ the new version of Apptainer, you'll have to update the submodule.  To do
 this, just run:
 
 ```bash
-git submodule update --remote --merge
-git add vendor/src/github.com/apptainer/apptainer
-git commit
+git submodule deinit -f .
+git submodule update --init
+cd apptainer_source
+git checkout main
+cd ..
 ```
 
-This will update the Apptainer submodule to the latest version of the master
-branch.
+This will update the Apptainer submodule to the latest version of the
+main branch.
