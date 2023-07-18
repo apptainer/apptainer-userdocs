@@ -86,6 +86,8 @@ A "fake root" user can never access or modify files and directories for
 which they don't already have access or rights on the host filesystem,
 so a "fake root" user won't be able to access root-only host files
 such as ``/etc/shadow`` or the host ``/root`` directory.
+As a convenience, by default the original user's home directory is bound
+to ``/root`` inside the container.
 
 Additionally, all files or directories created by the "fake root"
 user are owned by ``root:root`` inside the container but as ``user:group``
