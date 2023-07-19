@@ -211,9 +211,6 @@ If the host MPI is Open MPI, the definition file looks like:
        export PATH="$OMPI_DIR/bin:$PATH"
        export LD_LIBRARY_PATH="$OMPI_DIR/lib:$LD_LIBRARY_PATH"
        export MANPATH="$OMPI_DIR/share/man:$MANPATH"
-       # Work around a problem that UCX has with unprivileged user namespaces
-       # See https://github.com/apptainer/apptainer/issues/769
-       export UCX_POSIX_USE_PROC_LINK=n
 
    %post
        echo "Installing required packages..."
@@ -247,6 +244,18 @@ If the host MPI is Open MPI, the definition file looks like:
    There are wide variations in MPI configuration across HPC systems.
    Consult your system documentation, or ask your support staff for
    details.
+
+.. note::
+
+   The MPI UCX library has a problem with unprivileged user namespaces.
+   See `apptainer issue 769
+   <https://github.com/apptainer/apptainer/issues/769 >`__
+   for details and for now use the ``UCX_TLS=sysv,ib`` transport as a
+   workaround, for example:
+
+   .. code::
+
+      mpirun -np 2 -mca pml ucx -x UCX_TLS=sysv,ib apptainer exec $MY_CONTAINER ./a.out
 
 Running an MPI Application
 ==========================
