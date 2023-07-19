@@ -250,8 +250,8 @@ If the host MPI is Open MPI, the definition file looks like:
    The MPI UCX library has a problem with unprivileged user namespaces.
    See `apptainer issue 769
    <https://github.com/apptainer/apptainer/issues/769>`__
-   for details and for now use the ``UCX_TLS=sysv,ib`` transport as a
-   workaround, for example:
+   for details and for now use the ``UCX_TLS=sysv,ib`` transport as
+   a workaround, for example:
 
    .. code::
 
