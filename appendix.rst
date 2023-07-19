@@ -40,7 +40,10 @@ below with their respective functionality.
 
 #. **{ENVPREFIX}_BIND** and **{ENVPREFIX}_BINDPATH**: Comma separated
    string ``source:<dest>`` list of paths to bind between the host and
-   the container.
+   the container, applied in that order.
+   Note that ``{ENVPREFIX}_BIND`` is also automatically set inside a
+   container to list all the paths bound to it, so that by default all
+   the same binds will be applied to nested {command} commands.
 
 #. **{ENVPREFIX}_BLKIO_WEIGHT**: Specify a relative weight for block
    device access during contention. Range 10-1000. Default is 0 (disabled).
