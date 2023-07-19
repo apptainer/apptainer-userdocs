@@ -13,16 +13,16 @@ def variableReplace(app, docname, source):
 # dictionary structure.
 variable_replacements = {
     "{InstallationVersion}" : "1.2.0",
-    "{admindocs}" : "https://apptainer.org/docs/admin/main",
-    "{version}": "main",
-    "{adminversion}": "main",
+    "{admindocs}" : "https://apptainer.org/docs/admin/1.2",
+    "{version}": "1.2",
+    "{adminversion}": "1.2",
     "{Project}": "Apptainer",
     "{AProject}": "An Apptainer",
     "{aProject}": "an Apptainer",
     "{command}": "apptainer",
     "{ENVPREFIX}": "APPTAINER",
     "{orgrepo}": "apptainer/apptainer",
-    "{repobranch}": "main",
+    "{repobranch}": "release-1.2",
 }
 
 
