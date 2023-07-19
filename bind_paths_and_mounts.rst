@@ -138,15 +138,24 @@ this would be:
 
 .. code::
 
-   $ export {ENVPREFIX}_BIND="/opt,/data:/mnt"
+   $ export {ENVPREFIX}_BINDPATH="/opt,/data:/mnt"
 
    $ {command} shell my_container.sif
 
-Using the environment variable ``${ENVPREFIX}_BIND``, you can bind paths
+Using the environment variable ``${ENVPREFIX}_BINDPATH``, you can bind paths
 even when you are running your container as an executable file with a
 runscript. If you bind many directories into your {Project}
 containers and they don't change, you could even benefit by setting this
 variable in your ``.bashrc`` file.
+
+.. note::
+
+   Inside {aProject} container all the paths that were bound in are set
+   in the ``${ENVPREFIX}_BIND`` variable.  That means they will be
+   automatically bound in again by default if another {command} command is
+   run nested inside the first container.  You can change that variable
+   if you choose before that point, but if you want to avoid interfering
+   with nested containers it's better to use ``${ENVPREFIX}_BINDPATH``.
 
 ``--mount`` Examples
 ====================
