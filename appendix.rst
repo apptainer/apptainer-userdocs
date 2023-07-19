@@ -65,6 +65,9 @@ below with their respective functionality.
    Equivalent to setting ``--containall --no-eval --no-init --no-umask
    --writable-tmpfs``. Default is false.
 
+#. **{ENVPREFIX}_CONFIGDIR**: Specifies the directory to use for
+   per-user configuration.  The default is ``$HOME/.{command}``.
+
 #. **{ENVPREFIX}_CONTAIN**: To use minimal ``/dev`` and empty other
    directories (e.g. ``/tmp`` and ``$HOME``) instead of sharing
    filesystems from your host. Default is set to false.
@@ -249,6 +252,9 @@ below with their respective functionality.
 #. **{ENVPREFIX}_NOCLEANUP**: To not clean up the bundle after a failed
    build, this can be helpful for debugging. Default is set to false.
 
+#. **{ENVPREFIX}_NOCOLOR**: Print mesages without color output.
+   Default is set to false unless stderr is not a terminal.
+
 #. **{ENVPREFIX}_NOHTTPS**: Sets to either false or true to avoid using
    HTTPS for communicating with the local docker registry. Default is
    set to false.
@@ -302,6 +308,12 @@ below with their respective functionality.
 #. **{ENVPREFIX}_PWD** and **{ENVPREFIX}_TARGET_PWD**: The initial
    working directory for payload process inside the container.
 
+``Q``
+=====
+
+#. **{ENVPREFIX}_QUIET**: Suppresses all Info messages.
+   Default is set to false.
+
 ``R``
 =====
 
@@ -333,6 +345,9 @@ below with their respective functionality.
    interactive shell.
 
 #. **{ENVPREFIX}_SIGNAL**: Specifies a signal sent to the instance.
+
+#. **{ENVPREFIX}_SILENT**: Suppresses all Info and Warning messages.
+   Default is set to false.
 
 ``T``
 =====
@@ -372,6 +387,12 @@ below with their respective functionality.
    that the container will run in a new user namespace, allowing
    {Project} to run completely unprivileged even with a setuid
    installation.
+   Default is set to false.
+
+``V``
+=====
+
+#. **{ENVPREFIX}_VERBOSE**: Print additional information.
    Default is set to false.
 
 ``W``
