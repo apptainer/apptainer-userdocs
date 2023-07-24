@@ -1,4 +1,4 @@
-.. _endpoints:
+.. _remote:
 
 ################
 Remote Endpoints
