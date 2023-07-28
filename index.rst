@@ -65,7 +65,9 @@ Sharing & Online Services
    :maxdepth: 1
 
    Remote Endpoints <endpoint>
-   Library API Registries <library_api>
+   Keyserver Management <keyserver>
+   OCI Registries <registry>
+   Sylabs Cloud Library <cloud_library>
 
 **************
 Advanced Usage
