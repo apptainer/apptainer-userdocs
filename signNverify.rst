@@ -106,19 +106,10 @@ or saved locally.
 
    Public key listing (/home/ian/.{command}/keys/pgp-public):
 
-   0) U: Ian Kaneshiro (example key) <ikaneshiro@apptainer.org>
-      C: 2022-02-23 15:12:19 -0800 PST
-      F: 8232570480B868E1473AEEB03DBCBA1EE9D661E5
-      L: 4096
-      --------
-
-In the output above the index of my key is ``0`` and the letters stand
-for the following:
-
-   -  U: User
-   -  C: Creation date and time
-   -  F: Fingerprint
-   -  L: Key length
+   0)  User:              Ian Kaneshiro (example key) <ikaneshiro@apptainer.org>
+       Creation time:     2022-02-23 15:12:19 -0800 PST
+       Fingerprint:       8232570480B868E1473AEEB03DBCBA1EE9D661E5
+       Length (in bits):  4096
 
 If you would like others in the community to easily be able to fetch your
 public key for image verification, you can push your key to a public keyserver.
