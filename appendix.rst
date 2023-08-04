@@ -235,6 +235,10 @@ below with their respective functionality.
 #. **{ENVPREFIX}_MEMORY_SWAP**: Specify a limit for memory + swap usage by the
    container. Default is unset. Effect depends on **{ENVPREFIX}_MEMORY**.
 
+#. **{ENVPREFIX}_MESSAGELEVEL**: Set numeric message level for output. 
+   Message levels are `Fatal=-4, Error=-3, Warn=-2, Log=-1, Info=1, 
+   Verbose=2, Verbose2=3, Verbose3=4, Debug=5`.
+
 #. **{ENVPREFIX}_MOUNT**: To specify host to container mounts, using the
    syntax understood by the ``--mount`` flag. Multiple mounts should be
    separated by newline characters.
