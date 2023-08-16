@@ -235,7 +235,7 @@ brackets in the current definition file, i.e., the form of ``{{ variable }}``,
 will be replaced by a value defined by a ``variable=value`` entry in this section.
 Note that values defined in this section are only the default values for defined
 variables; if the same variables are passed with different values via the options
-``--build-arg`` or ``-biuld-arg-file`` they will overwrite values defined in
+``--build-arg`` or ``--build-arg-file`` they will overwrite values defined in
 this section.
 
 Consider the example from the definition file above:
