@@ -67,6 +67,7 @@ Sharing & Online Services
    Remote Endpoints <endpoint>
    Keyserver Management <keyserver>
    OCI Registries <registry>
+   Library API Registries <library_api>
 
 **************
 Advanced Usage

@@ -9,12 +9,12 @@ Quick Start
 This guide is intended for running {Project} on a computer where you
 will install {Project} yourself.
 
-If you need to request an installation on your shared resource, see the
-:ref:`requesting an installation section <installation-request>` for
+If you need to request an installation on your shared resource, see
+:ref:`requesting an installation <installation-request>` for
 information to send to your system administrator.
 
 For any additional help or support contact the {Project} Community:
-https://apptainer.org/help
+https://{command}.org/help
 
 .. _quick-installation:
 
@@ -22,8 +22,8 @@ https://apptainer.org/help
 Quick Installation
 ******************
 
-You will need a Linux system to run {Project} natively and it's easiest
-to install if you have root access.
+You will need a Linux system to run {Project}.  
+Root access is not required if user namespaces are available.
 
 To install from source, follow the instructions in the `INSTALL.md
 <https://github.com/{orgrepo}/blob/{repobranch}/INSTALL.md>`_
@@ -47,7 +47,7 @@ Overview of the {Project} Interface
 {Project}'s :ref:`command line interface <cli>` allows you to build
 and interact with containers transparently. You can run programs inside
 a container as if they were running on your host system. You can easily
-redirect IO, use pipes, pass arguments, and access files, sockets, and
+redirect I/O, use pipes, pass arguments, and access files, sockets, and
 ports on the host system from within a container.
 
 The ``help`` command gives an overview of {Project} options and
@@ -70,35 +70,47 @@ subcommands as follows:
      other Linux system where {Project} is installed.
 
    Options:
-     -d, --debug     print debugging information (highest verbosity)
-     -h, --help      help for {command}
-         --nocolor   print without color output (default False)
-     -q, --quiet     suppress normal output
-     -s, --silent    only print errors
-     -v, --verbose   print additional information
+         --build-config    use configuration needed for building containers
+     -c, --config string   specify a configuration file (for root or
+                           unprivileged installation only) (default
+                           "/etc/{command}/{command}.conf")
+     -d, --debug           print debugging information (highest verbosity)
+     -h, --help            help for {command}
+         --nocolor         print without color output (default False)
+     -q, --quiet           suppress normal output
+     -s, --silent          only print errors
+     -v, --verbose         print additional information
+         --version         version for {command}
 
    Available Commands:
      build       Build {aProject} image
      cache       Manage the local cache
      capability  Manage Linux capabilities for users and groups
+     checkpoint  Manage container checkpoint state (experimental)
+     completion  Generate the autocompletion script for the specified shell
+     config      Manage various {command} configuration (root user only)
+     delete      Deletes requested image from the library
      exec        Run a command within a container
      help        Help about any command
      inspect     Show metadata for an image
      instance    Manage containers running as services
      key         Manage OpenPGP keys
+     keyserver   Manage {command} keyservers
      oci         Manage OCI containers
-     plugin      Manage {command} plugins
+     overlay     Manage an EXT3 writable overlay image
+     plugin      Manage {Project} plugins
      pull        Pull an image from a URI
      push        Upload image to the provided URI
+     registry    Manage authentication to OCI/Docker registries
      remote      Manage {command} remote endpoints
      run         Run the user-defined default command within a container
      run-help    Show the user-defined help for an image
      search      Search a Container Library for images
      shell       Run a shell within a container
-     sif         siftool is a program for Singularity Image Format (SIF) file manipulation
-     sign        Attach a cryptographic signature to an image
+     sif         Manipulate Singularity Image Format (SIF) images
+     sign        Add digital signature(s) to an image
      test        Run the user-defined tests within a container
-     verify      Verify cryptographic signatures attached to an image
+     verify      Verify digital signature(s) within an image
      version     Show the version for {Project}
 
    Examples:
@@ -107,7 +119,7 @@ subcommands as follows:
      $ {command} help instance start
 
 
-   For additional help or support, please visit https://www.apptainer.org/docs/
+   For additional help or support, please visit https://{command}.org/help/
 
 Information about individual subcommands can also be viewed by using the
 ``help`` command:
@@ -115,36 +127,49 @@ Information about individual subcommands can also be viewed by using the
 .. code::
 
    $ {command} help verify
-   Verify cryptographic signatures attached to an image
+   Verify digital signature(s) within an image
 
    Usage:
      {command} verify [verify options...] <image path>
 
    Description:
-     The verify command allows a user to verify cryptographic signatures on SIF
-     container files. There may be multiple signatures for data objects and
-     multiple data objects signed. By default the command searches for the primary
-     partition signature. If found, a list of all verification blocks applied on
-     the primary partition is gathered so that data integrity (hashing) and
-     signature verification is done for all those blocks.
+     The verify command allows a user to verify one or more digital signatures
+     within a SIF image.
+
+     Key material can be provided via PEM-encoded file, or via the PGP keyring. To
+     manage the PGP keyring, see '{command} help key'.
 
    Options:
-     -a, --all               verify all objects
-     -g, --group-id uint32   verify objects with the specified group ID
-     -h, --help              help for verify
-     -j, --json              output json
-         --legacy-insecure   enable verification of (insecure) legacy signatures
-     -l, --local             only verify with local keys
-     -i, --sif-id uint32     verify object with the specified ID
-     -u, --url string        key server URL (default "https://keys.openpgp.org")
+     -a, --all                                verify all objects
+         --certificate string                 path to the certificate
+         --certificate-intermediates string   path to pool of intermediate
+                                              certificates
+         --certificate-roots string           path to pool of root certificates
+     -g, --group-id uint32                    verify objects with the
+                                              specified group ID
+     -h, --help                               help for verify
+     -j, --json                               output json
+         --key string                         path to the public key file
+         --legacy-insecure                    enable verification of
+                                              (insecure) legacy signatures
+     -l, --local                              only verify with local key(s)
+                                              in keyring
+         --ocsp-verify                        enable online revocation check
+                                              for certificates
+     -i, --sif-id uint32                      verify object with the specified ID
+     -u, --url string                         specify a URL for a key server
 
 
    Examples:
+     Verify with a public key:
+     $ {command} verify --key public.pem container.sif
+
+     Verify with PGP:
      $ {command} verify container.sif
 
-   For additional help or support, please visit https://www.apptainer.org/docs/
+   For additional help or support, please visit https://{command}.org/help/
 
-{Project} uses positional syntax (i.e. the order of commands and options
+{Project} uses positional syntax (i.e., the order of commands and options
 matters). Global options affecting the behavior of all commands follow
 immediately after the main ``{command}`` command. Then come subcommands,
 followed by their options and arguments.
@@ -170,32 +195,29 @@ follows:
 
 .. code::
 
-   $ {command} capability list dave
+   $ {command} capability list myuser
 
 Container authors might also write help docs specific to a container, or
-for an internal module called an ``app``. If those help docs exist for a
+for an internal module called an "app". If those help docs exist for a
 particular container, you can view them as follows:
 
 .. code::
 
    $ {command} inspect --helpfile container.sif  # See the container's help, if provided
 
-   $ {command} inspect --helpfile --app=foo foo.sif  # See the help for foo, if provided
+   $ {command} inspect --helpfile --app=foo foo.sif  # See the help for the app foo, if provided
 
 ******************
 Downloading images
 ******************
 
-You can use the `pull
-<cli/{command}_pull.html>`_
-and `build
-<cli/{command}_build.html>`_
+You can use the :ref:`pull <{command}_pull>` and :ref:`build <{command}_build>`
 commands to download images from an external resource like an OCI registry.
 
 You can use ``pull`` with the ``docker://`` uri to reference OCI
 images served from an OCI registry. In this case ``pull`` does not just
-download an image file. OCI images are stored in layers, so ``pull``
-must also combine those layers into a usable {Project} file.
+download an image file; OCI images are stored in layers, so ``pull``
+must also combine those layers into a usable {Project} image.
 
 .. code::
 
@@ -216,7 +238,7 @@ images, you can use ``build`` to create images from other images or from
 scratch using a :ref:`definition file <definition-files>`. You can also
 use ``build`` to convert an image between the container formats
 supported by {Project}. To see a comparison of the {Project}
-definition file with Dockerfile, please see: :ref:`this section
+definition file with Dockerfile, please see :ref:`this section
 <sec:deffile-vs-dockerfile>`.
 
 .. _cowimage:
@@ -226,20 +248,19 @@ Interacting with images
 ***********************
 
 You can interact with images in several ways, each of which can accept
-image URIs in addition to a local image path.
+image URIs in addition to local image paths.
 
 As an example, the following command will pull a ``lolcow_latest.sif`` image
 from ghcr.io:
 
 .. code::
 
-   $ {command} pull docker://ghcr.io/apptainer/lolcow
+   $ {command} pull docker://ghcr.io/{command}/lolcow
 
 Shell
 =====
 
-The `shell
-<cli/{command}_shell.html>`_
+The :ref:`shell <{command}_shell>`
 command allows you to spawn a new shell within your container and
 interact with it as though it were a virtual machine.
 
@@ -247,7 +268,7 @@ interact with it as though it were a virtual machine.
 
    $ {command} shell lolcow_latest.sif
 
-   {Project} lolcow_latest.sif:~>
+   {Project}>
 
 The change in prompt indicates that you have entered the container
 (though you should not rely on prompt forms to determine whether you are in
@@ -258,25 +279,24 @@ are on the host system.
 
 .. code::
 
-   {Project} lolcow_latest.sif:~> whoami
+   {Project}> whoami
    david
 
-   {Project} lolcow_latest.sif:~> id
+   {Project}> id
    uid=1000(david) gid=1000(david) groups=1000(david),65534(nfsnobody)
 
-``shell`` also works with the ``docker://``, ``oras://``, ``library://``,  and
-``shub://`` URIs. This creates an ephemeral container that disappears
+``shell`` also works with the ``docker://``, ``oras://``, and ``library://``
+URIs. This creates an ephemeral container that disappears
 when the shell is exited.
 
 .. code::
 
-   $ {command} shell docker://ghcr.io/apptainer/lolcow
+   $ {command} shell docker://ghcr.io/{command}/lolcow
 
 Executing Commands
 ==================
 
-The `exec
-<cli/{command}_exec.html>`_
+The :ref:`exec <{command}_exec>`
 command allows you to execute a custom command within a container by
 specifying the image file. For instance, to execute the ``cowsay``
 program within the ``lolcow_latest.sif`` container:
@@ -293,13 +313,13 @@ program within the ``lolcow_latest.sif`` container:
                    ||----w |
                    ||     ||
 
-``exec`` also works with the ``docker://``, ``oras://``, ``library://``, and
-``shub://`` URIs. This creates an ephemeral container that executes a
+``exec`` also works with the ``docker://``, ``oras://``, and ``library://``
+URIs. This creates an ephemeral container that executes a
 command and disappears.
 
 .. code::
 
-   $ {command} exec docker://ghcr.io/apptainer/lolcow cowsay 'Fresh from the internet'
+   $ {command} exec docker://ghcr.io/{command}/lolcow cowsay 'Fresh from the internet'
     _________________________
    < Fresh from the internet >
     -------------------------
@@ -314,11 +334,10 @@ command and disappears.
 Running a container
 ===================
 
-{Project} containers contain :ref:`runscripts <runscript>`. These
+{Project} containers may contain :ref:`runscripts <runscript>`. These
 are user-defined scripts that define the actions a container should
 perform when someone runs it. The runscript can be triggered with the
-`run
-<cli/{command}_run.html>`_
+:ref:`run <{command}_run>`
 command, or simply by calling the container as though it were an
 executable.
 
@@ -344,13 +363,13 @@ executable.
                    ||----w |
                    ||     ||
 
-``run`` also works with the ``docker://``, ``oras://``, ``library://``, and
-``shub://`` URIs. This creates an ephemeral container that runs and then
+``run`` also works with the ``docker://``, ``oras://``, and ``library://``
+URIs. This creates an ephemeral container that runs and then
 disappears.
 
 .. code::
 
-   $ {command} run docker://ghcr.io/apptainer/lolcow
+   $ {command} run docker://ghcr.io/{command}/lolcow
    ______________________________
    < Mon Aug 16 13:12:33 CDT 2021 >
     ------------------------------
@@ -394,8 +413,8 @@ illustrative example:
 To replicate Docker/OCI behavior, you may need additional escaping or
 quoting of arguments.
 
-Unlike the ``run`` command, the ``exec`` command replicates the Docker/OCI
-behavior, as it calls the specified executable directly:
+Unlike the ``run`` command, the ``exec`` command does behave in the same
+manner as Docker/OCI, because it calls the specified executable directly:
 
 .. code::
 
@@ -425,8 +444,8 @@ working directory, and additional system locations from the host into the
 container.
 
 You can specify additional directories to bind mount into your container
-with the ``--bind`` option. In this example, the ``data`` directory on
-the host system is bind mounted to the ``/mnt`` directory inside the
+with the ``--bind`` option. In the following example, the ``data`` directory
+on the host system is bind mounted to the ``/mnt`` directory inside the
 container.
 
 .. code::
@@ -503,15 +522,15 @@ Converting images from one format to another
 The ``build`` command allows you to build a new container from an existing
 container. This means that you can use it to convert a container from one format
 to another. For instance, if you have already created a sandbox (directory) and
-want to convert it to the Singularity Image Format you can do so:
+want to convert it to the Singularity Image Format, you can do so as follows:
 
 .. code::
 
    $ {command} build new.sif sandbox
 
-Doing so may break reproducibility if you have altered your sandbox outside of
-the context of a :ref:`definition file <qs-def-files>`, so you are advised
-to exercise care.
+Note, however, that this approach may break reproducibility, in the event that
+you have altered your sandbox outside of the context of a :ref:`definition file
+<qs-def-files>`, so you are advised to exercise care.
 
 .. _qs-def-files:
 
@@ -578,11 +597,14 @@ follows:
 This is a very small example of the things that you can do with a
 :ref:`definition file <definition-files>`. You can also use an
 existing container on your host system as a base.
+Definition files also support :ref:`"templating" <sec:templating>`: the
+ability to pass values from the command-line, or from a definitions file,
+that will replace placeholders in the definition file at build time.
 
 This quickstart document just scratches the surface of all of the things
 you can do with {Project}!
 
-If you need additional help or support, see https://apptainer.org/help.
+If you need additional help or support, see https://{command}.org/help.
 
 .. _installation-request:
 
@@ -604,7 +626,7 @@ to draft a message similar to this:
 
    Dear shared resource administrator,
 
-   We are interested in having {Project} (https://apptainer.org)
+   We are interested in having {Project} (https://{command}.org)
    installed on our shared resource. {Project} containers will allow us to
    build encapsulated environments, meaning that our work is reproducible and
    we are empowered to choose all dependencies including libraries, operating
@@ -637,7 +659,7 @@ to draft a message similar to this:
        {admindocs}/installation.html
 
    If you have questions about any of the above, you can contact one of the
-   sources listed at https://apptainer.org/help. I can do my best
+   sources listed at https://{command}.org/help. I can do my best
    to facilitate this interaction if help is needed.
 
    Thank you kindly for considering this request!
