@@ -18,7 +18,8 @@ configure a virtualized network for a container.
    default. Unrestricted ability to configure networking for containers
    would allow users to affect networking on the host, or in a cluster.
 
-   {Project} allows the administrator to permit a list of
+   The administrator of a setuid-root installation of {Project}
+   is able to permit a list of
    unprivileged users and/or groups to use specified network
    configurations. This is accomplished through settings in
    ``{command}.conf`` and only work in setuid mode.
