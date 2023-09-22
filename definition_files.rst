@@ -235,7 +235,7 @@ brackets in the current definition file, i.e., the form of ``{{ variable }}``,
 will be replaced by a value defined by a ``variable=value`` entry in this section.
 Note that values defined in this section are only the default values for defined
 variables; if the same variables are passed with different values via the options
-``--build-arg`` or ``-biuld-arg-file`` they will overwrite values defined in
+``--build-arg`` or ``--build-arg-file`` they will overwrite values defined in
 this section.
 
 Consider the example from the definition file above:
@@ -700,7 +700,7 @@ line of text to the ``%labels`` section. The portion of text up to the
 first space will be taken as the label's name, and the portion following
 it will be taken as the label's value.
 
-In the previous example, the first label name is ``Author``` with a
+In the previous example, the first label name is ``Author`` with a
 value of ``alice``. The second label name is ``Version`` with a
 value of ``v0.0.1``. Finally, the third label name is ``MyLabel`` with a
 value of ``Hello World``.
