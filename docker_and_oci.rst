@@ -120,17 +120,17 @@ To make use of the API limits under a Docker Hub account, or to access
 private containers, you'll need to authenticate to Docker Hub. There are
 a number of ways to do this with {Project}.
 
-{Project} CLI Remote Command
-------------------------------
+{Project} CLI ``registry`` Command
+------------------------------------
 
-The ``{command} remote login`` command supports logging into Docker
+The ``{command} registry login`` command supports logging into Docker
 Hub and other OCI registries. For Docker Hub, the registry hostname is
 ``docker.io``, so you will need to login as below, specifying your
 username:
 
 .. code::
 
-   $ {command} remote login --username myuser docker://docker.io
+   $ {command} registry login --username myuser docker://docker.io
    Password / Token:
    INFO:    Token stored in /home/myuser/.{command}/remote.yaml
 
@@ -139,14 +139,14 @@ which you should generate in the 'Security' section of your account
 profile page on Docker Hub.
 
 To check which Docker / OCI registries you are currently logged in to,
-use ``{command} remote list``.
+use ``{command} registry list``.
 
 To logout of a registry, so that your credentials are forgotten, use
-``{command} remote logout``:
+``{command} registry logout``:
 
 .. code::
 
-   $ {command} remote logout docker://docker.io
+   $ {command} registry logout docker://docker.io
    INFO:    Logout succeeded
 
 Docker CLI Authentication
@@ -240,7 +240,7 @@ To pull containers from private repositories you will need to generate a
 CLI token in the Quay web interface, then use it to login with
 {Project}. Use the same methods as described for Docker Hub above:
 
--  Run ``{command} remote login --username myuser docker://quay.io``
+-  Run ``{command} registry login --username myuser docker://quay.io``
    to store your credentials for {Project}.
 -  Use ``docker login quay.io`` if ``docker`` is on your machine.
 -  Use the ``--docker-login`` flag for a one-time interactive login.
@@ -273,7 +273,7 @@ Use one of the following authentication methods (detailed above for
 Docker Hub), with the username ``$oauthtoken`` and the password set to
 your NGC API key.
 
--  Run ``{command} remote login --username \$oauthtoken
+-  Run ``{command} registry login --username \$oauthtoken
    docker://nvcr.io`` to store your credentials for {Project}.
 -  Use ``docker login nvcr.io`` if ``docker`` is on your machine.
 -  Use the ``--docker-login`` flag for a one-time interactive login.
@@ -307,7 +307,7 @@ documentation here.
 Use one of the following authentication methods (detailed above for
 Docker Hub), with your username and personal access token:
 
--  Run ``{command} remote login --username myuser docker://ghcr.io``
+-  Run ``{command} registry login --username myuser docker://ghcr.io``
    to store your credentials for {Project}.
 -  Use ``docker login ghcr.io`` if ``docker`` is on your machine.
 -  Use the ``--docker-login`` flag for a one-time interactive login.
@@ -348,7 +348,7 @@ username used in conjunction with this password is always ``AWS``.
 
 Then login using one of the following methods:
 
--  Run ``{command} remote login --username AWS
+-  Run ``{command} registry login --username AWS
    docker://<accountid>.dkr.ecr.<region>.amazonaws.com`` to store your
    credentials for {Project}.
 
@@ -381,7 +381,7 @@ will add credentials to ``.docker/config.json`` which can be read by
 Service Principle accounts will have an explicit username and password,
 and you should authenticate using one of the following methods:
 
--  Run ``{command} remote login --username myuser
+-  Run ``{command} registry login --username myuser
    docker://myregistry.azurecr.io`` to store your credentials for
    {Project}.
 
@@ -542,7 +542,7 @@ stored credentials or environment variables must be available to the
    environment variables through sudo to the ``root`` build process by
    running ``sudo -E {command} build ...``.
 
--  Run ``sudo {command} remote login ...`` to store your credentials
+-  Run ``sudo {command} registry login ...`` to store your credentials
    for the ``root`` user on your system. This is separate from storing
    the credentials under your own account.
 
@@ -1209,7 +1209,7 @@ If you experience problems pulling containers from a private registry,
 check your credentials carefully. You can ``{command} pull`` with the
 ``--docker-login`` flag to perform an interactive login. This may be
 useful if you are unsure whether you have stored credentials properly
-via ``{command} remote login`` or ``docker login``.
+via ``{command} registry login`` or ``docker login``.
 
 OCI registries expect different values for username and password fields.
 Some require a token to be generated and used instead of your account
