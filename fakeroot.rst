@@ -44,14 +44,14 @@ the host:
    When the fakeroot command is used, an INFO message is displayed.
    The combination of a root-mapped user namespace with the fakeroot command
    allows most package installations to work, but the fakeroot command is
-   bound in from the host so if the host libc library is of a very
-   different vintage than the corresponding container the
-   fakeroot command can fail with errors about a missing GLIBC version.
-   If that situation happens the easiest solution is to first run a
-   container with an operating system matching the target glibc version,
-   `install {Project} unprivileged
+   bound in from the host so if the host libc library is a newer version
+   than the corresponding library in the container the
+   fakeroot command can fail with errors about missing GLIBC versions.
+   If that situation happens the easiest solution is to use the
+   `install-unprivileged.sh script
    <{admindocs}/installation.html#install-from-pre-built-packages>`__
-   there, and do the build nested inside that container.
+   to install {Project} because it downloads a fakeroot command 
+   built with as old a libc as possible.
 #. If user namespaces are not available but {Project} has been installed
    with setuid-root and also the "fakeroot" command is available, then
    the fakeroot command will be run by itself.
