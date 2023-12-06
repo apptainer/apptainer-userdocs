@@ -216,6 +216,31 @@ supported by {Project}. To see a comparison of the {Project}
 definition file with Dockerfile, please see: :ref:`this section
 <sec:deffile-vs-dockerfile>`.
 
+.. note::
+
+   If you are using {Project} through Lima, be aware that the home
+   directory is mounted as read-only and cannot be used for writing.
+   You need to change to another directory (use ``cd``) to run those
+   commands, such as ``{command} pull`` or ``{command} build``, from
+   your ``lima`` shell::
+
+   $ limactl shell apptainer
+   $ cd /tmp/lima
+   $ {command} pull docker://alpine
+   $ exit
+
+   Otherwise you will get an error, about: "read-only file system"
+
+   You can also use an absolute path, to where you want the images.
+   The best performance is found when using a filesystem local to the
+   guest instance (instead of using a shared filesystem), but then you
+   need to copy the files from the guest to the host after building::
+
+   $ apptainer.lima build /var/tmp/alpine.sif docker://alpine
+   $ limactl copy apptainer:/var/tmp/alpine.sif ./alpine.sif
+
+   Now it can be used, since {Project} images are read-only by default.
+
 .. _cowimage:
 
 ***********************
