@@ -15,7 +15,7 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v2
         with:
-          go-version: 1.19.6
+          go-version: 1.20.10
 
       - name: Update repositories
         run: |
@@ -34,7 +34,7 @@ jobs:
 
       - name: Install Sphinx
         run: |
-          pip install --user --upgrade --upgrade-strategy eager sphinx sphinx-rtd-theme restructuredtext_lint rstcheck pygments m2r2
+          pip install --user --upgrade --upgrade-strategy eager setuptools sphinx sphinx-rtd-theme restructuredtext_lint rstcheck pygments m2r2
 
       - name: Lint rst
         run: |
