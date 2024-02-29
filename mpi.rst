@@ -245,6 +245,8 @@ If the host MPI is Open MPI, the definition file looks like:
    Consult your system documentation, or ask your support staff for
    details.
 
+
+.. _mpi-issue:
 .. note::
 
    The MPI UCX library has a problem with unprivileged user namespaces.
@@ -256,6 +258,23 @@ If the host MPI is Open MPI, the definition file looks like:
    .. code::
 
       mpirun -np 2 -mca pml ucx -x UCX_TLS=sysv,ib apptainer exec $MY_CONTAINER ./a.out
+
+Using --sharens mode
+====================
+
+By default in unprivileged user namespace mode each {command} command runs in its own user namespace.
+This causes problems for MPI runs, as observed :ref:`in this issue <mpi-issue>`. The new ``--sharens`` flag will 
+move all spawned processes into the same user namespace, similar to what is done with {Project} SUID mode. 
+
+.. code::
+
+   mpirun -np 2 {command} exec --sharens $MY_CONTAINER ./a.out
+
+.. note::
+
+   Note that the ``--sharens`` flag requires all {command} commands to have the same parent process. This is because these
+   child processes will join the same namespace identified using the parent process id. To meet the requirement, {Project} 
+   containers should be launched by the same process, e.g. mpirun, and all these containers should be running on the same host. 
 
 Running an MPI Application
 ==========================
