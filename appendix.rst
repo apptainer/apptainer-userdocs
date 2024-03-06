@@ -29,11 +29,18 @@ below with their respective functionality.
    or not be allowed in the container. (root only) Default is set to
    false.
 
+#. **{ENVPREFIX}_ALLOW_UNSIGNED**: Set to true to allow pushing unsigned SIF
+   images to a ``library://`` destination. Default is false.
+
 #. **{ENVPREFIX}_APP** and **{ENVPREFIX}_APPNAME**: Sets the name of an
    application to be run inside a container.
 
 #. **{ENVPREFIX}_APPLY_CGROUPS**: Used to apply cgroups from an input
    file for container processes. (it requires root privileges)
+
+#. **{ENVPREFIX}_PULL_ARCH**: Set the architecture
+   (e.g. ``arm64``) of an image to pull from a ``library://`` or OCI source.
+   Defaults to the host architecture.
 
 ``B``
 =====
@@ -61,12 +68,21 @@ below with their respective functionality.
 #. **{ENVPREFIX}_CACHEDIR**: Specifies the directory for image downloads
    to be cached in. See :ref:`sec:cache`.
 
+#. **{ENVPREFIX}_CAP_GROUP**: Specify a group to modify when managing permitted
+   capabilities with the ``capability`` command.
+
+#. **{ENVPREFIX}_CAP_USER**: Specify a user to modify when managing permitted
+   capabilities with the ``capability`` command.
+
 #. **{ENVPREFIX}_CLEANENV**: Specifies if the environment should be
    cleaned or not before running the container. Default is set to false.
 
 #. **{ENVPREFIX}_COMPAT**: Set to true to enable Docker/OCI compatibility mode.
    Equivalent to setting ``--containall --no-eval --no-init --no-umask
    --writable-tmpfs``. Default is false.
+
+#. **{ENVPREFIX}_CONFIG_FILE**: Use a custom ``{command}.conf`` configuration
+   file. Only supported for non-root users in non-setuid mode.
 
 #. **{ENVPREFIX}_CONFIGDIR**: Specifies the directory to use for
    per-user configuration.  The default is ``$HOME/.{command}``.
@@ -93,6 +109,9 @@ below with their respective functionality.
 
 #. **{ENVPREFIX}_CPUSET_MEMS**: Specify a list or range of memory nodes
    available to the container. Default is unset.
+
+#. **{ENVPREFIX}_CWD** (deprecated **{ENVPREFIX}_PWD** and **{ENVPREFIX}_TARGET_PWD**): The initial
+   working directory for payload process inside the container.
 
 ``D``
 =====
@@ -142,15 +161,19 @@ below with their respective functionality.
 ``E``
 =====
 
-#. **{ENVPREFIX}_ENVIRONMENT**: Contains all the environment variables
-   that have been exported in your container.
-
 #. **{ENVPREFIX}_ENCRYPTION_PASSPHRASE**: Used to specify the plaintext
    passphrase to encrypt the container.
 
 #. **{ENVPREFIX}_ENCRYPTION_PEM_PATH**: Used to specify the path of the
    file containing public or private key to encrypt the container in PEM
    format.
+
+#. **{ENVPREFIX}_ENV_FILE**: Specify a file containing ``KEY=VAL`` environment
+   variables that should be set in the container.
+
+#. **{ENVPREFIX}_ENVIRONMENT**: Set during a build to the path to a file into
+   which ``KEY=VAL`` environment variables can be added. The file is evaluated
+   at container startup.
 
 #. **{ENVPREFIX}ENV_\***: Allows you to transpose variables into the
    container at runtime. You can see more in detail how to use this
@@ -168,22 +191,24 @@ below with their respective functionality.
    section <environment-and-metadata>`.
 
 #. **{ENVPREFIX}ENV_PREPEND_PATH**: Used to prepend directories to the
-   beginning of `$PATH`` environment variable. You can see more in
+   beginning of ``$PATH`` environment variable. You can see more in
    detail on how to use this variable in our :ref:`environment and
    metadata section <environment-and-metadata>`.
 
 ``F``
 =====
 
-#. **{ENVPREFIX}_FAKEROOT**: Set to false by default, considers running
-   the container in a new user namespace as uid 0 (experimental).
-#. **{ENVPREFIX}_FORCE**: Forces to kill the instance.
+#. **{ENVPREFIX}_FAKEROOT**: Run or build a container using a user namespace
+   with a root uid/gid mapping.
 
-``G``
-=====
+#. **{ENVPREFIX}_FIXPERMS**: Set to true to ensure owner has ``rwX`` permissions on
+   all files in a container built from an OCI source.
 
-#. **{ENVPREFIX}_GROUP**: Used to specify a string of capabilities for
-   the given group.
+#. **{ENVPREFIX}_FORCE**: Skip confirmation for destructive actions, e.g.
+   overwriting a container image or killing an instance.
+
+#. **{ENVPREFIX}_FUSESPEC**: A FUSE filesystem mount specification of the form
+   '<type>:<fuse command> <mountpoint>', that will be mounted in the container.
 
 ``H``
 =====
@@ -206,8 +231,8 @@ below with their respective functionality.
 ``J``
 =====
 
-#. **{ENVPREFIX}_JSON**: Specifies the structured json of the def file,
-   every node as each section in the def file.
+#. **{ENVPREFIX}_JSON**: Use JSON as an input or output format. Applies to the
+   ``build`` and ``instance list`` commands. Default is false.
 
 ``K``
 =====
@@ -220,8 +245,25 @@ below with their respective functionality.
 
 #. **{ENVPREFIX}_LABELS**: Specifies the labels associated with the
    image.
+
 #. **{ENVPREFIX}_LIBRARY**: Specifies the library to pull from. Default
    is set to our Cloud Library.
+
+#. **{ENVPREFIX}_LOCAL_VERIFY**: Set to true to only use the local keyring when
+   verifying PGP signed SIF images. Disables retrieval of public keys from
+   configured keyservers. Default is false.
+
+#. **{ENVPREFIX}_LOGIN_USERNAME**: Set the username to use when logging in to a
+   remote endpoint, registry, or keyserver.
+
+#. **{ENVPREFIX}_LOGIN_PASSWORD**: Set the password to use when logging in to a
+   remote endpoint, registry, or keyserver.
+
+#. **{ENVPREFIX}_LOGIN_INSECURE**: Set to true to use HTTP (not HTTPS) when
+   logging in to a remote endpoint. Default is false.
+
+#. **{ENVPREFIX}_LOGS**: Set to true to show the path to instance log files in
+   ``instance list`` output. Default is false.
 
 ``M``
 =====
@@ -262,9 +304,8 @@ below with their respective functionality.
 #. **{ENVPREFIX}_NOCOLOR**: Print mesages without color output.
    Default is set to false unless stderr is not a terminal.
 
-#. **{ENVPREFIX}_NOHTTPS**: Sets to either false or true to avoid using
-   HTTPS for communicating with the local docker registry. Default is
-   set to false.
+#. **{ENVPREFIX}_NO_HTTPS** and **{ENVPREFIX}_NOHTTPS**: Set to true to use HTTP
+   (not HTTPS) to communicate with registry servers. Default is false.
 
 #. **{ENVPREFIX}_NO_EVAL**: Set to true in order to prevent {Project}
    performing shell evaluation on environment variables / runscript
@@ -284,8 +325,14 @@ below with their respective functionality.
 #. **{ENVPREFIX}_NO_NV**: Flag to disable Nvidia support. Opposite of
    ``{ENVPREFIX}_NV``.
 
+#. **{ENVPREFIX}_NO_PID**: Set to true to disable the PID namespace, when it is
+   inferred by other options (e.g.``--containall`` )
+
 #. **{ENVPREFIX}_NO_PRIVS**: To drop all the privileges from root user
-   in the container. Default is set to false.
+   in the container. Default is false.
+
+#. **{ENVPREFIX}_NOTEST**: Set to true to disable execution of ``%test`` sections
+   when building a container.
 
 #. **{ENVPREFIX}_NO_UMASK**: Set to true to prevent host umask propagating
    to container, and use a default 0022 umask instead. Default is false.
@@ -309,11 +356,14 @@ below with their respective functionality.
 ``P``
 =====
 
+#. **{ENVPREFIX}_PULLDIR** and **{ENVPREFIX}_PULLFOLDER**: Specify destination
+   directory when pulling a container image.
+
+#. **{ENVPREFIX}_PID_FILE**: When starting an instance, write the instance PID
+   to the specified file.
+
 #. **{ENVPREFIX}_PIDS_LIMIT**: Specify maximum number of processes that
    the container may spawn. Default is 0 (no limit).
-
-#. **{ENVPREFIX}_PWD** and **{ENVPREFIX}_TARGET_PWD**: The initial
-   working directory for payload process inside the container.
 
 ``Q``
 =====
@@ -324,21 +374,26 @@ below with their respective functionality.
 ``R``
 =====
 
-#. **{ENVPREFIX}_ROOTFS**: To reference the system file location.
+#. **{ENVPREFIX}_ROOTFS**: During a build ``{ENVPREFIX}_ROOTFS`` is set to the
+   path of the rootfs for the container. It can be used within a definition file
+   to manipulate the rootfs (e.g. from the ``%setup`` section).
+
+#. **{ENVPREFIX}_ROCM**: Set to true to expose ROCm devices and libraries inside
+   the container. Default is false.
 
 #. **{ENVPREFIX}_RUNSCRIPT**: Specifies the runscript of the image.
 
 ``S``
 =====
 
-#. **{ENVPREFIX}_SANDBOX**: To specify that the format of the image
+#. **{ENVPREFIX}_SANDBOX**: Set to true to specify that the format of the image
    should be a sandbox. Default is set to false.
 
 #. **{ENVPREFIX}_SCRATCH** and **{ENVPREFIX}_SCRATCHDIR**: Used to
    include a scratch directory within the container that is linked to a
    temporary directory. (use -W to force location)
 
-#. **{ENVPREFIX}_SECTION**: To specify a comma separated string of all
+#. **{ENVPREFIX}_SECTION**: Set to specify a comma separated string of all
    the sections to be run from the deffile (setup, post, files,
    environment, test, labels, none)
 
@@ -356,12 +411,22 @@ below with their respective functionality.
 #. **{ENVPREFIX}_SILENT**: Suppresses all Info and Warning messages.
    Default is set to false.
 
+#. **{ENVPREFIX}_SIGNAL**: Specifies the signal to send to an instance with
+   ``{command} instance stop``.
+
+#. **{ENVPREFIX}_SIGN_KEY**: Set the path to a key file to be used when signing
+   a SIF image.
+
+#. **{ENVPREFIX}_SPARSE**: Set to true to create sparse overlay image files with
+   the ``{command} overlay create`` command.
+
 ``T``
 =====
 
 #. **{ENVPREFIX}_TEST**: Specifies the test script for the image.
-#. **{ENVPREFIX}_TMPDIR**: Used with the ``build`` command, to consider
-   a temporary location for the build. See :ref:`sec:temporaryfolders`.
+
+#. **{ENVPREFIX}_TMPDIR**: Specify a location for temporary files to be used
+   when pulling and building container images. See :ref:`sec:temporaryfolders`.
 
 ``U``
 =====
@@ -387,8 +452,8 @@ below with their respective functionality.
 
 #. **{ENVPREFIX}_URL**: Specifies the key server ``URL``.
 
-#. **{ENVPREFIX}_USER**: Used to specify a string of capabilities for
-   the given user.
+#. **{ENVPREFIX}_USER**: As root, specify a user to manage that user's instances
+   with the ``instance`` commands.
 
 #. **{ENVPREFIX}_USERNS** and **{ENVPREFIX}_UNSHARE_USERNS**: To specify
    that the container will run in a new user namespace, allowing
@@ -401,6 +466,25 @@ below with their respective functionality.
 
 #. **{ENVPREFIX}_VERBOSE**: Print additional information.
    Default is set to false.
+
+``V``
+=====
+
+#. **{ENVPREFIX}_VERIFY_CERTIFICATE**: Set the path to a PEM file containing the
+   certificate to be used when verifying an x509 signed SIF image.
+
+#. **{ENVPREFIX}_VERIFY_INTERMEDIATES**: Set the path to a PEM file containing
+   an intermediate certificate / chain to be used when verifying an x509 signed
+   SIF image.
+
+#. **{ENVPREFIX}_VERIFY_KEY**: Set the path to a key file to be used when
+   verifying a key signed SIF image.
+
+#. **{ENVPREFIX}_VERIFY_OCSP**: Set to true to enable OCSP verification of
+   certificates. Default is false.
+
+#. **{ENVPREFIX}_VERIFY_ROOTS**: Set the path to a PEM file containing root
+   certificate(s) to be used when verifying an x509 signed SIF image.
 
 ``W``
 =====
