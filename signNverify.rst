@@ -19,7 +19,7 @@ public key or certificate. By default, {Project} uses PGP keys to sign and
 verify containers. Signing and verifying containers with X.509 key material
 / certificates is also supported.
 
-PGP Public key material (used for verification) can be distributed manually, or
+PGP Public keys for verification can be distributed manually, or
 can be uploaded to and automatically retrieved from a remote keyserver.
 
 As well as indicating a container has not been modified, a valid signature may
@@ -42,10 +42,9 @@ for more information).
 Verifying containers from remote sources
 ****************************************
 
-The ``verify`` command will allow you to verify that a SIF container image has
+The ``verify`` command will check that a SIF container image has
 been signed using a PGP key or certificate. This ensures that the container
 image on your disk is a bit-for-bit reproduction of the original image.
-
 
 .. code::
 
@@ -67,6 +66,11 @@ container.
 
 This feature is available with SIF images like those you can pull from container
 libraries or OCI registries via ``oras://``.
+
+.. note::
+
+   ``{command} verify`` will only run against a local SIF file. You must
+   ``pull`` an image to a local disk before you can verify it.
 
 .. _sign_your_own_containers:
 
@@ -292,6 +296,11 @@ of objects. Each object has an ``ID``, and belongs to a ``GROUP``.
    3    |1       |NONE    |40960-41055               |JSON.Generic
    4    |1       |NONE    |45056-2781184             |FS (Squashfs/*System/amd64)
    5    |NONE    |1   (G) |2781184-2782981           |Signature (SHA-256)
+
+.. note:: 
+
+   The ``{command} sif`` commands will only run against a local SIF file. You
+   must ``pull`` an image to a local disk before you can examine it.
 
 I can choose to sign and verify a specific object with the ``--sif-id``
 option to ``sign`` and ``verify``.
