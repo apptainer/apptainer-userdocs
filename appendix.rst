@@ -420,6 +420,9 @@ below with their respective functionality.
 #. **{ENVPREFIX}_SPARSE**: Set to true to create sparse overlay image files with
    the ``{command} overlay create`` command.
 
+#. **{ENVPREFIX}_SHARENS**: Share the namespace and image 
+   with other containers launched from the same parent process.
+
 ``T``
 =====
 
