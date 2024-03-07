@@ -397,7 +397,7 @@ The ``%post`` scriptlet will run under ``sh`` or ``bash`` by default. You can
 change the shell or interpreter that the scriptlet runs under by using a ``-c
 <shell>`` argument on the ``%post`` line, e.g:
 
-.. code:: singularity
+.. code:: {command}
 
    %post -c /bin/zsh
       ...
