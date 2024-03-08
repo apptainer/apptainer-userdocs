@@ -400,44 +400,14 @@ which details how to use ``az acr token create`` to obtain a token name
 and password pair that can be used to authenticate with the above
 methods.
 
-************************************
-Specifying a platform / architecture
-************************************
+**************************
+Specifying an architecture
+**************************
 
-By default, ``singularity pull`` from a ``docker://`` URI will attempt to fetch
+By default, ``{command} pull`` from a ``docker://`` URI will attempt to fetch
 a container that matches the architecture of your host system. If you need to
 retrieve a container that does not have the same architecture as your host (e.g.
-an ``arm64`` container on an ``amd64`` host), you can use the ``--platform`` or
-``--arch`` options.
-
-``--platform`` option
-=====================
-
-The ``--platform`` option for ``singularity pull`` accepts an OCI platform
-string. This has two or three parts, separated by forward slashes (``/``):
-
-- An OS value. Only ``linux`` is supported by {Singularity}.
-- A CPU architecture value, e.g. ``arm64``.
-- An optional CPU variant, e.g. ``v8``.
-
-For example, the platform string for a 32-bit v7 ARM container would be
-``linux/arm/v7``.
-
-{Singularity} will normalize any platform string you supply, before passing it
-to the OCI registry, to ensure that it matches intended images.
-
-To pull an Ubuntu image for a 64-bit ARM system from Docker Hub, using the
-``--platform`` option:
-
-.. code::
-
-   $ singularity pull --platform linux/arm64 docker://ubuntu
-
-To pull a 32-bit image for a v7 ARM CPU:
-
-.. code::
-
-   $ singularity pull --platform linux/arm/v7 docker://ubuntu
+an ``arm64`` container on an ``amd64`` host), you can use the ``--arch`` options.
 
 ``--arch`` option
 =================
@@ -447,7 +417,7 @@ Ubuntu image for a 64-bit ARM system:
 
 .. code::
 
-   $ singularity pull --arch arm64 docker://ubuntu
+   $ {command} pull --arch arm64 docker://ubuntu
 
 CPU emulation
 =============
@@ -457,11 +427,11 @@ will likely fail:
 
 .. code::
 
-   $ singularity run ppc64le.sif 
-   FATAL:   While checking image: could not open image /home/dtrudg-sylabs/Git_Sylabs/singularity-userdocs/ppc64le.sif: the image's architecture (ppc64le) could not run on the host's (amd64)
+   $ {command} run ppc64le.sif 
+   FATAL:   While checking image: could not open image ppc64le.sif: the image's architecture (ppc64le) could not run on the host's (amd64)
 
 
-However, {Singularity} is able to make use of CPU emulation with QEMU, and the Linux
+However, {Project} is able to make use of CPU emulation with QEMU, and the Linux
 kernel's binfmt_misc mechanism, to run containers that do not match the host CPU.
 
 An adminstrator can configure emulation support by installing distribution
@@ -470,7 +440,7 @@ packages, or using the `multiarch/qemu-user-static
 
 .. code::
 
-   $ sudo singularity run docker://multiarch/qemu-user-static --reset -p yes
+   $ sudo {command} run docker://multiarch/qemu-user-static --reset -p yes
 
 .. note::
 
@@ -486,7 +456,7 @@ It is now possible to run containers for other architectures:
    x86_64
 
    # A ppc64le container can be run using emulation
-   $ singularity run ppc64le.sif uname -m
+   $ {command} run ppc64le.sif uname -m
    ppc64le
 
 Running a container in this manner, using emulation, will be many times slower
