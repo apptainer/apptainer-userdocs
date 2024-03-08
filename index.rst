@@ -67,7 +67,6 @@ Sharing & Online Services
    Remote Endpoints <endpoint>
    Keyserver Management <keyserver>
    OCI Registries <registry>
-   Sylabs Cloud Library <cloud_library>
 
 **************
 Advanced Usage
