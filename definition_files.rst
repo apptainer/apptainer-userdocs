@@ -393,6 +393,25 @@ container at runtime.
    ``${ENVPREFIX}_ENVIRONMENT`` take precedence over those added via
    ``%environment``.
 
+The ``%post`` scriptlet will run under ``sh`` or ``bash`` by default. You can
+change the shell or interpreter that the scriptlet runs under by using a ``-c
+<shell>`` argument on the ``%post`` line, e.g:
+
+.. code:: {command}
+
+   %post -c /bin/zsh
+      ...
+
+In the ``%post`` section above, the scriptlet will be run by the  zsh shell
+installed at ``/bin/zsh`` in the container. The requested shell must be present
+in the base image that was bootstrapped.
+
+.. note::
+
+   Unlike the ``%test`` and ``%runscript`` sections, the ``%post`` section does
+   not support hashbang lines (``#!``) for specifying a custom shell. The ``-c
+   <shell>`` argument must be used instead.
+
 .. _def-test-section:
 
 %test
