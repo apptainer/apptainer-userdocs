@@ -1,4 +1,4 @@
-.. _endpoints:
+.. _endpoint:
 
 ################
 Remote Endpoints
@@ -64,25 +64,16 @@ configuration files directly.
 List Remotes
 ============
 
-To ``list`` existing remote endpoints, run this:
+To ``list`` existing remote endpoints, run the following:
 
 .. code:: console
 
    $ {command} remote list
 
-   Cloud Services Endpoints
-   ========================
+   NAME           URI                  DEFAULT?  GLOBAL?  EXCLUSIVE?  SECURE?
+   DefaultRemote  cloud.apptainer.org  ✓         ✓                    ✓
 
-   NAME           URI                  ACTIVE  GLOBAL  EXCLUSIVE
-   DefaultRemote  cloud.apptainer.org  YES     YES     NO
-
-   Keyservers
-   ==========
-
-   URI                       GLOBAL  INSECURE  ORDER
-   https://keys.openpgp.org  YES     NO        1*
-
-The ``YES`` in the ``ACTIVE`` column for ``DefaultRemote`` shows that this
+The ``✓`` in the ``DEFAULT?`` column for ``DefaultRemote`` shows that this
 is the current default remote endpoint.
 
 .. _remote_add_and_login:
@@ -104,23 +95,23 @@ hosted at enterprise.example.com:
    $ {command} remote add myremote https://enterprise.example.com
 
    INFO:    Remote "myremote" added.
-   INFO:    Authenticating with remote: myremote
-   Generate an API Key at https://enterprise.example.com/auth/tokens, and paste here:
-   API Key:
+   Generate an access token at https://enterprise.example.com/auth/tokens, and paste it here.
+   Token entered will be hidden for security.
+   Access Token:
 
-You will be prompted to setup an API key as the remote is added. The ``add``
-subcommand will provide you with the web address you need to visit to generate
-your new key.
+You will be prompted to setup an API key as the remote is added. As the example
+above shows, the output of the ``add`` subcommand will provide you with the web
+address you need to visit in order to generate your new access token.
 
 To ``add`` a global remote endpoint (available to all users on the
-system) an administrative user should run:
+system), an administrative user should run:
 
 .. code:: console
 
    $ sudo {command} remote add --global <remote_name> <remote_uri>
 
    # example...
-   $ sudo {command} remote add --global company-remote https://enterprise.example.com
+   $ sudo {command} remote add --global company-remote https://enterprise7.example.com
    INFO:    Remote "company-remote" added.
    INFO:    Global option detected. Will not automatically log into remote.
 
@@ -184,10 +175,26 @@ To ``remove`` an endpoint:
 Use the ``--global`` option as the root user to remove a global
 endpoint:
 
-.. code::
+.. code:: console
 
    $ sudo {command} remote remove --global <remote_name>
 
+Insecure (HTTP) Endpoints
+-------------------------
+
+If you are using a endpoint that only exposes its service discovery file 
+over an insecure HTTP connection, it can be added by specifying 
+the ``--insecure`` flag:
+
+.. code:: console
+
+   $ sudo {command} remote add --global --insecure test http://test.example.com
+   INFO:    Remote "test" added.
+   INFO:    Global option detected. Will not automatically log into remote.
+
+This flag causes HTTP to be used instead of HTTPS *for service discovery only*. The
+protocol used to access individual library-, build- and keyservice-URLs is
+determined by the contents of the service discovery file.
 
 Set the Default Remote
 ======================
@@ -208,18 +215,11 @@ column in the output of ``remote list``:
    Cloud Services Endpoints
    ========================
 
-   NAME            URI                     ACTIVE  GLOBAL  EXCLUSIVE
-   DefaultRemote   cloud.apptainer.org     YES     YES     NO
-   company-remote  enterprise.example.com  NO      YES     NO
-   myremote        enterprise.example.com  NO      NO      NO
-
-   Keyservers
-   ==========
-
-   URI                       GLOBAL  INSECURE  ORDER
-   https://keys.openpgp.org  YES     NO        1*
-
-   * Active cloud services keyserver
+   NAME            URI                      DEFAULT?  GLOBAL?  EXCLUSIVE?  SECURE?
+   DefaultRemote   cloud.apptainer.org                ✓                    ✓
+   company-remote  enterprise7.example.com            ✓                    ✓
+   myremote        enterprise.example.com   ✓                              ✓
+   test            test.example.com                   ✓                    ✓
 
    $ {command} remote use myremote
    INFO:    Remote "myremote" now in use.
@@ -228,18 +228,37 @@ column in the output of ``remote list``:
    Cloud Services Endpoints
    ========================
 
-   NAME            URI                     ACTIVE  GLOBAL  EXCLUSIVE
-   DefaultRemote   cloud.apptainer.org     NO      YES     NO
-   company-remote  enterprise.example.com  NO      YES     NO
-   myremote        enterprise.example.com  YES     NO      NO
+   NAME            URI                      DEFAULT?  GLOBAL?  EXCLUSIVE?  SECURE?
+   DefaultRemote   cloud.apptainer.org      ✓         ✓                    ✓
+   company-remote  enterprise7.example.com            ✓                    ✓
+   myremote        enterprise.example.com                                  ✓
+   test            test.example.com                   ✓                    ✓
 
-   Keyservers
-   ==========
+In the example above, the default remote at the start (before being changed to
+``DefaultRemote``) was ``myremote``. That is because adding a new remote endpoint
+automatically makes the newly-added endpoint the default one, and the same user
+had previously used the ``remote add`` command to add the ``myremote`` endpoint.
+This behavior can be suppressed by passing the ``--no-default`` flag to the
+``remote add`` command, which will then add a new remote endpoint but leave the
+default endpoint unchanged:
 
-   URI                       GLOBAL  INSECURE  ORDER
-   https://keys.example.com  YES     NO        1*
+.. code:: console
 
-   * Active cloud services keyserver
+   $ {command} remote add --no-default myotherremote https://enterprise2.example.com
+   INFO:    Remote "myotherremote" added.
+   Generate an access token at https://enterprise2.example.com/auth/tokens, and paste it here.
+   Token entered will be hidden for security.
+   Access Token:
+
+  $ {command} remote list
+
+   NAME            URI                      DEFAULT?  GLOBAL?  EXCLUSIVE?  SECURE?
+   DefaultRemote   cloud.apptainer.org      ✓         ✓                    ✓
+   company-remote  enterprise7.example.com            ✓                    ✓
+   myotherremote   enterprise2.example.com                                 ✓
+   myremote        enterprise.example.com                                  ✓
+   test            test.example.com                   ✓                    ✓
+
 
 An administrator can make a remote
 the only usable remote for the system, using the ``--exclusive`` flag:
@@ -252,18 +271,12 @@ the only usable remote for the system, using the ``--exclusive`` flag:
    Cloud Services Endpoints
    ========================
 
-   NAME            URI                     ACTIVE  GLOBAL  EXCLUSIVE
-   DefaultRemote   cloud.apptainer.org     NO      YES     NO
-   company-remote  enterprise.example.com  YES     YES     YES
-   myremote        enterprise.example.com  NO      NO      NO
-
-   Keyservers
-   ==========
-
-   URI                       GLOBAL  INSECURE  ORDER
-   https://keys.example.com  YES     NO        1*
-
-   * Active cloud services keyserver
+   NAME            URI                      DEFAULT?  GLOBAL?  EXCLUSIVE?  SECURE?
+   DefaultRemote   cloud.apptainer.org                ✓                    ✓
+   company-remote  enterprise7.example.com  ✓         ✓        ✓           ✓
+   myotherremote   enterprise2.example.com                                 ✓
+   myremote        enterprise.example.com                                  ✓
+   test            test.example.com                   ✓                    ✓
 
 This, in turn, prevents users from changing the remote they use:
 
