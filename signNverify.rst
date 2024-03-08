@@ -90,9 +90,9 @@ You can use the ``newpair`` subcommand in the ``key`` command group like so:
 
    $ {command} key newpair
 
-   Enter your name (e.g., John Doe) : Ian Kaneshiro
-   Enter your email address (e.g., john.doe@example.com) : ikaneshiro@apptainer.org
-   Enter optional comment (e.g., development keys) : example key
+   Enter your name (e.g., John Doe) : Joe User
+   Enter your email address (e.g., john.doe@example.com) : myuser@example.com
+   Enter optional comment (e.g., development keys) : demo
    Enter a passphrase :
    Retype your passphrase :
    Generating Entity and OpenPGP Key Pair... done
@@ -106,19 +106,10 @@ or saved locally.
 
    Public key listing (/home/ian/.{command}/keys/pgp-public):
 
-   0) U: Ian Kaneshiro (example key) <ikaneshiro@apptainer.org>
-      C: 2022-02-23 15:12:19 -0800 PST
-      F: 8232570480B868E1473AEEB03DBCBA1EE9D661E5
-      L: 4096
-      --------
-
-In the output above the index of my key is ``0`` and the letters stand
-for the following:
-
-   -  U: User
-   -  C: Creation date and time
-   -  F: Fingerprint
-   -  L: Key length
+   0)  User:              Joe User (demo) <myuser@example.com>
+       Creation time:     2019-11-15 09:54:54 -0600 CST
+       Fingerprint:       E5F780B2C22F59DF748524B435C3844412EE233B
+       Length (in bits):  4096
 
 If you would like others in the community to easily be able to fetch your
 public key for image verification, you can push your key to a public keyserver.
@@ -175,8 +166,8 @@ download it again like so.
 
    Showing 1 results
 
-   FINGERPRINT                               ALGORITHM  BITS  CREATION DATE                  EXPIRATION DATE  STATUS     NAME/EMAIL
-   8232570480B868E1473AEEB03DBCBA1EE9D661E5  RSA        4096  2022-02-23 15:12:19 -0800 PST                   [enabled]  Ian Kaneshiro (example key) <ikaneshiro@apptainer.org>
+   KEY ID    BITS  NAME/EMAIL
+   12EE233B  4096  Joe User (demo) <myuser@example.com>
 
    $ {command} key pull 8232570480B868E1473AEEB03DBCBA1EE9D661E5
    1 key(s) added to keyring of trust /home/ian/.{command}/keys/pgp-public
@@ -230,8 +221,8 @@ without needing to contact the key server.
    $ {command} verify my_container.sif
 
    Verifying image: my_container.sif
-   [LOCAL]   Signing entity: Ian Kaneshiro (example key) <ikaneshiro@apptainer.org>
-   [LOCAL]   Fingerprint: 8232570480B868E1473AEEB03DBCBA1EE9D661E5
+   [LOCAL]   Signing entity: Joe User (Demo keys) <myuser@example.com>
+   [LOCAL]   Fingerprint: 65833F473098C6215E750B3BDFD69E5CEE85D448
    Objects verified:
    ID  |GROUP   |LINK    |TYPE
    ------------------------------------------------
@@ -253,8 +244,8 @@ command again.
    $ {command} verify my_container.sif
 
    Verifying image: my_container.sif
-   [REMOTE]  Signing entity: Ian Kaneshiro (example key) <ikaneshiro@apptainer.org>
-   [REMOTE]  Fingerprint: 8232570480B868E1473AEEB03DBCBA1EE9D661E5
+   [REMOTE]   Signing entity: Joe User (Demo keys) <myuser@example.com>
+   [REMOTE]   Fingerprint: 65833F473098C6215E750B3BDFD69E5CEE85D448
    Objects verified:
    ID  |GROUP   |LINK    |TYPE
    ------------------------------------------------
@@ -316,8 +307,8 @@ option to ``sign`` and ``verify``.
    $ {command} verify --sif-id 1 my_container.sif
 
    Verifying image: my_container.sif
-   [LOCAL]   Signing entity: Ian Kaneshiro (example key) <ikaneshiro@apptainer.org>
-   [LOCAL]   Fingerprint: 8232570480B868E1473AEEB03DBCBA1EE9D661E5
+   [LOCAL]   Signing entity: Joe User (Demo keys) <myuser@example.com>
+   [LOCAL]   Fingerprint: 65833F473098C6215E750B3BDFD69E5CEE85D448
    Objects verified:
    ID  |GROUP   |LINK    |TYPE
    ------------------------------------------------
@@ -334,8 +325,8 @@ knowledge.
    $ {command} verify my_container.sif
 
    Verifying image: my_container.sif
-   [LOCAL]   Signing entity: Ian Kaneshiro (example key) <ikaneshiro@apptainer.org>
-   [LOCAL]   Fingerprint: 8232570480B868E1473AEEB03DBCBA1EE9D661E5
+   [LOCAL]   Signing entity: Joe User (Demo keys) <myuser@example.com>
+   [LOCAL]   Fingerprint: 65833F473098C6215E750B3BDFD69E5CEE85D448
 
    Error encountered during signature verification: object 2: object not signed
    FATAL:   Failed to verify container: integrity: object 2: object not signed
@@ -359,8 +350,8 @@ the same ``--group-id`` option.
    $ {command} verify --group-id 1 my_container.sif
 
    Verifying image: my_container.sif
-   [LOCAL]   Signing entity: Ian Kaneshiro (example key) <ikaneshiro@apptainer.org>
-   [LOCAL]   Fingerprint: 8232570480B868E1473AEEB03DBCBA1EE9D661E5
+   [LOCAL]   Signing entity: Joe User (Demo keys) <myuser@example.com>
+   [LOCAL]   Fingerprint: 65833F473098C6215E750B3BDFD69E5CEE85D448
    Objects verified:
    ID  |GROUP   |LINK    |TYPE
    ------------------------------------------------
@@ -379,8 +370,8 @@ specifying ``--group-id`` can also verify the container:
    $ {command} verify my_container.sif
 
    Verifying image: my_container.sif
-   [LOCAL]   Signing entity: Ian Kaneshiro (example key) <ikaneshiro@apptainer.org>
-   [LOCAL]   Fingerprint: 8232570480B868E1473AEEB03DBCBA1EE9D661E5
+   [LOCAL]   Signing entity: Joe User (Demo keys) <myuser@example.com>
+   [LOCAL]   Fingerprint: 65833F473098C6215E750B3BDFD69E5CEE85D448
    Objects verified:
    ID  |GROUP   |LINK    |TYPE
    ------------------------------------------------

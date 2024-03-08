@@ -215,7 +215,7 @@ to one another during the build process.
        fi
 
    %labels
-       Author alice
+       Author myuser@example.com
        Version v0.0.1
 
    %help
@@ -691,7 +691,7 @@ Consider the ``%labels`` section from the example definition file above:
 .. code:: {command}
 
    %labels
-       Author d@sylabs.io
+       Author myuser@example.com
        Version v0.0.1
        MyLabel Hello World
 
@@ -701,7 +701,7 @@ first space will be taken as the label's name, and the portion following
 it will be taken as the label's value.
 
 In the previous example, the first label name is ``Author`` with a
-value of ``alice``. The second label name is ``Version`` with a
+value of ``myuser@example.com``. The second label name is ``Version`` with a
 value of ``v0.0.1``. Finally, the third label name is ``MyLabel`` with a
 value of ``Hello World``.
 
@@ -712,7 +712,7 @@ following command:
 
    $ {command} inspect my_container.sif
 
-   Author: alice
+   Author: myuser@example.com
    Version: v0.0.1
    MyLabel: Hello World
    org.label-schema.build-arch: amd64
