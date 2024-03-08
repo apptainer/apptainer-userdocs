@@ -400,6 +400,70 @@ which details how to use ``az acr token create`` to obtain a token name
 and password pair that can be used to authenticate with the above
 methods.
 
+**************************
+Specifying an architecture
+**************************
+
+By default, ``{command} pull`` from a ``docker://`` URI will attempt to fetch
+a container that matches the architecture of your host system. If you need to
+retrieve a container that does not have the same architecture as your host (e.g.
+an ``arm64`` container on an ``amd64`` host), you can use the ``--arch`` options.
+
+``--arch`` option
+=================
+
+The ``--arch`` option accepts a CPU architecture only. For example, to pull an
+Ubuntu image for a 64-bit ARM system:
+
+.. code::
+
+   $ {command} pull --arch arm64 docker://ubuntu
+
+CPU emulation
+=============
+
+If you try to run a container that does not match the host CPU architecture, it
+will likely fail:
+
+.. code::
+
+   $ {command} run ppc64le.sif 
+   FATAL:   While checking image: could not open image ppc64le.sif: the image's architecture (ppc64le) could not run on the host's (amd64)
+
+
+However, {Project} is able to make use of CPU emulation with QEMU, and the Linux
+kernel's binfmt_misc mechanism, to run containers that do not match the host CPU.
+
+An adminstrator can configure emulation support by installing distribution
+packages, or using the `multiarch/qemu-user-static
+<https://github.com/multiarch/qemu-user-static>`__ container from Docker Hub:
+
+.. code::
+
+   $ sudo {command} run docker://multiarch/qemu-user-static --reset -p yes
+
+.. note::
+
+   Running this container with sudo will modify system configuration files, and
+   register binaries on the host.
+
+It is now possible to run containers for other architectures:
+
+.. code::
+
+   # The host system is an AMD64 / x86_64 machine
+   $ uname -m
+   x86_64
+
+   # A ppc64le container can be run using emulation
+   $ {command} run ppc64le.sif uname -m
+   ppc64le
+
+Running a container in this manner, using emulation, will be many times slower
+than running on a system where the CPU architecture matches the container.
+Emulation is often useful for testing and development purposes, but rarely
+appropriate when deploying a container to an HPC system.
+
 *************************************
 Building From Docker / OCI Containers
 *************************************
