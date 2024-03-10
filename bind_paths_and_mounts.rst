@@ -301,13 +301,13 @@ home``:
 .. code::
 
    $ {command} shell --containall my_container.sif
-   Apptainer> ls -lah $HOME
+   {Project}> ls -lah $HOME
    total 4K
    drwxr-xr-x    2 user group      60 Sep  1 11:45 .
    drwxr-xr-x    1 user group      60 Sep  1 11:44 ..
 
    $ {command} shell --containall --no-home my_container.sif
-   Apptainer> ls -lah $HOME
+   {Project}> ls -lah $HOME
    total 52K
    drwxr-xr-x    2 user group        60 Sep  1 11:45 .
    drwxr-xr-x    1 user group        60 Sep  1 11:44 ..
