@@ -37,7 +37,7 @@ are discussed in the `installation section of the admin guide
 <{admindocs}/installation.html>`__.
 
 If you have an existing version of {Project} installed from source, which
-you wish to upgrade or remove / uninstall, see the `installation section of the admin guide
+you wish to upgrade or remove / uninstall, also see the `installation section of the admin guide
 <{admindocs}/installation.html>`__.
 
 ***************************************
