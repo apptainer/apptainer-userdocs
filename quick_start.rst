@@ -36,6 +36,10 @@ and using {Project} on Mac and Windows machines
 are discussed in the `installation section of the admin guide
 <{admindocs}/installation.html>`__.
 
+If you have an existing version of {Project} installed from source, which
+you wish to upgrade or remove / uninstall, also see the `installation section of the admin guide
+<{admindocs}/installation.html>`__.
+
 ***************************************
 Overview of the {Project} Interface
 ***************************************
@@ -137,7 +141,6 @@ Information about individual subcommands can also be viewed by using the
 
    Examples:
      $ {command} verify container.sif
-
 
    For additional help or support, please visit https://www.apptainer.org/docs/
 
