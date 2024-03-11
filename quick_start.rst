@@ -416,9 +416,10 @@ Files on the host are reachable from within the container:
 
    Hello from inside the container
 
-This example works because ``hostfile.txt`` exists in the user's home
-directory. By default, {Project} bind mounts ``/home/$USER``,
-``/tmp``, and ``$PWD`` into your container at runtime.
+This example works because ``hostfile.txt`` exists in the user's home directory
+(``$HOME``). By default, {Project} bind mounts ``$HOME``, the current
+working directory, and additional system locations from the host into the
+container.
 
 You can specify additional directories to bind mount into your container
 with the ``--bind`` option. In this example, the ``data`` directory on
