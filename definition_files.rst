@@ -236,29 +236,7 @@ will be replaced by a value defined by a ``variable=value`` entry in this sectio
 Note that values defined in this section are only the default values for defined
 variables; if the same variables are passed with different values via the options
 ``--build-arg`` or ``--build-arg-file`` they will overwrite values defined in
-this section.
-
-Consider the example from the definition file above:
-
-.. code:: {command}
-
-   Bootstrap: docker
-   From: ubuntu:{{ VERSION }}
-   Stage: build
-
-   %arguments
-      VERSION=22.04
-
-The value in this entry ``VERSION=22.04`` will replace the template variable 
-``{{ VERSION }}`` during the build process by default.
-
-However, if a user builds the image with the command
-
-.. code:: {command}
-
-   apptainer build --build-arg VERSION=23.04 my_container.sif my_container.def
-
-then the From image tag will be overridden to ``23.04`` rather than ``22.04``.
+this section. See details and examples in the section :ref:`template arguments <template_arguments>`.
 
 %setup
 ======
@@ -770,6 +748,344 @@ After building the help can be displayed like so:
    $ {command} run-help my_container.sif
        This is a demo container used to illustrate a def file that uses all
        supported sections.
+
+****************************************************
+Templating: How to Pass Values into Definition Files
+****************************************************
+
+{Project} definition files support *templating*:
+definition files can include placeholders for values that will be passed at
+build time, either using command-line options or by specifying a file that
+contains the relevant values.
+
+Basics
+======
+
+To use templating, include a ``{{ placeholder }}`` at the point in your
+definition file where you'd like the passed-in value to go. For example:
+
+.. code:: apptainer
+
+   Bootstrap: docker
+   From: ubuntu:22.04
+   Stage: build
+
+   %runscript
+       echo {{ some_text }}
+
+When building a container from this definition file, a concrete value for
+``{{ some_text }}`` can be passed via the ``--build-arg`` flag to the ``build``
+command. This flag accepts a ``varname=value`` pair, as shown here:
+
+.. code::
+
+   $ {command} build --build-arg some_text="Hello world" ./my_container.sif ./my_container.def
+   INFO:    Starting build...
+   Getting image source signatures
+   Copying blob f4bb4e8dca02 skipped: already exists  
+   Copying config 2b7cc08dcd done   | 
+   Writing manifest to image destination
+   2024/03/08 14:17:24  info unpack layer: sha256:f4bb4e8dca02be491b4f72d2ef2127a64ce49c48d0d9c0a0fcaffa625067679d
+   INFO:    Adding runscript
+   INFO:    Creating SIF file...
+   INFO:    Build complete: ./my_container.sif
+
+   $ {command} run ./my_container.sif
+   Hello world
+
+Alternatively, the ``varname=value`` assignments can be placed in a file, and
+the path to that file specified using the ``--build-arg-file`` flag to the
+``build`` command, as shown here:
+
+.. code::
+
+   $ cat << EOF > ./my_args_file.txt
+   some_text="Hello again, world"
+   EOF
+
+   $ {command} build -F --build-arg-file ./my_args_file.txt ./my_container.sif ./my_container.def
+   INFO:    Starting build...
+   Getting image source signatures
+   Copying blob f4bb4e8dca02 skipped: already exists  
+   Copying config 2b7cc08dcd done   | 
+   Writing manifest to image destination
+   2024/03/08 14:17:24  info unpack layer: sha256:f4bb4e8dca02be491b4f72d2ef2127a64ce49c48d0d9c0a0fcaffa625067679d
+   INFO:    Adding runscript
+   INFO:    Creating SIF file...
+   INFO:    Build complete: ./my_container.sif
+
+   $ {command} run ./my_container.sif
+   Hello again, world
+
+Working with multiple variables
+===============================
+
+A single definition file can use multiple different templating variables, use a
+single variable more than once, and use variables in different sections of the
+definition file, as shown here:
+
+.. code:: apptainer
+
+   Bootstrap: docker
+   From: ubuntu:22.04
+   Stage: build
+
+   %setup
+       echo {{ file_contents }} > /tmp/test_file
+
+   %environment
+       export CUSTOM_VAR_ONE={{ var_value1 }}
+       export CUSTOM_VAR_TWO={{ var_value2 }}
+
+   %runscript
+       echo "file contents:" `cat /tmp/test_file`
+       echo "--> this should, if I'm not mistaken, equal:" {{ file_contents }}
+       echo ""
+       echo "env var: ${CUSTOM_VAR_ONE}"
+       echo "--> this should, if I'm not mistaken, equal:" {{ var_value1 }}
+       echo ""
+       echo "env var: ${CUSTOM_VAR_TWO}"
+       echo "--> this should, if I'm not mistaken, equal:" {{ var_value2 }}
+       echo ""
+       echo "and finally, here's some text:" {{ some_text}}
+
+To use this definition file, one can pass values for all the different variables
+using ``--build-arg`` flags:
+
+.. code::
+
+   $ {command} build -F --build-arg file_contents="'I am in a file'" --build-arg var_value1="'I am in an env var'" --build-arg var_value2="'I am also in an env var'" --build-arg some_text="'I am just some text'" ./my_container.sif ./my_container.def
+   INFO:    Starting build...
+   Getting image source signatures
+   Copying blob f4bb4e8dca02 skipped: already exists  
+   Copying config 2b7cc08dcd done   | 
+   Writing manifest to image destination
+   2024/03/08 14:42:15  info unpack layer: sha256:f4bb4e8dca02be491b4f72d2ef2127a64ce49c48d0d9c0a0fcaffa625067679d
+   INFO:    Running setup scriptlet
+   + echo I am in a file
+   INFO:    Adding environment to container
+   INFO:    Adding runscript
+   INFO:    Creating SIF file...
+   INFO:    Build complete: ./my_container.sif
+
+   $ {command} run ./my_container.sif
+   file contents: I am in a file
+   --> this should, if I'm not mistaken, equal: I am in a file
+
+   env var: I am in an env var
+   --> this should, if I'm not mistaken, equal: I am in an env var
+
+   env var: I am also in an env var
+   --> this should, if I'm not mistaken, equal: I am also in an env var
+
+   and finally, here's some text: I am just some text
+
+Or one can place the values for the different values in a file, and pass the
+path to that file using the ``--build-arg-file`` flag:
+
+.. code::
+
+   $ cat << EOF > ./my_args_file.txt
+   file_contents="I am in a file"
+   var_value1="I am in an env var"
+   var_value2="I am also in an env var"
+   some_text="I am just some text"
+   EOF
+
+   $ {command} build -F --build-arg-file ./my_args_file.txt ./my_container.sif ./my_container.def
+   INFO:    Starting build...
+   Getting image source signatures
+   Copying blob f4bb4e8dca02 skipped: already exists  
+   Copying config 2b7cc08dcd done   | 
+   Writing manifest to image destination
+   2024/03/08 14:42:15  info unpack layer: sha256:f4bb4e8dca02be491b4f72d2ef2127a64ce49c48d0d9c0a0fcaffa625067679d
+   INFO:    Running setup scriptlet
+   + echo I am in a file
+   INFO:    Adding environment to container
+   INFO:    Adding runscript
+   INFO:    Creating SIF file...
+   INFO:    Build complete: ./my_container.sif
+
+   $ {command} run ./my_container.sif
+   file contents: I am in a file
+   --> this should, if I'm not mistaken, equal: I am in a file
+
+   env var: I am in an env var
+   --> this should, if I'm not mistaken, equal: I am in an env var
+
+   env var: I am also in an env var
+   --> this should, if I'm not mistaken, equal: I am also in an env var
+
+   and finally, here's some text: I am just some text
+
+Or one can use a combination of both strategies:
+
+.. code::
+
+   $ cat << EOF > ./my_args_file.txt
+   var_value1="I am in an env var"
+   some_text="I am just some text"
+   EOF
+
+   $ {command} build -F --build-arg file_contents="'I am in a file'" --build-arg var_value2="'I am also in an env var'" --build-arg-file ./my_args_file.txt ./my_container.sif ./my_container.def
+   INFO:    Starting build...
+   Getting image source signatures
+   Copying blob f4bb4e8dca02 skipped: already exists  
+   Copying config 2b7cc08dcd done   | 
+   Writing manifest to image destination
+   2024/03/08 14:42:15  info unpack layer: sha256:f4bb4e8dca02be491b4f72d2ef2127a64ce49c48d0d9c0a0fcaffa625067679d
+   INFO:    Running setup scriptlet
+   + echo I am in a file
+   INFO:    Adding environment to container
+   INFO:    Adding runscript
+   INFO:    Creating SIF file...
+   INFO:    Build complete: ./my_container.sif
+
+   $ {command} run ./my_container.sif
+   file contents: I am in a file
+   --> this should, if I'm not mistaken, equal: I am in a file
+
+   env var: I am in an env var
+   --> this should, if I'm not mistaken, equal: I am in an env var
+
+   env var: I am also in an env var
+   --> this should, if I'm not mistaken, equal: I am also in an env var
+
+   and finally, here's some text: I am just some text
+
+Precedence among multiple value sources
+=======================================
+
+In the event that an argument is passed via ``--build-arg`` more than once, the
+last occurrence will take precedence:
+
+.. code::
+
+   $ {command} build -F --build-arg file_contents="'I am in a file (1st time)'" --build-arg var_value2="'I am also in an env var'" --build-arg file_contents="'I am in a file (2nd time)'" --build-arg-file ./my_args_file.txt ./my_container.sif ./my_container.def
+   INFO:    Starting build...
+   Getting image source signatures
+   Copying blob f4bb4e8dca02 skipped: already exists  
+   Copying config 2b7cc08dcd done   | 
+   Writing manifest to image destination
+   2024/03/08 14:42:15  info unpack layer: sha256:f4bb4e8dca02be491b4f72d2ef2127a64ce49c48d0d9c0a0fcaffa625067679d
+   INFO:    Running setup scriptlet
+   + echo 'I am in a file (2nd time)'
+   INFO:    Adding environment to container
+   INFO:    Adding runscript
+   INFO:    Creating SIF file...
+   INFO:    Build complete: ./my_container.sif
+
+   $ {command} run ./my_container.sif
+   file contents: I am in a file (2nd time)
+   --> this should, if I'm not mistaken, equal: I am in a file (2nd time)
+
+   env var: I am in an env var
+   --> this should, if I'm not mistaken, equal: I am in an env var
+
+   env var: I am also in an env var
+   --> this should, if I'm not mistaken, equal: I am also in an env var
+
+   and finally, here's some text: I am just some text
+
+In the event that a variable is defined both in the file passed to
+``--build-arg-file`` and via the command line using ``--build-arg`` flag, the value passed via the
+command line will take precedence:
+
+.. code::
+
+   $ cat << EOF > ./my_args_file.txt
+   var_value1="I am in an env var"
+   var_value2="I am also in an env var (from build arg file)"
+   some_text="I am just some text"
+   EOF
+
+   $ {command} build -F --build-arg file_contents="'I am in a file'" --build-arg var_value2="'I am also in an env var (from command line)'" --build-arg-file ./my_args_file.txt ./my_container.sif ./my_container.def
+   INFO:    Starting build...
+   Getting image source signatures
+   Copying blob f4bb4e8dca02 skipped: already exists  
+   Copying config 2b7cc08dcd done   | 
+   Writing manifest to image destination
+   2024/03/08 14:42:15  info unpack layer: sha256:f4bb4e8dca02be491b4f72d2ef2127a64ce49c48d0d9c0a0fcaffa625067679d
+   INFO:    Running setup scriptlet
+   + echo 'I am in a file'
+   INFO:    Adding environment to container
+   INFO:    Adding runscript
+   INFO:    Creating SIF file...
+   INFO:    Build complete: ./my_container.sif
+
+   $ {command} run ./my_container.sif
+   file contents: I am in a file
+   --> this should, if I'm not mistaken, equal: I am in a file
+
+   env var: I am in an env var
+   --> this should, if I'm not mistaken, equal: I am in an env var
+
+   env var: I am also in an env var (from command line)
+   --> this should, if I'm not mistaken, equal: I am also in an env var (from command line)
+
+   and finally, here's some text: I am just some text
+
+Default variable values: the %arguments section
+===============================================
+
+.. _template_arguments:
+
+If a definition file contains a variable placeholder and no value for that
+variable is provided (via either ``--build-arg`` or ``--build-arg-file``),
+{Project} will generate an error:
+
+.. code:: apptainer
+
+   Bootstrap: docker
+   From: ubuntu:22.04
+   Stage: build
+
+   %runscript
+      echo "Here is some text:" {{ some_text }}
+      echo "And here is some more text:" {{ some_more_text }}
+
+.. code::
+
+   $ {command} build -F --build-arg some_more_text="more more more" ./my_container.sif ./my_container.def
+   FATAL:   Unable to build from ./my_container.def: build var some_text is not defined through either --build-arg (--build-arg-file) or 'arguments' section
+
+However, definition files can provide default values for some or all variables
+using the ``%arguments`` section, as shown here:
+
+.. code:: apptainer
+
+   Bootstrap: docker
+   From: ubuntu:22.04
+   Stage: build
+
+   %runscript
+      echo "Here is some text:" {{ some_text }}
+      echo "And here is some more text:" {{ some_more_text }}
+
+   %arguments
+      some_text="Some default text"
+      some_more_text="Some more default text"
+
+.. code::
+
+   $ {command} build -F --build-arg some_more_text="more more more" ./my_container.sif ./my_container.def
+   INFO:    Starting build...
+   Getting image source signatures
+   Copying blob f4bb4e8dca02 skipped: already exists  
+   Copying config 2b7cc08dcd done   | 
+   Writing manifest to image destination
+   2024/03/08 14:52:53  info unpack layer: sha256:f4bb4e8dca02be491b4f72d2ef2127a64ce49c48d0d9c0a0fcaffa625067679d
+   INFO:    Adding runscript
+   INFO:    Creating SIF file...
+   INFO:    Build complete: ./my_container.sif
+
+   $ {command} run ./my_container.sif
+   Here is some text: Some default text
+   And here is some more text: more more more
+
+Note that in the event of a variable having both a default value *and* a value
+explicitly set via ``--build-arg`` or ``--build-arg-file``, the explicitly-set
+value will take precedence (as the example above shows).
 
 ******************
 Multi-Stage Builds
