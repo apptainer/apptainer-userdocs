@@ -78,36 +78,29 @@ This has some advantages over suid mode:
    {Project} keeps the setuid portions to a minimum and has passed a
    careful review, but still it is a risk.
 
--  Linux kernel developers believe that it is inherently unsafe to
+-  Non-suid {command} can run nested inside another {command} command
+   or in other container runtimes that restrict setuid-root.
+
+-  Although suid {command} no longer uses kernel filesystem drivers by
+   by default except when the system administrator has strictly
+   controlled which containers may be run, suid mode has optional
+   features that are dangerous if improperly configured.  In particular,
+   Linux kernel developers believe that it is inherently unsafe to
    allow unprivileged users to modify an underlying filesystem at will
    while kernel code is actively accessing the filesystem
    (see this `article <https://lwn.net/Articles/652468/>`__).
    Kernel filesystem drivers do not and cannot protect against all kinds
    of modifications to that data which it has not itself written, and
    that fact could potentially be used to attack the kernel.
-   By the way it does mounts (details below), {Project} prevents the
-   most obvious modifications which would enable elevated privileges,
-   and there are not currently any publicly known kernel attacks for
-   the filesystem type that {Project} allows by default (squashfs),
-   but this is a significant risk.  There is a known public attack
-   for the ext4 filesystemm that is unpatched on many older operating
-   systems, so {Project} disallows using that in setuid-root mode
-   by default (see this `advisory
+   In fact there is a known public vulnerability
+   for the ext4 filesystem that is unpatched on many older operating
+   systems which is part of a class of vulnerabilities that are
+   continuously being discovered (see this `advisory
    <https://github.com/apptainer/apptainer/security/advisories/GHSA-j4rf-7357-f4cg>`__).
-
--  Non-suid {command} can run nested inside another {command} command
-   or in other container runtimes that restrict setuid-root.
+   This is why suid mode {command} now uses FUSE drivers for filesystem
+   mounts by default.
 
 However, there are also some disadvantages of the non-suid mode:
-
--  Mounting from unprivileged user namespaces makes use of FUSE
-   filesystems, which run extra processes in user space.
-   This has slightly lower performance than kernel filesystems,
-   but it has been shown to not be a very significant overhead for
-   typical HPC workflows.
-   Metadata operations are still moved to the node running the
-   container, which is a big advantage over having many files directly
-   on networked filesystems.
 
 -  Non-suid mode SIF file encryption is incompatible with the older suid
    mode encryption.  It uses a kernel feature that does not have an exact
@@ -122,6 +115,12 @@ However, there are also some disadvantages of the non-suid mode:
    are not enforceable, because if unprivileged user namespaces are
    available then people could always compile their own copy from source
    and set their own configuration options.
+
+-  Supplementary groups are not visible inside of the container.  That is
+   because unprivileged user namespaces only allow mapping one group.
+   Processes running inside non-suid {command} containers retain the
+   access rights of the supplementary groups assigned outside,
+   but they cannot change the default group.
 
 -  Since the Linux kernel is subject to a much greater amount of
    scrutiny than the {Project} setuid software, there have been a greater

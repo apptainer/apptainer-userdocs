@@ -16,11 +16,9 @@ information to send to your system administrator.
 For any additional help or support contact the {Project} Community:
 https://{command}.org/help
 
-.. _quick-installation:
-
-******************
-Quick Installation
-******************
+************
+Installation
+************
 
 You will need a Linux system to run {Project}.  
 Root access is not required if user namespaces are available.
