@@ -13,6 +13,10 @@ Overview
 :ref:`push <push>` containers to a registry that was designed specifically for
 SIF images and :ref:`pull <pull>` SIF images created by others.
 
+{Project} does not have a default library service defined.
+If you want to use this you will probably need to first
+:ref:`restore pre-{Project} library behavior <restoring_pre-{command}_library_behavior>`.
+
 Many Library API registries will require authentication to perform operations
 like pushing container images or pulling potentially private container images.
 The ``remote`` command group governs the authentication for Library API
