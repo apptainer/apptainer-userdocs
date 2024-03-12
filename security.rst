@@ -109,11 +109,10 @@ However, there are also some disadvantages of the non-suid mode:
    container, which is a big advantage over having many files directly
    on networked filesystems.
 
--  Encryption is not yet supported. In suid mode, {Project} uses kernel LUKS2
-   mounts to run encrypted containers without writing a decrypted
-   version of their content to disk.
-   An unprivileged FUSE filesystem will hopefully be able to perform this
-   operation in a future release.
+-  Non-suid mode SIF file encryption is incompatible with the older suid
+   mode encryption.  It uses a kernel feature that does not have an exact
+   uprivileged replacement, but encryption is available unprivileged by
+   making use of a FUSE program.
 
 -  Some little used :ref:`security options <security-options>` and
    :ref:`network options <networking>` of {Project} that give users elevated
@@ -215,7 +214,8 @@ feature. This is the same technology routinely used for full disk
 encryption. The encrypted container is mounted directly through the
 kernel. Unlike other container formats, the encrypted container is run
 without ever decrypting its contents to disk.
-Encryption and decryption is not currently supported in non-suid mode.
+Non-suid encryption and decryption uses the FUSE gocryptfs program,
+which also avoids decrypting contents to disk.
 
 *******************************
 Configuration & Runtime Options
