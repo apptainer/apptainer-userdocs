@@ -164,6 +164,11 @@ below with their respective functionality.
 #. **{ENVPREFIX}_ENCRYPTION_PASSPHRASE**: Used to specify the plaintext
    passphrase to encrypt the container.
 
+#. **{ENVPREFIX}_ENCRYPTION_PEM_DATA**: If it contains data from a public PEM 
+   file, {Project} can use those data to encrypt a container. If it contains 
+   data from a private PEM file, {Project} will try to use the data to run an 
+   encrypted container. 
+
 #. **{ENVPREFIX}_ENCRYPTION_PEM_PATH**: Used to specify the path of the
    file containing public or private key to encrypt the container in PEM
    format.
