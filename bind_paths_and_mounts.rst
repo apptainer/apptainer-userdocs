@@ -238,14 +238,11 @@ Using ``--bind`` or ``--mount`` with the ``--writable`` flag
 ============================================================
 
 To mount a bind path inside the container, a *bind point* must be
-defined within the container. The bind point is a directory within the
+defined within the container. The bind point is a directory or file within the
 container that {Project} can use as a destination to bind a
-directory on the host system.
-
-{Project} will do its best to bind mount
-requested paths into a container regardless of whether the appropriate
-bind point exists within the container. {Project} can often carry
-out this operation even in the absence of the "overlay fs" feature.
+directory or file from the host system.
+Under most circumstances, {Project} will automatically create any missing
+bind points within the container using an overlay.
 
 However, binding paths to non-existent points within the container can
 result in unexpected behavior when used in conjunction with the
@@ -485,10 +482,6 @@ wish to distribute in an image file that allows read/write:
    $ {command} run \
        --mount type=bind,src=inputs.img,dst=/input-data,image-src=/ \
        mycontainer.sif
-
-By default for security reasons the ext3 format is only supported in
-unprivileged user namespace mode, so unless that default is changed a
-``-u/--userns`` option may be needed with a setuid-root installation.
 
 SquashFS Image Files
 ====================

@@ -22,11 +22,6 @@ that you want to use the directory or image as an overlay at runtime
 with the ``--overlay`` option, or ``--writable`` if you want to modify
 the overlay embedded in SIF.
 
-.. note::
-    By default for security reasons the ext3 format is only supported in
-    unprivileged user namespace mode, so unless that default is changed a
-    ``-u/--userns`` option may be needed with a setuid-root installation.
-
 If you want to make changes to the image, but do not want them to
 persist, use the ``--writable-tmpfs`` option. This stores all changes in
 an in-memory temporary filesystem which is discarded as soon as the
@@ -160,7 +155,7 @@ On the other hand, a directory of modifications to a base container image
 cannot be transported or shared as easily as a single overlay file,
 and it generally does not work well on network file servers
 (see the `NFS <{admindocs}/installation.html#nfs>`_ and
-`Lustre / GPFS <{admindocs}/installation.html#lustre-gpfs>`_
+`Lustre / GPFS / PanFS <{admindocs}/installation.html#lustre-gpfs-panfs>`_
 sections of the admin guide).
 It is supported, however, and this section describes how to use it.
 
