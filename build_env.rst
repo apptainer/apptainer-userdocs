@@ -264,8 +264,7 @@ Environment Variables
 You can set environment variables on the host to influence the behaviour of a
 build. Note that environment variables are not passed into the build itself, and
 cannot be accessed in the ``%post`` section of a definition file. To pass values
-into a build, use the :ref:`templating / build-args support <sec:templating>`
-introduced in {Singularity} 4.0.
+into a build, use the :ref:`templating / build-args support <sec:templating>`.
 
 Environment variables that control a build are generally associated with an
 equivalent CLI option. The order of precendence is:

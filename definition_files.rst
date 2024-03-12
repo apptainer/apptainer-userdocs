@@ -368,8 +368,7 @@ write configuration files, create new directories, etc.
 
 The commands in the ``%post`` section run in a clean environment. Environment
 variables from the host are not passed into the build. To pass values into a
-build you should use the :ref:`templating / build-args support <sec:templating>`
-introduced in {Singularity} 4.0.
+build you should use the :ref:`templating / build-args support <sec:templating>`.
 
 Consider the ``%post`` section from the example definition file above:
 
