@@ -107,9 +107,8 @@ this keyword.
 Building encrypted containers
 *****************************
 
-With {aProject} setuid installation it is possible to build and run
-encrypted containers.
-The containers are decrypted at runtime entirely in kernel space, meaning
+{Project} can build and run encrypted containers.
+The containers are decrypted at runtime entirely in memory, meaning
 that no intermediate decrypted data is ever present on disk. See
 :ref:`encrypted containers <encryption>` for more details.
 
