@@ -236,29 +236,7 @@ will be replaced by a value defined by a ``variable=value`` entry in this sectio
 Note that values defined in this section are only the default values for defined
 variables; if the same variables are passed with different values via the options
 ``--build-arg`` or ``--build-arg-file`` they will overwrite values defined in
-this section.
-
-Consider the example from the definition file above:
-
-.. code:: {command}
-
-   Bootstrap: docker
-   From: ubuntu:{{ VERSION }}
-   Stage: build
-
-   %arguments
-      VERSION=22.04
-
-The value in this entry ``VERSION=22.04`` will replace the template variable 
-``{{ VERSION }}`` during the build process by default.
-
-However, if a user builds the image with the command
-
-.. code:: {command}
-
-   apptainer build --build-arg VERSION=23.04 my_container.sif my_container.def
-
-then the From image tag will be overridden to ``23.04`` rather than ``22.04``.
+this section. See details and examples in the section :ref:`template arguments <template_arguments>`.
 
 %setup
 ======
@@ -775,7 +753,7 @@ After building the help can be displayed like so:
 Templating: How to Pass Values into Definition Files
 ****************************************************
 
-Starting with version 4.0, {Singularity} definition files support *templating*:
+{Project} definition files support *templating*:
 definition files can include placeholders for values that will be passed at
 build time, either using command-line options or by specifying a file that
 contains the relevant values.
@@ -786,9 +764,9 @@ Basics
 To use templating, include a ``{{ placeholder }}`` at the point in your
 definition file where you'd like the passed-in value to go. For example:
 
-.. code:: singularity
+.. code:: apptainer
 
-   Bootstrap: library
+   Bootstrap: docker
    From: ubuntu:22.04
    Stage: build
 
@@ -801,15 +779,18 @@ command. This flag accepts a ``varname=value`` pair, as shown here:
 
 .. code::
 
-   $ sudo singularity build --build-arg some_text="Hello world" ./my_container.sif ./my_container.def
+   $ {command} build --build-arg some_text="Hello world" ./my_container.sif ./my_container.def
    INFO:    Starting build...
-   INFO:    Using cached image
-   INFO:    Verifying bootstrap image /root/.singularity/cache/library/sha256.7a63c14842a5c9b9c0567c1530af87afbb82187444ea45fd7473726ca31a598b
+   Getting image source signatures
+   Copying blob f4bb4e8dca02 skipped: already exists  
+   Copying config 2b7cc08dcd done   | 
+   Writing manifest to image destination
+   2024/03/08 14:17:24  info unpack layer: sha256:f4bb4e8dca02be491b4f72d2ef2127a64ce49c48d0d9c0a0fcaffa625067679d
    INFO:    Adding runscript
    INFO:    Creating SIF file...
    INFO:    Build complete: ./my_container.sif
 
-   $ singularity run ./my_container.sif
+   $ {command} run ./my_container.sif
    Hello world
 
 Alternatively, the ``varname=value`` assignments can be placed in a file, and
@@ -822,15 +803,18 @@ the path to that file specified using the ``--build-arg-file`` flag to the
    some_text="Hello again, world"
    EOF
 
-   $ sudo singularity build -F --build-arg-file ./my_args_file.txt ./my_container.sif ./my_container.def
+   $ {command} build -F --build-arg-file ./my_args_file.txt ./my_container.sif ./my_container.def
    INFO:    Starting build...
-   INFO:    Using cached image
-   INFO:    Verifying bootstrap image /root/.singularity/cache/library/sha256.7a63c14842a5c9b9c0567c1530af87afbb82187444ea45fd7473726ca31a598b
+   Getting image source signatures
+   Copying blob f4bb4e8dca02 skipped: already exists  
+   Copying config 2b7cc08dcd done   | 
+   Writing manifest to image destination
+   2024/03/08 14:17:24  info unpack layer: sha256:f4bb4e8dca02be491b4f72d2ef2127a64ce49c48d0d9c0a0fcaffa625067679d
    INFO:    Adding runscript
    INFO:    Creating SIF file...
    INFO:    Build complete: ./my_container.sif
 
-   $ singularity run ./my_container.sif
+   $ {command} run ./my_container.sif
    Hello again, world
 
 Working with multiple variables
@@ -840,9 +824,9 @@ A single definition file can use multiple different templating variables, use a
 single variable more than once, and use variables in different sections of the
 definition file, as shown here:
 
-.. code:: singularity
+.. code:: apptainer
 
-   Bootstrap: library
+   Bootstrap: docker
    From: ubuntu:22.04
    Stage: build
 
@@ -870,18 +854,21 @@ using ``--build-arg`` flags:
 
 .. code::
 
-   $ sudo singularity build -F --build-arg file_contents="'I am in a file'" --build-arg var_value1="'I am in an env var'" --build-arg var_value2="'I am also in an env var'" --build-arg some_text="'I am just some text'" ./my_container.sif ./my_container.def
+   $ {command} build -F --build-arg file_contents="'I am in a file'" --build-arg var_value1="'I am in an env var'" --build-arg var_value2="'I am also in an env var'" --build-arg some_text="'I am just some text'" ./my_container.sif ./my_container.def
    INFO:    Starting build...
-   INFO:    Using cached image
-   INFO:    Verifying bootstrap image /root/.singularity/cache/library/sha256.7a63c14842a5c9b9c0567c1530af87afbb82187444ea45fd7473726ca31a598b
+   Getting image source signatures
+   Copying blob f4bb4e8dca02 skipped: already exists  
+   Copying config 2b7cc08dcd done   | 
+   Writing manifest to image destination
+   2024/03/08 14:42:15  info unpack layer: sha256:f4bb4e8dca02be491b4f72d2ef2127a64ce49c48d0d9c0a0fcaffa625067679d
    INFO:    Running setup scriptlet
-   + echo 'I am in a file'
+   + echo I am in a file
    INFO:    Adding environment to container
    INFO:    Adding runscript
    INFO:    Creating SIF file...
    INFO:    Build complete: ./my_container.sif
 
-   $ singularity run ./my_container.sif
+   $ {command} run ./my_container.sif
    file contents: I am in a file
    --> this should, if I'm not mistaken, equal: I am in a file
 
@@ -905,18 +892,21 @@ path to that file using the ``--build-arg-file`` flag:
    some_text="I am just some text"
    EOF
 
-   $ sudo singularity build -F --build-arg-file ./my_args_file.txt ./my_container.sif ./my_container.def
+   $ {command} build -F --build-arg-file ./my_args_file.txt ./my_container.sif ./my_container.def
    INFO:    Starting build...
-   INFO:    Using cached image
-   INFO:    Verifying bootstrap image /root/.singularity/cache/library/sha256.7a63c14842a5c9b9c0567c1530af87afbb82187444ea45fd7473726ca31a598b
+   Getting image source signatures
+   Copying blob f4bb4e8dca02 skipped: already exists  
+   Copying config 2b7cc08dcd done   | 
+   Writing manifest to image destination
+   2024/03/08 14:42:15  info unpack layer: sha256:f4bb4e8dca02be491b4f72d2ef2127a64ce49c48d0d9c0a0fcaffa625067679d
    INFO:    Running setup scriptlet
-   + echo 'I am in a file'
+   + echo I am in a file
    INFO:    Adding environment to container
    INFO:    Adding runscript
    INFO:    Creating SIF file...
    INFO:    Build complete: ./my_container.sif
 
-   $ singularity run ./my_container.sif
+   $ {command} run ./my_container.sif
    file contents: I am in a file
    --> this should, if I'm not mistaken, equal: I am in a file
 
@@ -937,18 +927,21 @@ Or one can use a combination of both strategies:
    some_text="I am just some text"
    EOF
 
-   $ sudo singularity build -F --build-arg file_contents="'I am in a file'" --build-arg var_value2="'I am also in an env var'" --build-arg-file ./my_args_file.txt ./my_container.sif ./my_container.def
+   $ {command} build -F --build-arg file_contents="'I am in a file'" --build-arg var_value2="'I am also in an env var'" --build-arg-file ./my_args_file.txt ./my_container.sif ./my_container.def
    INFO:    Starting build...
-   INFO:    Using cached image
-   INFO:    Verifying bootstrap image /root/.singularity/cache/library/sha256.7a63c14842a5c9b9c0567c1530af87afbb82187444ea45fd7473726ca31a598b
+   Getting image source signatures
+   Copying blob f4bb4e8dca02 skipped: already exists  
+   Copying config 2b7cc08dcd done   | 
+   Writing manifest to image destination
+   2024/03/08 14:42:15  info unpack layer: sha256:f4bb4e8dca02be491b4f72d2ef2127a64ce49c48d0d9c0a0fcaffa625067679d
    INFO:    Running setup scriptlet
-   + echo 'I am in a file'
+   + echo I am in a file
    INFO:    Adding environment to container
    INFO:    Adding runscript
    INFO:    Creating SIF file...
    INFO:    Build complete: ./my_container.sif
 
-   $ singularity run ./my_container.sif
+   $ {command} run ./my_container.sif
    file contents: I am in a file
    --> this should, if I'm not mistaken, equal: I am in a file
 
@@ -968,10 +961,13 @@ last occurrence will take precedence:
 
 .. code::
 
-   $ sudo singularity build -F --build-arg file_contents="'I am in a file (1st time)'" --build-arg var_value2="'I am also in an env var'" --build-arg file_contents="'I am in a file (2nd time)'" --build-arg-file ./my_args_file.txt ./my_container.sif ./my_container.def
+   $ {command} build -F --build-arg file_contents="'I am in a file (1st time)'" --build-arg var_value2="'I am also in an env var'" --build-arg file_contents="'I am in a file (2nd time)'" --build-arg-file ./my_args_file.txt ./my_container.sif ./my_container.def
    INFO:    Starting build...
-   INFO:    Using cached image
-   INFO:    Verifying bootstrap image /root/.singularity/cache/library/sha256.7a63c14842a5c9b9c0567c1530af87afbb82187444ea45fd7473726ca31a598b
+   Getting image source signatures
+   Copying blob f4bb4e8dca02 skipped: already exists  
+   Copying config 2b7cc08dcd done   | 
+   Writing manifest to image destination
+   2024/03/08 14:42:15  info unpack layer: sha256:f4bb4e8dca02be491b4f72d2ef2127a64ce49c48d0d9c0a0fcaffa625067679d
    INFO:    Running setup scriptlet
    + echo 'I am in a file (2nd time)'
    INFO:    Adding environment to container
@@ -979,7 +975,7 @@ last occurrence will take precedence:
    INFO:    Creating SIF file...
    INFO:    Build complete: ./my_container.sif
 
-   $ singularity run ./my_container.sif
+   $ {command} run ./my_container.sif
    file contents: I am in a file (2nd time)
    --> this should, if I'm not mistaken, equal: I am in a file (2nd time)
 
@@ -1003,10 +999,13 @@ command line will take precedence:
    some_text="I am just some text"
    EOF
 
-   $ sudo singularity build -F --build-arg file_contents="'I am in a file'" --build-arg var_value2="'I am also in an env var (from command line)'" --build-arg-file ./my_args_file.txt ./my_container.sif ./my_container.def
+   $ {command} build -F --build-arg file_contents="'I am in a file'" --build-arg var_value2="'I am also in an env var (from command line)'" --build-arg-file ./my_args_file.txt ./my_container.sif ./my_container.def
    INFO:    Starting build...
-   INFO:    Using cached image
-   INFO:    Verifying bootstrap image /root/.singularity/cache/library/sha256.7a63c14842a5c9b9c0567c1530af87afbb82187444ea45fd7473726ca31a598b
+   Getting image source signatures
+   Copying blob f4bb4e8dca02 skipped: already exists  
+   Copying config 2b7cc08dcd done   | 
+   Writing manifest to image destination
+   2024/03/08 14:42:15  info unpack layer: sha256:f4bb4e8dca02be491b4f72d2ef2127a64ce49c48d0d9c0a0fcaffa625067679d
    INFO:    Running setup scriptlet
    + echo 'I am in a file'
    INFO:    Adding environment to container
@@ -1014,7 +1013,7 @@ command line will take precedence:
    INFO:    Creating SIF file...
    INFO:    Build complete: ./my_container.sif
 
-   $ singularity run ./my_container.sif
+   $ {command} run ./my_container.sif
    file contents: I am in a file
    --> this should, if I'm not mistaken, equal: I am in a file
 
@@ -1029,13 +1028,15 @@ command line will take precedence:
 Default variable values: the %arguments section
 ===============================================
 
+.. _template_arguments:
+
 If a definition file contains a variable placeholder and no value for that
 variable is provided (via either ``--build-arg`` or ``--build-arg-file``),
-{Singularity} will generate an error:
+{Project} will generate an error:
 
-.. code:: singularity
+.. code:: apptainer
 
-   Bootstrap: library
+   Bootstrap: docker
    From: ubuntu:22.04
    Stage: build
 
@@ -1045,15 +1046,15 @@ variable is provided (via either ``--build-arg`` or ``--build-arg-file``),
 
 .. code::
 
-   $ sudo singularity build -F --build-arg some_more_text="more more more" ./my_container.sif ./my_container.def
+   $ {command} build -F --build-arg some_more_text="more more more" ./my_container.sif ./my_container.def
    FATAL:   Unable to build from ./my_container.def: build var some_text is not defined through either --build-arg (--build-arg-file) or 'arguments' section
 
 However, definition files can provide default values for some or all variables
 using the ``%arguments`` section, as shown here:
 
-.. code:: singularity
+.. code:: apptainer
 
-   Bootstrap: library
+   Bootstrap: docker
    From: ubuntu:22.04
    Stage: build
 
@@ -1067,15 +1068,18 @@ using the ``%arguments`` section, as shown here:
 
 .. code::
 
-   $ sudo singularity build -F --build-arg some_more_text="more more more" ./my_container.sif ./my_container.def
+   $ {command} build -F --build-arg some_more_text="more more more" ./my_container.sif ./my_container.def
    INFO:    Starting build...
-   INFO:    Using cached image
-   INFO:    Verifying bootstrap image /root/.singularity/cache/library/sha256.7a63c14842a5c9b9c0567c1530af87afbb82187444ea45fd7473726ca31a598b
+   Getting image source signatures
+   Copying blob f4bb4e8dca02 skipped: already exists  
+   Copying config 2b7cc08dcd done   | 
+   Writing manifest to image destination
+   2024/03/08 14:52:53  info unpack layer: sha256:f4bb4e8dca02be491b4f72d2ef2127a64ce49c48d0d9c0a0fcaffa625067679d
    INFO:    Adding runscript
    INFO:    Creating SIF file...
    INFO:    Build complete: ./my_container.sif
 
-   $ singularity run ./my_container.sif
+   $ {command} run ./my_container.sif
    Here is some text: Some default text
    And here is some more text: more more more
 
