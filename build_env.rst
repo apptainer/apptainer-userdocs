@@ -318,7 +318,7 @@ Library
 
 ``{ENVPREFIX}_LIBRARY`` -
 Used to specify the library to pull from.
-Default is the currently selected :ref:`remote endpoint <endpoints>`.
+Default is the currently selected :ref:`remote endpoint <endpoint>`.
 
 Encryption
 ----------
