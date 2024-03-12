@@ -45,6 +45,16 @@ Because ``build`` can accept an existing container as a target and
 create a container in either supported format, you can use it to convert
 existing containers from one format to another.
 
+
+.. note::
+   {Project} leverages the user namespace kernel feature to give the illusion 
+   of elevated privileges while building containers. On some systems, the user 
+   namespace may be incompletely configured for individual users. In this case, 
+   {Project} may bind mount the ``fakeroot`` program from the host into the 
+   container during the build, and this might fail in some containers with 
+   mismatching libraries. See the :ref:`fakeroot documentation <fakeroot>` for 
+   more details.
+
 *************************************************
 Downloading an existing container from Docker Hub
 *************************************************
