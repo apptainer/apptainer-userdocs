@@ -122,7 +122,7 @@ html_context = {
     'display_github': True,
     'github_user': 'apptainer',
     'github_repo': 'apptainer-userdocs',
-    'github_version': 'master',
+    'github_version': 'main',
     'conf_py_path': '/',
 }
 
