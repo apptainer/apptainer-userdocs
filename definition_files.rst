@@ -567,7 +567,7 @@ the following syntax:
 .. code:: {command}
 
     %environment
-       FOO=${FOO:-'default'}
+       export FOO=${FOO:-'default'}
 
 The value of ``FOO`` in the container will take the value of ``FOO`` on
 the host, or ``default`` if ``FOO`` is not set on the host or if
