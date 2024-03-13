@@ -56,7 +56,7 @@ copyright = u'epub placeholder'
 # built documents.
 #
 # The short X.Y version.
-version = 'main'
+version = '1.3'
 # We have not had separate docs per release version for some time, so set
 # release = version here.
 release = version
@@ -122,7 +122,7 @@ html_context = {
     'display_github': True,
     'github_user': 'apptainer',
     'github_repo': 'apptainer-userdocs',
-    'github_version': 'main',
+    'github_version': '1.3',
     'conf_py_path': '/',
 }
 
