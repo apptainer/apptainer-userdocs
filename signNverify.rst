@@ -273,7 +273,7 @@ As well as the default behaviour, which signs all objects, fine-grained
 control of signing is possible.
 
 If you ``sif list`` a SIF file you will see it is comprised of a number
-of objects. Each object has an ``ID``, and belongs to a ``GROUP``.
+of objects. Each object has an ``ID``, and belongs to a ``GROUP``. Since signatures are *applied* to objects, they have an ``ID`` but not a ``GROUP``.
 
 .. code::
 
