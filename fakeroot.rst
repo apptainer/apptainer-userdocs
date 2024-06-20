@@ -47,11 +47,17 @@ the host:
    bound in from the host so if the host libc library is a newer version
    than the corresponding library in the container the
    fakeroot command can fail with errors about missing GLIBC versions.
-   If that situation happens the easiest solution is to use the
+   If that situation happens the easiest solution may be to use the
    `install-unprivileged.sh script
    <{admindocs}/installation.html#install-from-pre-built-packages>`__
    to install {Project} because it downloads a fakeroot command 
-   built with as old a libc as possible.
+   built with as old a libc as possible. 
+   Otherwise you can also try using the ``--ignore-fakeroot-command`
+   which may work if the commands in the ``%post`` section of the build
+   definition file are simple enough.
+   As a last resort advanced option see the
+   :ref:`Using fakeroot command inside definition file <fakeroot-inside-def>`
+   example below.
 #. If user namespaces are not available but {Project} has been installed
    with setuid-root and also the "fakeroot" command is available, then
    the fakeroot command will be run by itself.
@@ -220,3 +226,41 @@ HTTP server:
 .. code::
 
    {command} run --fakeroot --net --network-args="portmap=8080:80/tcp" -w docker://nginx
+
+
+.. _fakeroot-inside-def:
+
+Using fakeroot command inside definition file:
+----------------------------------------------
+
+When using fakeroot mode 3 above, where user namespaces are
+available but /etc/subuid mapping is not set up, and you are trying
+to build a container for an operating sytem with an older glibc
+library than the host, this more advanced technique may help.
+
+First, use the {command} build ``--ignore-fakeroot-command`` option.
+If your ``%post`` commands are simple enough, that alone may be enough.
+If any of the commands try to do ``chown`` or something similar, then
+try additionally installing the fakeroot command in the ``%post``
+section and running the other commands under that.
+
+For example, with a definition file called ``my.def``
+containing this:
+
+.. code:: {command}
+
+   Bootstrap: docker
+   From: docker://centos:7
+
+   %post
+       yum install -y epel-release
+       yum install -y fakeroot
+       fakeroot bash -c '
+           yum install -y openssh
+       '
+
+then build with
+
+.. code::
+
+   {command} build --ignore-fakeroot-command my.sif my.def
