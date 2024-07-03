@@ -14,7 +14,7 @@ If you need to request an installation on your shared resource, see
 information to send to your system administrator.
 
 For any additional help or support contact the {Project} Community:
-https://{command}.org/help
+https://{command}.org/support
 
 ************
 Installation
