@@ -207,7 +207,7 @@ Add package to a writable overlay
 .. code::
 
    mkdir /tmp/test.overlay
-   {command} exec --fakeroot --overlay /tmp/test.overlay /tmp/test.sif yum -y install openssh
+   {command} exec --fakeroot --overlay /tmp/test.overlay /tmp/test.sif dnf -y install openssh
 
 Ping from container:
 --------------------
@@ -250,13 +250,13 @@ containing this:
 .. code:: {command}
 
    Bootstrap: docker
-   From: docker://centos:7
+   From: docker://rockylinux:8
 
    %post
-       yum install -y epel-release
-       yum install -y fakeroot
+       dnf install -y epel-release
+       dnf install -y fakeroot
        fakeroot bash -c '
-           yum install -y openssh
+           dnf install -y openssh
        '
 
 then build with

@@ -37,7 +37,7 @@ typically install the package for the web server and then instruct systemd
 
 .. code::
 
-   $ sudo yum install nginx
+   $ sudo dnf install nginx
    $ sudo systemctl enable --now nginx
 
 If you were to attempt this in a container, it's likely that it will not work as

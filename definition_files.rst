@@ -68,7 +68,7 @@ that uses the ``From`` keyword to build a Debian container:
 .. code:: {command}
 
    Bootstrap: docker
-   From: debian:7
+   From: debian:10
 
 A def file that uses an official mirror to install CentOS 7 might look
 like this:
@@ -76,9 +76,9 @@ like this:
 .. code:: {command}
 
    Bootstrap: yum
-   OSVersion: 7
-   MirrorURL: http://mirror.centos.org/centos-%{OSVERSION}/%{OSVERSION}/os/$basearch/
-   Include: yum
+   OSVersion: 9
+   MirrorURL: http://repo.almalinux.org/almalinux/%{OSVERSION}/BaseOS/x86_64/os
+   Include: dnf
 
 Each bootstrap agent enables its own options and keywords, which you can
 read about, and see examples of, in the :ref:`appendix <buildmodules>`.
@@ -97,8 +97,8 @@ Other bootstrap agents
 
 -  :ref:`library <build-library-module>` (images hosted on Library API Registries)
 -  :ref:`shub <build-shub>` (images hosted on Singularity Hub)
--  :ref:`yum <build-yum>` (yum-based systems such as CentOS and
-   Scientific Linux)
+-  :ref:`yum <build-yum>` (yum- or dnf- based systems such as RHEL and
+   its derivatives)
 -  :ref:`debootstrap <build-debootstrap>` (apt-based systems such as
    Debian and Ubuntu)
 -  oci (bundle compliant with OCI Image Specification)

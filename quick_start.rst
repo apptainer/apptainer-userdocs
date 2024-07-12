@@ -540,7 +540,7 @@ recommended that you build a SIF file using {aProject} definition file.
 This also makes it easy to add files, environment variables, and install custom
 software. You can start with base images from Docker Hub and use
 images directly from official repositories such as Ubuntu, Debian,
-CentOS, Arch, and BusyBox.
+Fedora, Arch, and BusyBox.
 
 A definition file has a header and a body. The header determines the
 base container to begin with, and the body is further divided into
