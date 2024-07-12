@@ -159,7 +159,7 @@ file and enter the container with full capabilities using the
 
 .. code::
 
-   $ sudo {command} exec --keep-privs docker://centos:7 ping -c 1 8.8.8.8
+   $ sudo {command} exec --keep-privs docker://rockylinux:8 ping -c 1 8.8.8.8
    PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
    64 bytes from 8.8.8.8: icmp_seq=1 ttl=128 time=18.8 ms
 
@@ -179,7 +179,7 @@ inside the container:
 
 .. code::
 
-   $ sudo {command} exec --drop-caps CAP_NET_RAW docker://centos:7 ping -c 1 8.8.8.8
+   $ sudo {command} exec --drop-caps CAP_NET_RAW docker://rockylinux:8 ping -c 1 8.8.8.8
    ping: socket: Operation not permitted
 
 The ``drop-caps`` option will also accept the case insensitive keyword
