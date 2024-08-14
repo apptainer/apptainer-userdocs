@@ -344,8 +344,7 @@ into the container.
 
 If you are using an older distribution that provides FUSE commands such
 as ``sshfs`` based on FUSE 2 then you can install FUSE 3 versions of the
-commands you need inside your container. EL7 distributions can install a
-compatible version of FUSE 3 from the EPEL repository.
+commands you need inside your container.
 
 FUSE mount definitions
 ======================
