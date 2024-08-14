@@ -9,14 +9,13 @@ NVIDIA's CUDA GPU compute framework, or AMD's ROCm solution. This allows
 easy access to users of GPU-enabled machine learning frameworks such as
 TensorFlow, regardless of the host operating system. As long as the host
 has a driver and library installation for CUDA/ROCm, then it's possible
-to e.g. run TensorFlow in an up-to-date Ubuntu 20.04 container, from an
-older RHEL 7 host. However, note the libc version present in the container 
-and on the host shouldn't be too far apart, especially if the version in 
-the container is newer than the version on the host, as this type of 
-mismatch can lead to a variety of low-level problems. Generally, running
-a container with an older libc than the host will work, but the reverse 
-(running a container with a newer libc than the host) is more likely to 
-cause issues.
+to e.g. run TensorFlow in an up-to-date Ubuntu 24.04 container, from an
+older RHEL 8 host. However, note that since the libraries are bound in
+from the host, the libc version present in the container and on the host
+must not be too far apart or there will be libc mismatch errors.  Errors
+happen when the libc in the container is older than on the host and have
+sometimes also been seen when the libc in the container is much newer
+than on the host.
 
 Applications that support OpenCL for compute acceleration can also be
 used easily, with an additional bind option.
