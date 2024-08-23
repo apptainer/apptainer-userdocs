@@ -52,7 +52,7 @@ the host:
    <{admindocs}/installation.html#install-from-pre-built-packages>`__
    to install {Project} because it downloads a fakeroot command 
    built with as old a libc as possible. 
-   Otherwise you can also try using the ``--ignore-fakeroot-command`
+   Otherwise you can also try using the ``--ignore-fakeroot-command``
    which may work if the commands in the ``%post`` section of the build
    definition file are simple enough.
    As a last resort advanced option see the
