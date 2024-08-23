@@ -249,7 +249,7 @@ In order to work correctly with user namespaces there also needs to be
 an environment variable setting of ``FAKEROOTDONTTRYCHOWN=1``.
 
 For example, with a definition file called ``my.def``
-containing this for a RHEL-derived system:
+containing this for a RHEL-derived container:
 
 .. code:: {command}
 
@@ -263,7 +263,7 @@ containing this for a RHEL-derived system:
            dnf install -y openssh
        '
 
-or this for an alpine system:
+or this for an alpine container:
 
 .. code::
 
@@ -283,7 +283,7 @@ then build with
 
    {command} build --ignore-fakeroot-command my.sif my.def
 
-A Debian-derived system is more challenging because even the
+A Debian-derived container is more challenging because even the
 installation of the fakeroot package itself requires more than is
 available in fakeroot mode 2 (root-mapped user namespace).  So to
 demonstrate this you need to first build an image with another method
