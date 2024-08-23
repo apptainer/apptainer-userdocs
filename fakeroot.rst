@@ -236,31 +236,93 @@ Using fakeroot command inside definition file:
 When using fakeroot mode 3 above, where user namespaces are
 available but /etc/subuid mapping is not set up, and you are trying
 to build a container for an operating sytem with an older glibc
-library than the host, this more advanced technique may help.
+library than the host or for a target operating system like alpine
+that does not include glibc, this more advanced technique may help.
 
-First, use the {command} build ``--ignore-fakeroot-command`` option.
+First, use the {command} build ``--ignore-fakeroot-command`` option
+to avoid binding in the fakeroot command from the host.
 If your ``%post`` commands are simple enough, that alone may be enough.
 If any of the commands try to do ``chown`` or something similar, then
 try additionally installing the fakeroot command in the ``%post``
-section and running the other commands under that.
+section and running the other commands under that. 
+In order to work correctly with user namespaces there also needs to be
+an environment variable setting of ``FAKEROOTDONTTRYCHOWN=1``.
 
 For example, with a definition file called ``my.def``
-containing this:
+containing this for a RHEL-derived system:
 
 .. code:: {command}
 
    Bootstrap: docker
-   From: docker://rockylinux:8
+   From: rockylinux:8
 
    %post
        dnf install -y epel-release
        dnf install -y fakeroot
-       fakeroot bash -c '
+       FAKEROOTDONTTRYCHOWN=1 fakeroot bash -c '
            dnf install -y openssh
+       '
+
+or this for an alpine system:
+
+.. code::
+
+   Bootstrap: docker
+   From: alpine:latest
+
+   %post
+       apk update
+       apk add fakeroot
+       FAKEROOTDONTTRYCHOWN=1 fakeroot sh -c '
+           apk add squid
        '
 
 then build with
 
-.. code::
+.. code:: {command}
 
    {command} build --ignore-fakeroot-command my.sif my.def
+
+A Debian-derived system is more challenging because even the
+installation of the fakeroot package itself requires more than is
+available in fakeroot mode 2 (root-mapped user namespace).  So to
+demonstrate this you need to first build an image with another method
+that installs fakeroot (perhaps on another host where you have root
+access), and then make that image available where you need it and build
+on top of that.
+
+For example for the first phase:
+
+.. code:: {command}
+
+   Bootstrap: docker
+   From: ubuntu:20.04
+
+   %post
+       apt update
+       apt install -y fakeroot
+
+and build with
+
+.. code:: {command}
+
+   sudo {command} build ubuntu+fakeroot.sif my.def
+
+Then this for the second phase in a file called my2.def:
+
+.. code:: {command}
+
+   Bootstrap: localimage
+   From: ubuntu+fakeroot.sif
+
+   %post
+       FAKEROOTDONTTRYCHOWN=1 fakeroot bash -c '
+           apt update
+           apt install -y openssh
+       '
+
+and build with
+
+.. code:: {command}
+
+   {command} build --ignore-fakeroot-command my.sif my2.def
