@@ -186,16 +186,11 @@ commands are identical.
 
 .. code::
 
-   $ {command} instance stop \*
+   $ {command} instance stop '*'
 
    $ {command} instance stop --all
 
    $ {command} instance stop -a
-
-.. note::
-
-   You must escape the wildcard with a backslash ``\*`` to pass it properly
-   through your shell.
 
 ************************************
 Nginx "Hello-world" in {Project}
