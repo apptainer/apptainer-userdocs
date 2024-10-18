@@ -99,44 +99,35 @@ state has been successfully restored upon restart.
 .. code::
 
     Bootstrap: docker
-    From: python:3.10-buster
-
+    From: python:3.10-bookworm
+    
     %post
         mkdir /app
         cat > /app/server.py <<EOF
+    import socketserver
     import argparse
-    from http.server import BaseHTTPRequestHandler, HTTPServer
-
-    state = "0"
-
+    
+    count = 0
+    
     parser = argparse.ArgumentParser(description='Optional app description')
     parser.add_argument('port', type=int, help='A required integer port argument')
     args = parser.parse_args()
-
-    class handler(BaseHTTPRequestHandler):
-        def do_GET(self):
-            self.send_response(200)
-            self.send_header('Content-type','text/plain')
-            self.end_headers()
-
-            self.wfile.write(bytes(state, "utf8"))
-        def do_POST(self):
-            self.send_response(200)
-            self.send_header('Content-type','text/plain')
-            self.end_headers()
-
-            global state
-            state = self.rfile.read(1).decode("utf8")
-            self.wfile.write(bytes(state, "utf8"))
-
-
-    with HTTPServer(('', args.port), handler) as server:
-        server.serve_forever()
+    
+    class Handler(socketserver.BaseRequestHandler):
+        def handle(self):
+            global count
+            count += 1
+            response = bytes("request:{}\n".format(count), "ascii")
+            self.request.sendall(response)
+    
+    if __name__ == "__main__":
+        with socketserver.TCPServer(('', args.port), Handler) as server:
+            server.allow_reuse_address = True
+            server.serve_forever()
     EOF
-
+    
     %startscript
         python3 /app/server.py $@
-
 
 We can build this container using:
 
@@ -168,21 +159,19 @@ the state of a variable on the server.
 
 .. code::
 
-    $ curl localhost:8888; echo
-    0
+    $ curl --http0.9 localhost:8888
+    request:1
 
-We can see that it is set to ``0`` by default when this application is started
-normally. We can now update the state of the server from ``0`` to ``1`` with
-the following ``POST`` request:
+We can see that the request count value is ``1`` when this application is started
+and accessed via curl. After making another call to the application, we can see that the request
+count is ``2`` as expected.
 
 .. code::
 
-    $ curl -X POST localhost:8888 -d '1'; echo
-    1
-    $ curl localhost:8888; echo
-    1
+    $ curl --http0.9 localhost:8888
+    request:2
 
-Now that variable on our server is in a new state, ``1``, we can use the
+Now that the request count variable on our server is in a new state, ``2``, we can use the
 ``checkpoint instance`` command and reference the instance via the
 ``instance://`` URI format:
 
@@ -210,14 +199,28 @@ our application's state:
     INFO:    instance started successfully
 
 
-And now we can verify the variable on the server has been properly restored to
-a value of ``1``, instead of the default of ``0``:
+And now when we get access to the application again, the request count value is ``3`` as expected,
+meaning that the previous request count value was ``2``.
 
 .. code::
 
-    $ curl localhost:8888; echo
-    1
+    $ curl --http0.9 localhost:8888
+    $ request:3
 
+We can repeat the previous two steps, i.e. stop the server instance and restart it via dmtcp to verify the restoration
+of the value of the request count.
+
+.. code::
+
+    $ {command} instance stop server
+    $ {command} instance start --dmtcp-restart example-checkpoint server.sif restarted-server 8888
+
+Then access the application and see that the request count value is restored as expected. 
+
+.. code::
+
+    $ curl --http0.9 localhost:8888
+    $ request:3
 
 Finally, we can stop our instance running our restored application and delete our
 checkpoint if we no longer need it to restart our application from this state:
