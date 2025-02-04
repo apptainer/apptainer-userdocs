@@ -279,13 +279,13 @@ Building the image
 
 To package the Web to PDF service into a SIF container, we must create a
 definition file. Let's first choose a base from which to build our container. In
-this case the docker image ``node:8`` which comes pre-installed with Node 8 has
+this case the docker image ``node:23`` which comes pre-installed with Node 23 has
 been used:
 
 .. code:: {command}
 
    Bootstrap: docker
-   From: node:8
+   From: node:23
 
 The service also requires a slew of dependencies to be manually installed
 in addition to Node 8, so we can add those into the ``post`` section as
