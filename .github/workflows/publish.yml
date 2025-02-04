@@ -38,11 +38,10 @@ jobs:
 
       - name: Install Sphinx
         run: |
-          # docutils==0.16 is a temporary downgrade to fix bullet list rendering
-          # see https://stackoverflow.com/questions/67542699/readthedocs-sphinx-not-rendering-bullet-list-from-rst-file
-          # Once fixed, it can be removed from the list because it is
-          # otherwise an implied dependency
-          pip install --user --upgrade --upgrade-strategy eager docutils==0.16 setuptools sphinx sphinx-rtd-theme restructuredtext_lint pygments m2r2
+          # docutils<0.21 is a temporary downgrade to fix a compiling issue
+          # see https://github.com/CrossNox/m2r2/issues/68
+          # Note any change here also has to go into pull_request.yml
+          pip install --user --upgrade --upgrade-strategy eager "docutils<0.21" setuptools sphinx sphinx-rtd-theme restructuredtext_lint pygments m2r2
 
       - name: Build web documentation
         run: |
