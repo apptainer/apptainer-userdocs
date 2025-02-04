@@ -338,7 +338,7 @@ The complete definition file will look like this:
 .. code:: {command}
 
    Bootstrap: docker
-   From: node:8
+   From: node:23
 
    %post
 
@@ -411,7 +411,7 @@ provide the service:
    $ {command} shell instance://pdf
    {Project}> ps aux
    USER     PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
-   user       1  0.0  0.0 1178984 20700 ?       Sl   11:40   0:00 sinit
+   user       1  0.0  0.0 1178984 20700 ?       Sl   11:40   0:00 appinit
    user      13  0.0  0.0   4284   696 ?        S    11:40   0:00 /bin/sh /.singularity.d/startscript
    user      15  1.0  0.0 984908 41508 ?        Sl   11:40   0:00 npm
    user      25  0.0  0.0   4292   716 ?        S    11:40   0:00 sh -c env-cmd nodemon --watch ./src -e js src/index.js
