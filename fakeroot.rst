@@ -181,7 +181,7 @@ Some bootstrap methods that require creation of block devices (like
 ``/dev/null``) may not always work correctly with "fake root".
 With the rootles mode "fake root", {Project} uses seccomp filters
 to give programs the illusion that block device creation succeeded.
-This appears to work with ``yum`` bootstraps and *may* work with other
+This appears to work with ``yum`` or ``dnf`` bootstraps and *may* work with other
 bootstrap methods, although ``debootstrap`` is known to not work.
 
 If only the fakeroot command is used for "fake root" mode (because no

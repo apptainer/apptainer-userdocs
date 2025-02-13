@@ -70,12 +70,12 @@ that uses the ``From`` keyword to build a Debian container:
    Bootstrap: docker
    From: debian:10
 
-A def file that uses an official mirror to install CentOS 7 might look
+A def file that uses an official mirror to install AlmaLinux 9 might look
 like this:
 
 .. code:: {command}
 
-   Bootstrap: yum
+   Bootstrap: dnf
    OSVersion: 9
    MirrorURL: http://repo.almalinux.org/almalinux/%{OSVERSION}/BaseOS/x86_64/os
    Include: dnf
