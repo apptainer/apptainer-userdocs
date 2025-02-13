@@ -6,9 +6,10 @@ Network virtualization
 
 .. _sec:networking:
 
-{Project} provides full integration with `cni
-<https://github.com/containernetworking/cni>`_ , to make network
-virtualization easy. The following options can be used with the the
+{Project} provides full integration with `CNI
+<https://github.com/containernetworking/cni>`_ , and the ability to join an
+existing network namespace, to make network virtualization easy. 
+The following options can be used with the the
 action commands (``exec``, ``run``, and ``shell``) to create and
 configure a virtualized network for a container.
 
@@ -58,6 +59,53 @@ hostname within the container.
 
    $ sudo {command} exec --hostname hal-9000 my_container.sif hostname
    hal-9000
+
+****************
+``--netns-path``
+****************
+
+The ``--netns-path`` flag takes a path to a network namespace to join when
+starting a container. The root user may join any network namespace. An
+unprivileged user can only join a network namespace specified in the new
+allowed ``netns paths directive`` in ``{command}.conf``, if they are also
+listed in ``allow net users`` / ``allow net groups``. Not currently supported
+with ``--fakeroot`` mode.
+
+For example, a network namespace can be created with the ``ip`` command on the
+host, and then a container started that will run within this namespace:
+
+.. code::
+
+   # Create an example named network namespace
+   $ sudo ip netns add my-net
+
+   # Add a dummy network interface to the network namespace
+   $ sudo ip netns exec my-net ip link add dummy0 type dummy
+
+   # Run a container in the network namespace
+   $ sudo {command} run --netns-path /run/netns/my-net library://alpine
+   INFO:    Using cached image
+   Apptainer> ip a
+   1: lo: <LOOPBACK> mtu 65536 qdisc noop state DOWN qlen 1000
+      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+   2: dummy0: <BROADCAST,NOARP> mtu 1500 qdisc noop state DOWN qlen 1000
+      link/ether 92:5c:ab:ab:d3:d0 brd ff:ff:ff:ff:ff:ff
+   Apptainer>
+
+Note that the ``ip a`` command run inside the container shows the ``dummy0``
+interface we added to the ``my-net`` network namespace.
+
+The root user can join any network namespace with ``--netns-path``.
+
+A non-root user can only join a network namespace if the following are true:
+
+* {Project} is installed with setuid privileges.
+* The path of the network namespace is listed in the ``allow netns paths``
+  directive in ``{command}.conf``, which is typically managed by the system
+  administrator.
+* The user is listed in the ``allow net users`` directive in ``{command}.conf``,
+  or the user is a member of a group listed in the ``allow net groups`` directive
+  in ``{command}.conf``.
 
 *********
 ``--net``
