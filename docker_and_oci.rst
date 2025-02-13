@@ -1282,7 +1282,8 @@ Section          Description                 Section          Description
                  | are supported, e.g.
                  | ``library``, ``docker``,
                  | ``http``, ``shub``,
-                 | ``yum``, ``debootstrap``.
+                 | ``yum``, ``dnf``, 
+                 | ``debootstrap``.
 
 ``From:``        | Specifies the base        ``FROM``         | Creates a layer from
                  | image from which to the                    | the specified docker image.

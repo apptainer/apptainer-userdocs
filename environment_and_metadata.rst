@@ -67,9 +67,9 @@ Environment From a Base Image
 
 When you build a container with {Project} you might *bootstrap* from
 a library or Docker image, or using Linux distribution bootstrap tools
-such as ``debootstrap``, ``yum`` etc.
+such as ``debootstrap``, ``yum``, ``dnf`` etc.
 
-When using ``debootstrap``, ``yum`` etc. you are starting from a fresh
+When using ``debootstrap``, ``yum``, ``dnf`` etc. you are starting from a fresh
 install of a Linux distribution into your container. No specific
 environment variables will be set. If you are using a ``library`` or
 ``Docker`` source then you may inherit environment variables from your
