@@ -273,7 +273,7 @@ variables include special characters.
 ``--env-file`` option
 =====================
 
-The ``--env-file`` option lets you provide a file that contains
+The ``--env-file`` option lets you provide one or more files that contain
 environment variables as ``NAME=VALUE`` pairs, e.g.:
 
 .. code::
@@ -281,8 +281,19 @@ environment variables as ``NAME=VALUE`` pairs, e.g.:
    $ cat myenvs
    MYVAR="Hello from a file"
 
-   $ {command} run --env-file myenvs env.sif
+   $ cat myenvs2
+   MYVAR="Hello from a file 2"
+
+   $ {command} run --env-file myenvs --env-file myenvs2 env.sif
+   Hello from a file 2
+
+   $ {command} run --env-file myenvs2,myenvs env.sif
    Hello from a file
+
+.. note::
+
+   Note that if more than one file is used, the variables of the same name are 
+   overridden with later files taking priority.
 
 ``{ENVPREFIX}ENV_`` prefix
 ==========================
