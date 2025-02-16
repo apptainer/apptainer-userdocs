@@ -132,6 +132,7 @@ username:
 
    $ {command} registry login --username myuser docker://docker.io
    Password / Token:
+   INFO:    Token stored in /home/myuser/.docker/config.json
    INFO:    Token stored in /home/myuser/.{command}/remote.yaml
 
 The Password / Token you enter must be a Docker Hub CLI access token,
@@ -148,6 +149,10 @@ To logout of a registry, so that your credentials are forgotten, use
 
    $ {command} registry logout docker://docker.io
    INFO:    Logout succeeded
+
+For more information on ``{command} registry`` and its subcommands, including
+the ``--authfile`` flag for storing and using credentials in user-specified
+files, see :ref:`the documentation of the registry command <registry>` itself.
 
 Docker CLI Authentication
 -------------------------
@@ -175,6 +180,8 @@ credentials, use the ``--docker-login`` flag:
    $ {command} pull --docker-login docker://myuser/private
    Enter Docker Username: myuser
    Enter Docker Password:
+
+.. _sec:docker_envvars:
 
 Environment Variables
 ---------------------
@@ -529,9 +536,10 @@ ensure that the credentials needed to access the image are available to
 A build might be run as the ``root`` user, e.g. via ``sudo``, or under
 your own account.
 
-If you are running the build as ``root``, using ``sudo``, then any
-stored credentials or environment variables must be available to the
-``root`` user:
+If you are running the build as ``root``, then any stored
+credentials or environment variables must be available to the ``root`` user. You
+can make the credentials available to the ``root`` user in one of the following
+ways:
 
 -  Use the ``--docker-login`` flag for a one-time interactive login.
    I.E. run ``sudo {command} build --docker-login myimage.sif
@@ -548,6 +556,14 @@ stored credentials or environment variables must be available to the
 
 -  Use ``sudo docker login`` if ``docker`` is on your machine. This is
    separate from storing the credentials under your own account.
+
+-  Store the credentials in a custom file on your filesystem using the
+   ``registry login --authfile <path>`` subcommand, and then pass the same
+   ``--authfile <path>`` flag to the ``build`` command. Note, however, that this
+   will store the relevant credentials unencrypted in the specified file, so
+   appropriate care must be taken concerning the location, ownership, and
+   permissions of this file. See the :ref:`documentation of the --authfile flag
+   <sec:authfile>` for more information.
 
 If you are running the build under your account
 you do not need to specially set credentials for the root user.
