@@ -37,6 +37,23 @@ command group.
 ..
    TODO Compliance testing/validation  - need to document ... https://github.com/opencontainers/runtime-tools
 
+Authentication with OCI registries
+==================================
+
+By default, the ``run / shell / exec`` and ``pull`` commands will attempt to use
+the login credentials found in the user's
+``$HOME/.docker/docker-config.json`` file to authenticate with the OCI
+registry in use (e.g. DockerHub). This file is created and populated by the
+:ref:`registry login <registry>` command.
+
+If this file does not exist, or exists but does not contain credentials for the
+registry in question, anonymous authentication will be used instead.
+
+However, the ``run / shell / exec`` and ``pull`` commands can also use
+credentials stored in a different file of the user's choosing, by specifying the
+``--authfile <path>`` flag. See the :ref:`documentation of the --authfile flag
+<sec:authfile>` for details on how to create and use custom credential files.
+
 ******************************
 Mounted OCI Filesystem Bundles
 ******************************
