@@ -407,6 +407,8 @@ which details how to use ``az acr token create`` to obtain a token name
 and password pair that can be used to authenticate with the above
 methods.
 
+.. _specifying-an-architecture:
+
 **************************
 Specifying an architecture
 **************************
@@ -425,6 +427,36 @@ Ubuntu image for a 64-bit ARM system:
 .. code::
 
    $ {command} pull --arch arm64 docker://ubuntu
+
+``--arch-variant`` option
+=========================
+
+The ``--arch-variant`` option can be used for CPU variants. Currently only the
+ARM CPU variants are supported.
+
+.. code::
+
+   $ {command} pull --arch arm --arch-variant 7 docker://ubuntu
+
+.. list-table:: ARM Architectures
+   :widths: 25 25 50
+   :header-rows: 1
+
+   * - ``--arch``
+     - ``--arch-variant``
+     - Architecture
+   * - ``arm``
+     - ``5``
+     - arm32v5
+   * - ``arm``
+     - ``6``
+     - arm32v6
+   * - ``arm``
+     - ``7``
+     - arm32v7
+   * - ``arm64``
+     - ``8``
+     - arm64v8
 
 CPU emulation
 =============
@@ -525,6 +557,28 @@ header. The following two examples are equivalent:
    Bootstrap: docker
    Registry: quay.io
    From: bitnami/python:3.7
+
+Build architecture
+------------------
+
+By default, ``{command} build`` will build a container that matches
+the architecture of your host system.
+
+The ``--arch`` option can be used to build for another CPU architecture.
+For example, to build an image for a 64-bit ARM system on an Intel host:
+
+.. code::
+
+   $ {command} build --arch arm64 ubuntu.sif docker://ubuntu
+
+The ``--arch-variant`` option can be used for fetching CPU variants,
+although the variant is not recorded in the SIF file (only the arch).
+
+.. code::
+
+   $ {command} build --arch arm --arch-variant 7 ubuntu.sif docker://ubuntu
+
+See :ref:`specifying-an-architecture` (in ``pull``) for more details.
 
 Authentication During a Build
 -----------------------------
