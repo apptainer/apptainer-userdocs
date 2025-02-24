@@ -66,6 +66,27 @@ them into {Project} containers.
 
    $ {command} build alpine.sif docker://alpine
 
+**************************
+Specifying an architecture
+**************************
+
+By default, ``{command} build`` from a ``docker://`` URI will attempt to fetch
+a container that matches the architecture of your host system. If you need to
+retrieve a container that does not have the same architecture as your host (e.g.
+an ``arm64`` container on an ``amd64`` host), you can use the ``--arch`` options.
+
+.. code::
+
+   $ {command} build --arch arm64 alpine.sif docker://alpine
+
+Or to build an ``arm32`` container by using the ``--arch-variant`` option:
+
+.. code::
+
+   $ {command} build --arch arm --arch-variant 7 alpine.sif docker://alpine
+
+See :ref:`specifying-an-architecture` and :ref:`cpu-emulation` for more details.
+
 *************************************************************
 Downloading an existing container from a Library API Registry
 *************************************************************
