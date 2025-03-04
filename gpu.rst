@@ -98,6 +98,8 @@ to a SIF before you start working with it:
    $ {command} pull docker://tensorflow/tensorflow:latest-gpu
    ...
    INFO:    Creating SIF file...
+   [=====================================================================]
+   100 % 0s
    INFO:    Build complete: tensorflow_latest-gpu.sif
 
 Then run the container with GPU support:
@@ -457,6 +459,8 @@ to a SIF before you start working with it:
    $ {command} pull docker://rocm/tensorflow:latest
    ...
    INFO:    Creating SIF file...
+   [=====================================================================]
+   100 % 0s
    INFO:    Build complete: tensorflow_latest.sif
 
 Then run the container with GPU support:

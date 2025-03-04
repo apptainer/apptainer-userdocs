@@ -79,6 +79,8 @@ exists locally. (Recall:
    Writing manifest to image destination
    Storing signatures
    INFO:    Creating SIF file...
+   [=====================================================================]
+   100 % 0s
    INFO:    Build complete: busybox_latest.sif
 
 This is one way to bootstrap creation of this image in SIF that

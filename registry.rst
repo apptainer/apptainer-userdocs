@@ -133,6 +133,8 @@ by passing them the same ``--authfile <path>`` flag:
    Writing manifest to image destination
    2023/09/28 13:15:46  info unpack layer: sha256:7264a8db6415046d36d16ba98b79778e18accee6ffa71850405994cffa9be7de
    INFO:    Creating SIF file...
+   [=====================================================================]
+   100 % 0s
    Apptainer>
 
 .. note::

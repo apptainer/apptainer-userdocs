@@ -342,6 +342,20 @@ To show help about the options available for selected compressor:
     $ mksquashfs squashfs-root out.squashfs -comp zstd -Xhelp
 
 Non-gzip squashfs compression might not work with some installations.
+However, note that by default the {command} command now uses its own
+bundled recent version of mksquashfs that should have the maximum
+compressors enabled.  So you might want to explore the help on that
+version, for example by setting its directory early in your PATH like
+this:
+
+.. code::
+
+    $ PATH=$({command} buildcfg | sed -n 's,^LIBEXECDIR=\(.*\),\1/{command}/bin,p'):$PATH
+
+Also note that by using non-default compression methods that the
+resulting SIF file might not be usable by installations that do not have
+the decompression method available.  This can be especially true for
+older versions of {command}.
 
 ``--notest``
 ============

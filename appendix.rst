@@ -1111,6 +1111,7 @@ currently residing in the Docker daemon's internal storage:
    Storing signatures
    2019/12/11 14:53:24  info unpack layer: sha256:eb7c47c7f0fd0054242f35366d166e6b041dfb0b89e5f93a82ad3a3206222502
    INFO:    Creating SIF file...
+   [=====================================================================] 100 % 0s
    {Project}>
 
 The ``{ENVPREFIX}_DOCKER_HOST`` or ``DOCKER_HOST`` environment variables may be
@@ -1162,6 +1163,7 @@ from a docker image stored in a ``docker save`` formatted tar file:
    Storing signatures
    2019/12/11 15:25:09  info unpack layer: sha256:eb7c47c7f0fd0054242f35366d166e6b041dfb0b89e5f93a82ad3a3206222502
    INFO:    Creating SIF file...
+   [=====================================================================] 100 % 0s
    {Project}>
 
 Keywords

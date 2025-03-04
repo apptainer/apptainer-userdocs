@@ -801,6 +801,7 @@ command. This flag accepts a ``varname=value`` pair, as shown here:
    2024/03/08 14:17:24  info unpack layer: sha256:f4bb4e8dca02be491b4f72d2ef2127a64ce49c48d0d9c0a0fcaffa625067679d
    INFO:    Adding runscript
    INFO:    Creating SIF file...
+   [=====================================================================] 100 % 0s
    INFO:    Build complete: ./my_container.sif
 
    $ {command} run ./my_container.sif
@@ -825,6 +826,8 @@ the path to that file specified using the ``--build-arg-file`` flag to the
    2024/03/08 14:17:24  info unpack layer: sha256:f4bb4e8dca02be491b4f72d2ef2127a64ce49c48d0d9c0a0fcaffa625067679d
    INFO:    Adding runscript
    INFO:    Creating SIF file...
+   [=====================================================================]
+   100 % 0s
    INFO:    Build complete: ./my_container.sif
 
    $ {command} run ./my_container.sif
@@ -879,6 +882,8 @@ using ``--build-arg`` flags:
    INFO:    Adding environment to container
    INFO:    Adding runscript
    INFO:    Creating SIF file...
+   [=====================================================================]
+   100 % 0s
    INFO:    Build complete: ./my_container.sif
 
    $ {command} run ./my_container.sif
@@ -917,6 +922,8 @@ path to that file using the ``--build-arg-file`` flag:
    INFO:    Adding environment to container
    INFO:    Adding runscript
    INFO:    Creating SIF file...
+   [=====================================================================]
+   100 % 0s
    INFO:    Build complete: ./my_container.sif
 
    $ {command} run ./my_container.sif
@@ -952,6 +959,8 @@ Or one can use a combination of both strategies:
    INFO:    Adding environment to container
    INFO:    Adding runscript
    INFO:    Creating SIF file...
+   [=====================================================================]
+   100 % 0s
    INFO:    Build complete: ./my_container.sif
 
    $ {command} run ./my_container.sif
@@ -986,6 +995,8 @@ last occurrence will take precedence:
    INFO:    Adding environment to container
    INFO:    Adding runscript
    INFO:    Creating SIF file...
+   [=====================================================================]
+   100 % 0s
    INFO:    Build complete: ./my_container.sif
 
    $ {command} run ./my_container.sif
@@ -1024,6 +1035,8 @@ command line will take precedence:
    INFO:    Adding environment to container
    INFO:    Adding runscript
    INFO:    Creating SIF file...
+   [=====================================================================]
+   100 % 0s
    INFO:    Build complete: ./my_container.sif
 
    $ {command} run ./my_container.sif
@@ -1090,6 +1103,8 @@ using the ``%arguments`` section, as shown here:
    2024/03/08 14:52:53  info unpack layer: sha256:f4bb4e8dca02be491b4f72d2ef2127a64ce49c48d0d9c0a0fcaffa625067679d
    INFO:    Adding runscript
    INFO:    Creating SIF file...
+   [=====================================================================]
+   100 % 0s
    INFO:    Build complete: ./my_container.sif
 
    $ {command} run ./my_container.sif
