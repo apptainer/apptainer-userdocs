@@ -14,7 +14,8 @@ the appearance of running as root.
 the host:
 
 #. If the host is set up to map the current user via ``/etc/subuid`` and
-   ``/etc/subgid`` mapping files, {Project} will use that method first.
+   ``/etc/subgid`` mapping files (or equivalent through libsubid),
+   {Project} will use that method first.
    This is also commonly referred to as "rootless mode" and is the
    method used for example by Podman.
    This mode requires user namespaces to be enabled.
