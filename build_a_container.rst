@@ -181,6 +181,47 @@ You can do so with the following command.
 
    $ {command} build lolcow.sif lolcow.def
 
+***********************
+Alternative compressors
+***********************
+
+It is possible to use different compressors, see :ref:`--mksquashfs-args`:
+
+.. list-table:: Compressors
+   :widths: 25 25 25 25
+   :header-rows: 1
+
+   * - ``-comp``
+     - Default Level
+     - Optimized For
+     - Additional Notes
+   * - ``gzip``
+     - 9
+     - Compatibility
+     - Default
+   * - ``lzo``
+     - 8
+     - Speed
+     - Obsolete (Use ``lz4``)
+   * - ``lz4``
+     - 1
+     - Speed
+     - Fastest
+   * - ``xz``
+     - 6
+     - Size
+     - Obsolete (Use ``zstd``)
+   * - ``zstd``
+     - 15
+     - Size
+     - Smallest
+
+Example: ``--mksquashfs-args="-comp gzip -Xcompression-level 1"``
+(``--fast`` instead of ``--best``)
+
+The different compressors have (very) different compression levels,
+see the help text for each.
+
 .. note::
 
    Beware that it is possible to build an image on a host and have the
@@ -258,6 +299,49 @@ definition file as JSON.
 
 This command allows you to set a different image library. Look
 :ref:`here <library_api_registries>` for more information.
+
+.. _--mksquashfs-args:
+
+``--mksquashfs-args``
+=====================
+
+Extra arguments to pass to ``mksquashfs``` when creating SIF files.
+
+To show the available arguments, see the manual page or help:
+
+.. code::
+
+    $ mksquashfs -help
+
+For instance, to limit the number of processors use ``-processors``:
+
+.. code-block:: none
+
+    -processors <number>    use <number> processors.  By default will use number of
+                            processors available
+
+You might also be interested in the compressors and their options:
+
+.. code-block:: none
+
+    -comp <comp>            select <comp> compression
+                            Compressors available:
+                                    gzip (default)
+                                    lzo
+                                    lz4
+                                    xz
+                                    zstd
+
+    -no-compression         do not compress any of the data or metadata.  This is
+                            equivalent to specifying -noI -noD -noF and -noX
+
+To show help about the options available for selected compressor:
+
+.. code::
+
+    $ mksquashfs squashfs-root out.squashfs -comp zstd -Xhelp
+
+Non-gzip squashfs compression might not work with some installations.
 
 ``--notest``
 ============
