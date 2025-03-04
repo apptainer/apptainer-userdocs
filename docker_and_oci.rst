@@ -56,6 +56,8 @@ the container that's called ``sylabsio/lolcow:latest``:
    2021/10/04 14:50:21  info unpack layer: sha256:16ec32c2132b43494832a05f2b02f7a822479f8250c173d0ab27b3de78b2f058
    2021/10/04 14:50:23  info unpack layer: sha256:5ca731fc36c28789c5ddc3216563e8bfca2ab3ea10347e07554ebba1c953242e
    INFO:    Creating SIF file...
+   [=====================================================================]
+   100 % 0s
     _____________________________
    < Mon Oct 4 14:50:30 CDT 2021 >
     -----------------------------
@@ -672,6 +674,8 @@ name:
    Writing manifest to image destination
    Storing signatures
    INFO:    Creating SIF file...
+   [=====================================================================]
+   100 % 0s
    INFO:    Build complete: lolcow_from_docker_cache.sif
 
 The tag name must be included in the URI. Unlike when pulling from a
@@ -750,6 +754,8 @@ rather than an object hosted by a service, it uses ``:<filename>``, not
    Writing manifest to image destination
    Storing signatures
    INFO:    Creating SIF file...
+   [=====================================================================]
+   100 % 0s
    INFO:    Build complete: lolcow_tar.sif
 
 .. note::
