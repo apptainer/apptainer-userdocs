@@ -271,7 +271,7 @@ host**. We'll use ``file1`` to demonstrate the usage of the ``%files``
 section below. ``file2``, on the other hand, is created at the root of
 the file system **within the container**.
 
-More recent versions of {Project} provide the ``%files`` section,
+Consider using the ``%files`` section instead,
 which is a safer alternative to copying files from the host system into
 the container during the build process.
 
