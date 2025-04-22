@@ -687,8 +687,19 @@ registry, the ``docker-daemon`` bootstrap agent will not try to pull a
    In the example above, the build was performed without ``sudo``. This
    is possible only when the user is part of the ``docker`` group on the
    host, since {Project} must contact the Docker daemon through its
-   socket. If you are not part of the ``docker`` group you will need to
-   use ``sudo`` for the build to complete successfully.
+   socket. If you are not part of the ``docker`` group, or if you are using
+   Podman for the ``docker`` command, you will need to use ``sudo`` for
+   the build to complete successfully.
+
+.. note::
+
+   You can also use rootless docker or rootless podman with ``docker-daemon``,
+   then you don't need to use ``sudo`` or be a part of any root groups.
+   Set the environment variable ``DOCKER_HOST`` to the URL of your daemon
+   socket, following the upstream documentation from `Docker
+   <https://docs.docker.com/engine/security/rootless>`__ or from `Podman
+   <https://docs.podman.io/en/latest/Tutorials.html>`__.
+   Example command: ``export DOCKER_HOST=unix:///run/user/1000/docker.sock``
 
 To build from an image cached by the Docker daemon in a definition file
 use ``Bootstrap: docker-daemon``, and a ``From: <REPOSITORY>:TAG`` line:
