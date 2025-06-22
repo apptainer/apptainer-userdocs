@@ -340,7 +340,7 @@ below with their respective functionality.
 #. **{ENVPREFIX}_NETWORK_ARGS**: To specify the network arguments to
    pass to CNI plugins.
 
-#. **{ENVPREFIX}_NOCOLOR**: Print mesages without color output.
+#. **{ENVPREFIX}_NOCOLOR**: Print messages without color output.
    Default is set to false unless stderr is not a terminal.
 
 #. **{ENVPREFIX}_NOENV**: List of environment variables to block from
