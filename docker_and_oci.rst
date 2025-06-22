@@ -477,7 +477,7 @@ will likely fail:
 However, {Project} is able to make use of CPU emulation with QEMU, and the Linux
 kernel's binfmt_misc mechanism, to run containers that do not match the host CPU.
 
-An adminstrator can configure emulation support by installing distribution
+An administrator can configure emulation support by installing distribution
 packages, or using the `multiarch/qemu-user-static
 <https://github.com/multiarch/qemu-user-static>`__ container from Docker Hub:
 
@@ -974,7 +974,7 @@ variables. To avoid the extra evaluation of variables that {Project}
 performs you can:
 
 * Follow the instructions in the :ref:`escaping-environment` section to
-  explictly escape environment variables.
+  explicitly escape environment variables.
 * Use the ``--no-eval`` flag.
 
 ``--no-eval`` prevents {Project} from evaluating environment variables on

@@ -310,7 +310,7 @@ below with their respective functionality.
 #. **{ENVPREFIX}_NOCLEANUP**: To not clean up the bundle after a failed
    build, this can be helpful for debugging. Default is set to false.
 
-#. **{ENVPREFIX}_NOCOLOR**: Print mesages without color output.
+#. **{ENVPREFIX}_NOCOLOR**: Print messages without color output.
    Default is set to false unless stderr is not a terminal.
 
 #. **{ENVPREFIX}_NO_HTTPS** and **{ENVPREFIX}_NOHTTPS**: Set to true to use HTTP
@@ -1146,7 +1146,7 @@ written explicitly.
 Overview
 --------
 
-The ``docker-archive`` boostrap agent allows you to create a {Project} image
+The ``docker-archive`` bootstrap agent allows you to create a {Project} image
 from a docker image stored in a ``docker save`` formatted tar file:
 
 .. code:: console
