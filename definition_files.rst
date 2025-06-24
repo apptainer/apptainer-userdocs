@@ -582,6 +582,22 @@ the host, or ``default`` if ``FOO`` is not set on the host or if
 See :ref:`Environment and Metadata <environment-and-metadata>` for more
 information about the {Project} container environment.
 
+.. note::
+
+   Things set up in the ``%environment`` section are done in a parent
+   shell of the one that executes the container, so things such as
+   function definitions and aliases do not get carried through.
+   As a result, for example initializing conda cannot be done there.
+   For that type of initialization you can instead in the ``%post``
+   section add to ``/etc/bash.bashrc`` on Debian-based distributions or
+   ``/etc/bashrc`` on Redhat-based distributions.
+   In addition, by default the ``shell`` command starts the shell
+   with a ``--norc`` option so it does not run any bashrc. 
+   That can be worked around by adding
+   ``export SINGULARITY_SHELL=/bin/bash`` in the ``%environment``
+   section, but be aware that then the user's ``~/.bashrc`` will
+   also be run which may have new side effects.
+
 .. _startscript:
 
 %startscript
