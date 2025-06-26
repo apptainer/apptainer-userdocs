@@ -588,9 +588,15 @@ information about the {Project} container environment.
    shell of the one that executes the container, so things such as
    function definitions and aliases do not get carried through.
    As a result, for example initializing conda cannot be done there.
-   For that type of initialization you can instead in the ``%post``
-   section add to ``/etc/bash.bashrc`` on Debian-based distributions or
-   ``/etc/bashrc`` on Redhat-based distributions.
+
+   For that type of initialization in non-interactive shells you can in
+   the ``%post`` section export ``BASH_ENV`` to point to a script to
+   source when the shell starts.
+
+   For the equivalent in interactive shells you can instead in the ``%post``
+   section add to ``/etc/bash.bashrc`` on Debian-based distributions.
+   (RedHat-based distributions have a /etc/bashrc that apparently once
+   was equivalent but it does not appear to work in current versions.)
    In addition, by default the ``shell`` command starts the shell
    with a ``--norc`` option so it does not run any bashrc. 
    That can be worked around by adding
