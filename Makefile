@@ -22,7 +22,7 @@ ALLSPHINXOPTS   = -d $(BUILDDIR)/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
 # the i18n builder cannot share the environment and doctrees with the others
 I18NSPHINXOPTS  = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
 
-.PHONY: help clean html dirhtml singlehtml pickle json htmlhelp qthelp devhelp epub latex latexpdf text man changes linkcheck doctest gettext clidocs
+.PHONY: help clean html dirhtml singlehtml pickle json htmlhelp qthelp devhelp epub latex latexpdf text man changes linkcheck doctest gettext clidocs lint
 
 help:
 	@echo "Please use \`make <target>' where <target> is one of"
@@ -48,6 +48,7 @@ help:
 	@echo "  pseudoxml  to make pseudoxml-XML files for display purposes"
 	@echo "  linkcheck  to check all external links for integrity"
 	@echo "  doctest    to run all doctests embedded in the documentation (if enabled)"
+	@echo "  lint       to run rstcheck on .rst files"
 
 ifndef SKIPCLI
 
@@ -194,3 +195,9 @@ pseudoxml: clidocs
 	$(SPHINXBUILD) -b pseudoxml $(ALLSPHINXOPTS) $(BUILDDIR)/pseudoxml
 	@echo
 	@echo "Build finished. The pseudo-XML files are in $(BUILDDIR)/pseudoxml."
+
+lint:
+	mkdir _tmp/
+	python3 copyreplace.py _tmp/ *.rst
+	rstcheck --ignore-languages c,c++ --report-level warning _tmp/*
+	rm -fr _tmp/
