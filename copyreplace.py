@@ -1,10 +1,9 @@
 #
-#  This copies all files given in argv to the same file name with a '.rep'
-#  extension, replacing all the strings defined in replacements.py.
+#  This copies all files given in argv to the directory given by the
+#  first argument and replacing all the strings defined in replacements.py.
 #  This is intended for use in conjunction with rstcheck which runs
 #  independently of the variable replacement that sphinx does.
 #
-
 from replacements import *
 import sys
 from pathlib import Path
