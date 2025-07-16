@@ -1,0 +1,2 @@
+# This enables the legacy issue_template.md to be used by default
+blank_issues_enabled: true
