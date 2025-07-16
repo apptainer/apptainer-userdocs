@@ -1,3 +1,11 @@
+---
+name: Default issue template
+about: Default template for all
+title: ''
+labels: ''
+assignees: ''
+
+---
 
 ## Which Document page:
 
