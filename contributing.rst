@@ -66,7 +66,7 @@ Other dependencies include:
 More information about contributing to the documentation, instructions
 on how to install the dependencies, and how to generate the files can be
 obtained `here
-<https://github.com/{orgrepo}-userdocs/blob/{repobranch}/README.md>`__.
+<https://github.com/{orgrepo}-userdocs/blob/{version}/README.md>`__.
 
 For more information on using Git and GitHub to create a pull request
 suggesting additions and edits to the docs, see the :ref:`section on
