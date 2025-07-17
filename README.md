@@ -7,7 +7,7 @@ This is a community project maintained as a sub-project by the
 [Apptainer](https:/apptainer.org) project,
 and contributions are always welcome! If you'd like to update or improve
 Apptainer's documentation please read the
-[Apptainer CONTRIBUTING file](https://github.com/apptainer/apptainer/CONTRIBUTING.md),
+[Apptainer CONTRIBUTING file](https://github.com/apptainer/apptainer/blob/main/CONTRIBUTING.md),
 follow the instructions below, and submit a PR on GitHub.
 
 
