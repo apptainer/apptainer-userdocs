@@ -1325,6 +1325,28 @@ variable changes depending on the app we specify:
    $ {command} exec --app bar my_container.sif env | grep SOFTWARE
    SOFTWARE=bar
 
+********
+Comments
+********
+
+You can add a comment by prefixing the line with a ‘#’.
+
+.. code:: {command}
+
+   # This is a comment
+   Bootstrap: docker
+   From: debian:10
+
+   # This is a comment
+   %setup
+      # This is a comment
+      touch /file1
+
+.. note::
+
+   Some sections like ``%test`` and ``%runscript`` recognise
+   hashbang lines (``#!``) for specifying a custom shell.
+
 *******************************************
 Best Practices for Writing Definition Files
 *******************************************
