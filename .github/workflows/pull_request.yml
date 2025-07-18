@@ -44,9 +44,10 @@ jobs:
       - name: Lint rst
         run: |
           set -x
-          python3 copyreplace.py *.rst
-          rstcheck --ignore-languages c,c++ --report-level warning *.rep
-          rm -f *.rep
+          mkdir _tmp/
+          python3 copyreplace.py _tmp/ *.rst
+          rstcheck --ignore-languages c,c++ --report-level warning _tmp/*
+          rm -fr _tmp/
 
       - name: Build web documentation
         run: |
