@@ -27,8 +27,9 @@ command group.
 
 .. note::
 
-   All commands in the ``oci`` command group require ``root``
-   privileges.
+   All commands in the ``oci`` command group require ``root`` privileges.
+   For that reason these commands have not been very useful and should
+   be considered deprecated.
 
 
 ..

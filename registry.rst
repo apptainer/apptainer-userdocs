@@ -185,3 +185,47 @@ both for the ``registry login`` / ``registry logout`` commands and for the `pull
 `instance
 <cli/{command}_instance.html>`__.
 set of commands.
+
+***********************
+``docker://`` vs ``oras://``
+***********************
+
+{Project} supports two different protocols when communicating with OCI
+registries.
+The standard protocol is used with the ``docker://`` URI.
+{Project} supports pulling OCI containers with that protocol, but it
+converts the containers into its own format and does not support pushing
+them back to registries using that protocol.
+(Pulling can be done explicitly with either the ``pull`` command or 
+implicitly by one of the action commands such as ``run``.)
+
+On the other hand, the ``oras://`` protocol is the OCI protocol for 
+artifacts, so {Project} supports pushing and pulling ``.sif``
+containers using that protocol.
+The name of the container is in the same format in both cases, with
+a registry name, a slash, a tag name (which may itself include a slash),
+a colon, and a version.
+The default registry name when pulling is ``docker.io``.
+The same protocol must be used when pulling a container as was used 
+when pushing it.
+The most popular registries are ``ghcr.io`` and ``docker.io`` and they
+both support both OCI container protocols.
+
+Here are some examples:
+
+.. code::
+
+   $ {command} pull docker://alpine:latest
+   $ {command} pull docker://ghcr.io/apptainer/apptainer
+   $ {command} pull oras://ghcr.io/apptainer/alpine
+   $ {command} run docker://alpine
+   $ {command} run oras://docker.io/davedykstra/lolcow
+
+***********************
+Registry mirrors
+***********************
+
+{Project} supports mirrors (caches) for registries.  Please see the
+`registry.conf section <{admindocs}/configfiles.html#registry-mirror-configuration>`_
+in the admin guide.  
+They can be configured system-wide or by individual users.
