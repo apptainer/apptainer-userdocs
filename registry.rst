@@ -226,6 +226,6 @@ Registry mirrors
 ***********************
 
 {Project} supports mirrors (caches) for registries.  Please see the
-`registry.conf section <{admindocs}/configfiles.html#registry-mirror-configuration>`_
+`registries.conf section <{admindocs}/configfiles.html#registry-mirror-configuration>`_
 in the admin guide.  
 They can be configured system-wide or by individual users.
