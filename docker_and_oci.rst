@@ -27,6 +27,10 @@ This section will highlight these workflows, and discuss the limitations
 and best practices to keep in mind when creating containers targeting
 both Docker and {Project}.
 
+{Apptainer} can also run nested inside a Docker container, although it
+requires adding some runtime options to the docker command.  For details
+see the `admin guide <{admindocs}/installation.html#running-inside-docker>`_.
+
 **************************
 Containers From Docker Hub
 **************************
@@ -170,6 +174,8 @@ login.
    {Project} can only read credentials stored directly in
    ``~/.docker/config.json``. It cannot read credentials from external
    Docker credential helpers.
+
+.. _sec:docker_login:
 
 Interactive Login
 -----------------

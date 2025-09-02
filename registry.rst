@@ -9,9 +9,8 @@ It is common for users of {Project} to use `OCI
 images. Some registries require credentials to access certain images or even the
 registry itself. One method is to supply credentials for each command or set
 environment variables to contain the credentials for a single registry. See
-:ref:`Authentication via Interactive Login
-<sec:authentication_via_docker_login>` and :ref:`Authentication via Environment
-Variables <sec:authentication_via_environment_variables>`.
+the sections on authentication via :ref:`Interactive Login <sec:docker_login>`
+and :ref:`Environment Variables <sec:docker_envvars>`.
 
 Alternatively, users can supply credentials on a per-registry basis with the ``registry`` command.
 
@@ -186,9 +185,9 @@ both for the ``registry login`` / ``registry logout`` commands and for the `pull
 <cli/{command}_instance.html>`__.
 set of commands.
 
-***********************
+****************************
 ``docker://`` vs ``oras://``
-***********************
+****************************
 
 {Project} supports two different protocols when communicating with OCI
 registries.
