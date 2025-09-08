@@ -236,7 +236,7 @@ Using fakeroot command inside definition file:
 
 When using fakeroot mode 3 above, where user namespaces are
 available but /etc/subuid mapping is not set up, and you are trying
-to build a container for an operating sytem with an older glibc
+to build a container for an operating system with an older glibc
 library than the host or for a target operating system like alpine
 that does not include glibc, this more advanced technique may help.
 
