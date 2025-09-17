@@ -590,7 +590,7 @@ information about the {Project} container environment.
    As a result, for example initializing conda cannot be done there.
 
    For that type of initialization in non-interactive shells you can in
-   the ``%post`` section export ``BASH_ENV`` to point to a script to
+   the ``%environment`` section export ``BASH_ENV`` to point to a script to
    source when the shell starts.
 
    For the equivalent in interactive shells you can instead in the ``%post``
