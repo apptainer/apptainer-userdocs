@@ -589,15 +589,20 @@ information about the {Project} container environment.
    function definitions and aliases do not get carried through.
    As a result, for example initializing conda cannot be done there.
 
-   For that type of initialization in non-interactive shells you can in
+   For that type of initialization you can take advantage of some bash
+   features, if the container includes bash (for example alpine does not
+   include bash).  Apptainer by default will use bash if it is available.
+   For non-interactive shells you can in
    the ``%environment`` section export ``BASH_ENV`` to point to a script to
-   source when the shell starts.
+   source when the child shell starts.
+   Note that bash by default does not process aliases in non-interactive
+   shells, unless ``shopt -s expand_aliases`` is used before they are defined.
 
    For the equivalent in interactive shells you can instead in the ``%post``
    section add to ``/etc/bash.bashrc`` on Debian-based distributions.
    (RedHat-based distributions have a /etc/bashrc that apparently once
    was equivalent but it does not appear to work in current versions.)
-   In addition, by default the ``shell`` command starts the shell
+   In addition, by default the ``shell`` command starts bash
    with a ``--norc`` option so it does not run any bashrc. 
    That can be worked around by adding
    ``export SINGULARITY_SHELL=/bin/bash`` in the ``%environment``
