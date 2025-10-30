@@ -885,6 +885,10 @@ For instance, on Ubuntu you can install it like so:
 
    $ sudo apt-get update && sudo apt-get install dnf
 
+When building a container as an unprivileged user using this bootstrap,
+not all of the fakeroot modes work well.  See
+:ref:`Building container images <build>` for details.
+
 .. _build-debootstrap:
 
 ``debootstrap`` build agent
@@ -954,6 +958,10 @@ On RHEL you can install it from the epel repos like so:
 .. code::
 
    $ sudo dnf update && sudo dnf install epel-release && sudo dnf install debootstrap.noarch
+
+When building a container as an unprivileged user using this bootstrap,
+not all of the fakeroot modes work well.  See
+:ref:`Building container images <build>` for details.
 
 .. _build-arch:
 
@@ -1232,3 +1240,10 @@ Keywords
    Bootstrap: scratch
 
 There are no additional keywords for the scratch bootstrap agent.
+
+Notes
+-----
+
+When building a container as an unprivileged user using this bootstrap,
+not all of the fakeroot modes work well.  See
+:ref:`Building container images <build>` for details.

@@ -173,25 +173,40 @@ unprivileged user.
 
 .. _build:
 
-Build
-=====
+Building container images
+=========================
 
-Depending on the method of "fake root" used, an unprivileged user can build
+Depending on the mode of "fake root" used, an unprivileged user can build
 an image from a definition file with few restrictions.
+The ``--fakeroot`` option is automatically implied when an unprivileged
+user uses the ``{command} build`` command.
+
+The rootless mode (fakeroot mode 1) works for almost all cases and has
+the fewest restrictions.  For adding to existing containers, such as
+with the bootstrap methods ``docker``, ``oras``, and ``localimage``,
+fakeroot mode 3 using the fakeroot command and a root-mapped user
+namespace also works well for most cases, as long as the host and
+container libraries are compatible as detailed in the description of
+mode 3 above.
+
 Some bootstrap methods that require creation of block devices (like
 ``/dev/null``) may not always work correctly with "fake root".
-With the rootles mode "fake root", {Project} uses seccomp filters
+With fakeroot mode 1, {Project} uses seccomp filters
 to give programs the illusion that block device creation succeeded.
-This appears to work with ``yum`` or ``dnf`` bootstraps and *may* work with other
+This appears to work with ``yum``, ``dnf``, and ``scratch`` bootstraps
+and *may* work with other
 bootstrap methods, although ``debootstrap`` is known to not work.
+The other fakeroot modes do not work well with these bootstraps that
+build containers from scratch.
 
-If only the fakeroot command is used for "fake root" mode (because no
-user namespaces are available, in suid mode), then building a container
+If the fakeroot command is used by itself for "fake root" mode (because no
+user namespaces are available in suid mode, that is, fakeroot mode 4),
+then building a container
 also implies the ``--fix-perms`` option, because otherwise directories
 created may not be writable by the creating user.
 
-Examples
-========
+Fakeroot examples
+=================
 
 Build from a definition file:
 -----------------------------
@@ -232,7 +247,7 @@ HTTP server:
 .. _fakeroot-inside-def:
 
 Using fakeroot command inside definition file:
-----------------------------------------------
+==============================================
 
 When using fakeroot mode 3 above, where user namespaces are
 available but /etc/subuid mapping is not set up, and you are trying
