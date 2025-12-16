@@ -501,6 +501,18 @@ that are available for interactive containers. E.g. to limit memory usage to
 
    {command} instance start --memory 1G url-to-pdf.sif pdf
 
+Profiling with performance counters using perf
+======================================================
+
+For in-depth container perfomance analysis it would be useful to collect data from Linux's performance counters. Normally this is done by supplying the target PID to ``perf``. This, however does not work for containers out of the box. Apart from PID, perf can also keep track of cgroups. Instances are run within a cgroup, so we can use those to facts to track our container's performance counters. You can do this by using the ``-G or --cgroup`` perf option that collects all system events and filters by cgroup name. For cgroups v2, the cgroup name is found in ``/sys/fs/cgroup/{path}/apptainer-{instance id number}``. The final perf command would look something like:
+
+.. code::
+
+   perf -a -e cache-misses --cgroup "{path}/apptainer-{instance id number}" -- sleep 10
+
+.. note::
+   Because you are using gathering system metrics you will need to reduce your ``kernel.perf_event_paranoid`` to less than or equal to 0 or enable CAP_PERFMON, CAP_SYS_PTRACE or CAP_SYS_ADMIN
+
 ******************************
 System integration / PID files
 ******************************
