@@ -504,7 +504,20 @@ that are available for interactive containers. E.g. to limit memory usage to
 Profiling with performance counters using perf
 ======================================================
 
-For in-depth container perfomance analysis it would be useful to collect data from Linux's performance counters. Normally this is done by supplying the target PID to ``perf``. This, however does not work for containers out of the box. Apart from PID, perf can also keep track of cgroups. When possible, {command} instances are run within a cgroup, so we can use those that fact to track our container's performance counters. You can do this by using the ``-G or --cgroup`` perf option that collects all system events and filters by cgroup name. For cgroups v2, the cgroup name is everything after ``/sys/fs/cgroup/``. Usually the {command} instance, cgroups are found in in ``$CGROUPPATH/{command}-$INSTANCEID``, where ``$CGROUPPATH`` is the path between /sys/fs/cgroup and your cgroup directory. For example, for the cgroup in ``/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/user.slice/{command}-30443`` the $CGROUPPATH is ``user.slice/user-1000.slice/user@1000.service/user.slice/``. The final perf command would look something like:
+For in-depth container perfomance analysis it would be useful to collect data
+from Linux's performance counters. Normally this is done by supplying the target
+PID to ``perf``. This, however does not work for containers out of the box.
+Apart from PID, perf can also keep track of cgroups. When possible, {command}
+instances are run within a cgroup, so we can use fact to track our
+container's performance counters. You can do this by using the ``-G or --cgroup``
+perf option that collects all system events and filters by cgroup name. For
+cgroups v2, the cgroup name is everything after ``/sys/fs/cgroup/``. Usually for 
+{command} instance, cgroups are found in in
+``$CGROUPPATH/{command}-$INSTANCEID``, where ``$CGROUPPATH`` is the path between
+/sys/fs/cgroup and your cgroup directory. For example, for the cgroup in
+``/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/user.slice/{command}-30443``
+the $CGROUPPATH is ``user.slice/user-1000.slice/user@1000.service/user.slice/``.
+The final perf command would look something like:
 
 
 .. code::
