@@ -31,10 +31,10 @@ at runtime in memory.
 
    We use ``Privileged Encryption`` to represent the case of an encrypted image built by the
    root user and decrypted with a suid installation.  The partition type in a SIF image in this
-   case wil be shown as ``Encrypted squashfs``.
+   case will be shown as ``Encrypted squashfs``.
 
    We use ``Unprivileged Encryption`` to represent the case of an encrypted image built by
-   normal unprivileged users and decrypted either without a suid installion or with the ``--userns``
+   normal unprivileged users and decrypted either without a suid installation or with the ``--userns``
    option.  The partition type in a SIF image in this case will be shown as ``Gocryptfs squashfs``.
    This case requires 
    `unprivileged user namespaces <{admindocs}/user_namespace.html>`_. 

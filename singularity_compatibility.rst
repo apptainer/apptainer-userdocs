@@ -54,7 +54,7 @@ We can see from the ``env`` output that this environment variable was properly
 set inside the container.
 
 Next we can use the ``SINGULARITYENV_`` prefix to do the same thing, but this
-time we wil have the intended value be ``BAZ``:
+time we will have the intended value be ``BAZ``:
 
 .. code::
 
