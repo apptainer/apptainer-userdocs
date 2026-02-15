@@ -1146,7 +1146,7 @@ where both ``<image>`` and ``<tag>`` are mandatory fields that must be
 written explicitly.
 
 
-.. _docker-daemon:
+.. _docker-archive:
 
 ``docker-archive`` bootstrap agent
 ==================================
