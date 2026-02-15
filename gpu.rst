@@ -93,7 +93,7 @@ the available versions on the `tags page on Docker Hub
 The container is large, so it's best to build or pull the docker image
 to a SIF before you start working with it:
 
-.. code::
+.. code:: console
 
    $ {command} pull docker://tensorflow/tensorflow:latest-gpu
    ...
@@ -104,7 +104,7 @@ to a SIF before you start working with it:
 
 Then run the container with GPU support:
 
-.. code::
+.. code:: console
 
    $ {command} run --nv tensorflow_latest-gpu.sif
 
@@ -123,7 +123,7 @@ Then run the container with GPU support:
 You can verify the GPU is available within the container by using the
 tensorflow ``list_local_devices()`` function:
 
-.. code::
+.. code:: console
 
    {Project}> python
    Python 2.7.15+ (default, Jul  9 2019, 16:51:35)
@@ -166,7 +166,7 @@ This variable will limit the GPU devices that CUDA programs see.
 E.g. to run the tensorflow container, but using only the first GPU in
 the host, we could do:
 
-.. code::
+.. code:: console
 
    $ {ENVPREFIX}ENV_CUDA_VISIBLE_DEVICES=0 {command} run --nv tensorflow_latest-gpu.sif
 
@@ -255,7 +255,7 @@ Tensorflow can be run using ``--nvccli`` in a similar manner as the
 standard ``--nv`` binding approach when run unprivleged. Build the
 large container into a sandbox:
 
-.. code::
+.. code:: console
 
    $ {command} build --sandbox tensorflow_latest-gpu docker://tensorflow/tensorflow:latest-gpu
    INFO:    Starting build...
@@ -265,7 +265,7 @@ large container into a sandbox:
 
 Then run the container with ``nvidia-container-cli`` GPU support:
 
-.. code::
+.. code:: console
 
    $ {command} run --nvccli tensorflow_latest-gpu
 
@@ -284,7 +284,7 @@ Then run the container with ``nvidia-container-cli`` GPU support:
 You can verify the GPU is available within the container by using the
 tensorflow ``list_local_devices()`` function:
 
-.. code::
+.. code:: console
 
    {Project}> python
    Python 2.7.15+ (default, Jul  9 2019, 16:51:35)
@@ -321,7 +321,7 @@ devices are bound into the ``/dev`` tree in the container.
 For example, to pass only the 2nd and 3rd GPU into a container running
 on a system with 4 GPUs, run the following:
 
-.. code::
+.. code:: console
 
    $ export NVIDIA_VISIBLE_DEVICES=1,2
    $ {command} run -uwc --nvccli tensorflow_latest-gpu
@@ -344,7 +344,7 @@ Note that:
 If you use ``--contain`` without setting ``NVIDIA_VISIBLE_DEVICES``, no
 GPUs will be available in the container, and a warning will be shown:
 
-.. code::
+.. code:: console
 
    $ {command} run -uwc --nvccli tensorflow_latest-gpu
    WARNING: When using nvidia-container-cli with --contain NVIDIA_VISIBLE_DEVICES
@@ -356,7 +356,7 @@ To restore the behaviour of the standard GPU handling, set
 If your system contains Ampere or newer GPUs that support virtual MIG
 devices, you can specify MIG identifiers / UUIDs.
 
-.. code::
+.. code:: console
 
    $ export NVIDIA_VISIBLE_DEVICES=MIG-GPU-5c89852c-d268-c3f3-1b07-005d5ae1dc3f/7/0
 
@@ -454,7 +454,7 @@ the available versions on the `tags page on Docker Hub
 The container is large, so it's best to build or pull the docker image
 to a SIF before you start working with it:
 
-.. code::
+.. code:: console
 
    $ {command} pull docker://rocm/tensorflow:latest
    ...
@@ -465,14 +465,14 @@ to a SIF before you start working with it:
 
 Then run the container with GPU support:
 
-.. code::
+.. code:: console
 
    $ {command} run --rocm tensorflow_latest.sif
 
 You can verify the GPU is available within the container by using the
 tensorflow ``list_local_devices()`` function:
 
-.. code::
+.. code:: console
 
    {Project}> ipython
    Python 3.5.2 (default, Jul 10 2019, 11:58:48)
@@ -515,7 +515,7 @@ Blender as a graphical application that will make use of a local Radeon
 GPU for OpenCL compute using the container that has been published to
 the Sylabs library:
 
-.. code::
+.. code:: console
 
    $ {command} exec --rocm --bind /etc/OpenCL library://sylabs/examples/blender blender
 

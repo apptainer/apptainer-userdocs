@@ -141,7 +141,7 @@ MPICH Hybrid Container
 If the host MPI is MPICH, a definition file such as the following
 example can be used:
 
-.. code::
+.. code:: {command}
 
    Bootstrap: docker
    From: ubuntu:22.04
@@ -197,7 +197,7 @@ Open MPI Hybrid Container
 
 If the host MPI is Open MPI, the definition file looks like:
 
-.. code::
+.. code:: {command}
 
    Bootstrap: docker
    From: ubuntu:22.04
@@ -255,7 +255,7 @@ If the host MPI is Open MPI, the definition file looks like:
    for details and for now use the ``UCX_TLS=sysv,ib`` transport as
    a workaround, for example:
 
-   .. code::
+   .. code:: shell
 
       mpirun -np 2 -mca pml ucx -x UCX_TLS=sysv,ib apptainer exec $MY_CONTAINER ./a.out
 
@@ -266,7 +266,7 @@ By default in unprivileged user namespace mode each {command} command runs in it
 This causes problems for MPI runs, as observed :ref:`in this issue <mpi-issue>`. The new ``--sharens`` flag will 
 move all spawned processes into the same user namespace, similar to what is done with {Project} SUID mode. 
 
-.. code::
+.. code:: shell
 
    mpirun -np 2 {command} exec --sharens $MY_CONTAINER ./a.out
 
@@ -288,7 +288,7 @@ Assuming your container with MPI and your application is already built,
 the ``mpirun`` command to start your application looks like when your
 container has been built based on the hybrid model:
 
-.. code::
+.. code:: console
 
    $ mpirun -n <NUMBER_OF_RANKS> {command} exec <PATH/TO/MY/IMAGE> </PATH/TO/BINARY/WITHIN/CONTAINER>
 
@@ -296,7 +296,7 @@ Practically, this command will first start a process instantiating
 ``mpirun`` and then {Project} containers on compute nodes. Finally,
 when the containers start, the MPI binary is executed:
 
-.. code::
+.. code:: console
 
    $ mpirun -n 8 {command} run hybrid-mpich.sif /opt/mpitest
    Hello, I am rank 3/8
@@ -370,7 +370,7 @@ forward. The following example shows the definition file for the test
 program, which in this case has been compiled on the host to
 ``/tmp/mpitest``:
 
-.. code::
+.. code:: {command}
 
    Bootstrap: docker
    From: ubuntu:22.04
@@ -402,7 +402,7 @@ systems that have a version-compatible MPI installation, but under
 different installation paths. You can also hard code the MPI path in the
 definition file if you wish.
 
-.. code::
+.. code:: console
 
    $ export MPI_DIR="<PATH/TO/HOST/MPI/DIRECTORY>"
    $ mpirun -n <NUMBER_OF_RANKS> {command} exec --bind "$MPI_DIR" <PATH/TO/MY/IMAGE> </PATH/TO/BINARY/WITHIN/CONTAINER>
@@ -411,7 +411,7 @@ On an example system we may be using an Open MPI installation at
 ``/cm/shared/apps/openmpi/gcc/64/4.0.5/``. This means that the commands
 to run the container in bind mode are:
 
-.. code::
+.. code:: console
 
    $ export MPI_DIR="/cm/shared/apps/openmpi/gcc/64/4.0.5"
    $ mpirun -n 8 {command} exec --bind "$MPI_DIR" bind.sif /opt/mpitest
@@ -435,7 +435,7 @@ that aims at starting {aProject} container on each node allocated
 to the execution of the job. It can easily be adapted for all major
 batch systems available.
 
-.. code::
+.. code:: console
 
    $ cat my_job.sh
    #!/bin/bash
@@ -453,7 +453,7 @@ is based on the bind model, please add the appropriate bind options.
 
 A user can then submit a job by executing the following SLURM command:
 
-.. code::
+.. code:: console
 
    $ sbatch my_job.sh
 
@@ -498,7 +498,7 @@ communicate with, the MPI stack in the container.
 E.g. if we attempt to run the hybrid Open MPI container, but with
 ``mpirun`` from MPICH loaded on the host:
 
-.. code::
+.. code:: console
 
    $ module add mpich
    $ mpirun -n 8 {command} run hybrid-openmpi.sif /opt/mpitest

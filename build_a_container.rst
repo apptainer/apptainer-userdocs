@@ -62,7 +62,7 @@ Downloading an existing container from Docker Hub
 You can use ``build`` to download layers from Docker Hub and assemble
 them into {Project} containers.
 
-.. code::
+.. code:: console
 
    $ {command} build alpine.sif docker://alpine
 
@@ -75,13 +75,13 @@ a container that matches the architecture of your host system. If you need to
 retrieve a container that does not have the same architecture as your host (e.g.
 an ``arm64`` container on an ``amd64`` host), you can use the ``--arch`` options.
 
-.. code::
+.. code:: console
 
    $ {command} build --arch arm64 alpine.sif docker://alpine
 
 Or to build an ``arm32`` container by using the ``--arch-variant`` option:
 
-.. code::
+.. code:: console
 
    $ {command} build --arch arm --arch-variant 7 alpine.sif docker://alpine
 
@@ -96,7 +96,7 @@ If you have set up a library remote endpoint as described in
 you can use the build command to download a container from the Container
 Library.
 
-.. code::
+.. code:: console
 
    $ {command} build lolcow.sif library://lolcow
 
@@ -115,7 +115,7 @@ Creating writable ``--sandbox`` directories
 If you want to create a container within a writable directory (called a
 *sandbox*) you can do so with the ``--sandbox`` option.
 
-.. code::
+.. code:: console
 
    $ {command} build --sandbox alpine/ docker://alpine
 
@@ -123,7 +123,7 @@ The resulting directory operates just like a container in a SIF file. To
 make persistent changes within the sandbox container, use the
 ``--writable`` flag when you invoke your container.
 
-.. code::
+.. code:: console
 
    $ {command} shell --writable alpine/
 
@@ -137,7 +137,7 @@ one format to another. For example, if you had a sandbox container
 called ``development/`` and you wanted to convert it to a SIF container
 called ``production.sif``, you could do so as follows:
 
-.. code::
+.. code:: console
 
    $ {command} build production.sif development/
 
@@ -177,7 +177,7 @@ to use it to build a SIF container:
 
 You can do so with the following command.
 
-.. code::
+.. code:: console
 
    $ {command} build lolcow.sif lolcow.def
 
@@ -309,7 +309,7 @@ Extra arguments to pass to ``mksquashfs``` when creating SIF files.
 
 To show the available arguments, see the manual page or help:
 
-.. code::
+.. code:: console
 
     $ mksquashfs -help
 
@@ -337,7 +337,7 @@ You might also be interested in the compressors and their options:
 
 To show help about the options available for selected compressor:
 
-.. code::
+.. code:: console
 
     $ mksquashfs squashfs-root out.squashfs -comp zstd -Xhelp
 
@@ -348,7 +348,7 @@ compressors enabled.  So you might want to explore the help on that
 version, for example by setting its directory early in your PATH like
 this:
 
-.. code::
+.. code:: console
 
     $ PATH=$({command} buildcfg | sed -n 's,^LIBEXECDIR=\(.*\),\1/{command}/bin,p'):$PATH
 

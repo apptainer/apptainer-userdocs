@@ -317,7 +317,7 @@ these are the commands to restore the library
 behavior from before {Project}, where using the ``library://`` URI would
 download from the Sylabs Cloud anonymously:
 
-.. code::
+.. code:: console
 
    $ {command} remote add --no-login SylabsCloud cloud.sycloud.io
    INFO:    Remote "SylabsCloud" added.

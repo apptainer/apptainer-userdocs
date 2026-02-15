@@ -35,7 +35,7 @@ To run a service, such as a web server, outside of a container you would
 typically install the package for the web server and then instruct systemd
 (which manages system services on most Linux distributions) to start it. E.g.
 
-.. code::
+.. code:: console
 
    $ sudo dnf install nginx
    $ sudo systemctl enable --now nginx
@@ -56,7 +56,7 @@ To demonstrate the basics of instances, let's use an easy (though somewhat
 useless) example, using an Alpine Linux image from {Project}'s github container
 registry:
 
-.. code::
+.. code:: console
 
    $ {command} pull oras://ghcr.io/apptainer/alpine:latest
 
@@ -67,7 +67,7 @@ Starting Instances
 
 To start an instance, you should follow this procedure:
 
-.. code::
+.. code:: console
 
    [command]                      [image]              [name of instance]
 
@@ -82,7 +82,7 @@ to execute the ``runscript`` when the instance initiates.
 You can confirm that an instance is running by using the ``instance
 list`` command:
 
-.. code::
+.. code:: console
 
    $ {command} instance list
 
@@ -101,14 +101,14 @@ simple as running the command multiple times with different instance
 names. The instance name uniquely identify instances, so they cannot be
 repeated.
 
-.. code::
+.. code:: console
 
    $ {command} instance start alpine_latest.sif instance2
    $ {command} instance start alpine_latest.sif instance3
 
 We now have 3 instances, all using the same image:
 
-.. code::
+.. code:: console
 
    $ {command} instance list
    INSTANCE NAME    PID      IP              IMAGE
@@ -118,7 +118,7 @@ We now have 3 instances, all using the same image:
 
 You can filter the instance list by supplying a pattern:
 
-.. code::
+.. code:: console
 
    $ {command} instance list '*2'
    INSTANCE NAME    PID      IP              IMAGE
@@ -130,7 +130,7 @@ there is no ``%startscript`` the container will stay idle in the background.
 
 You can also define start scripts on a per app basis.
 
-.. code::
+.. code:: console
 
     $ {command} instance start --app myapp alpine_latest.sif myapp-instance
 
@@ -151,21 +151,21 @@ instance name.
 To run a specific command against an instance, in the foreground, use
 ``{command} exec``:
 
-.. code::
+.. code:: console
 
    $ {command} exec instance://instance1 cat /etc/os-release
 
 Similarly, you can use ``{command} run`` to run the ``%runscript`` for the
 container, against a running instance:
 
-.. code::
+.. code:: console
 
    $ {command} run instance://instance2
 
 If you want to poke around inside of your instance, you can use the normal
 ``{command} shell`` command, but give it the instance URI:
 
-.. code::
+.. code:: console
 
    $ {command} shell instance://instance3
    {Project}>
@@ -176,7 +176,7 @@ Stopping Instances
 When you are finished with your instance you can clean it up with the
 ``instance stop`` command as follows:
 
-.. code::
+.. code:: console
 
    $ {command} instance stop instance1
 
@@ -184,7 +184,7 @@ If you have multiple instances running and you want to stop all of them,
 you can do so with a wildcard or the --all flag. The following three
 commands are identical.
 
-.. code::
+.. code:: console
 
    $ {command} instance stop '*'
 
@@ -217,7 +217,7 @@ the instance. Because we are running a web server, which defaults to listening
 on privileged port 80, we're going to run the following instance commands as
 root, using ``sudo``.
 
-.. code::
+.. code:: console
 
    $ {command} build nginx.sif nginx.def
    ...
@@ -232,7 +232,7 @@ Just like that we've downloaded, built, and run an NGINX {Project} image. We
 can confirm it's running using the curl tool, to fetch the web page that is now
 being hosted by NGINX.
 
-.. code::
+.. code:: console
 
    $ curl localhost
 
@@ -371,7 +371,7 @@ The complete definition file will look like this:
 
 We can now build the container image from the definition file:
 
-.. code::
+.. code:: console
 
    $ {command} build url-to-pdf.sif url-to-pdf.def
 
@@ -380,7 +380,7 @@ Running the Service
 
 We can now start an instance to run the service:
 
-.. code::
+.. code:: console
 
    $ {command} instance start url-to-pdf.sif pdf
 
@@ -390,7 +390,7 @@ don't need to run it with ``sudo`` this time.
 We can confirm it's working by sending the server an http request using
 curl:
 
-.. code::
+.. code:: console
 
    $ curl -o apptainer.pdf localhost:9000/api/render?url=http://apptainer.org/docs
      % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
@@ -406,7 +406,7 @@ You should see a PDF file being generated like the one shown below:
 If you shell into the instance, you can see the processes that are running, to
 provide the service:
 
-.. code::
+.. code:: console
 
    $ {command} shell instance://pdf
    {Project}> ps aux
@@ -435,7 +435,7 @@ error messages into log files.
 You can view the location of log files for running instances using the ``--log``
 option of the ``instance list`` command:
 
-.. code::
+.. code:: console
 
    $ {command} instance list --logs
    INSTANCE NAME    PID       LOGS
@@ -449,7 +449,7 @@ The ``.out`` log collects standard output. The ``.err`` log collects standard
 error. You can look at the content of the log files to check how your service is
 running:
 
-.. code::
+.. code:: console
 
    $ cat /home/user/.{command}/instances/logs/mini/user/pdf.out
 
@@ -478,7 +478,7 @@ the resources used by the instance to be monitored, and limited.
 
 To monitor the resource usage of an instance, use the ``instance stats`` command:
 
-.. code::
+.. code:: console
 
     $ {command} instance stats pdf
    INSTANCE NAME    CPU USAGE    MEM USAGE / LIMIT     MEM %    BLOCK I/O            PIDS
@@ -497,7 +497,7 @@ applied to instances using the same :ref:`command line flags <cgroup_flags>`
 that are available for interactive containers. E.g. to limit memory usage to
 1GiB, we can use the ``--memory`` flag:
 
-.. code::
+.. code:: shell
 
    {command} instance start --memory 1G url-to-pdf.sif pdf
 
@@ -521,7 +521,7 @@ the $CGROUPPATH is ``user.slice/user-1000.slice/user@1000.service/user.slice/``.
 The final perf command would look something like:
 
 
-.. code::
+.. code:: shell
 
    perf -a -e cache-misses --cgroup "$CGROUPPATH/{command}-$INSTANCEID" -- sleep 10
 
@@ -543,7 +543,7 @@ via pid files.
 You can specify a ``--pid-file`` option to ``{command} instance start`` to
 write the PID for an instance to the specified file, e.g.
 
-.. code::
+.. code:: console
 
    $ {command} instance start --pid-file /home/dave/alpine.pid alpine_latest.sif instanceA
 
@@ -554,7 +554,7 @@ An example service file for an instance controlled by systemd is below.
 This can be used as a template to setup containerized services under
 systemd.
 
-.. code::
+.. code:: systemd
 
    [Unit]
    Description=Web Instance

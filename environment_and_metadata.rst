@@ -79,7 +79,7 @@ If I build {aProject} container from the image
 ``docker://python:3.7`` then when I run the container I can see that the
 ``PYTHON_VERSION`` variable is set in the container:
 
-.. code::
+.. code:: console
 
    $ {command} exec python.sif env | grep PYTHON_VERSION
    PYTHON_VERSION=3.7.7
@@ -113,7 +113,7 @@ of a definition file to set a container environment variable:
 Now the value of ``MYVAR`` is ``Hello`` when the container is launched.
 The ``%runscript`` is set to echo the value.
 
-.. code::
+.. code:: console
 
    $ {command} run env.sif
    Hello
@@ -176,7 +176,7 @@ the value from the host, use ``{ENVPREFIX}ENV_`` or the ``--env`` flag. For
 example, to force ``MYVAR`` in the container to take the value of ``MYVAR`` on
 the host:
 
-.. code::
+.. code:: console
 
    $ export {ENVPREFIX}ENV_MYVAR="$MYVAR"
    $ {command} run mycontainer.sif
@@ -189,7 +189,7 @@ container you can use the ``-e`` or ``--cleanenv`` option. This gives a
 clean environment inside the container, with a minimal set of
 environment variables for correct operation of most software.
 
-.. code::
+.. code:: console
 
    $ {command} exec --cleanenv env.sif env
    HOME=/home/dave
@@ -258,7 +258,7 @@ workflow.
 The ``--env`` option on the ``run/exec/shell`` commands allows you to
 specify environment variables as ``NAME=VALUE`` pairs:
 
-.. code::
+.. code:: console
 
    $ {command} run env.sif
    Hello
@@ -276,7 +276,7 @@ variables include special characters.
 The ``--env-file`` option lets you provide one or more files that contain
 environment variables as ``NAME=VALUE`` pairs, e.g.:
 
-.. code::
+.. code:: console
 
    $ cat myenvs
    MYVAR="Hello from a file"
@@ -302,7 +302,7 @@ If you export an environment variable on your host called
 ``{ENVPREFIX}ENV_xxx`` *before* you run a container, then it will set
 the environment variable ``xxx`` inside the container:
 
-.. code::
+.. code:: console
 
    $ {command} run env.sif
    Hello
@@ -330,7 +330,7 @@ To ensure containers work correctly, when a host ``PATH`` might contain
 a lot of host-specific locations that are not present in the container,
 {Project} will ensure ``PATH`` in the container is set to a default.
 
-.. code::
+.. code:: shell
 
    /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
@@ -348,7 +348,7 @@ If you set a variable on your host called ``{ENVPREFIX}ENV_APPEND_PATH``
 then its value will be appended (added to the end) of the ``PATH``
 variable in the container.
 
-.. code::
+.. code:: console
 
    $ {command} exec env.sif sh -c 'echo $PATH'
    /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
@@ -364,7 +364,7 @@ If you set a variable on your host called
 ``{ENVPREFIX}ENV_PREPEND_PATH`` then its value will be prepended (added
 to the start) of the ``PATH`` variable in the container.
 
-.. code::
+.. code:: console
 
    $ {command} exec env.sif sh -c 'echo $PATH'
    /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
@@ -404,7 +404,7 @@ variables that {Project} performs you can:
 container startup, so that they will take the same value as with a Docker/OCI
 runtime:
 
-.. code::
+.. code:: console
 
    # Set an environment variable that would run `date` if evaluated
    $ export {ENVPREFIX}_MYVAR='$(date)'
@@ -431,7 +431,7 @@ the host, use double quotes around the variable, so that it is
 processed by the host shell before the value is passed to
 {Project}. For example:
 
-.. code::
+.. code:: shell
 
    {command} run --env "MYHOST=$HOSTNAME" mycontainer.sif
 
@@ -456,7 +456,7 @@ value. Instead it will be substituted inside the container.
 For example, to create an environment variable ``MYPATH``, with the
 same value as ``PATH`` in the container (not the host's ``PATH``):
 
-.. code::
+.. code:: shell
 
    {command} run --env "MYPATH=\$PATH" mycontainer.sif
 
@@ -474,7 +474,7 @@ verbatim, it must be quoted and escaped appropriately. For example, if
 you need to set a path containing a literal ``$LIB`` for the
 ``LD_PRELOAD`` environment variable:
 
-.. code::
+.. code:: shell
 
    {command} run --env="LD_PRELOAD=/foo/bar/\\\$LIB/baz.so" mycontainer.sif
 
@@ -488,7 +488,7 @@ escapes the literal ``$``.
 You can also use single quotes on the command line, to avoid one
 level of escaping:
 
-.. code::
+.. code:: shell
 
    {command} run --env='LD_PRELOAD=/foo/bar/\$LIB/baz.so' mycontainer.sif
 
@@ -595,7 +595,7 @@ Inherited labels can only be overwritten during a build when the build
 is performed using the ``--force`` option. {Project} will warn that
 it is not modifying an existing label when ``--force`` is not used:
 
-.. code::
+.. code:: console
 
    $ {command} build test2.sif test2.def
    ...
@@ -683,7 +683,7 @@ visible.
 The ``-d`` or ``-deffile`` flag shows the definition file(s) that were
 used to build the container.
 
-.. code::
+.. code:: console
 
    $ {command} inspect --deffile jupyter.sif
 
@@ -754,7 +754,7 @@ Which is the definition file for the ``jupyter.sif`` container.
 
 The ``-r`` or ``--runscript`` option shows the runscript for the image.
 
-.. code::
+.. code:: console
 
    $ {command} inspect --runscript jupyter.sif
 
@@ -794,7 +794,7 @@ And the output would look like:
 
 The ``-t`` or ``--test`` flag shows the test script for the image.
 
-.. code::
+.. code:: console
 
    $ {command} inspect --test jupyter.sif
 
@@ -808,7 +808,7 @@ The ``-e`` or ``--environment`` flag shows the environment variables
 that are defined in the container image. These may be set from one or
 more environment files, depending on how the container was built.
 
-.. code::
+.. code:: console
 
    $ {command} inspect --environment jupyter.sif
 
@@ -831,13 +831,13 @@ in the ``%help`` section of its definition file.
 
 You can call it this way:
 
-.. code::
+.. code:: console
 
    $ {command} inspect --helpfile jupyter.sif
 
 And the output would look like:
 
-.. code::
+.. code:: text
 
    Container with Anaconda 2 (Conda 4.5.11 Canary) and Jupyter Notebook 5.6.0 for Debian 9.x (Stretch).
    This installation is based on Python 2.7.15
@@ -890,7 +890,7 @@ dynamically, at runtime, to support new features. In the longer term,
 metadata will be moved outside of the container, and stored only in the
 SIF file metadata descriptor.
 
-.. code::
+.. code:: text
 
    /.singularity.d/
 

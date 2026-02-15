@@ -51,7 +51,7 @@ ports on the host system from within a container.
 The ``help`` command gives an overview of {Project} options and
 subcommands as follows:
 
-.. code::
+.. code:: console
 
    $ {command} help
 
@@ -122,7 +122,7 @@ subcommands as follows:
 Information about individual subcommands can also be viewed by using the
 ``help`` command:
 
-.. code::
+.. code:: console
 
    $ {command} help verify
    Verify digital signature(s) within an image
@@ -175,14 +175,14 @@ followed by their options and arguments.
 For example, to pass the ``--debug`` option to the main ``{command}``
 command and run {Project} with debugging messages on:
 
-.. code::
+.. code:: console
 
    $ {command} --debug run docker://alpine
 
 To pass the ``--containall`` option to the ``run`` command and run a
 {Project} image in an isolated manner:
 
-.. code::
+.. code:: console
 
    $ {command} run --containall docker://alpine
 
@@ -191,7 +191,7 @@ instance, to list Linux capabilities for a particular user, you would
 use the ``list`` command in the ``capability`` command group, as
 follows:
 
-.. code::
+.. code:: console
 
    $ {command} capability list myuser
 
@@ -199,7 +199,7 @@ Container authors might also write help docs specific to a container, or
 for an internal module called an "app". If those help docs exist for a
 particular container, you can view them as follows:
 
-.. code::
+.. code:: console
 
    $ {command} inspect --helpfile container.sif  # See the container's help, if provided
 
@@ -217,7 +217,7 @@ images served from an OCI registry. In this case ``pull`` does not just
 download an image file; OCI images are stored in layers, so ``pull``
 must also combine those layers into a usable {Project} image.
 
-.. code::
+.. code:: console
 
    $ {command} pull docker://alpine
 
@@ -225,7 +225,7 @@ You can also use the ``build`` command to download pre-built images from
 an external resource. When using ``build`` you must specify a name for
 your container like so:
 
-.. code::
+.. code:: console
 
    $ {command} build alpine.sif docker://alpine
 
@@ -251,7 +251,7 @@ image URIs in addition to local image paths.
 As an example, the following command will pull a ``lolcow_latest.sif`` image
 from ghcr.io:
 
-.. code::
+.. code:: console
 
    $ {command} pull docker://ghcr.io/{command}/lolcow
 
@@ -262,7 +262,7 @@ The :ref:`shell <{command}_shell>`
 command allows you to spawn a new shell within your container and
 interact with it as though it were a virtual machine.
 
-.. code::
+.. code:: console
 
    $ {command} shell lolcow_latest.sif
 
@@ -275,7 +275,7 @@ a container or not).
 Once inside of {aProject} container, you are the same user as you
 are on the host system.
 
-.. code::
+.. code:: console
 
    {Project}> whoami
    david
@@ -287,7 +287,7 @@ are on the host system.
 URIs. This creates an ephemeral container that disappears
 when the shell is exited.
 
-.. code::
+.. code:: console
 
    $ {command} shell docker://ghcr.io/{command}/lolcow
 
@@ -299,7 +299,7 @@ command allows you to execute a custom command within a container by
 specifying the image file. For instance, to execute the ``cowsay``
 program within the ``lolcow_latest.sif`` container:
 
-.. code::
+.. code:: console
 
    $ {command} exec lolcow_latest.sif cowsay moo
     _____
@@ -315,7 +315,7 @@ program within the ``lolcow_latest.sif`` container:
 URIs. This creates an ephemeral container that executes a
 command and disappears.
 
-.. code::
+.. code:: console
 
    $ {command} exec docker://ghcr.io/{command}/lolcow cowsay 'Fresh from the internet'
     _________________________
@@ -339,7 +339,7 @@ perform when someone runs it. The runscript can be triggered with the
 command, or simply by calling the container as though it were an
 executable.
 
-.. code::
+.. code:: console
 
    $ {command} run lolcow_latest.sif
    ______________________________
@@ -365,7 +365,7 @@ executable.
 URIs. This creates an ephemeral container that runs and then
 disappears.
 
-.. code::
+.. code:: console
 
    $ {command} run docker://ghcr.io/{command}/lolcow
    ______________________________
@@ -386,7 +386,7 @@ them. For example, the default runscript of the ``docker://alpine``
 container passes any arguments to a shell. We can ask the container
 to run ``echo`` command in this shell as follows:
 
-.. code::
+.. code:: console
 
    $ {command} run docker://alpine echo "hello"
 
@@ -397,7 +397,7 @@ can behave slightly differently than in Docker/OCI runtimes, if they
 contain expressions that have special meaning to the shell. Here is an
 illustrative example:
 
-.. code::
+.. code:: console
 
    $ docker run -it --rm alpine echo "\$HOSTNAME"
    $HOSTNAME
@@ -414,7 +414,7 @@ quoting of arguments.
 Unlike the ``run`` command, the ``exec`` command does behave in the same
 manner as Docker/OCI, because it calls the specified executable directly:
 
-.. code::
+.. code:: console
 
    $ {command} exec docker://alpine echo "\$HOSTNAME"
    $HOSTNAME
@@ -428,7 +428,7 @@ Working with Files
 
 Files on the host are reachable from within the container:
 
-.. code::
+.. code:: console
 
    $ echo "Hello from inside the container" > $HOME/hostfile.txt
 
@@ -446,7 +446,7 @@ with the ``--bind`` option. In the following example, the ``data`` directory
 on the host system is bind mounted to the ``/mnt`` directory inside the
 container.
 
-.. code::
+.. code:: console
 
    $ echo "Drink milk (and never eat hamburgers)." > /data/cow_advice.txt
 
@@ -456,7 +456,7 @@ container.
 Pipes and redirects also work with {Project} commands, just like they
 do with normal Linux commands:
 
-.. code::
+.. code:: console
 
    $ cat /data/cow_advice.txt | {command} exec lolcow_latest.sif cowsay
     ________________________________________
@@ -493,7 +493,7 @@ Sandbox Directories
 To build into a ``sandbox`` (container in a directory) use the ``build
 --sandbox`` command and option:
 
-.. code::
+.. code:: console
 
    $ {command} build --sandbox ubuntu/ docker://ubuntu
 
@@ -507,7 +507,7 @@ directory just as you would with {aProject} image. If you pass the
 files within the sandbox directory (provided you have the permissions to
 do so).
 
-.. code::
+.. code:: console
 
    $ {command} exec --writable ubuntu touch /foo
 
@@ -522,7 +522,7 @@ container. This means that you can use it to convert a container from one format
 to another. For instance, if you have already created a sandbox (directory) and
 want to convert it to the Singularity Image Format, you can do so as follows:
 
-.. code::
+.. code:: console
 
    $ {command} build new.sif sandbox
 
@@ -571,7 +571,7 @@ Here is an example of a definition file:
 To build a container from this definition file (assuming it is a file
 named ``lolcow.def``), you would call ``build`` as follows:
 
-.. code::
+.. code:: console
 
    $ {command} build lolcow.sif lolcow.def
 
@@ -620,7 +620,7 @@ answers to many common questions.
 If you need to request an installation from your administrator, you may decide
 to draft a message similar to this:
 
-.. code::
+.. code:: text
 
    Dear shared resource administrator,
 

@@ -44,7 +44,7 @@ as it is using the ``{ENVPREFIX}ENV_`` prefix to command {Project} to create an
 environment variable in the container with the name ``FOO`` and the value
 ``BAR``:
 
-.. code::
+.. code:: console
 
   $ {ENVPREFIX}ENV_FOO=BAR {command} exec docker://alpine env
   [...]
@@ -56,7 +56,7 @@ set inside the container.
 Next we can use the ``SINGULARITYENV_`` prefix to do the same thing, but this
 time we wil have the intended value be ``BAZ``:
 
-.. code::
+.. code:: console
 
   $ SINGULARITYENV_FOO=BAZ {command} exec  docker://alpine env
   WARNING: DEPRECATED USAGE: Forwarding SINGULARITYENV_FOO as environment variable will not be supported in the future, use {ENVPREFIX}ENV_FOO instead
@@ -70,7 +70,7 @@ compatibility once it is past this current period of transition.
 Finally, if both are set, the value set by the ``{ENVPREFIX}ENV_`` variable will
 take priority over the ``SINGULARITYENV_`` variable.
 
-.. code::
+.. code:: console
 
   $ {ENVPREFIX}ENV_FOO=BAR SINGULARITYENV_FOO=BAZ {command} exec iqube_latest.sif env
   WARNING: Skipping environment variable [SINGULARITYENV_FOO=BAZ], FOO is already overridden with different value [BAR]
@@ -94,7 +94,7 @@ has taken place. Below is an example of running the ``version`` command using
 either program name and getting the same output because we are running the same
 underlying binary:
 
-.. code::
+.. code:: console
 
   $ {command} --version
   {command} version {InstallationVersion}
@@ -121,7 +121,7 @@ The following data will be migrated if it is found:
 
 Below we can see example output from when user configuration is being migrated:
 
-.. code::
+.. code:: console
 
   $ {command} exec docker://alpine echo
   INFO:    Detected Singularity user configuration directory
@@ -136,7 +136,7 @@ Below we can see example output from when user configuration is being migrated:
 We can also see that subsequent use of {Project} will not perform this
 migration again:
 
-.. code::
+.. code:: console
 
   $ {command} exec docker://alpine echo
   WARNING: /usr/local/etc/singularity/ exists, migration to {command} by system administrator is not complete
