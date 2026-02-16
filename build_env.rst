@@ -241,7 +241,7 @@ through to root's environment when executing the ``build`` command with
    Many modern Linux distributions use an in-memory ``tmpfs`` filesystem
    for ``/tmp`` when installed on a computer with a sufficient amount of
    RAM. This may limit the size of container you can build, as temporary
-   directories under ``/tmp`` share RAM with runniing programs etc. A
+   directories under ``/tmp`` share RAM with running programs etc. A
    ``tmpfs`` also uses default mount options that can interfere with
    some container builds.
 
