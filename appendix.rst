@@ -881,7 +881,7 @@ or ``dnf`` installed on your system. It may seem counter-intuitive to install YU
 or DNF on a system that uses a different package manager, but you can do so.
 For instance, on Ubuntu you can install it like so:
 
-.. code::
+.. code:: console
 
    $ sudo apt-get update && sudo apt-get install dnf
 
@@ -949,13 +949,13 @@ In order to use the ``debootstrap`` build module, you must have
 ``debootstrap`` installed on your system. On Ubuntu you can install it
 like so:
 
-.. code::
+.. code:: console
 
    $ sudo apt-get update && sudo apt-get install debootstrap
 
 On RHEL you can install it from the epel repos like so:
 
-.. code::
+.. code:: console
 
    $ sudo dnf update && sudo dnf install epel-release && sudo dnf install debootstrap.noarch
 
@@ -1126,7 +1126,7 @@ The ``{ENVPREFIX}_DOCKER_HOST`` or ``DOCKER_HOST`` environment variables may be
 set to instruct {{Project}} to pull images from a Docker daemon that is not
 running at the default location. For example, when using a virtualized Docker you may be instructed to set ``DOCKER_HOST`` e.g.
 
-.. code::
+.. code:: text
 
    To connect the Docker client to the Docker daemon, please set
    export DOCKER_HOST=tcp://192.168.59.103:2375
@@ -1146,7 +1146,7 @@ where both ``<image>`` and ``<tag>`` are mandatory fields that must be
 written explicitly.
 
 
-.. _docker-daemon:
+.. _docker-archive:
 
 ``docker-archive`` bootstrap agent
 ==================================
@@ -1221,7 +1221,7 @@ A minimal container providing a shell can be created by copying the
 
 The resulting container provides a shell, and is 696KiB in size:
 
-.. code::
+.. code:: console
 
    $ ls -lah scratch.sif
    -rwxr-xr-x. 1 dave dave 696K May 28 13:29 scratch.sif

@@ -98,7 +98,7 @@ The ``registry login`` and ``registry logout`` subcommands therefore support an
 credential information to be added to (by ``registry login``) or removed from
 (by ``registry logout``):
 
-.. code:: 
+.. code:: console
 
    $ {command} registry login -u myuser --authfile ./myauthfile docker://docker.io
    Password / Token:
@@ -121,7 +121,7 @@ commands discussed above (`pull
 <cli/{command}_instance.html>`__.),
 by passing them the same ``--authfile <path>`` flag:
 
-.. code:: 
+.. code:: console
 
    $ {command} shell --authfile myauthfile docker://placeforstuff/private1:latest
    INFO:    Converting OCI blobs to SIF format
@@ -149,7 +149,7 @@ Finally, note that logging in when the relevant credentials already exist, and
 logging out when the relevant credentials are already absent, are not considered
 errors:
 
-.. code::
+.. code:: console
 
    $ {command} registry login -u myuser --authfile ./myauthfile docker://docker.io
    Password / Token:
@@ -212,7 +212,7 @@ both support both OCI container protocols.
 
 Here are some examples:
 
-.. code::
+.. code:: console
 
    $ {command} pull docker://alpine:latest
    $ {command} pull docker://ghcr.io/apptainer/apptainer

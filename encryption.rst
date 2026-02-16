@@ -89,7 +89,7 @@ one of the following methods.
 Encrypting with a passphrase interactively (``Privileged Encryption``)
 ----------------------------------------------------------------------
 
-.. code::
+.. code:: console
 
    $ sudo {command} build --passphrase encrypted.sif encrypted.def
    Enter encryption passphrase: <secret>
@@ -98,7 +98,7 @@ Encrypting with a passphrase interactively (``Privileged Encryption``)
 Using an environment variable (``Privileged Encryption``)
 ---------------------------------------------------------
 
-.. code::
+.. code:: console
 
    $ sudo {ENVPREFIX}_ENCRYPTION_PASSPHRASE=<secret> {command} build --encrypt encrypted.sif encrypted.def
    Starting build...
@@ -113,7 +113,7 @@ not record your passphrase on the command line. For instance, you could
 save a plain text passphrase in a file (e.g. ``secret.txt``) and use it
 like so.
 
-.. code::
+.. code:: console
 
    $ export {ENVPREFIX}_ENCRYPTION_PASSPHRASE=$(cat secret.txt)
 
@@ -123,13 +123,13 @@ like so.
 Image info verification (``Privileged Encryption``)
 ---------------------------------------------------
 
-.. code:: 
+.. code:: console
 
    $ {command} sif list encrypted.sif
 
 Example:
 
-.. code:: 
+.. code:: text
 
    ------------------------------------------------------------------------------
    ID   |GROUP   |LINK    |SIF POSITION (start-end)  |TYPE
@@ -145,7 +145,7 @@ Note that partition 4 is type ``Encrypted squashfs``.
 Encrypting with a passphrase interactively (``Unprivileged Encryption``)
 ------------------------------------------------------------------------
 
-.. code::
+.. code:: console
 
    $ {command} build --passphrase encrypted.sif encrypted.def
    Enter encryption passphrase: <secret>
@@ -154,13 +154,13 @@ Encrypting with a passphrase interactively (``Unprivileged Encryption``)
 Using an environment variable (``Unprivileged Encryption``)
 -----------------------------------------------------------
 
-.. code::
+.. code:: console
 
    $ {ENVPREFIX}_ENCRYPTION_PASSPHRASE=<secret> {command} build encrypted.sif encrypted.def
    Starting build...
 
 
-.. code::
+.. code:: console
 
    $ export {ENVPREFIX}_ENCRYPTION_PASSPHRASE=$(cat secret.txt)
 
@@ -170,13 +170,13 @@ Using an environment variable (``Unprivileged Encryption``)
 Image info verification (``Unprivileged Encryption``)
 -----------------------------------------------------
 
-.. code:: 
+.. code:: console
 
    $ {command} sif list encrypted.sif
 
 Example:
 
-.. code:: 
+.. code:: text
 
    ------------------------------------------------------------------------------
    ID   |GROUP   |LINK    |SIF POSITION (start-end)  |TYPE
@@ -200,7 +200,7 @@ You can create a pair of RSA keys suitable for encrypting your container
 with the ``ssh-keygen`` command, and then create a PEM file with a few
 specific flags like so:
 
-.. code::
+.. code:: console
 
    # Generate a key pair
    $ ssh-keygen -t rsa -b 4096 -m pem -N ''
@@ -221,7 +221,7 @@ and private, because it is not encrypted itself.
 Encrypting with a command line option (``Privileged Encryption``)
 -----------------------------------------------------------------
 
-.. code::
+.. code:: console
 
    $ sudo {command} build --pem-path=rsa_pub.pem encrypted.sif encrypted.def
    Starting build...
@@ -229,7 +229,7 @@ Encrypting with a command line option (``Privileged Encryption``)
 Encrypting with an environment variable (``Privileged Encryption``)
 -------------------------------------------------------------------
 
-.. code::
+.. code:: console
 
    $ sudo {ENVPREFIX}_ENCRYPTION_PEM_PATH=rsa_pub.pem {command} build --encrypt encrypted.sif encrypted.def
    Starting build...
@@ -238,13 +238,13 @@ In this case it is necessary to use the ``--encrypt`` flag since the
 presence of an environment variable alone will not trigger the encrypted
 build workflow.
 
-.. code:: 
+.. code:: console
 
    $ {command} sif list encrypted.sif
 
 Example:
 
-.. code:: 
+.. code:: text
 
    ------------------------------------------------------------------------------
    ID   |GROUP   |LINK    |SIF POSITION (start-end)  |TYPE
@@ -260,7 +260,7 @@ Note that partition 4 is type ``Encrypted squashfs``.
 Encrypting with a command line option (``Unprivileged Encryption``)
 -------------------------------------------------------------------
 
-.. code::
+.. code:: console
 
    $ {command} build --pem-path=rsa_pub.pem encrypted.sif encrypted.def
    Starting build...
@@ -268,7 +268,7 @@ Encrypting with a command line option (``Unprivileged Encryption``)
 Encrypting with an environment variable (``Unprivileged Encryption``)
 ---------------------------------------------------------------------
 
-.. code::
+.. code:: console
 
    $ {ENVPREFIX}_ENCRYPTION_PEM_PATH=rsa_pub.pem {command} build --encrypt encrypted.sif encrypted.def
    Starting build...
@@ -277,13 +277,13 @@ In this case it is necessary to use the ``--encrypt`` flag since the
 presence of an environment variable alone will not trigger the encrypted
 build workflow.
 
-.. code:: 
+.. code:: console
 
    $ {command} sif list encrypted.sif
 
 Example:
 
-.. code:: 
+.. code:: text
 
    ------------------------------------------------------------------------------
    ID   |GROUP   |LINK    |SIF POSITION (start-end)  |TYPE
@@ -313,7 +313,7 @@ the sections above.
 Running with a passphrase interactively
 ---------------------------------------
 
-.. code::
+.. code:: console
 
    $ {command} run --passphrase encrypted.sif
    Enter passphrase for encrypted container: <secret>
@@ -321,7 +321,7 @@ Running with a passphrase interactively
 Running with a passphrase in an environment variable
 ----------------------------------------------------
 
-.. code::
+.. code:: console
 
    $ {ENVPREFIX}_ENCRYPTION_PASSPHRASE="secret" {command} run encrypted.sif
 
@@ -331,7 +331,7 @@ not record your passphrase on the command line. For instance, you could
 save a plain text passphrase in a file (e.g. ``secret.txt``) and use it
 like so.
 
-.. code::
+.. code:: console
 
    $ export {ENVPREFIX}_ENCRYPTION_PASSPHRASE=$(cat secret.txt)
 
@@ -346,32 +346,32 @@ Encryption section above.
 Running using a command line option
 -----------------------------------
 
-.. code::
+.. code:: console
 
    $ {command} run --pem-path=rsa_pri.pem encrypted.sif
 
 Running using an environment variable
 -------------------------------------
 
-.. code::
+.. code:: console
 
    $ {ENVPREFIX}_ENCRYPTION_PEM_PATH=rsa_pri.pem {command} run encrypted.sif
 
 When executing an ``Unprivileged Encryption`` encrypted image with {aProject} suid 
 installation, ``--userns`` is required.
 
-.. code:: 
+.. code:: console
 
    $ {command} run --pem-path=rsa_pri.pem encrypted.sif
 
 The following error will be shown
 
-.. code:: 
+.. code:: text
 
    FATAL:   container creation failed: mount hook function failure: mount /proc/self/fd/3->/usr/local/var/apptainer/mnt/session/rootfs error: while mounting image /proc/self/fd/3: gocryptfs requires user namespace, please add `--userns` option
 
 Add ``--userns`` option
 
-.. code:: 
+.. code:: console
 
    $ {command} run --pem-path=rsa_pri.pem --userns encrypted.sif

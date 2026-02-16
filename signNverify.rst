@@ -46,7 +46,7 @@ The ``verify`` command will check that a SIF container image has
 been signed using a PGP key or certificate. This ensures that the container
 image on your disk is a bit-for-bit reproduction of the original image.
 
-.. code::
+.. code:: console
 
    $ {command} verify alpine_latest.sif
 
@@ -86,7 +86,7 @@ more keys.
 
 You can use the ``newpair`` subcommand in the ``key`` command group like so:
 
-.. code::
+.. code:: console
 
    $ {command} key newpair
 
@@ -100,7 +100,7 @@ You can use the ``newpair`` subcommand in the ``key`` command group like so:
 The ``list`` subcommand will show you all of the keys you have created
 or saved locally.
 
-.. code::
+.. code:: console
 
    $ {command} key list
 
@@ -116,7 +116,7 @@ public key for image verification, you can push your key to a public keyserver.
 
 First we can check which key server we have configured using:
 
-.. code::
+.. code:: console
 
    $ {command} remote list
 
@@ -144,7 +144,7 @@ Here we can see that we will be pushing to `https://keys.openpgp.org
 <https://keys.openpgp.org>`__. Now we can use the following command to push our
 key:
 
-.. code::
+.. code:: console
 
    $ {command} key push 8232570480B868E1473AEEB03DBCBA1EE9D661E5
 
@@ -160,7 +160,7 @@ key:
 If you delete your local public PGP key, you can always locate and
 download it again like so.
 
-.. code::
+.. code:: console
 
    $ {command} key search --long-list ikaneshiro@apptainer.org
 
@@ -186,7 +186,7 @@ names, emails, and fingerprints (key IDs) provided that the backend keystore
 supports these actions. When searching for a fingerprint, you need to use ``0x``
 before the fingerprint, check the example:
 
-.. code::
+.. code:: console
 
    # search for key ID:
    $ {command} key search 0x8883491F4268F173C6E5DC49EDECE4F3F38D871E
@@ -205,7 +205,7 @@ Signing and validating your own containers
 
 Now that you have a key generated, you can use it to sign images like so:
 
-.. code::
+.. code:: console
 
    $ {command} sign my_container.sif
 
@@ -216,7 +216,7 @@ Now that you have a key generated, you can use it to sign images like so:
 Because your public PGP key is saved locally you can verify the image
 without needing to contact the key server.
 
-.. code::
+.. code:: console
 
    $ {command} verify my_container.sif
 
@@ -237,7 +237,7 @@ in the absence of a local public key. To demonstrate this, first
 ``remove`` your local public key, and then try to use the ``verify``
 command again.
 
-.. code::
+.. code:: console
 
    $ {command} key remove 8232570480B868E1473AEEB03DBCBA1EE9D661E5
 
@@ -260,7 +260,7 @@ obtained from a key server, and is not present on your local computer. You can
 retrieve it, so that you can verify even if you are offline with ``{command} key
 pull``
 
-.. code::
+.. code:: console
 
    $ {command} key pull 8232570480B868E1473AEEB03DBCBA1EE9D661E5
 
@@ -275,7 +275,7 @@ control of signing is possible.
 If you ``sif list`` a SIF file you will see it is comprised of a number
 of objects. Each object has an ``ID``, and belongs to a ``GROUP``. Since signatures are *applied* to objects, they have an ``ID`` but not a ``GROUP``.
 
-.. code::
+.. code:: console
 
    $ {command} sif list my_container.sif
 
@@ -296,7 +296,7 @@ of objects. Each object has an ``ID``, and belongs to a ``GROUP``. Since signatu
 I can choose to sign and verify a specific object with the ``--sif-id``
 option to ``sign`` and ``verify``.
 
-.. code::
+.. code:: console
 
    $ {command} sign --sif-id 1 my_container.sif
 
@@ -320,7 +320,7 @@ sif-id gives a fatal error. The container is not considered verified as
 whole because other objects could have been changed without my
 knowledge.
 
-.. code::
+.. code:: console
 
    $ {command} verify my_container.sif
 
@@ -334,7 +334,7 @@ knowledge.
 I can sign a group of objects with the ``--group-id`` option to
 ``sign``.
 
-.. code::
+.. code:: console
 
    $ {command} sign --group-id 1 my_container.sif
    Signing image: my_container.sif
@@ -345,7 +345,7 @@ This creates one signature over all objects in the group. I can verify
 that nothing in the group has been modified by running ``verify`` with
 the same ``--group-id`` option.
 
-.. code::
+.. code:: console
 
    $ {command} verify --group-id 1 my_container.sif
 
@@ -365,7 +365,7 @@ Because every object in the SIF file is within the signed group 1 the
 entire container is signed, and the default ``verify`` behavior without
 specifying ``--group-id`` can also verify the container:
 
-.. code::
+.. code:: console
 
    $ {command} verify my_container.sif
 
@@ -394,7 +394,7 @@ The {Project} GitHub repo contains keys and certificates useful for testing. If
 you want to use them to carry out the commands below, first, carry out the
 following commands:
 
-.. code::
+.. code:: console
 
    $ git clone https://github.com/{orgrepo}.git
 
@@ -413,7 +413,7 @@ Signing with a PEM key
 To sign a container using a private key in PEM format, provide the private key
 material to the ``sign`` command using the ``--key`` flag. 
 
-.. code::
+.. code:: console
 
    $ {command} sign --key $KEYD/rsa-private.pem lolcow.sif 
    INFO:    Signing image with key material from 'rsa_pri.pem'
@@ -422,7 +422,7 @@ material to the ``sign`` command using the ``--key`` flag.
 
 The DSSE signature descriptor can now be seen by inspecting the SIF file:
 
-.. code::
+.. code:: console
 
    $ {command} sif list lolcow.sif 
    ------------------------------------------------------------------------------
@@ -442,7 +442,7 @@ The DSSE signature descriptor can now be seen by inspecting the SIF file:
 Attempting to ``verify`` the image without options will fail, as it is not
 signed with a PGP key:
 
-.. code::
+.. code:: console
 
    $ {command} verify lolcow.sif 
    INFO:    Verifying image with PGP key material
@@ -457,7 +457,7 @@ Verifying with a PEM key
 To verify a container using a PEM public key directly, provide the key material
 to the ``verify`` command using the ``key`` flag:
 
-.. code::
+.. code:: console
 
    $ {command} verify --key $KEYD/rsa-public.pem lolcow.sif 
    INFO:    Verifying image with key material from 'rsa_pub.pem'
@@ -480,7 +480,7 @@ certificate, pass the certificate to the ``verify`` command using the
 intermediate and valid root certificates with the
 ``--certificate-intermediates`` and ``--certificate-roots`` flags:
 
-.. code::
+.. code:: console
 
    $ {command} verify \
       --certificate $CERTD/leaf.pem \
@@ -500,7 +500,7 @@ When verifying a container using X.509 certificates, {Project} can perform
 online revocation checks using the Online Certificate Status Protocol (OCSP). To
 enable OCSP checks, add the ``--ocsp-verify`` flag to your ``verify`` command:
 
-.. code::
+.. code:: console
 
    $ {command} verify \
       --certificate $CERTD/leaf.pem \
@@ -515,7 +515,7 @@ has not been revoked. In the event that an OCSP responder cannot be contacted,
 or a certificate has been revoked, verification will fail with a validation
 error:
 
-.. code::
+.. code:: text
 
    INFO:    Validate: cert:leaf  issuer:intermediate
    FATAL:   Failed to verify container: OCSP verification has failed

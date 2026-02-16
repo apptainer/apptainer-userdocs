@@ -46,7 +46,7 @@ It's easy to run a public Docker Hub container with {Project}. Just
 put ``docker://`` in front of the container repository and tag. To run
 the container that's called ``sylabsio/lolcow:latest``:
 
-.. code::
+.. code:: console
 
    $ {command} run docker://sylabsio/lolcow:latest
    INFO:    Converting OCI blobs to SIF format
@@ -80,7 +80,7 @@ Docker container again the downloads and conversion aren't required.
 To obtain the Docker container as a SIF file in a specific location,
 which you can move, share, and keep for later, ``{command} pull`` it:
 
-.. code::
+.. code:: console
 
    $ {command} pull docker://sylabsio/lolcow
    INFO:    Using cached SIF image
@@ -134,7 +134,7 @@ Hub and other OCI registries. For Docker Hub, the registry hostname is
 ``docker.io``, so you will need to login as below, specifying your
 username:
 
-.. code::
+.. code:: console
 
    $ {command} registry login --username myuser docker://docker.io
    Password / Token:
@@ -151,7 +151,7 @@ use ``{command} registry list``.
 To logout of a registry, so that your credentials are forgotten, use
 ``{command} registry logout``:
 
-.. code::
+.. code:: console
 
    $ {command} registry logout docker://docker.io
    INFO:    Logout succeeded
@@ -183,7 +183,7 @@ Interactive Login
 To perform a one-off interactive login, which will not store your
 credentials, use the ``--docker-login`` flag:
 
-.. code::
+.. code:: console
 
    $ {command} pull --docker-login docker://myuser/private
    Enter Docker Username: myuser
@@ -209,7 +209,7 @@ prefix, are set they will also be used provided the ``{ENVPREFIX}_`` equivalent
 is not overriding them. This allows a single set of environment variables to be
 set for both ``{command}`` and ``docker`` operations.
 
-.. code::
+.. code:: console
 
    $ export {ENVPREFIX}_DOCKER_USERNAME=myuser
    $ export {ENVPREFIX}_DOCKER_PASSWORD=mytoken
@@ -238,7 +238,7 @@ Quay is an OCI container registry used by a large number of projects,
 and hosted at ``https://quay.io``. To pull public containers from Quay,
 just include the ``quay.io`` hostname in your ``docker://`` URI:
 
-.. code::
+.. code:: console
 
    $ {command} pull docker://quay.io/bitnami/python:3.7
    INFO:    Converting OCI blobs to SIF format
@@ -274,7 +274,7 @@ Previously, an account and API token was required to pull NGC
 containers. However, they are now available to pull as a guest without
 login:
 
-.. code::
+.. code:: console
 
    $ {command} pull docker://nvcr.io/nvidia/pytorch:21.09-py3
    INFO:    Converting OCI blobs to SIF format
@@ -307,7 +307,7 @@ GitHub Container Registry is increasingly used to provide Docker
 containers alongside the source code of hosted projects. You can pull a
 public container from GitHub Container Registry using a ``ghcr.io`` URI:
 
-.. code::
+.. code:: console
 
    $ {command} pull docker://ghcr.io/containerd/alpine:latest
    INFO:    Converting OCI blobs to SIF format
@@ -357,7 +357,7 @@ the AWS CLI to request a password, which can then be used to
 authenticate to an ECR private registry in the specified region. The
 username used in conjunction with this password is always ``AWS``.
 
-.. code::
+.. code:: console
 
    $ aws ecr get-login-password --region region
 
@@ -432,7 +432,7 @@ an ``arm64`` container on an ``amd64`` host), you can use the ``--arch`` options
 The ``--arch`` option accepts a CPU architecture only. For example, to pull an
 Ubuntu image for a 64-bit ARM system:
 
-.. code::
+.. code:: console
 
    $ {command} pull --arch arm64 docker://ubuntu
 
@@ -442,7 +442,7 @@ Ubuntu image for a 64-bit ARM system:
 The ``--arch-variant`` option can be used for CPU variants. Currently only the
 ARM CPU variants are supported.
 
-.. code::
+.. code:: console
 
    $ {command} pull --arch arm --arch-variant 7 docker://ubuntu
 
@@ -474,7 +474,7 @@ CPU emulation
 If you try to run a container that does not match the host CPU architecture, it
 will likely fail:
 
-.. code::
+.. code:: console
 
    $ {command} run ppc64le.sif 
    FATAL:   While checking image: could not open image ppc64le.sif: the image's architecture (ppc64le) could not run on the host's (amd64)
@@ -487,7 +487,7 @@ An adminstrator can configure emulation support by installing distribution
 packages, or using the `multiarch/qemu-user-static
 <https://github.com/multiarch/qemu-user-static>`__ container from Docker Hub:
 
-.. code::
+.. code:: console
 
    $ sudo {command} run docker://multiarch/qemu-user-static --reset -p yes
 
@@ -498,7 +498,7 @@ packages, or using the `multiarch/qemu-user-static
 
 It is now possible to run containers for other architectures:
 
-.. code::
+.. code:: console
 
    # The host system is an AMD64 / x86_64 machine
    $ uname -m
@@ -577,14 +577,14 @@ the architecture of your host system.
 The ``--arch`` option can be used to build for another CPU architecture.
 For example, to build an image for a 64-bit ARM system on an Intel host:
 
-.. code::
+.. code:: console
 
    $ {command} build --arch arm64 ubuntu.sif docker://ubuntu
 
 The ``--arch-variant`` option can be used for fetching CPU variants,
 although the variant is not recorded in the SIF file metadata (only the arch).
 
-.. code::
+.. code:: console
 
    $ {command} build --arch arm --arch-variant 7 ubuntu.sif docker://ubuntu
 
@@ -647,7 +647,7 @@ If you have pulled or run a container on your machine under ``docker``,
 it will be cached locally by the Docker daemon. The ``docker images``
 command will list containers that are available:
 
-.. code::
+.. code:: console
 
    $ docker images
    REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
@@ -658,7 +658,7 @@ by Docker. You can directly build it into a SIF file using a
 ``docker-daemon:`` URI specifying the ``REPOSITORY:TAG`` container
 name:
 
-.. code::
+.. code:: console
 
    $ {command} build lolcow_from_docker_cache.sif docker-daemon:sylabsio/lolcow:latest
    INFO:    Starting build...
@@ -727,7 +727,7 @@ the build process.
 If an image is listed by the ``docker images`` command, then we can
 create a tar archive file using ``docker save`` and the image ID:
 
-.. code::
+.. code:: console
 
    $ sudo docker images
    REPOSITORY                        TAG               IMAGE ID       CREATED          SIZE
@@ -738,7 +738,7 @@ create a tar archive file using ``docker save`` and the image ID:
 If we examine the contents of the tar file we can see that it contains
 the layers and metadata that make up a Docker container:
 
-.. code::
+.. code:: console
 
    $ tar tvf lolcow.tar
    drwxr-xr-x  0 0      0           0 Aug 16 11:22 2f0514a4c044af1ff4f47a46e14b6d46143044522fcd7a9901124209d16d6171/
@@ -757,7 +757,7 @@ We can convert this tar file into {aProject} container using the
 rather than an object hosted by a service, it uses ``:<filename>``, not
 ``://<location>``. To build a tar archive directly to a SIF container:
 
-.. code::
+.. code:: console
 
    $ {command} build lolcow_tar.sif docker-archive:lolcow.tar
    INFO:    Starting build...
@@ -899,7 +899,7 @@ If you experience issues, use the ``--contain`` option to stop
 may need to use ``--bind`` or ``--mount`` to then add back e.g. an HPC
 project directory that you need access to.
 
-.. code::
+.. code:: console
 
    # Without --contain, python in the container finds packages
    # in your $HOME directory.
@@ -933,7 +933,7 @@ To disable automatic propagation of environment variables, the
 only variables on the host that are prefixed with ``{ENVPREFIX}ENV_``
 are set in the container:
 
-.. code::
+.. code:: console
 
    # Set a host variable
    $ export HOST_VAR=123
@@ -954,7 +954,7 @@ will not be overridden by host environment variables.
 
 For example, the ``docker://openjdk:latest`` container sets ``JAVA_HOME``:
 
-.. code::
+.. code:: console
 
    # Set a host JAVA_HOME
    export JAVA_HOME=/test
@@ -987,7 +987,7 @@ performs you can:
 container startup, so that they will take the same value as with a Docker/OCI
 runtime:
 
-.. code::
+.. code:: console
 
    # Set an environment variable that would run `date` if evaluated
    $ export {ENVPREFIX}_MYVAR='$(date)'
@@ -1056,7 +1056,7 @@ For example, a container using the ``tini`` init process will produce
 warnings when started as an instance, or if run with ``--pid``. To work
 around this, use the ``--no-init`` flag to disable the shim:
 
-.. code::
+.. code:: console
 
    $ {command} run --pid tini_example.sif
    [WARN  tini (2690)] Tini is not running as PID 1 .
@@ -1124,7 +1124,7 @@ this script mirrors Docker as closely as possible.
 If the Docker container only has an ``ENTRYPOINT`` - that ``ENTRYPOINT``
 is run, with any arguments appended:
 
-.. code::
+.. code:: console
 
    # ENTRYPOINT="date"
 
@@ -1139,7 +1139,7 @@ is run, with any arguments appended:
 If the Docker container only has a ``CMD`` - the ``CMD`` is run, or is
 *replaced* with any arguments:
 
-.. code::
+.. code:: console
 
    # CMD="date"
 
@@ -1155,7 +1155,7 @@ If the Docker container has a ``CMD`` *and* ``ENTRYPOINT``, then we run
 ``ENTRYPOINT`` with either ``CMD`` as default arguments, or replaced
 with any user supplied arguments:
 
-.. code::
+.. code:: console
 
    # ENTRYPOINT="date"
    # CMD="--utc"
@@ -1183,7 +1183,7 @@ If you are using a container that was directly built or run from a Docker/OCI
 source, with {Project} 1.1.0 or later, the ``--no-eval`` flag will prevent
 this extra evaluation so that arguments are handled in a compatible manner:
 
-.. code::
+.. code:: console
 
    # docker/OCI behavior
    $ docker run -it --rm alpine echo "\$HOSTNAME"
@@ -1210,7 +1210,7 @@ To avoid evaluation without ``--no-eval``, and when using containers built
 earlier than {Project} 1.1.0, you will need to add an extra level of shell
 escaping to arguments on the command line:
 
-.. code::
+.. code:: console
 
    $ docker run -it --rm alpine echo "\$HOSTNAME"
    $HOSTNAME

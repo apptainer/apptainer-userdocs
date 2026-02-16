@@ -88,7 +88,7 @@ CPU Limits
 use.  The minimum is ``0.01`` or one hundredth of a physical CPU. The maximum is
 the number of CPU cores on your system.
 
-.. code::
+.. code:: console
 
    # Limit container to 3.5 CPUs
    $ {command} run --cpus 3.5 myfirstapp.sif
@@ -100,7 +100,7 @@ container A will receive twice as much CPU time than container B, but *only when
 there is contention for CPUs*, i.e. the containers are able to consume more CPU
 time than is available.
 
-.. code::
+.. code:: console
 
    # Container A - twice as much CPU priority as container B
    $ {command} run --cpu-shares 1024 myfirstapp.sif
@@ -115,7 +115,7 @@ run. For example, on a dual CPU system you might pin one container to the first
 ``--cpuset-mems`` specifies a list of memory nodes the container can use. It
 should generally be set to the same value as ``--cpuset-cpus``.
 
-.. code::
+.. code:: console
 
    # Container A - first CPU
    $ {command} run --cpuset-cpus 0-11 --cpuset-mems 0-11 myfirstapp.sif
@@ -131,7 +131,7 @@ You can use suffixes such as ``M`` or ``G`` to specify megabytes or gigabytes.
 If the container tries to use more memory than its limit, the system will kill
 it.
 
-.. code::
+.. code:: console
 
    # Run a program that will use 10GB of RAM, with a 100MB limit
    $ {command} exec --memory 100M memhog.sif memhog 10G
@@ -141,7 +141,7 @@ it.
 limit set with ``--memory``. When there is contention for memory, the system
 will attempt to make sure the container doesn't exceed the soft limit.
 
-.. code::
+.. code:: console
 
    # Kill my program if it exceeds 10G, but aim for 8G if there is contention
    $ {command} exec --memory 10G --memory-reservation 8G myfirstapp.sif
@@ -152,7 +152,7 @@ value of ``-1`` means *unlimited swap*. If ``--memory-swap`` is not set or is
 ``0``, then the container can use an amount of swap up to the value of
 ``--memory``. It's easier to understand this flag with examples:
 
-.. code::
+.. code:: console
 
    # Run a container that can use up to 1G RAM, or swap if it is swapped out
    $ {command} run --memory 1G myfirstapp.sif
@@ -183,7 +183,7 @@ is contention for I/O with other containers. It may be useful to give high
 priority to a container that needs infrequent but time sensitive data access,
 running alongside an application that is continuously performing bulk reads.
 
-.. code::
+.. code:: console
 
    # Container A - ten times as much block IO priority as container B
    $ {command} run --blkio-weight 1000 myfirstapp.sif
@@ -194,7 +194,7 @@ running alongside an application that is continuously performing bulk reads.
 ``--blkio-weight-device`` sets a relative weight for the container when performing
 block I/O on a specific device. Specify the device and weight as ``<device path>:weight``:
 
-.. code::
+.. code:: console
 
    # Container A - ten times as much block IO priority as container B on disk /dev/sda
    $ {command} run --blkio-weight-device /dev/sda:1000 myfirstapp.sif
@@ -224,7 +224,7 @@ To apply resource limits to a container, using the ``--apply-cgroups``
 flag, which takes a path to a TOML file specifying the cgroups
 configuration to be applied:
 
-.. code::
+.. code:: console
 
    $ {command} shell --apply-cgroups /path/to/cgroups.toml my_container.sif
 
@@ -245,7 +245,7 @@ This corresponds to a ratio versus other cgroups with cpu shares.
 Usually the default value is ``1024``. That means if you want to allow
 to use 50% of a single CPU, you will set ``512`` as value.
 
-.. code::
+.. code:: toml
 
    [cpu]
        shares = 512
@@ -264,7 +264,7 @@ the cgroup. ``quota`` allows you to configure the amount of CPU time
 that a cgroup can use per period. The default is 100ms (100000us). So if
 you want to limit amount of CPU time to 20ms during period of 100ms:
 
-.. code::
+.. code:: toml
 
    [cpu]
        period = 100000
@@ -275,7 +275,7 @@ you want to limit amount of CPU time to 20ms during period of 100ms:
 You can also restrict access to specific CPUs (cores) and associated
 memory nodes by using ``cpus/mems`` fields:
 
-.. code::
+.. code:: toml
 
    [cpu]
        cpus = "0-1"
@@ -295,14 +295,14 @@ To limit the amount of memory that your container uses to 500MB
 (524288000 bytes), set a ``limit`` value inside the ``[memory]`` section
 of your cgroups TOML file:
 
-.. code::
+.. code:: toml
 
    [memory]
        limit = 524288000
 
 Start your container, applying the toml file, e.g.:
 
-.. code::
+.. code:: console
 
    $ {command} run --apply-cgroups path/to/cgroups.toml docker://alpine
 
@@ -311,7 +311,7 @@ memory. This example assumes that there is only one running container.
 If you are running multiple containers you will find multiple cgroups
 trees under the ``apptainer`` directory.
 
-.. code::
+.. code:: console
 
    # cgroups v1
    $ cat /sys/fs/cgroup/memory/apptainer/*/memory.limit_in_bytes
@@ -327,7 +327,7 @@ IO Limits
 To control block device I/O, applying limits to competing container, use
 the ``[blockIO]`` section of the TOML file:
 
-.. code::
+.. code:: toml
 
    [blockIO]
        weight = 1000
@@ -347,7 +347,7 @@ for specific device major/minor numbers. For example, to override
 ``weight/leafWeight`` for ``/dev/loop0`` and ``/dev/loop1`` block
 devices, set limits for device major 7, minor 0 and 1:
 
-.. code::
+.. code:: toml
 
    [blockIO]
        [[blockIO.weightDevice]]
@@ -365,7 +365,7 @@ You can also limit the IO read/write rate to a specific absolute value,
 e.g. 16MB per second for the ``/dev/loop0`` block device. The ``rate``
 is specified in bytes per second.
 
-.. code::
+.. code:: toml
 
    [blockIO]
        [[blockIO.throttleReadBpsDevice]]
@@ -393,7 +393,7 @@ devices or classes of device.
 In this example, a container is configured to only be able to read from
 or write to ``/dev/null``:
 
-.. code::
+.. code:: toml
 
    [[devices]]
        access = "rwm"
@@ -442,7 +442,7 @@ For example, assuming your system is configured correctly for
 unprivileged cgroup creation via systemd, you can limit the number of
 CPUs a container run is allowed to use:
 
-.. code::
+.. code:: console
 
    $ systemd-run --user --scope -p AllowedCPUs=1,2 -- {command} run mycontainer.sif
 

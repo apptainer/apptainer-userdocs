@@ -68,7 +68,7 @@ of illustration.
 Suppose the Singularity Image Format (SIF) file ``busybox_latest.sif``
 exists locally. (Recall:
 
-.. code::
+.. code:: console
 
    $ {command} pull docker://busybox
    INFO:    Starting build...
@@ -93,7 +93,7 @@ found in the section :ref:`Support for Docker and OCI
 For the purpose of bootstrapping the creation of an OCI compliant
 container, this SIF file can be mounted as follows:
 
-.. code::
+.. code:: console
 
    $ sudo {command} oci mount ./busybox_latest.sif /var/tmp/busybox
 
@@ -101,7 +101,7 @@ By issuing the ``mount`` command, the root filesystem encapsulated in
 the SIF file ``busybox_latest.sif`` is mounted on ``/var/tmp/busybox``
 as an ``overlay`` file system,
 
-.. code::
+.. code:: console
 
    $ sudo df -k
    Filesystem                   1K-blocks    Used Available Use% Mounted on
@@ -116,7 +116,7 @@ as an ``overlay`` file system,
 
 with permissions as follows:
 
-.. code::
+.. code:: console
 
    $ sudo ls -ld /var/tmp/busybox
    drwx------ 4 root root 4096 Apr  4 14:30 /var/tmp/busybox
@@ -126,7 +126,7 @@ Content of an OCI Compliant Filesystem Bundle
 
 The *expected* contents of the mounted filesystem are as follows:
 
-.. code::
+.. code:: console
 
    $ sudo ls -la /var/tmp/busybox
    total 28
@@ -751,7 +751,7 @@ Furthermore, and through use of ``$ sudo cat
 identifies ``/var/tmp/busybox/rootfs`` as the container's root
 filesystem, as required by the standard; this filesystem has contents:
 
-.. code::
+.. code:: console
 
    $ sudo ls /var/tmp/busybox/rootfs
    bin  dev  environment  etc  home  proc  root  {command}  sys  tmp  usr  var
@@ -814,7 +814,7 @@ below for additional details. Once revealed, the filesystem bundle can
 be used to bootstrap the creation of an OCI compliant container instance
 as follows:
 
-.. code::
+.. code:: console
 
    $ sudo {command} oci create -b /var/tmp/busybox busybox1
 
@@ -907,7 +907,7 @@ Unmounting OCI Filesystem Bundles
 To unmount a mounted OCI filesystem bundle, the following command should
 be issued:
 
-.. code::
+.. code:: console
 
    $ sudo {command} oci umount /var/tmp/busybox
 

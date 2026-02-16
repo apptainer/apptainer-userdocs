@@ -34,7 +34,7 @@ option to pass the value of ``{ENVPREFIX}_CACHEDIR`` through to the root user's
 environment. This allows you to control where images will be cached even when
 running builds under ``sudo``.
 
-.. code::
+.. code:: console
 
    $ export {ENVPREFIX}_CACHEDIR=/tmp/user/temporary-cache
 
@@ -69,7 +69,7 @@ location that is:
 Inside the cache location you will find separate directories for the
 different kinds of data that are cached:
 
-.. code::
+.. code:: shell
 
    $HOME/.{command}/cache/blob
    $HOME/.{command}/cache/library
@@ -98,7 +98,7 @@ inconsistent.
 If you observe error messages that mention `github.com/etcd-io/bbolt` when
 trying to run {Project}, then you should remove the database file:
 
-.. code::
+.. code:: shell
 
    rm ~/.local/share/containers/cache/blob-info-cache-v1.boltdb
 
@@ -121,7 +121,7 @@ Listing the Cache
 
 To view a summary of cache usage, use ``{command} cache list``:
 
-.. code::
+.. code:: console
 
    $ {command} cache list
    There are 4 container file(s) using 59.45 MB and 23 oci blob file(s) using 379.10 MB of space
@@ -129,7 +129,7 @@ To view a summary of cache usage, use ``{command} cache list``:
 
 To view more detailed information, use ``{command} cache list -v``:
 
-.. code::
+.. code:: console
 
    $ {command} cache list -v
    NAME                     DATE CREATED           SIZE             TYPE
@@ -184,7 +184,7 @@ cache clean``.
 By default, ``{command} cache clean`` will remove all cache entries,
 after asking you to confirm:
 
-.. code::
+.. code:: console
 
    $ {command} cache clean
    This will delete everything in your cache (containers from all sources and OCI blobs).
@@ -199,14 +199,14 @@ If you want to leave your most recent cached images in place, but remove
 images that were cached longer ago, you can use the ``--days`` / ``-d``
 option. E.g. to clean cache entries older than 30 days:
 
-.. code::
+.. code:: console
 
    $ {command} cache clean --days 30
 
 To remove only a specific kind of cache entry, e.g. only library images,
 use the ``--type`` / ``-T`` option:
 
-.. code::
+.. code:: console
 
    $ {command} cache clean --type library
 

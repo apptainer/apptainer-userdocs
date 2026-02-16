@@ -98,7 +98,7 @@ repository. Once forked, clone your fork of the repo to your computer.
 (Obviously, you should replace ``your-username`` with your GitHub
 username.)
 
-.. code::
+.. code:: console
 
    $ git clone https://github.com/your-username/{command}.git && \
        cd {command}/
@@ -112,7 +112,7 @@ cloned the repo, we will probably want to make a new branch from main
 in which to work on our new feature. Lets call that branch
 ``new-feature``:
 
-.. code::
+.. code:: console
 
    $ git checkout main && \
        git checkout -b new-feature
@@ -131,7 +131,7 @@ The {Project} requires that all contributed git commits use the ``-s`` option
 which adds a ``Signed-off-by`` line to indicate agreement with the
 `Developer Certificate of Origin <https://developercertificate.org>`_.
 
-.. code::
+.. code:: console
 
    $ git add file-changed1 file-changed2...
 
@@ -140,7 +140,7 @@ which adds a ``Signed-off-by`` line to indicate agreement with the
 This commit message is important - it should describe exactly the
 changes that you have made. Good commit messages read like so:
 
-.. code::
+.. code:: console
 
    $ git commit -s -m "changed function getConfig in functions.go to output csv to fix #2"
 
@@ -160,14 +160,14 @@ Step 4. Push your branch to your fork
 When you are done with your commits, you should push your branch to your
 fork (and you can also continuously push commits here as you work):
 
-.. code::
+.. code:: console
 
    $ git push origin new-feature
 
 Note that you should always check the status of your branches to see
 what has been pushed (or not):
 
-.. code::
+.. code:: console
 
    $ git status
 
@@ -193,7 +193,7 @@ repository at that moment. As you work, your branch may become out of
 date as others merge changes into the upstream main. In the event that
 you need to update a branch, you will need to follow the next steps:
 
-.. code::
+.. code:: console
 
    $ git remote add upstream https://github.com/{orgrepo}.git && # to add a new remote named "upstream" \
        git checkout main && # or another branch to be updated \

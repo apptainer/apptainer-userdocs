@@ -43,7 +43,7 @@ To take advantage of this granted capability as a user, ``pinger`` must
 also request the capability when executing a container with the
 ``--add-caps`` flag like so:
 
-.. code::
+.. code:: console
 
    $ {command} exec --add-caps CAP_NET_RAW oras://ghcr.io/apptainer/ubuntu_ping:v1.0 ping -c 1 8.8.8.8
    PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
@@ -58,7 +58,7 @@ If the admin decides that it is no longer necessary to allow the user
 revoke the appropriate Linux capability and ``pinger`` will not be able
 to add that capability to their containers anymore:
 
-.. code::
+.. code:: console
 
    $ {command} exec --add-caps CAP_NET_RAW oras://ghcr.io/apptainer/ubuntu_ping:v1.0 ping -c 1 8.8.8.8
    WARNING: not authorized to add capability: CAP_NET_RAW
@@ -79,7 +79,7 @@ Assuming the root user will execute containers with the ``CAP_NET_RAW``
 capability by default, executing the same container ``pinger`` executed
 above works without the need to grant capabilities:
 
-.. code::
+.. code:: console
 
    # {command} exec oras://ghcr.io/apptainer/ubuntu_ping:v1.0 ping -c 1 8.8.8.8
    PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
@@ -91,7 +91,7 @@ above works without the need to grant capabilities:
 
 Now we can manually drop the ``CAP_NET_RAW`` capability like so:
 
-.. code::
+.. code:: console
 
    # {command} exec --drop-caps CAP_NET_RAW oras://ghcr.io/apptainer/ubuntu_ping:v1.0 ping -c 1 8.8.8.8
    ping: socket: Operation not permitted
@@ -142,7 +142,7 @@ security precaution. But the root user can override this precaution and
 allow SetUID binaries to behave as expected within {aProject}
 container with the ``--allow-setuid`` option like so:
 
-.. code::
+.. code:: console
 
    $ sudo {command} shell --allow-setuid some_container.sif
 
@@ -157,7 +157,7 @@ change is in effect, the root user can override the ``{command}.conf``
 file and enter the container with full capabilities using the
 ``--keep-privs`` option.
 
-.. code::
+.. code:: console
 
    $ sudo {command} exec --keep-privs docker://rockylinux:8 ping -c 1 8.8.8.8
    PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
@@ -177,7 +177,7 @@ initiate a container as root to enhance security.
 For instance, to drop the ability for the root user to open a raw socket
 inside the container:
 
-.. code::
+.. code:: console
 
    $ sudo {command} exec --drop-caps CAP_NET_RAW docker://rockylinux:8 ping -c 1 8.8.8.8
    ping: socket: Operation not permitted
@@ -196,7 +196,7 @@ container at runtime.
 
 For instance:
 
-.. code::
+.. code:: console
 
    $ sudo whoami
    root
@@ -216,7 +216,7 @@ installed with {Project}, normally at
 example, we will use a much simpler configuration file to blacklist the
 ``mkdir`` command.
 
-.. code::
+.. code:: json
 
    {
        "defaultAction": "SCMP_ACT_ALLOW",
@@ -246,7 +246,7 @@ example, we will use a much simpler configuration file to blacklist the
 We'll save the file at ``/home/david/no_mkdir.json``. Then we can invoke
 the container like so:
 
-.. code::
+.. code:: console
 
    $ sudo {command} shell --security seccomp:/home/david/no_mkdir.json my_container.sif
 
@@ -259,7 +259,7 @@ in a core dump.
 The full list of arguments accepted by the ``--security`` option are as
 follows:
 
-.. code::
+.. code:: shell
 
    --security="seccomp:/usr/local/etc/{command}/seccomp-profiles/default.json"
    --security="apparmor:/usr/bin/man"

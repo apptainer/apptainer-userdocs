@@ -58,7 +58,7 @@ create`` to create persistent overlay images.
 
 For example, to create a 1 GiB overlay image:
 
-.. code::
+.. code:: console
 
    $ {command} overlay create --size 1024 /tmp/ext3_overlay.img
 
@@ -70,7 +70,7 @@ user.
 
 For example:
 
-.. code::
+.. code:: console
 
    $ {command} build /tmp/nginx.sif docker://nginx
    ...
@@ -87,14 +87,14 @@ the time that it is created.
 
 To create a sparse overlay image, use the ``--sparse`` flag.
 
-.. code::
+.. code:: console
 
    $ {command} overlay create --sparse --size 1024 /tmp/ext3_overlay.img
 
 Note that ``ls`` will show the full size of the file, while ``du`` will show the
 space on disk that the file is currently using:
 
-.. code::
+.. code:: console
 
    $ ls -lah /tmp/ext3_overlay.img
    -rw-------. 1 user user 1.0G Jan 27 11:47 /tmp/ext3_overlay.img
@@ -127,7 +127,7 @@ option.
 
 For example:
 
-.. code::
+.. code:: console
 
    $ {command} build ubuntu.sif docker://ubuntu
    ...
@@ -169,13 +169,13 @@ It is supported, however, and this section describes how to use it.
 
 Create a directory as usual:
 
-.. code::
+.. code:: console
 
    $ mkdir my_overlay
 
 The example below shows the directory overlay in action.
 
-.. code::
+.. code:: console
 
    $ {command} shell --fakeroot --overlay my_overlay ubuntu.sif
    {Project}> mkdir /data
@@ -187,7 +187,7 @@ The example below shows the directory overlay in action.
 You will find that your changes persist across sessions as though you
 were using a writable container.
 
-.. code::
+.. code:: console
 
    $ {command} shell --userns --overlay my_overlay ubuntu.sif
    {Project}> ls -ld /data
@@ -198,7 +198,7 @@ were using a writable container.
 If you mount your container without the ``--overlay`` directory, your
 changes will be gone.
 
-.. code::
+.. code:: console
 
    $ {command} shell ubuntu.sif
    {Project}> ls /data
@@ -215,7 +215,7 @@ and no longer needs to use ``--fakeroot``.
 
 Continuing the above example:
 
-.. code::
+.. code:: console
 
    $ {command} shell --userns --overlay my_overlay:ro ubuntu.sif
    {Project}> which vim
@@ -234,7 +234,7 @@ modifications to it to be managed as a single file.
 
 To add a 1 GiB writable overlay partition to an existing SIF image:
 
-.. code::
+.. code:: console
 
    $ {command} overlay create --size 1024 ubuntu.sif
 
@@ -252,7 +252,7 @@ user.
 
 So for example:
 
-.. code::
+.. code:: console
 
    $ {command} build /tmp/nginx.sif docker://nginx
    $ {command} overlay create --size 1024 --create-dir /var/cache/nginx /tmp/nginx.sif
@@ -267,7 +267,7 @@ use the ``sif add`` subcommand.
 
 In order to do this, you must first create a file system image:
 
-.. code::
+.. code:: console
 
    $ {command} sif add --datatype 4 --partfs 2 --parttype 4 --partarch 2 --groupid 1 ubuntu.sif overlay.img
    $ {command} sif list ubuntu.sif | grep -i ext3
@@ -295,7 +295,7 @@ default mounted readonly.
 To modify the overlay image, use the ``--writable`` option (and likely
 also the ``--fakeroot`` option):
 
-.. code::
+.. code:: console
 
    $ {command} shell --writable --fakeroot ubuntu.sif
    {Project}> apt-get update && apt-get install -y vim
@@ -311,7 +311,7 @@ To resize an overlay, standard Linux tools which manipulate ext3 images can be
 used. For instance, to resize the 500MB file created above to 700MB one could
 use the ``e2fsck`` and ``resize2fs`` utilities as follows:
 
-.. code::
+.. code:: console
 
    $ e2fsck -f overlay.img && \
        resize2fs overlay.img 700M

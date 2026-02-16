@@ -54,7 +54,7 @@ Using Plugins
 
 The ``list`` command prints the currently installed plugins.
 
-.. code::
+.. code:: console
 
    $ {command} plugin list
    There are no plugins installed.
@@ -65,7 +65,7 @@ source code of their plugins. A plugin can be compiled from its source code with
 the ``compile`` command. A number of example plugins are included in the
 ``examples/plugins`` directory of the {Project} source.
 
-.. code::
+.. code:: console
 
    $ {command} plugin compile examples/plugins/cli-plugin/
    INFO:    Plugin built to: /home/dtrudg/Git/apptainer/examples/plugins/cli-plugin/cli-plugin.sif
@@ -73,7 +73,7 @@ the ``compile`` command. A number of example plugins are included in the
 Upon successful compilation, a SIF file will appear in the directory of the
 plugin's source code.
 
-.. code::
+.. code:: console
 
    $ ls examples/plugins/cli-plugin/ | grep sif
    cli-plugin.sif
@@ -91,7 +91,7 @@ Every plugin encapsulates various information such as the plugin's
 author, the plugin's version, etc. To view this information about a
 plugin, use the ``inspect`` command.
 
-.. code::
+.. code:: console
 
    $ {command} plugin inspect examples/plugins/cli-plugin/cli-plugin.sif
    Name: example.com/cli-plugin
@@ -102,7 +102,7 @@ plugin, use the ``inspect`` command.
 To install a plugin, use the ``install`` command. This operation
 requires root privilege.
 
-.. code::
+.. code:: console
 
    $ sudo {command} plugin install examples/plugins/cli-plugin/cli-plugin.sif
    $ {command} plugin list
@@ -114,7 +114,7 @@ Any plugin can be disabled with the ``disable`` command and re-enabled
 with the ``enable`` command. Both of these operations require root
 privilege.
 
-.. code::
+.. code:: console
 
    $ sudo {command} plugin disable example.com/cli-plugin
    $ {command} plugin list
@@ -129,7 +129,7 @@ privilege.
 Finally, to uninstall a plugin, use the ``uninstall`` command. This
 operation requires root privilege.
 
-.. code::
+.. code:: console
 
    $ sudo {command} plugin uninstall example.com/cli-plugin
    Uninstalled plugin "example.com/cli-plugin".

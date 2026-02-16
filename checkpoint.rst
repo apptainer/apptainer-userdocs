@@ -70,7 +70,7 @@ A build and install of DMTCP from source will generally place libraries at
 configure your linker to find these libraries and update its cache with the
 following commands:
 
-.. code::
+.. code:: console
 
     # echo /usr/local/lib/dmtcp > /etc/ld.so.conf.d/dmtcp.conf
     # ldconfig
@@ -78,7 +78,7 @@ following commands:
 Verify that the libraries are in the cache by ensuring there is output from the
 following command:
 
-.. code::
+.. code:: console
 
     $ ldconfig -p | grep dmtcp
 
@@ -96,7 +96,7 @@ http server that allows a variable to be read and written with ``GET`` and
 the {Project} community, but gives us an easy way to check that application
 state has been successfully restored upon restart.
 
-.. code::
+.. code:: {command}
 
     Bootstrap: docker
     From: python:3.10-bookworm
@@ -131,7 +131,7 @@ state has been successfully restored upon restart.
 
 We can build this container using:
 
-.. code::
+.. code:: console
 
     $ {command} build server.sif server.def
 
@@ -141,7 +141,7 @@ command group. This initializes a location in your user home directory for
 {Project} to store state related to DMTCP and the checkpoint images it will
 generate.
 
-.. code::
+.. code:: console
 
     $ {command} checkpoint create example-checkpoint
     INFO:    Checkpoint "example-checkpoint" created.
@@ -149,7 +149,7 @@ generate.
 Now we can start an instance of our application with the ``--dmtcp-launch`` flag
 naming the ``checkpoint`` we want to use to store state for this instance.
 
-.. code::
+.. code:: console
 
     $ {command} instance start --dmtcp-launch example-checkpoint server.sif server 8888 # this last arg is the port the server will listen to.
     INFO:    instance started successfully
@@ -157,7 +157,7 @@ naming the ``checkpoint`` we want to use to store state for this instance.
 Once we have our application up and running, we can ``curl`` against it and read
 the state of a variable on the server.
 
-.. code::
+.. code:: console
 
     $ curl --http0.9 localhost:8888
     request:1
@@ -166,7 +166,7 @@ We can see that the request count value is ``1`` when this application is starte
 and accessed via curl. After making another call to the application, we can see that the request
 count is ``2`` as expected.
 
-.. code::
+.. code:: console
 
     $ curl --http0.9 localhost:8888
     request:2
@@ -175,7 +175,7 @@ Now that the request count variable on our server is in a new state, ``2``, we c
 ``checkpoint instance`` command and reference the instance via the
 ``instance://`` URI format:
 
-.. code::
+.. code:: console
 
     $ {command} checkpoint instance server
     INFO:    Using checkpoint "example-checkpoint"
@@ -183,7 +183,7 @@ Now that the request count variable on our server is in a new state, ``2``, we c
 Now that we have checkpointed the state of our application, we can safely
 stop the instance:
 
-.. code::
+.. code:: console
 
     $ {command} instance stop server
     INFO:    Stopping server instance of /home/ian/server.sif (PID=209072)
@@ -193,7 +193,7 @@ We can restart our server and restore its state by starting a new instance using
 the ``--dmtcp-restart`` flag and specifying the checkpoint to be used to restore
 our application's state:
 
-.. code::
+.. code:: console
 
     $ {command} instance start --dmtcp-restart example-checkpoint server.sif restarted-server 8888
     INFO:    instance started successfully
@@ -202,7 +202,7 @@ our application's state:
 And now when we get access to the application again, the request count value is ``3`` as expected,
 meaning that the previous request count value was ``2``.
 
-.. code::
+.. code:: console
 
     $ curl --http0.9 localhost:8888
     $ request:3
@@ -210,14 +210,14 @@ meaning that the previous request count value was ``2``.
 We can repeat the previous two steps, i.e. stop the server instance and restart it via dmtcp to verify the restoration
 of the value of the request count.
 
-.. code::
+.. code:: console
 
     $ {command} instance stop server
     $ {command} instance start --dmtcp-restart example-checkpoint server.sif restarted-server 8888
 
 Then access the application and see that the request count value is restored as expected. 
 
-.. code::
+.. code:: console
 
     $ curl --http0.9 localhost:8888
     $ request:3
@@ -225,7 +225,7 @@ Then access the application and see that the request count value is restored as 
 Finally, we can stop our instance running our restored application and delete our
 checkpoint if we no longer need it to restart our application from this state:
 
-.. code::
+.. code:: console
 
     $ {command} instance stop restarted-server
     INFO:    Stopping restarted-server instance of /home/ian/server.sif (PID=247679)

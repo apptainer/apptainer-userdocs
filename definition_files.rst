@@ -433,14 +433,14 @@ not have the same hardware that will be used in your production
 environment), you can do so by passing the ``--notest`` flag to the
 build command:
 
-.. code::
+.. code:: console
 
    $ {command} build --notest my_container.sif my_container.def
 
 Running the test command on a container built with this def file yields
 the following:
 
-.. code::
+.. code:: console
 
    $ {command} test my_container.sif
    Container base is Ubuntu as expected.
@@ -554,7 +554,7 @@ After building this container, you can use a command like the following
 one to verify that the environment variables have been set appropriately
 at runtime:
 
-.. code::
+.. code:: console
 
    $ {command} exec my_container.sif env | grep -E 'LISTEN_PORT|LC_ALL'
    LISTEN_PORT=54321
@@ -631,7 +631,7 @@ Here, the netcat (``nc``) program is used to listen for TCP traffic on
 the port indicated by the ``$LISTEN_PORT`` variable (set in the
 ``%environment`` section, above). The script can be invoked as follows:
 
-.. code::
+.. code:: console
 
    $ {command} instance start my_container.sif instance1
    INFO:    instance started successfully
@@ -678,7 +678,7 @@ exist, and only the process running within the container remains.
 Running the container built using this def file will yield the
 following:
 
-.. code::
+.. code:: console
 
    $ ./my_container.sif
    Container was created Thu Dec  6 20:01:56 UTC 2018
@@ -743,7 +743,7 @@ value of ``Hello World``.
 You can inspect the available labels on your image by running the
 following command:
 
-.. code::
+.. code:: console
 
    $ {command} inspect my_container.sif
 
@@ -781,7 +781,7 @@ Consider the ``%help`` section from the example definition file above:
 
 After building the help can be displayed like so:
 
-.. code::
+.. code:: console
 
    $ {command} run-help my_container.sif
        This is a demo container used to illustrate a def file that uses all
@@ -804,7 +804,7 @@ Basics
 To use templating, include a ``{{ placeholder }}`` at the point in your
 definition file where you'd like the passed-in value to go. For example:
 
-.. code:: apptainer
+.. code:: {command}
 
    Bootstrap: docker
    From: ubuntu:22.04
@@ -817,7 +817,7 @@ When building a container from this definition file, a concrete value for
 ``{{ some_text }}`` can be passed via the ``--build-arg`` flag to the ``build``
 command. This flag accepts a ``varname=value`` pair, as shown here:
 
-.. code::
+.. code:: console
 
    $ {command} build --build-arg some_text="Hello world" ./my_container.sif ./my_container.def
    INFO:    Starting build...
@@ -838,7 +838,7 @@ Alternatively, the ``varname=value`` assignments can be placed in a file, and
 the path to that file specified using the ``--build-arg-file`` flag to the
 ``build`` command, as shown here:
 
-.. code::
+.. code:: console
 
    $ cat << EOF > ./my_args_file.txt
    some_text="Hello again, world"
@@ -867,7 +867,7 @@ A single definition file can use multiple different templating variables, use a
 single variable more than once, and use variables in different sections of the
 definition file, as shown here:
 
-.. code:: apptainer
+.. code:: {command}
 
    Bootstrap: docker
    From: ubuntu:22.04
@@ -895,7 +895,7 @@ definition file, as shown here:
 To use this definition file, one can pass values for all the different variables
 using ``--build-arg`` flags:
 
-.. code::
+.. code:: console
 
    $ {command} build -F --build-arg file_contents="'I am in a file'" --build-arg var_value1="'I am in an env var'" --build-arg var_value2="'I am also in an env var'" --build-arg some_text="'I am just some text'" ./my_container.sif ./my_container.def
    INFO:    Starting build...
@@ -928,7 +928,7 @@ using ``--build-arg`` flags:
 Or one can place the values for the different values in a file, and pass the
 path to that file using the ``--build-arg-file`` flag:
 
-.. code::
+.. code:: console
 
    $ cat << EOF > ./my_args_file.txt
    file_contents="I am in a file"
@@ -967,7 +967,7 @@ path to that file using the ``--build-arg-file`` flag:
 
 Or one can use a combination of both strategies:
 
-.. code::
+.. code:: console
 
    $ cat << EOF > ./my_args_file.txt
    var_value1="I am in an env var"
@@ -1008,7 +1008,7 @@ Precedence among multiple value sources
 In the event that an argument is passed via ``--build-arg`` more than once, the
 last occurrence will take precedence:
 
-.. code::
+.. code:: console
 
    $ {command} build -F --build-arg file_contents="'I am in a file (1st time)'" --build-arg var_value2="'I am also in an env var'" --build-arg file_contents="'I am in a file (2nd time)'" --build-arg-file ./my_args_file.txt ./my_container.sif ./my_container.def
    INFO:    Starting build...
@@ -1042,7 +1042,7 @@ In the event that a variable is defined both in the file passed to
 ``--build-arg-file`` and via the command line using ``--build-arg`` flag, the value passed via the
 command line will take precedence:
 
-.. code::
+.. code:: console
 
    $ cat << EOF > ./my_args_file.txt
    var_value1="I am in an env var"
@@ -1087,7 +1087,7 @@ If a definition file contains a variable placeholder and no value for that
 variable is provided (via either ``--build-arg`` or ``--build-arg-file``),
 {Project} will generate an error:
 
-.. code:: apptainer
+.. code:: {command}
 
    Bootstrap: docker
    From: ubuntu:22.04
@@ -1097,7 +1097,7 @@ variable is provided (via either ``--build-arg`` or ``--build-arg-file``),
       echo "Here is some text:" {{ some_text }}
       echo "And here is some more text:" {{ some_more_text }}
 
-.. code::
+.. code:: console
 
    $ {command} build -F --build-arg some_more_text="more more more" ./my_container.sif ./my_container.def
    FATAL:   Unable to build from ./my_container.def: build var some_text is not defined through either --build-arg (--build-arg-file) or 'arguments' section
@@ -1105,7 +1105,7 @@ variable is provided (via either ``--build-arg`` or ``--build-arg-file``),
 However, definition files can provide default values for some or all variables
 using the ``%arguments`` section, as shown here:
 
-.. code:: apptainer
+.. code:: {command}
 
    Bootstrap: docker
    From: ubuntu:22.04
@@ -1119,7 +1119,7 @@ using the ``%arguments`` section, as shown here:
       some_text="Some default text"
       some_more_text="Some more default text"
 
-.. code::
+.. code:: console
 
    $ {command} build -F --build-arg some_more_text="more more more" ./my_container.sif ./my_container.def
    INFO:    Starting build...
@@ -1303,7 +1303,7 @@ the files & directories of other apps, be placed under the app-specific
 Installing apps into modules using the ``%app*`` sections enables the
 ``--app`` option, allowing commands like the following:
 
-.. code::
+.. code:: console
 
    % {command} run --app foo my_container.sif
    RUNNING FOO
@@ -1313,7 +1313,7 @@ built.
 
 You can also launch an app as a service using the `instance start` command:
 
-.. code::
+.. code:: console
 
    % {command} instance start --app foo my_container.sif
 
@@ -1322,7 +1322,7 @@ the def file above. You can execute the following command to search the
 list of active environment variables and ``grep`` to determine if the
 variable changes depending on the app we specify:
 
-.. code::
+.. code:: console
 
    $ {command} exec --app foo my_container.sif env | grep SOFTWARE
    SOFTWARE=foo

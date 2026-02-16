@@ -128,7 +128,7 @@ Here's an example of using the ``--bind`` option and binding ``/data``
 on the host to ``/mnt`` in the container (``/mnt`` does not need to
 already exist in the container):
 
-.. code::
+.. code:: console
 
    $ ls /data
    bar  foo
@@ -138,7 +138,7 @@ already exist in the container):
 
 You can bind multiple directories in a single command with this syntax:
 
-.. code::
+.. code:: console
 
    $ {command} shell --bind /opt,/data:/mnt my_container.sif
 
@@ -148,7 +148,7 @@ This will bind ``/opt`` on the host to ``/opt`` in the container and
 Using the environment variable instead of the command line argument,
 this would be:
 
-.. code::
+.. code:: console
 
    $ export {ENVPREFIX}_BINDPATH="/opt,/data:/mnt"
 
@@ -184,7 +184,7 @@ infer ``type=bind`` if it is not provided.
 
 To mount ``data`` on the host to ``/mnt`` inside the container:
 
-.. code::
+.. code:: console
 
    $ {command} exec \
        --mount type=bind,src=/data,dst=/mnt \
@@ -194,7 +194,7 @@ To mount ``data`` on the host to ``/mnt`` inside the container:
 To mount the same directory read-only in the container, add the ``ro``
 option:
 
-.. code::
+.. code:: console
 
    $ {command} exec \
        --mount type=bind,source=/data,dest=/mnt,ro \
@@ -204,7 +204,7 @@ option:
 You can bind multiple directories in a single command with multiple
 ``--mount`` flags:
 
-.. code::
+.. code:: console
 
    $ {command} shell --mount type=bind,src=/opt,dst=/opt \
                        --mount type=bind,src=/data,dst=/data \
@@ -218,7 +218,7 @@ wrapping each field in double quotes if necessary characters.
 ``--mount`` allows bind mounting paths that are not possible with the
 ``--bind`` flag. For example:
 
-.. code::
+.. code:: console
 
    # Mount a path containing ':' (not possible with --bind)
    $ {command} run \
@@ -262,7 +262,7 @@ When starting a container, {Project} allows you to mount your current
 working directory (``CWD``) without mounting your host ``$HOME`` directory by
 using the ``--no-home`` flag. This is equivalent to ``--no-mount home``:
 
-.. code::
+.. code:: console
 
    $ {command} shell --no-home my_container.sif
 
@@ -278,7 +278,7 @@ at ``$HOME``, which would otherwise be hidden by the bind mount from the host.
   If your current working directory is under ``$HOME``, and you do not want to
   mount it, you will need to disable both ``cwd`` and ``home`` mounts:
 
-  .. code::
+  .. code:: console
 
     $ {command} shell --no-mount home,cwd my_container.sif
 
@@ -295,7 +295,7 @@ If the container image includes files within ``$HOME``, the mounted temporary
 directory will hide them unless you also specify ``--no-home`` or ``--no-mount
 home``:
 
-.. code::
+.. code:: console
 
    $ {command} shell --containall my_container.sif
    {Project}> ls -lah $HOME
@@ -321,7 +321,7 @@ Kernel. Unprivileged (non-root) users can mount filesystems that have
 FUSE drivers. For example, the ``fuse-sshfs`` package allows you to
 mount a remote computer's filesystem to your local host, over ssh:
 
-.. code::
+.. code:: console
 
    $ mount.fuse sshfs#ythel:/home/dave other_host/
 
@@ -351,7 +351,7 @@ FUSE mount definitions
 
 A fusemount definition for {Project} consists of 3 parts:
 
-.. code::
+.. code:: text
 
    --fusemount <type>:<fuse command> <container mountpoint>
 
@@ -387,7 +387,7 @@ To use a FUSE ``sshfs`` mount in a container, where the ``fuse-sshfs``
 package has been installed on my host, I run with the ``host`` mount
 type:
 
-.. code::
+.. code:: console
 
    $ {command} run --fusemount "host:sshfs server:/ /server" docker://ubuntu
    {Project}> cat /etc/hostname
@@ -401,7 +401,7 @@ FUSE mount with a container executable
 If the FUSE driver / command that you want to use for the mount has been
 added to your container, you can use the ``container`` mount type:
 
-.. code::
+.. code:: console
 
    $ {command} run --fusemount "container:sshfs server:/ /server" sshfs.sif
    {Project}> cat /etc/hostname
@@ -429,14 +429,14 @@ cannot mount it to multiple container runs at the same time.
 To mount a directory from an image file, use the ``-B/--bind`` option
 and specify the bind in the format:
 
-.. code::
+.. code:: shell
 
    -B <image-file>:<dest>:image-src=<source>
 
 Alternatively use the ``--mount`` option, and specify the bind in the
 format:
 
-.. code::
+.. code:: shell
 
    --mount type=bind,src=<image-file>,dst=<dest>,image-src=<source>
 
@@ -452,7 +452,7 @@ Ext3 Image Files
 If you have a directory called ``inputs/`` that holds data files you
 wish to distribute in an image file that allows read/write:
 
-.. code:: sh
+.. code:: shell
 
    # Create an image file 'inputs.img' of size 100MB and put the
    # files inputs/ into it's root directory
@@ -489,7 +489,7 @@ If you have a directory called ``inputs/`` that holds data files you
 wish to distribute in an image file that is read-only, and compressed,
 then the squashfs format is appropriate:
 
-.. code:: sh
+.. code:: shell
 
    # Create an image file 'inputs.squashfs' and put the files from
    # inputs/ into it's root directory

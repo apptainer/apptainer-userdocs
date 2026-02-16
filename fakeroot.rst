@@ -213,14 +213,14 @@ Build from a definition file:
 
 (fakeroot is implied)
 
-.. code::
+.. code:: shell
 
    {command} build /tmp/test.sif /tmp/test.def
 
 Add package to a writable overlay
 ---------------------------------
 
-.. code::
+.. code:: shell
 
    mkdir /tmp/test.overlay
    {command} exec --fakeroot --overlay /tmp/test.overlay /tmp/test.sif dnf -y install openssh
@@ -230,7 +230,7 @@ Ping from container:
 
 (when the Network conditions above are met)
 
-.. code::
+.. code:: shell
 
    {command} exec --fakeroot --net docker://alpine ping -c1 8.8.8.8
 
@@ -239,7 +239,7 @@ HTTP server:
 
 (when the Network conditions above are met)
 
-.. code::
+.. code:: shell
 
    {command} run --fakeroot --net --network-args="portmap=8080:80/tcp" -w docker://nginx
 
@@ -281,7 +281,7 @@ containing this for a RHEL-derived container:
 
 or this for an alpine container:
 
-.. code::
+.. code:: {command}
 
    Bootstrap: docker
    From: alpine:latest
