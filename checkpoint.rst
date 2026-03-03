@@ -231,3 +231,228 @@ checkpoint if we no longer need it to restart our application from this state:
     INFO:    Stopping restarted-server instance of /home/ian/server.sif (PID=247679)
     $ {command} checkpoint delete example-checkpoint
     INFO:    Checkpoint "example-checkpoint" deleted.
+
+
+*******************************************
+Self-Contained Checkpointing in a Container
+*******************************************
+
+The built-in checkpoint feature described above requires a DMTCP
+installation on your host, glibc compatibility between host and container, and uses the
+``{command} instance`` workflow with ``--dmtcp-launch`` / ``--dmtcp-restart``
+flags. An alternative approach is to install DMTCP directly inside the
+container so that the checkpointing software and application is fully containerized.
+
+This is useful for the following scenarios:
+
+-  The host does not have DMTCP installed or configured.
+-  Portability across different hosts or clusters is needed.
+-  Automatic periodic checkpointing is preferred over manual
+   ``checkpoint instance`` commands.
+-  The simplicity of the ``{command} run`` workflow is preferred over instances.
+
+.. note::
+
+    This approach bypasses the built-in ``{command} checkpoint`` command group
+    entirely. Checkpointing and restarting are handled by the DMTCP installation
+    inside the container, driven by the container's ``%runscript``.
+
+Building the Container
+======================
+
+The definition file below installs DMTCP from source and includes a small
+Python counter application as an example workload. The key piece is the
+``%runscript``, which automatically detects whether checkpoint files exist and
+either restarts from them or launches the application fresh under DMTCP.
+
+.. code:: {command}
+
+    Bootstrap: docker
+    From: rockylinux/rockylinux:10
+
+    %post
+        dnf groupinstall -y "Development Tools"
+        dnf install -y libatomic which
+
+        git clone --branch=4.1.0 https://github.com/dmtcp/dmtcp.git
+        cd dmtcp
+        ./configure
+        make
+        make install
+
+        # --- Replace this section with your own application ---
+        mkdir /app
+        cat > /app/server.py <<EOF
+    import time
+
+    counter = 0
+    while True:
+        print(counter, flush=True)
+        counter += 1
+        time.sleep(1)
+    EOF
+
+    %runscript
+        CKPT_DIR="${DMTCP_CHECKPOINT_DIR:-.}"
+        RESTART_SCRIPT="$CKPT_DIR/dmtcp_restart_script.sh"
+
+        if [ -f "$RESTART_SCRIPT" ]; then
+            exec "$RESTART_SCRIPT"
+        else
+            exec dmtcp_launch \
+                --interval "${DMTCP_CHECKPOINT_INTERVAL:-10}" \
+                --coord-port 0 \
+                --ckpt-open-files \
+                python3 /app/server.py "$@"
+        fi
+
+The ``%runscript`` logic works as follows:
+
+-  ``DMTCP_CHECKPOINT_DIR`` — if set, DMTCP writes checkpoint files to that
+   directory; otherwise it defaults to the current working directory (``.``).
+-  On startup the script checks for ``dmtcp_restart_script.sh`` in the
+   checkpoint directory. If present, the application is restarted from the
+   saved state. If absent, a fresh launch is performed under ``dmtcp_launch``.
+
+The ``dmtcp_launch`` flags used here are:
+
+-  ``--interval`` — seconds between automatic checkpoints. Controlled at
+   runtime via the ``DMTCP_CHECKPOINT_INTERVAL`` environment variable
+   (default: 10 seconds).
+-  ``--coord-port 0`` — tells DMTCP to pick an available port for its
+   coordinator, avoiding conflicts with other processes.
+-  ``--ckpt-open-files`` — includes open file descriptors in the checkpoint
+   image so that files in use are properly saved and restored.
+
+To adapt this for your own application, replace the ``%post`` application
+installation section and the ``python3 /app/server.py "$@"`` command in the
+``%runscript`` with your own application and launch command.
+
+Build the container with:
+
+.. code:: console
+
+    $ {command} build myapp.sif myapp.def
+
+Running and Checkpointing
+=========================
+
+By default, DMTCP writes checkpoint files to the current working directory.
+It is recommended to create a dedicated directory so checkpoint data is easy
+to find and manage.
+
+.. code:: console
+
+    $ mkdir ckpt && cd ckpt
+    $ {command} run ../myapp.sif
+    0
+    1
+    2
+    ...
+
+Checkpoints are created automatically at the interval configured in the
+definition file (every 10 seconds by default). You can override this at
+runtime:
+
+.. code:: console
+
+    $ DMTCP_CHECKPOINT_INTERVAL=30 {command} run ../myapp.sif
+
+After a checkpoint interval elapses, interrupt the program with control-C
+and verify that checkpoint files have been written:
+
+.. code:: console
+
+    $ ls
+    ckpt_python3_*.dmtcp  dmtcp_restart_script.sh  ...
+
+Restarting from a Checkpoint
+============================
+
+To restart the application from its checkpointed state, run the container
+again from the same directory that contains the checkpoint files:
+
+.. code:: console
+
+    $ cd ckpt
+    $ {command} run ../myapp.sif
+    10
+    11
+    12
+    ...
+
+The ``%runscript`` detects ``dmtcp_restart_script.sh`` and automatically
+restarts the application from where it left off — the counter resumes from its
+checkpointed value. Subsequent checkpoints continue to update the files in the
+same directory.
+
+Starting Fresh
+==============
+
+To discard a previous checkpoint and start the application from scratch, either
+remove the checkpoint files:
+
+.. code:: console
+
+    $ rm -f ckpt_*.dmtcp dmtcp_restart_script.sh
+
+Or simply run the container from a different, empty directory:
+
+.. code:: console
+
+    $ mkdir ckpt-new && cd ckpt-new
+    $ {command} run ../myapp.sif
+    0
+    1
+    2
+    ...
+
+Using Exec and Shell
+====================
+
+The examples above all use ``{command} run``, which invokes the
+``%runscript`` and its automatic launch/restart logic. You can also use
+``{command} exec`` and ``{command} shell`` to work with DMTCP directly inside
+the container.
+
+**Launching with exec**
+
+Use ``{command} exec`` to call ``dmtcp_launch`` directly, bypassing the
+``%runscript``. This is useful when you want to pass different flags or
+launch a different command than what the ``%runscript`` provides:
+
+.. code:: console
+
+    $ mkdir ckpt && cd ckpt
+    $ {command} exec ../myapp.sif dmtcp_launch \
+        --interval 60 --coord-port 0 --ckpt-open-files \
+        python3 /app/server.py
+
+**Restarting with exec**
+
+Similarly, you can restart from a checkpoint by executing the restart script
+directly:
+
+.. code:: console
+
+    $ cd ckpt
+    $ {command} exec ../myapp.sif ./dmtcp_restart_script.sh
+    10
+    11
+    12
+    ...
+
+**Interactive debugging with shell**
+
+Use ``{command} shell`` to open an interactive session inside the container.
+This is helpful for inspecting checkpoint files, testing DMTCP commands, or
+debugging:
+
+.. code:: console
+
+    $ cd ckpt
+    $ {command} shell ../myapp.sif
+    > ls ckpt_*.dmtcp
+    ckpt_python3_*.dmtcp
+    > dmtcp_restart_script.sh --help
+    ...
