@@ -1123,7 +1123,7 @@ currently residing in the Docker daemon's internal storage:
    {Project}>
 
 The ``{ENVPREFIX}_DOCKER_HOST`` or ``DOCKER_HOST`` environment variables may be
-set to instruct {{Project}} to pull images from a Docker daemon that is not
+set to instruct {Project} to pull images from a Docker daemon that is not
 running at the default location. For example, when using a virtualized Docker you may be instructed to set ``DOCKER_HOST`` e.g.
 
 .. code:: text
@@ -1154,7 +1154,7 @@ written explicitly.
 Overview
 --------
 
-The ``docker-archive`` boostrap agent allows you to create a {Project} image
+The ``docker-archive`` bootstrap agent allows you to create a {Project} image
 from a docker image stored in a ``docker save`` formatted tar file:
 
 .. code:: console
