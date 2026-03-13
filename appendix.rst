@@ -6,6 +6,7 @@ Appendix
 
 ..
    TODO oci & oci-archive along with http & https
+   TODO buildkit with a reference to Containerfile
 
 .. _{command}-environment-variables:
 
@@ -65,6 +66,10 @@ below with their respective functionality.
 
 #. **{ENVPREFIX}_BOOT**: Set to false by default, considers if executing
    ``/sbin/init`` when container boots (root only).
+
+#. **{ENVPREFIX}_BUILDKIT_HOST**: Host address / socket to use when building images
+   from a ``buildkit`` or ``dockerfile`` source. ``BUILDKIT_HOST`` without the
+   ``{ENVPREFIX}_`` prefix is also accepted.
 
 ``C``
 =====
@@ -1157,6 +1162,9 @@ Overview
 The ``docker-archive`` bootstrap agent allows you to create a {Project} image
 from a docker image stored in a ``docker save`` formatted tar file:
 
+The alternative bootstrap agent ``oci-archive`` can also be used with these,
+since Docker saves archives compatible with *both* formats (since version 25).
+
 .. code:: console
 
    $ docker save -o alpine.tar alpine:latest
@@ -1184,6 +1192,78 @@ to the tar file containing the image to be specified with the ``From:`` keyword.
 
    Bootstrap: docker-archive
    From: <path-to-tar-file>
+
+.. _dockerfile:
+
+``dockerfile`` bootstrap agent
+==============================
+
+Overview
+--------
+
+The ``dockerfile`` bootstrap agent allows you to create a {Project} image
+from a Dockerfile stored in a build context directory (which can be ``.``):
+
+It is an alias for the ``buildkit`` bootstrap agent, since BuildKit is also
+known from the ``docker buildx`` plugin that has replaced ``docker build``.
+
+.. code:: console
+
+   $ cat Dockerfile
+   FROM alpine
+   CMD ["echo", "Hello", "World"]
+
+   $ {command} build hello-world.sif dockerfile:.
+   INFO:    Starting build...
+   INFO:    Building OCI image...
+   [+] Building 1.6s (5/5) FINISHED
+    => [internal] load build definition from Dockerfile
+    => => transferring dockerfile: 80B
+    => [internal] load metadata for docker.io/library/alpine:latest
+    => [internal] load .dockerignore
+    => => transferring context: 2B
+    => CACHED [1/1] FROM docker.io/library/alpine:latest@sha256:25109184c71bdad752c8312a8623239686a9a2071e8825f20acb8f2198c3f659
+    => => resolve docker.io/library/alpine:latest@sha256:25109184c71bdad752c8312a8623239686a9a2071e8825f20acb8f2198c3f659
+    => exporting to oci image format
+    => => exporting layers
+    => => exporting manifest sha256:54abfa35ab6a349b9e10226b913f3f13733630dcdbc4338056aa63c4e499cc28
+    => => exporting config sha256:92a056a793e53aac2acbdbe429709a76eaab586e634833866eca773d30236bd0
+    => => sending tarball
+   INFO:    Extracting OCI image...
+   INFO:    Inserting Apptainer configuration...
+   INFO:    Creating SIF file...
+   [=====================================================================] 100 % 0s
+   INFO:    Build complete: hello-world.sif
+
+   $ {command} run hello-world.sif
+   Hello World
+
+The ``{ENVPREFIX}_BUILDKIT_HOST`` or ``BUILDKIT_HOST`` environment variables may be
+set to instruct {Project} to build images with a BuildKit daemon that is not
+running at the default location. For example, when using a rootless BuildKit daemon started with ``rootlesskit buildkitd &``:
+
+.. code:: text
+
+   export BUILDKIT_HOST=unix:///run/user/1000/buildkit/buildkitd.sock
+
+The ``DOCKER_BUILDKIT`` and ``DOCKER_HOST`` environment variables may also be set to
+use an already existing Docker daemon *instead* of a BuildKit daemon, but some features like the build log will be missing.
+
+.. code:: text
+
+   export DOCKER_BUILDKIT=1 DOCKER_HOST=unix:///run/user/1000/docker.sock
+
+
+Keywords
+--------
+
+In a definition file, the ``dockerfile`` bootstrap agent requires the path
+to the build context directory containing the Dockerfile to be specified with the ``From:`` keyword.
+
+.. code:: {command}
+
+   Bootstrap: dockerfile
+   From: <path-to-build-context>
 
 .. _scratch-agent:
 

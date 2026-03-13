@@ -181,6 +181,35 @@ You can do so with the following command.
 
    $ {command} build lolcow.sif lolcow.def
 
+*************************************************
+Building containers from Dockerfile with BuildKit
+*************************************************
+
+{Project} can also build directly from an existing Dockerfile, by
+using an already running BuildKit daemon (or Docker daemon) process.
+For detailed information on {Project} definition files vs Dockerfile,
+please see :doc:`Docker and OCI <docker_and_oci>`.
+Suppose you already have the following file called ``Dockerfile``,
+and you want to use it to build a SIF container:
+
+.. code:: Dockerfile
+
+   FROM ubuntu:20.04
+
+   RUN apt-get -y update && \
+       apt-get -y install cowsay lolcat
+
+   ENV LC_ALL=C \
+       PATH=/usr/games:$PATH
+
+   CMD date | cowsay | lolcat
+
+You can do so with the following command.
+
+.. code:: console
+
+   $ {command} build lolcow.sif dockerfile:.
+
 ***********************
 Alternative compressors
 ***********************
