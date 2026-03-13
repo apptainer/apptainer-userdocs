@@ -27,6 +27,7 @@ to create the container. It can be one of the following:
 
 -  URI beginning with **docker://** to build from Docker Hub
 -  URI beginning with **oras://** to build from an OCI registry that supports OCI Artifacts
+-  URI beginning with **ipfs://** to build from an IPFS cluster that supports CID images
 -  URI beginning with **library://** to build from the Container Library
 -  URI beginning with **shub://** to build from Singularity Hub
 -  path to an **existing container** on your local machine
