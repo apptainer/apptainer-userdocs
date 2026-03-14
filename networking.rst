@@ -85,12 +85,12 @@ host, and then a container started that will run within this namespace:
    # Run a container in the network namespace
    $ sudo {command} run --netns-path /run/netns/my-net library://alpine
    INFO:    Using cached image
-   Apptainer> ip a
+   {Project}> ip a
    1: lo: <LOOPBACK> mtu 65536 qdisc noop state DOWN qlen 1000
       link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
    2: dummy0: <BROADCAST,NOARP> mtu 1500 qdisc noop state DOWN qlen 1000
       link/ether 92:5c:ab:ab:d3:d0 brd ff:ff:ff:ff:ff:ff
-   Apptainer>
+   {Project}>
 
 Note that the ``ip a`` command run inside the container shows the ``dummy0``
 interface we added to the ``my-net`` network namespace.

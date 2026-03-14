@@ -591,7 +591,7 @@ information about the {Project} container environment.
 
    For that type of initialization you can take advantage of some bash
    features, if the container includes bash (for example alpine does not
-   include bash).  Apptainer by default will use bash if it is available.
+   include bash).  {Project} by default will use bash if it is available.
    For non-interactive shells you can in
    the ``%environment`` section export ``BASH_ENV`` to point to a script to
    source when the child shell starts.
