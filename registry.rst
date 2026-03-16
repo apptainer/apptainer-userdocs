@@ -134,7 +134,7 @@ by passing them the same ``--authfile <path>`` flag:
    INFO:    Creating SIF file...
    [=====================================================================]
    100 % 0s
-   Apptainer>
+   {Project}>
 
 .. note::
 
