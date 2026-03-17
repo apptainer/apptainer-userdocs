@@ -66,6 +66,7 @@ Sharing & Online Services
    Keyserver Management <keyserver>
    OCI Registries <registry>
    Library API Registries <library_api>
+   IPFS Peer-To-Peer Clusters <peertopeer>
 
 **************
 Advanced Usage
