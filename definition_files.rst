@@ -102,11 +102,13 @@ Other bootstrap agents
 -  :ref:`debootstrap <build-debootstrap>` (apt-based systems such as
    Debian and Ubuntu)
 -  oci (bundle compliant with OCI Image Specification)
--  oci-archive (tar files obeying the OCI Image Layout Specification)
+-  :ref:`oci-archive <docker-archive>` (tar files obeying the OCI Image Layout Specification)
+-  :ref:`buildkit <dockerfile>` (directory that can be built to an OCI Image by an OCI worker)
 -  :ref:`docker-daemon <docker-daemon>` (images managed by the
    locally running docker daemon)
 -  :ref:`docker-archive <docker-archive>` (saved docker
    images)
+-  :ref:`dockerfile <dockerfile>` (Dockerfile that can be built to a docker image)
 -  :ref:`arch <build-arch>` (Arch Linux)
 -  :ref:`busybox <build-busybox>` (BusyBox)
 -  :ref:`zypper <build-zypper>` (zypper-based systems such as SUSE and
