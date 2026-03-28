@@ -315,7 +315,7 @@ below with their respective functionality.
 #. **{ENVPREFIX}_NOCLEANUP**: To not clean up the bundle after a failed
    build, this can be helpful for debugging. Default is set to false.
 
-#. **{ENVPREFIX}_NOCOLOR**: Print mesages without color output.
+#. **{ENVPREFIX}_NOCOLOR**: Print messages without color output.
    Default is set to false unless stderr is not a terminal.
 
 #. **{ENVPREFIX}_NO_HTTPS** and **{ENVPREFIX}_NOHTTPS**: Set to true to use HTTP

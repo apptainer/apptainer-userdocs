@@ -76,7 +76,7 @@ Multiple system mounts can be disabled by specifying them separated by commas:
 When the administrator has configured custom ``bind path`` entries in
 ``{command}.conf``, to mount specific paths into the container by default, you
 can disable them individually. To do this, specify the path(s) to disable with
-the ``--no-mount`` flag. For example, if the adminstrator has configured
+the ``--no-mount`` flag. For example, if the administrator has configured
 ``{command}.conf`` to always mount ``/data2``. you can disable this with
 ``--no-mount /data2``:
 
