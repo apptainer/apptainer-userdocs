@@ -106,7 +106,7 @@ Docker, as well as how to use containerized MPI and GPU applications.
    Support for Docker / OCI Containers <docker_and_oci>
    OCI Runtime Support <oci_runtime>
    {Project} and MPI applications <mpi>
-   GPU Support <gpu>
+   GPU and other Device Support <gpu>
 
 ************
 Get Involved
