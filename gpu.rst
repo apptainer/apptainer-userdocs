@@ -1,15 +1,23 @@
 .. _gpu:
 
-####################################
-GPU Support (NVIDIA CUDA & AMD ROCm)
-####################################
+############################
+GPU and other Device Support
+############################
 
 {Project} natively supports running application containers that use
-NVIDIA's CUDA GPU compute framework, or AMD's ROCm solution. This allows
+GPUs or other accelerators.  It has specific support for
+NVIDIA's CUDA GPU compute framework, AMD's ROCm GPU solution, and
+Intel's Gaudi HPU accelerators.
+In addition, it supports the Open Containers Initiative (OCI)
+Container Device Interface (CDI)
+generic method for making GPUs and other accelerator devices available
+inside containers; see the :ref:`CDI section <sec:cdi>` below for details.
+
+This hardware device support allows
 easy access to users of GPU-enabled machine learning frameworks such as
 TensorFlow, regardless of the host operating system. As long as the host
-has a driver and library installation for CUDA/ROCm, then it's possible
-to e.g. run TensorFlow in an up-to-date Ubuntu 24.04 container, from an
+has a driver and library installation for a GPU, then it's possible
+to e.g. run TensorFlow in a Ubuntu 24.04 container, from an
 older RHEL 8 host. However, note that since the libraries are bound in
 from the host, the libc version present in the container and on the host
 must not be too far apart or there will be libc mismatch errors.  Errors
@@ -22,7 +30,7 @@ used easily, with an additional bind option.
 
 {Project} experimental support is provided to use
 Nvidia's ``nvidia-container-cli`` tooling for GPU container setup. This
-functionality, accessible via the new ``--nvccli`` flag, improves
+functionality, accessible via the ``--nvccli`` flag, improves
 compatibility with OCI runtimes and exposes additional container
 configuration options.
 
@@ -31,7 +39,7 @@ NVIDIA GPUs & CUDA (Standard)
 *****************************
 
 Commands that ``run``, or otherwise execute containers (``shell``,
-``exec``) can take an ``--nv`` option, which will setup the container's
+``exec``), can take an ``--nv`` option which will setup the container's
 environment to use an NVIDIA GPU and the basic CUDA libraries to run a
 CUDA enabled application. The ``--nv`` flag will:
 
@@ -404,7 +412,7 @@ AMD GPUs & ROCm
 ROCm framework using AMD Radeon GPU cards.
 
 Commands that ``run``, or otherwise execute containers (``shell``,
-``exec``) can take an ``--rocm`` option, which will setup the
+``exec``), can take an ``--rocm`` option which will setup the
 container's environment to use a Radeon GPU and the basic ROCm libraries
 to run a ROCm enabled application. The ``--rocm`` flag will:
 
@@ -488,6 +496,77 @@ tensorflow ``list_local_devices()`` function:
    memoryClockRate (GHz) 1.183
    pciBusID 0000:09:00.0
    ...
+
+***************
+Intel Gaudi HPU
+***************
+
+Intel Gaudi HPUs are another type of accelerator for AI workloads.
+The term "HPU" is not generic; it stands for "Habana Processing Unit"
+because it was designed by Habana labs.
+
+This accelerator does not require importing any host software, it only
+requires importing device files from ``/dev``.  When {Project} starts
+a container with default options, all of ``/dev`` on the host is
+normally made available inside the container, so nothing special needs
+to be done.  However, if the ``--contain`` option is used or the
+``mount dev`` configuration file option is set to ``minimal``, most
+dev files are not imported into the container.  For that situation,
+an option ``--intel-hpu`` is made available to import the ``/dev``
+files needed for the device.  If there are multiple HPU devices
+installed on the host, by default all such devices are imported,
+but if a subset is desired that can be specified with a
+``HABANA_VISIBLE_DEVICES`` environment variable.  That should
+contain a comma-separated list of device IDs (e.g., ``"1,2,3"``)
+or ``"all"``, which is the default.
+
+.. _sec:cdi:
+
+********************************
+Container Device Interface (CDI)
+********************************
+
+{Project} also supports a generic device definition method as defined
+by the Open Containers Initiative (OCI) standard called
+`Container Device Interface (CDI)
+<https://github.com/container-orchestrated-devices/container-device-interface>`__.
+If a hardware device has a CDI definition file available, {Project} and
+other container runtimes that support CDI can use it to import the
+device into containers.
+
+A CDI definition can be used by {Project}'s "action" commands
+(``run`` / ``exec`` / ``shell``), with the ``--device`` option:
+
+.. code::
+
+  --device strings                fully-qualified CDI device name(s).
+                                  A fully-qualified CDI device name
+                                  consists of a VENDOR, CLASS, and
+                                  NAME, which are combined as follows:
+                                  <VENDOR>/<CLASS>=<NAME> (e.g.
+                                  vendor.com/device=mydevice).
+                                  Multiple fully-qualified CDI device
+                                  names can be given as a comma
+                                  separated list.
+
+The device string needed for a particular device should be available
+from the provider of the CDI definition file.
+
+{Project} uses a subset of the CDI specification that is most relevant
+to its containers: it bind mounts relevant ``/dev`` files (when it isn't
+already importing all of ``/dev``), bind mounts other files needed by the
+device, and imports environment variables relevant to the device.
+
+In addition, {Project} provides a ``--cdi-dirs`` option which
+enables the user to override the default search directory for CDI definition
+files:
+
+.. code::
+
+  --cdi-dirs strings              comma-separated list of directories
+                                  in which CDI should look for device
+                                  definition JSON files. If omitted,
+                                  default will be: /etc/cdi,/var/run/cdi
 
 *******************
 OpenCL Applications
