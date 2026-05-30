@@ -113,6 +113,7 @@ The {Project} action commands (``run``, ``exec``, ``shell``, and
 ``instance start``) will accept the ``--bind/-B`` command-line option to
 specify bind paths, and will also honor the ``${ENVPREFIX}_BIND`` and
 ``${ENVPREFIX}_BINDPATH`` environment variables (in that order).
+
 The argument for this
 option is a comma-delimited string of bind path specifications in the
 format ``src[:dest[:opts]]``, where ``src`` and ``dest`` are paths
@@ -161,20 +162,27 @@ this would be:
 
    $ {command} shell my_container.sif
 
-Using the environment variable ``${ENVPREFIX}_BINDPATH``, you can bind paths
-even when you are running your container as an executable file with a
-runscript. If you bind many directories into your {Project}
-containers and they don't change, you could even benefit by setting this
-variable in your ``.bashrc`` file.
+Using the environment variables, you can bind paths even when you are
+running your container as an executable file with a runscript. If you
+bind many directories into your {Project} containers and they don't
+change, you could even benefit by setting one of these variables in your
+``.bashrc`` file.
 
 .. note::
 
    Inside {aProject} container all the paths that were bound in are set
    in the ``${ENVPREFIX}_BIND`` variable.  That means they will be
    automatically bound in again by default if another {command} command is
-   run nested inside the first container.  You can change that variable
-   if you choose before that point, but if you want to avoid interfering
-   with nested containers it's better to use ``${ENVPREFIX}_BINDPATH``.
+   run nested inside the first container.
+
+   Unlike in Singularity, ``${ENVPREFIX}_BIND`` and
+   ``${ENVPREFIX}_BINDPATH`` are equivalent aliases in {Project} —
+   both set up the same bind mounts and both are propagated to nested
+   containers.  To bind a path without propagating it to nested
+   containers, use ``--mount`` with the ``nonested`` option (see
+   :ref:`--mount Examples <sec:mount_examples>` below).
+
+.. _sec:mount_examples:
 
 ``--mount`` Examples
 ====================
@@ -240,6 +248,19 @@ wrapping each field in double quotes if necessary characters.
 Mount specifications are also read from then environment variable
 ``${ENVPREFIX}_MOUNT``. Multiple bind mounts set via this environment
 variable should be separated by newlines (``\n``).
+
+To prevent a ``--mount`` bind from being propagated to nested containers
+via ``${ENVPREFIX}_BIND``, add the ``nonested`` flag:
+
+.. code:: console
+
+   $ {command} exec \
+       --mount type=bind,src=/data,dst=/mnt,nonested \
+       my_container.sif env | grep {ENVPREFIX}_BIND
+
+The mount will still be applied inside the container, but its
+destination will not appear in the ``${ENVPREFIX}_BIND`` variable,
+so nested {command} commands will not inherit it.
 
 Using ``--bind`` or ``--mount`` with the ``--writable`` flag
 ============================================================
