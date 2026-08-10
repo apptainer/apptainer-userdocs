@@ -25,7 +25,10 @@ as output.
 The type of target given determines the method that ``build`` will use
 to create the container. It can be one of the following:
 
--  URI beginning with **docker://** to build from Docker Hub
+-  URI beginning with **docker://** to build from Docker Hub and other OCI Image registries
+-  URI beginning with **docker-daemon:** to build from a running Docker daemon
+-  URI beginning with **docker-archive:** to build from a saved Docker image
+-  URI beginning with **dockerfile:** to build from a Dockerfile directory
 -  URI beginning with **oras://** to build from an OCI registry that supports OCI Artifacts
 -  URI beginning with **ipfs://** to build from an IPFS cluster that supports CID images
 -  URI beginning with **library://** to build from the Container Library
@@ -66,6 +69,33 @@ them into {Project} containers.
 .. code:: console
 
    $ {command} build alpine.sif docker://alpine
+
+.. note::
+
+   You can use other registries, not only Docker Hub (also known as ``docker.io``)
+
+   See the :ref:`OCI Image Registries <registry>` section in this guide, e.g.
+   ``quay.io`` or ``ghcr.io``.
+
+*************************************************
+Reusing existing containers from Docker or Podman
+*************************************************
+
+You can use containers that already exist in a local daemon or in a
+local file.
+
+.. code:: console
+
+   $ {command} build alpine.sif docker-daemon:alpine:latest
+
+See :ref:`containers-cached-by-the-docker-daemon` for more details.
+
+.. code:: console
+
+   $ docker image save alpine --output alpine.tar
+   $ {command} build alpine.sif docker-archive:alpine.tar
+
+See :ref:`containers-in-docker-archive-files` for more details.
 
 **************************
 Specifying an architecture
