@@ -650,6 +650,8 @@ found inside a running Docker daemon, or saved as an archive.
 {Project} can build from these locations by using specialized
 bootstrap agents.
 
+.. _containers-cached-by-the-docker-daemon:
+
 Containers Cached by the Docker Daemon
 --------------------------------------
 
@@ -727,6 +729,8 @@ use ``Bootstrap: docker-daemon``, and a ``From: <REPOSITORY>:TAG`` line:
 
 To use the "created" date of the input image also for the output image, you
 can use the ``--reproducible`` flag or the ``APPTAINER_REPRODUCIBLE`` env var.
+
+.. _containers-in-docker-archive-files:
 
 Containers in Docker Archive Files
 ----------------------------------
