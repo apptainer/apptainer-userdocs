@@ -175,11 +175,16 @@ change, you could even benefit by setting one of these variables in your
    automatically bound in again by default if another {command} command is
    run nested inside the first container.
 
-   Unlike in Singularity, ``${ENVPREFIX}_BIND`` and
-   ``${ENVPREFIX}_BINDPATH`` are equivalent aliases in {Project} —
-   both set up the same bind mounts and both are propagated to nested
-   containers.  To bind a path without propagating it to nested
-   containers, use ``--mount`` with the ``nonested`` option (see
+   Only ``${ENVPREFIX}_BIND`` is set inside the container, so
+   ``${ENVPREFIX}_BINDPATH`` is the easier of the two to use there.  Both
+   variables are read and the paths from them are combined, so adding to
+   ``${ENVPREFIX}_BINDPATH`` leaves the inherited list alone.  Edit
+   ``${ENVPREFIX}_BIND`` when you want to change what a nested {command}
+   command inherits.  Outside of a container the two are interchangeable.
+
+   Paths bound in through either variable are still passed on to nested
+   containers.  To bind a path without passing it on, use ``--mount``
+   with the ``nonested`` option (see
    :ref:`--mount Examples <sec:mount_examples>` below).
 
 .. _sec:mount_examples:

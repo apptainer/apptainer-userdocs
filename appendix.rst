@@ -52,9 +52,10 @@ below with their respective functionality.
 
 #. **{ENVPREFIX}_BIND** and **{ENVPREFIX}_BINDPATH**: Comma separated
    string ``source:<dest>`` list of paths to bind between the host and
-   the container. These are equivalent aliases and are combined together.
-   Note that ``{ENVPREFIX}_BIND`` is automatically set inside a
-   container to list all the paths bound to it (from both variables,
+   the container.  Both are read and the paths from them are combined,
+   in that order.
+   Note that only ``{ENVPREFIX}_BIND`` is automatically set inside a
+   container, listing all the paths bound to it (from both variables,
    ``--bind``, and ``--mount``), so that by default all the same binds
    will be applied to nested {command} commands.
 
