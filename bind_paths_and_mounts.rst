@@ -39,7 +39,7 @@ In the default configuration, the default bind mounts are:
   resolving to different locations on the host vs inside the container.
 - ``/dev``
 - ``/etc/hosts``
-- ``/etc/localtime`` 
+- ``/etc/localtime``
 - ``/proc``
 - ``/sys``
 - ``/tmp``
@@ -98,6 +98,8 @@ To disable all ``bind path`` entries set in ``{command}.conf``, use
 
    $ {command} run --no-mount bind-paths mycontainer.sif
 
+Notably, ``--no-mount bind-paths`` also disables ``/etc/resolv.conf`` despite
+it is being configured via ``config resolv_conf``.
 
 .. _user-defined-bind-paths:
 
