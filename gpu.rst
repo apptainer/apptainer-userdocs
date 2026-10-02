@@ -56,6 +56,19 @@ CUDA enabled application. The ``--nv`` flag will:
    the container, they will take precedence; see
    :ref:`Environment From the Host <host-environment>`.
 
+-  Bind the parts of the driver that programs load by their path instead
+   of by name, the GBM backend and the X server modules, together with
+   the driver's configuration files for EGL, Vulkan and OpenCL. With
+   these, graphics work as well as compute: a Wayland compositor, an X
+   server, or an OpenGL, Vulkan or OpenCL application inside the
+   container runs on the GPU.
+
+-  Ensure that the ``/dev/dri/`` device entries are available inside the
+   container, also with ``--contain``, because they are what GBM, EGL
+   and an X server open on the GPU. Device nodes that the host is
+   missing, such as ``/dev/nvidia-modeset``, are created first through
+   the driver's ``nvidia-modprobe`` helper when it is available.
+
 Requirements
 ============
 
@@ -81,9 +94,10 @@ compiled for the latest versions of CUDA.
 
 {Project} will find the NVIDIA/CUDA libraries on your host using the
 list of libraries in the configuration file
-``etc/{command}/nvbliblist``, and resolving paths through the
-``ldconfig`` cache. At time of release this list is appropriate for the
-latest stable CUDA version. It can be modified by the administrator to
+``etc/{command}/nvliblist.conf``, resolving paths through the
+``ldconfig`` cache and the ``gpu library path`` directories set in
+``{command}.conf``. This list is intended to support most versions of
+CUDA and related drivers. It can be modified by the administrator to
 add additional libraries if necessary. See the admin guide for more
 details.
 
@@ -235,6 +249,12 @@ operation has a number of advantages, including:
    container, e.g. compute, graphics, and display functionality.
 -  Configuration via the same environment variables that are in use with
    OCI containers.
+
+``--nvccli`` also binds the entries of ``nvliblist.conf`` that
+``nvidia-container-cli`` does not stage itself, such as the GBM backend,
+the X server modules and the EGL platform libraries, and the
+``/dev/dri/`` device entries of the selected GPUs, so that graphics work
+in the same way as with ``--nv``.
 
 Requirements & Limitations
 ==========================
@@ -388,8 +408,8 @@ not currently read these settings from the container environment.
    default value under {Project} is ``compute,utility``, which will
    provide CUDA functionality and basic utilities such as
    ``nvidia-smi``. Other options include ``graphics`` for OpenGL/Vulkan
-   support, ``video`` for the codecs SDK, and ``display`` to use X11
-   from a container.
+   support, ``video`` for the codecs SDK, ``display`` to use X11 from a
+   container, and ``all`` for every capability at once.
 
 -  ``NVIDIA_REQUIRE_*`` variables allow specifying requirements, which
    will be checked by ``nvidia-container-cli`` prior to starting the
