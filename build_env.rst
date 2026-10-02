@@ -267,7 +267,7 @@ cannot be accessed in the ``%post`` section of a definition file. To pass values
 into a build, use the :ref:`templating / build-args support <sec:templating>`.
 
 Environment variables that control a build are generally associated with an
-equivalent CLI option. The order of precendence is:
+equivalent CLI option. The order of precedence is:
 
 #. If a flag is represented by both a CLI option and an environment variable,
    and both are set, the CLI option will take precedence. This is true for all

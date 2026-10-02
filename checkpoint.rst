@@ -13,7 +13,7 @@ containerized applications while they are executing and then restart them from
 the saved state.
 
 This is valuable for use cases that need to minimize the impact of ephemeral
-environment failures, random hardware failures or job premption.
+environment failures, random hardware failures or job preemption.
 
 .. note::
 

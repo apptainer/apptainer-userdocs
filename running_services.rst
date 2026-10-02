@@ -504,7 +504,7 @@ that are available for interactive containers. E.g. to limit memory usage to
 Profiling with performance counters using perf
 ======================================================
 
-For in-depth container perfomance analysis it would be useful to collect data
+For in-depth container performance analysis it would be useful to collect data
 from Linux's performance counters. Normally this is done by supplying the target
 PID to ``perf``. However, this does not work for containers out of the box.
 Apart from PID, perf can also keep track of cgroups. When possible, {command}
