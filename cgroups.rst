@@ -178,7 +178,7 @@ IO Limits
 
 ``--blkio-weight`` sets a relative weight for the container when performing
 block I/O, e.g. reading/writing to/from disk. The weight should be between 10
-and 1000, and will control how much I/O access a container recieves when there
+and 1000, and will control how much I/O access a container receives when there
 is contention for I/O with other containers. It may be useful to give high
 priority to a container that needs infrequent but time sensitive data access,
 running alongside an application that is continuously performing bulk reads.
