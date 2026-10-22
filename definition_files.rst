@@ -86,8 +86,10 @@ read about, and see examples of, in the :ref:`appendix <buildmodules>`.
 Preferred bootstrap agents
 ==========================
 
--  :ref:`docker <build-docker-module>` (images hosted on Docker Hub)
--  :ref:`oras <build-oras>` (images from supported OCI registries)
+-  :ref:`docker <build-docker-module>` (images hosted on Docker Hub or
+   compatible registry)
+-  :ref:`oras <build-oras>` (images from OCI registries that support
+   storing artifacts)
 -  :ref:`localimage <build-localimage>` (images saved on your machine)
 -  :ref:`scratch <scratch-agent>` (a flexible option for building a
    container from scratch)
