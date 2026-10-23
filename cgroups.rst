@@ -85,7 +85,7 @@ CPU Limits
 ==========
 
 ``--cpus`` sets the number of CPUs, or fractional CPUs, that the container can
-use.  The minimum is ``0.01`` or one hundredth of a physical CPU. The maximum is
+use.  The minimum is ``0.01`` or one hundredth of a CPU. The maximum is
 the number of CPU cores on your system.
 
 .. code:: console
@@ -108,7 +108,7 @@ time than is available.
    # Container A - half as much CPU priority as container A
    $ {command} run --cpu-shares 512 mysecondapp.sif
 
-``--cpuset-cpus`` specifies a list of physical CPU IDs on which a container can
+``--cpuset-cpus`` specifies a list of CPU IDs on which a container can
 run. For example, on a dual CPU system you might pin one container to the first
 12 cores on CPU 1, and a second container to the second 12 cores on CPU 2.
 
