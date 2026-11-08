@@ -81,6 +81,7 @@ networking and security configuration.
    :maxdepth: 1
 
    Bind Paths and Mounts <bind_paths_and_mounts>
+   Overlay Containers <overlay_containers>
    Persistent Overlays <persistent_overlays>
    Instances - Running Services <running_services>
    Environment and Metadata <environment_and_metadata>

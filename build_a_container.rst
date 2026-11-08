@@ -350,6 +350,16 @@ are read.
    # build a data partition from a tar archive passed on standard input
    $ tar -I zstd -cf - inputs/ | {command} build --data inputs.sif -
 
+``--overlay``
+=============
+
+Build an overlay-only (thin) image containing only the files added, changed,
+or removed relative to a base image. See the :ref:`Overlay Containers
+<overlay-containers>` page for how to build an overlay, and to locate its base
+image at run time with the ``--basepath`` action option (or the
+``{ENVPREFIX}_BASEPATH`` environment variable), including the registry and
+image-name placeholders.
+
 ``--encrypt``
 =============
 
