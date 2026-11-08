@@ -912,6 +912,16 @@ The MirrorURL keyword is mandatory. It specifies the URI to use as a
 mirror to download the OS. If you define the ``OSVersion`` keyword, then
 you can use it in the URI as in the example above.
 
+In addition to ``%{OSVERSION}``, the ``%{BUILDARCH}`` macro resolves to the
+architecture of the image currently being built. This is useful when the
+mirror's layout is organized by architecture, so the same definition file
+can be used to build for different architectures (for example when using
+``{command} build --arch``), without hard-coding the architecture path:
+
+.. code:: {command}
+
+   MirrorURL: http://repo.almalinux.org/almalinux/%{OSVERSION}/BaseOS/%{BUILDARCH}/
+
 .. code:: {command}
 
    Include: dnf
@@ -1139,6 +1149,10 @@ module to use.
 The OSVersion keyword is optional. It specifies the OS version you would
 like to use. It is only required if you have specified a %{OSVERSION}
 variable in the ``MirrorURL`` keyword.
+
+As with the ``yum`` / ``dnf`` module, the ``%{BUILDARCH}`` macro resolves
+to the architecture of the image being built, so it can be used in the
+``MirrorURL`` in place of a hard-coded architecture path.
 
 .. code:: {command}
 
