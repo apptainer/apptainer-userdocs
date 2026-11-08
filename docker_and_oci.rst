@@ -25,7 +25,10 @@ Using {Project} you can:
 
 This section will highlight these workflows, and discuss the limitations
 and best practices to keep in mind when creating containers targeting
-both Docker and {Project}.
+both Docker and {Project}. For details on working with ORAS registries,
+see :ref:`Working with ORAS Registries
+<registry-working-with-oras-registries>` in the :ref:`registry
+<registry>` section.
 
 {Project} can also run nested inside a Docker container, although it
 requires adding some runtime options to the docker command.  For details
