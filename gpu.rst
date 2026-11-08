@@ -92,6 +92,26 @@ distributions may provide NVIDIA drivers and CUDA libraries, but they
 are often outdated which can lead to problems running applications
 compiled for the latest versions of CUDA.
 
+32-bit Support (``--compat32``)
+===============================
+
+The ``--compat32`` option, used together with a GPU option such as
+``--nv`` or ``--rocm``, additionally binds the host's 32-bit GPU driver
+libraries into ``/.singularity.d/libs32`` in the container, and adds that
+directory to ``LD_LIBRARY_PATH``. Those 32-bit libraries are kept separate
+from the 64-bit ones in ``/.singularity.d/libs`` because they have the same
+names, but graphical applications such as Windows programs running under Wine
+need both at once. With ``--nvccli``, ``--compat32`` instead adds the
+``compat32`` driver capability to ``nvidia-container-cli``.
+
+.. code:: console
+
+   $ {command} run --nv --compat32 mycontainer.sif
+
+Using ``NVIDIA_DRIVER_CAPABILITIES=compat32`` implies ``--compat32`` as well.
+
+``--compat32`` is also used with ``--rocm`` for 32-bit ROCm libraries.
+
 {Project} will find the NVIDIA/CUDA libraries on your host using the
 list of libraries in the configuration file
 ``etc/{command}/nvliblist.conf``, resolving paths through the
@@ -410,6 +430,8 @@ not currently read these settings from the container environment.
    ``nvidia-smi``. Other options include ``graphics`` for OpenGL/Vulkan
    support, ``video`` for the codecs SDK, ``display`` to use X11 from a
    container, and ``all`` for every capability at once.
+   The ``compat32`` capability (equivalent to ``--compat32``) is supported
+   as well.
 
 -  ``NVIDIA_REQUIRE_*`` variables allow specifying requirements, which
    will be checked by ``nvidia-container-cli`` prior to starting the
