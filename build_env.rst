@@ -226,6 +226,9 @@ However, {Project} will respect the environment variable ``TMPDIR``, and
 both of these locations can be overridden by setting the environment
 variable ``{ENVPREFIX}_TMPDIR``.
 
+If ``/tmp`` is on a ``tmpfs`` (in-memory) filesystem, the default
+temporary location is ``/var/tmp`` instead.
+
 The temporary directory used during a build must be on a filesystem that has
 enough space to hold the entire container image, uncompressed, including any
 temporary files that are created and later removed in the course of the build.
