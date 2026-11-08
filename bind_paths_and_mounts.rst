@@ -454,7 +454,9 @@ distribute directories containing a large number of data files as a
 single image file.
 
 You can mount from image files in ext3 format, squashfs format, or SIF
-format.
+format. You can also mount from archive files (tar, tar.gz, and related
+formats) using the ``archive-src`` option described in
+:ref:`Archive Mounts <archive-mounts>`.
 
 The ext3 image file format allows you to mount it into the container
 read/write and make changes, while the other formats are read-only. Note
@@ -579,3 +581,48 @@ instructions <overlay-sif>`:
 If your bind source is a SIF then {Project} will bind from the first
 data partition in the SIF, or you may specify an alternative descriptor
 by ID with the additional option ``id=n``, where n is the descriptor ID.
+
+.. _archive-mounts:
+
+**************
+Archive Mounts
+**************
+
+Similar to mounting a directory from an image file (above), you can mount
+a directory contained in an archive file into a container, using the
+``archive-src`` option in place of ``image-src``. This supports tar and
+compressed tar archives (``.tar``, ``.tar.gz``, ``.tar.xz``, ``.tar.zst``,
+``.tar.lzo``), and requires a FUSE-based archiver to be installed -- for
+example ``ratarmount``, ``fuse-archive``, or ``archivemount``. {Project}
+bundles ``archivemount-ng``; you may prefer to install ``ratarmount``
+because it has better performance.
+
+To mount a directory from an archive file, use the ``-B/--bind`` option and
+specify the bind in the format:
+
+.. code:: shell
+
+   -B <archive-file>:<dest>:archive-src=<source>
+
+Alternatively use the ``--mount`` option, and specify the bind in the
+format:
+
+.. code:: shell
+
+   --mount type=bind,src=<archive-file>,dst=<dest>,archive-src=<source>
+
+This will bind the ``<source>`` path inside the archive to ``<dest>`` in
+the container. If you do not add ``:archive-src=<source>``, the root of the
+archive is bound to ``<dest>``.
+
+.. code:: console
+
+   # Bind the archive's /inputs directory to /input-data in the container
+   $ {command} run -B data.tgz:/input-data:archive-src=/inputs mycontainer.sif
+
+   # Or with --mount instead of -B
+   $ {command} run \
+       --mount type=bind,src=data.tgz,dst=/input-data,archive-src=/inputs \
+       mycontainer.sif
+
+Archive mounts are read-only.
