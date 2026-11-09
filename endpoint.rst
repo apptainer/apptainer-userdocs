@@ -312,36 +312,9 @@ The remote endpoint was also formerly used for builds using the
 build ``--remote`` option, but {Project} does not support that.
 Instead, it supports :ref:`unprivileged local builds <build>`.
 
-If you would still like to have the previous default,
-these are the commands to restore the library
-behavior from before {Project}, where using the ``library://`` URI would
-download from the Sylabs Cloud anonymously:
-
-.. code:: console
-
-   $ {command} remote add --no-login SylabsCloud cloud.sycloud.io
-   INFO:    Remote "SylabsCloud" added.
-   $ {command} remote use SylabsCloud
-   INFO:    Remote "SylabsCloud" now in use.
-   $ {command} remote list
-   Cloud Services Endpoints
-   ========================
-
-   NAME           URI                  ACTIVE  GLOBAL  EXCLUSIVE
-   DefaultRemote  cloud.apptainer.org  NO      YES     NO
-   SylabsCloud    cloud.sycloud.io     YES     NO      NO
-
-   Keyservers
-   ==========
-
-   URI                                 GLOBAL  INSECURE  ORDER
-   https://keys.production.sycloud.io  YES     NO        1*
-
-   * Active cloud services keyserver
-
-To set the defaults system-wide see the corresponding section in the
-`admin guide
-<{admindocs}/configfiles.html#restoring-pre-{command}-library-behavior>`_.
+This documentation section used to show how to restore the configuration
+to connect to the Sylabs Cloud service, but that shut down in October 2026
+so there's no reason for it anymore.
 
 ************************
 Keyserver Configurations
