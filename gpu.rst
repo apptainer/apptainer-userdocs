@@ -601,7 +601,9 @@ from the provider of the CDI definition file.
 {Project} uses a subset of the CDI specification that is most relevant
 to its containers: it bind mounts relevant ``/dev`` files (when it isn't
 already importing all of ``/dev``), bind mounts other files needed by the
-device, and imports environment variables relevant to the device.
+device, imports environment variables relevant to the device, and runs
+the ``createRuntime`` / ``createContainer`` device hooks declared in the
+specification; see :ref:`CDI device hooks <sec:cdi-hooks>`.
 
 In addition, {Project} provides a ``--cdi-dirs`` option which
 enables the user to override the default search directory for CDI definition
@@ -613,6 +615,20 @@ files:
                                   in which CDI should look for device
                                   definition JSON files. If omitted,
                                   default will be: /etc/cdi,/var/run/cdi
+
+.. _sec:cdi-hooks:
+
+CDI device hooks
+================
+
+A CDI device specification may declare ``createRuntime`` and
+``createContainer`` hooks. {Project} runs those hooks -- after the
+container's mounts are in place and before the namespace is entered --
+the way an OCI runtime does, when running without setuid. A device whose
+spec declares hooks causes ``--writable-tmpfs`` to be implied (as
+``--nvccli`` already does), since the hooks write into the container root.
+In the setuid flow {Project} does not run the hooks and warns rather,
+because in that path it does not run ``nvidia-container-cli`` either.
 
 *******************
 OpenCL Applications
