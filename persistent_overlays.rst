@@ -256,7 +256,7 @@ So for example:
 
    $ {command} build /tmp/nginx.sif docker://nginx
    $ {command} overlay create --size 1024 --create-dir /var/cache/nginx /tmp/nginx.sif
-   $ echo "test" | {command} exec /tmp/nginx.sif sh -c "cat > /var/cache/nginx/test"
+   $ echo "test" | {command} exec --writable /tmp/nginx.sif sh -c "cat > /var/cache/nginx/test"
 
 
 Embed an overlay image in SIF
