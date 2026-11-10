@@ -546,6 +546,8 @@ then the squashfs format is appropriate:
        --mount type=bind,src=src-inputs.squashfs,dst=/input-data,image-src=/ \
        mycontainer.sif
 
+.. _sec:sif-image-files:
+
 SIF Image Files
 ===============
 
@@ -626,3 +628,60 @@ archive is bound to ``<dest>``.
        mycontainer.sif
 
 Archive mounts are read-only.
+
+Performance caveats
+===================
+
+Because the archive contents are read through a FUSE archiver, every file
+access passes through userspace, and -- for a compressed archive -- the
+data is decompressed on the fly. As a result, performance is very
+sensitive to the archiver you use, the compression format, and the access
+pattern, and can be unusably slow in the following common cases:
+
+.. warning::
+
+   - **Many small, randomly accessed files.** Workloads that stat, open,
+     or read large numbers of small files -- build systems, package
+     managers, ``find`` or ``grep -r``, or reading many small data files --
+     pay the FUSE round-trip and (re)compression cost on every access.
+     This is the most frequent cause of an unusably slow archive mount.
+   - **Compressed archives under random access.** The data must be
+     decompressed from the archive as it is read, so reaching a member far
+     from the start -- especially in ``.tar.gz``, which has no seekable
+     index -- may require scanning and decompressing the data before it.
+     Plain ``.tar`` avoids this, and ``.tar.xz``, ``.tar.zst``, and
+     ``.tar.lzo`` can be indexed for faster random access.
+   - **Highly parallel readers.** Many archivers (including the bundled
+     ``archivemount-ng``) do not parallelize reads well, so workloads that
+     issue many concurrent reads (MPI, ``xargs -P``, parallel builds) can
+     saturate the single FUSE daemon.
+
+For the best performance, use ``ratarmount`` as the archiver, prefer an
+uncompressed ``.tar`` or an indexable ``.tar.xz`` / ``.tar.zst`` /
+``.tar.lzo`` over ``.tar.gz`` for random access, and read large files
+sequentially. An archive mount is at its best for a few large files read
+in sequence; if your workload is dominated by many small, randomly
+accessed files, bind-mounting a real filesystem or a pre-extracted
+directory will be far faster than mounting an archive.
+
+If you want to keep distributing your data as a single bundled file --
+but need the performance of a real filesystem -- convert the archive
+into a SIF with a data partition. ``{command} build --data`` accepts a
+``.tar.gz`` (or ``.tar``) directly, extracting it into a data partition
+(squashfs). This is still served over FUSE, but a squashfs image is
+indexed, seekable, and block-addressable, so the FUSE driver can
+satisfy random and small reads directly rather than scanning and
+decompressing the whole archive -- which is what makes an archive mount
+slow. You therefore avoid the caveats above (especially for random or
+small-file access) at no cost to distribution:
+
+.. code:: shell
+
+   # Convert a compressed tar archive to a SIF data image
+   $ {command} build --data inputs.sif inputs.tar.gz
+
+   # Run {Project}, mounting the data to '/input-data' in the container
+   $ {command} run -B inputs.sif:/input-data:image-src=/inputs mycontainer.sif
+
+See :ref:`SIF Image Files <sec:sif-image-files>` for details on using a
+SIF data partition as a mount source.
