@@ -331,6 +331,25 @@ Build image with data partition instead of regular system partition.
 
 This sets the partition type to "Data", and avoids adding scripts.
 
+The source can be a ``.squashfs`` file, an ``.ext3`` file, or a tar
+archive (``.tar``, ``.tar.gz``, ``.tar.xz``, ``.tar.zst``, ``.tar.lzo``).
+For tar archives the decompression is done on the fly, and for uncompressed
+``.tar`` input several files may be concatenated on standard input (for
+example via ``cat``, ``zcat``, ``xzcat``, ``zstdcat`` or ``lzop -dc``) or
+passed with ``-`` as the source. Local files show a progress bar while they
+are read.
+
+.. code:: console
+
+   # build a data partition from a squashfs file
+   $ {command} build --data inputs.sif inputs.squashfs
+
+   # build a data partition from a compressed tar archive
+   $ {command} build --data inputs.sif inputs.tar.gz
+
+   # build a data partition from a tar archive passed on standard input
+   $ tar -I zstd -cf - inputs/ | {command} build --data inputs.sif -
+
 ``--encrypt``
 =============
 
