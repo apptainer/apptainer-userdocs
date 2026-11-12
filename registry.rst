@@ -220,7 +220,7 @@ Here are some examples:
    $ {command} run docker://alpine
    $ {command} run oras://docker.io/davedykstra/lolcow
 
- .. _registry-working-with-oras-registries:
+.. _registry-working-with-oras-registries:
 
 ****************************
 Working with ORAS Registries
