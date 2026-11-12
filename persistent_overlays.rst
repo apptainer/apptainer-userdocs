@@ -2,6 +2,8 @@
 Persistent Overlays
 ###################
 
+.. _persistent-overlays:
+
 Persistent overlay directories allow you to overlay a writable file
 system on an immutable read-only container for the illusion of
 read-write access. You can run a container and make changes, and these

@@ -50,6 +50,12 @@ below with their respective functionality.
 ``B``
 =====
 
+#. **{ENVPREFIX}_BASEPATH**: Comma-separated list of paths to search for
+   the base image of an overlay-only image built with
+   ``{command} build --overlay``, so it can be combined with the overlay
+   automatically at run time. Equivalent to the ``--basepath`` action
+   option; see :ref:`--basepath <sec:basepath>`.
+
 #. **{ENVPREFIX}_BIND** and **{ENVPREFIX}_BINDPATH**: Comma separated
    string ``source:<dest>`` list of paths to bind between the host and
    the container.  Both are read and the paths from them are combined,
