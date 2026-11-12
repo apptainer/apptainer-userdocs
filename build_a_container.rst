@@ -353,7 +353,7 @@ are read.
 ``--overlay``
 =============
 
-Build an overlay-only (thin) image containing only the files added, changed,
+Build an overlay (thin) image containing only the files added, changed,
 or removed relative to a base image. See the :ref:`Overlay Containers
 <overlay-containers>` page for how to build an overlay, and to locate its base
 image at run time with the ``--basepath`` action option (or the
