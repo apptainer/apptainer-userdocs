@@ -87,7 +87,7 @@ subcommands as follows:
      checkpoint  Manage container checkpoint state (experimental)
      completion  Generate the autocompletion script for the specified shell
      config      Manage various {command} configuration (root user only)
-     delete      Deletes requested image from the library
+     delete      Deletes requested image from a URI
      exec        Run a command within a container
      help        Help about any command
      inspect     Show metadata for an image
@@ -103,10 +103,11 @@ subcommands as follows:
      remote      Manage {command} remote endpoints
      run         Run the user-defined default command within a container
      run-help    Show the user-defined help for an image
-     search      Search a Container Library for images
+     search      Search a Container Library or Registry for images
      shell       Run a shell within a container
      sif         Manipulate Singularity Image Format (SIF) images
      sign        Add digital signature(s) to an image
+     tag         Tag image in the provided URI
      test        Run the user-defined tests within a container
      verify      Verify digital signature(s) within an image
      version     Show the version for {Project}

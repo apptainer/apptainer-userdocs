@@ -220,9 +220,106 @@ Here are some examples:
    $ {command} run docker://alpine
    $ {command} run oras://docker.io/davedykstra/lolcow
 
-***********************
+ .. _registry-working-with-oras-registries:
+
+****************************
+Working with ORAS Registries
+****************************
+
+{Project} can store SIF images in OCI/Docker registries using the
+``oras://`` protocol, and it understands a number of registry-specific
+operations in addition to ``pull`` and ``push``.
+
+Push
+====
+
+A single SIF image can be pushed to an ``oras://`` URI with ``{command}
+push``. If the image already has a description and/or annotations, they are
+recorded in the pushed image. To set or override them at push time, use the
+``--description`` and ``--annotation`` options (``--annotation`` accepts
+multiple ``key=value`` pairs):
+
+.. code:: console
+
+   $ {command} push --description "A Python image" \
+       --annotation team=data --annotation version=2.3 \
+       myimage.sif oras://ghcr.io/myuser/myimage:2.3
+
+The ``--description`` flag sets the
+``org.opencontainers.image.description`` annotation; each ``--annotation``
+adds a further annotation. These options are available when pushing
+``library://`` and ``oras://`` images (annotations are
+``oras://`` only).
+
+{Project} automatically records the ``org.opencontainers.image.created``
+annotation from the SIF's creation time, and the architecture of the image
+(from the SIF's partition metadata) into the pushed manifest, which is
+also what allows multi-architecture images to be grouped together in an
+image index.
+
+Pushing a multi-architecture image
+----------------------------------
+
+If you have SIF images built for different architectures, you can push them
+together in a single ``{command} push`` to the same ``oras://`` URI.
+{Project} groups them into a single OCI image index (one manifest per
+architecture), rather than overwriting the previous one. This mirrors the
+usual way that multi-architecture images are published to a registry.
+
+.. code:: shell
+
+   # Push both architecture variants to the same reference; they are
+   # combined into a single image index.
+   $ {command} push myimage-amd64.sif myimage-arm64.sif oras://ghcr.io/myuser/myimage:2.3
+
+Multi-architecture push is only supported for ``oras://`` destinations (the
+``library://`` transport does not allow multiple files).
+
+Search
+======
+
+The ``{command} search`` command can list images in an ``oras://`` registry
+(repository). It lists the available images and tags; it does not search
+image descriptions. You may restrict the results to a given architecture:
+
+.. code:: console
+
+   $ {command} search oras://ghcr.io/myuser
+   $ {command} search --arch arm64 oras://ghcr.io/myuser/myimage
+
+Delete
+======
+
+The ``{command} delete`` command removes an image from an ``oras://``
+registry. Deletion is subject to the capabilities of the registry; not all
+registries support deleting images or manifests.
+
+.. code:: console
+
+   $ {command} delete --arch amd64 oras://ghcr.io/myuser/myimage:2.3
+   Do you really want to remove the image? [N/y] y
+
+Tag
+===
+
+The ``{command} tag`` command creates an additional tag pointing at an
+image (or image index) that already exists in an ``oras://`` registry. This
+avoids having to push an extra copy to add a new tag:
+
+.. code:: console
+
+   $ {command} tag oras://ghcr.io/myuser/myimage:2.3 stable
+
+.. note::
+
+  Images pushed to a registry with the ``oras://`` protocol must be pulled
+  using the same protocol. A registry may therefore hold the same logical
+  container under both ``docker://`` and ``oras://`` names, and {Project}
+  treats these as separate images.
+
+****************
 Registry mirrors
-***********************
+****************
 
 {Project} supports mirrors (caches) for registries.  Please see the
 `registries.conf section <{admindocs}/configfiles.html#registry-mirror-configuration>`_
