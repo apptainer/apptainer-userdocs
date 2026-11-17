@@ -29,8 +29,9 @@ bootstrap as its base.
 
    $ {command} build --overlay my-overlay.sif my-def.def
 
-When the image is built, a hash of the base image and its original
-reference are stored in the overlay image's metadata. These are used at
+When the image is built, the original source of the base image along
+with a hash or hashes related to it are stored in the overlay image's
+metadata.  These are used at
 run time by the ``--basepath`` action option to find the base image and
 combine it with the overlay automatically.
 
@@ -87,7 +88,7 @@ Local base images
 If an entry in the basepath list is a SIF file or a sandbox directory,
 it is used directly, regardless of its name, although the hash must match.
 Otherwise, if the entry is a directory, it is searched for a base image
-matching the hash recorded in the overlay's metadata. Within that
+matching a hash recorded in the overlay's metadata. Within that
 directory {Project} looks for:
 
 * a file or directory directly named after the hash, and
@@ -107,6 +108,18 @@ It also tries each hash with and without the hash type prefix (typically
    2b3c4d...
    $ {command} run --basepath /srv/overlay-bases my-overlay.sif
 
+.. note::
+
+   If the original source was a localimage SIF, the hash searched for is
+   the hash of the SIF itself.  If it was a ``docker`` or ``oras``
+   bootstrap, it's a little more complicated because the hash that can
+   be used to pull the specific version can actually refer to multiple
+   different containers of different variants, such as different
+   architectures.  For that reason a second hash is also recorded that
+   references only the final container that was pulled.  That second
+   hash is used to search first through each basepath directory, and if
+   it is not found then the first hash is also searched for.
+
 Remote base images
 ==================
 
@@ -115,7 +128,7 @@ image reference, it must use the same transport as the original base.
 Each part of the reference may be left to its default, taken from the
 overlay's metadata, or given a new value. A missing registry and/or
 image name is taken from the default, and the version is inferred from
-the hash recorded in the overlay's metadata.
+one of the hashes recorded in the overlay's metadata.
 
 .. code:: console
 
